@@ -93,5 +93,4 @@ from hiding functional failures.
 
 ## Current score
 
-**Not scored — no playable implementation or Playwright browser run exists in this
-research work package.** Assigning a numeric quality score now would violate this rubric.
+**Not scored — no playable implementation exists, and an actual 2026-09-04 Playwright Chromium provisioning attempt was blocked by secure TLS connection resets. The evidence log is `qa/browser-prerequisite-2026-09-04.log`; no screenshot was fabricated.** Assigning a numeric quality score now would violate this rubric.

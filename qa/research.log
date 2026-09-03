@@ -13,3 +13,8 @@
   runtime system diagram, and map strategy. These are explicitly not browser QA images.
 - Defined strict future Playwright browser rubric. No production game or browser QA claim
   has been made in this research phase.
+
+2026-09-04 | PLAYWRIGHT browser prerequisite | BLOCKED, EVIDENCE LOGGED
+- Enari's secure npm install stopped at `UNABLE_TO_VERIFY_LEAF_SIGNATURE` for its GitHub-hosted dependency.
+- Playwright Chromium provisioning made five secure download attempts and each failed with TLS `ECONNRESET`; no browser executable/cached browser exists.
+- No browser image was fabricated or substituted. See `qa/browser-prerequisite-2026-09-04.log`.
