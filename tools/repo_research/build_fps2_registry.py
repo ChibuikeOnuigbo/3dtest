@@ -127,6 +127,24 @@ def main() -> None:
             "production_reuse": "BLOCKED: not individually cleared.",
         })
 
+    forge_props = []
+    forge_source = (args.reference / 'forge.html').read_text(encoding='utf-8')
+    for path in ('forge/props/Rock.glb', 'forge/props/Tree.glb'):
+        item = models[path]
+        info = item['inspection']
+        stem = Path(path).stem
+        forge_props.append({
+            'reference_path': path,
+            'bytes': item['bytes'],
+            'structure': {k: info.get(k) for k in ('nodes', 'meshes', 'materials', 'textures', 'skins', 'animations', 'indexed_triangles')},
+            'reference_usage': {
+                'context': 'Available in the separate Forge editor prop picker; the picker derives the GLB path from Rock.png or Tree.png, then loads chosenProp on user action.',
+                'picker_evidence': f"forge.html:{source_line(forge_source, f'forge/props/{stem}.png')}",
+                'load_evidence': f"forge.html:{source_line(forge_source, 'new THREE.GLTFLoader().load(chosenProp')}",
+            },
+            'production_reuse': 'BLOCKED: no exact upstream provenance/license clearance and no visual/performance approval.',
+        })
+
     report = {
         "schema": "fps2-runtime-registry/v1",
         "generated_by": "tools/repo_research/build_fps2_registry.py",
@@ -145,10 +163,13 @@ def main() -> None:
         ],
         "weapons_loaded_by_startup": weapons,
         "separate_support_and_character_models": support_entries,
+        "forge_editor_prop_models": forge_props,
         "maps_loaded_by_startup_selector": map_entries,
         "totals": {
             "weapon_glbs_loaded_by_startup": len(weapons),
             "weapon_glb_bytes": sum(item["bytes"] for item in weapons),
+            "forge_editor_prop_models": len(forge_props),
+            "all_model_format_entries_accounted_for": len(weapons) + len(support_entries) + len(map_entries) + len(forge_props),
             "all_entries_are_production_blocked": True,
         },
     }

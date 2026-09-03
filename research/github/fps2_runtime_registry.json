@@ -684,6 +684,46 @@
       "production_reuse": "BLOCKED: not individually cleared."
     }
   ],
+  "forge_editor_prop_models": [
+    {
+      "reference_path": "forge/props/Rock.glb",
+      "bytes": 5212904,
+      "structure": {
+        "nodes": 3,
+        "meshes": 1,
+        "materials": 1,
+        "textures": 3,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 13728
+      },
+      "reference_usage": {
+        "context": "Available in the separate Forge editor prop picker; the picker derives the GLB path from Rock.png or Tree.png, then loads chosenProp on user action.",
+        "picker_evidence": "forge.html:341",
+        "load_evidence": "forge.html:380"
+      },
+      "production_reuse": "BLOCKED: no exact upstream provenance/license clearance and no visual/performance approval."
+    },
+    {
+      "reference_path": "forge/props/Tree.glb",
+      "bytes": 1393896,
+      "structure": {
+        "nodes": 12,
+        "meshes": 8,
+        "materials": 3,
+        "textures": 2,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 26509
+      },
+      "reference_usage": {
+        "context": "Available in the separate Forge editor prop picker; the picker derives the GLB path from Rock.png or Tree.png, then loads chosenProp on user action.",
+        "picker_evidence": "forge.html:342",
+        "load_evidence": "forge.html:380"
+      },
+      "production_reuse": "BLOCKED: no exact upstream provenance/license clearance and no visual/performance approval."
+    }
+  ],
   "maps_loaded_by_startup_selector": [
     {
       "runtime_query_key": "CARGO",
@@ -753,6 +793,8 @@
   "totals": {
     "weapon_glbs_loaded_by_startup": 11,
     "weapon_glb_bytes": 204946908,
+    "forge_editor_prop_models": 2,
+    "all_model_format_entries_accounted_for": 26,
     "all_entries_are_production_blocked": true
   }
 }

@@ -77,7 +77,7 @@ Do not confuse startup loading with current player usage:
   firearm; and
 - `frag.glb` is a separate grenade model, not part of the weapon-GLB count.
 
-The complete repeatable register includes exact byte counts, mesh/skin/material/texture
+The complete repeatable register accounts for **all 26 model-format files**: 11 startup weapon GLBs, four selected map glTFs, nine support/character/effect/vehicle models, and two Rock/Tree GLBs exposed by the separate Forge editor picker. It includes exact byte counts, mesh/skin/material/texture
 counts, clip names, source loading evidence, game-mode use classification, and a
 per-item blocked provenance state:
 
