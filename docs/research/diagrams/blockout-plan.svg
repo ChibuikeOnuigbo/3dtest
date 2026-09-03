@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+ <title id="title">Candidate two-dimensional interior exterior FPS blockout plan</title>
+ <desc id="desc">A labelled top-down plan with exterior yard, secure threshold and enclosed rooms, spatial zones, collisions and critical path. It is a research map plan, not an in-game screenshot.</desc>
+ <defs>
+  <pattern id="smallGrid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#243d54" stroke-width="1" opacity=".55"/></pattern>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".32"/></filter>
+  <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ffd06d"/></marker>
+  <style>.h{font:700 28px system-ui,sans-serif;fill:#f4f8fb}.sub{font:500 15px system-ui,sans-serif;fill:#b9ccd9}.l{font:700 13px system-ui,sans-serif;fill:#95aebe;letter-spacing:1.5px}.t{font:700 16px system-ui,sans-serif;fill:#eaf1f6}.p{font:400 14px system-ui,sans-serif;fill:#c2d1dc}.k{font:600 12px system-ui,sans-serif;fill:#abbecb}.room{stroke:#9eb1c2;stroke-width:3}.wall{stroke:#d2dee7;stroke-width:8;stroke-linecap:square;fill:none}.thin{stroke:#86a0b3;stroke-width:2;fill:none}.route{stroke:#ffd06d;stroke-width:4;fill:none;stroke-dasharray:8 7;marker-end:url(#a)}.call{stroke:#8cdbd1;stroke-width:1.5;fill:none}</style>
+ </defs>
+ <rect width="1600" height="1080" fill="#081726"/>
+ <rect x="32" y="28" width="1536" height="90" rx="16" fill="#102d43" stroke="#386582"/>
+ <text x="64" y="68" class="h">Candidate small-mission blockout plan — continuous exterior/interior route</text>
+ <text x="64" y="96" class="sub">Original technical plan for future playtest • dimensions are blockout scale estimates • no source art, map geometry or story lock-in</text>
+ <rect x="1328" y="51" width="199" height="42" rx="21" fill="#452d32" stroke="#d8796c"/><text x="1428" y="78" text-anchor="middle" class="k" fill="#ffb8aa">RESEARCH ONLY · NOT QA</text>
+ <text x="65" y="164" class="l">TOP-DOWN BLOCKOUT · NORTH ↑ · APPROX. 42 m × 32 m PLAYABLE FOOTPRINT</text>
+ <g filter="url(#sh)">
+  <rect x="80" y="190" width="1090" height="760" rx="12" fill="url(#smallGrid)" stroke="#365873"/>
+  <!-- exterior yard -->
+  <rect x="115" y="225" width="510" height="690" rx="6" fill="#1c4a59" stroke="#72a6b7" stroke-width="3"/>
+  <text x="140" y="258" class="t">YARD / EXTERIOR ZONE</text><text x="140" y="281" class="k">wide but bounded; sprint, cover and sightline test</text>
+  <!-- exterior boundary wall -->
+  <path d="M115 225H625V915H115Z" class="wall"/>
+  <!-- gates/cover -->
+  <rect x="152" y="338" width="108" height="76" fill="#2f6572" stroke="#9ac3ca" stroke-width="2"/><text x="206" y="382" text-anchor="middle" class="k">cover A</text>
+  <rect x="374" y="278" width="146" height="61" fill="#2f6572" stroke="#9ac3ca" stroke-width="2"/><text x="447" y="315" text-anchor="middle" class="k">cover B</text>
+  <rect x="330" y="711" width="95" height="119" fill="#2f6572" stroke="#9ac3ca" stroke-width="2"/><text x="377" y="775" text-anchor="middle" class="k">cover C</text>
+  <rect x="490" y="498" width="94" height="106" fill="#2f6572" stroke="#9ac3ca" stroke-width="2"/><text x="537" y="554" text-anchor="middle" class="k">cover D</text>
+  <!-- player start -->
+  <circle cx="190" cy="820" r="20" fill="#f2c96e" stroke="#fff0bc" stroke-width="2"/><text x="190" y="825" text-anchor="middle" class="k" fill="#182a38">START</text>
+  <!-- threshold -->
+  <rect x="625" y="477" width="92" height="174" fill="#735a3c" stroke="#efc26e" stroke-width="3"/>
+  <text x="671" y="536" text-anchor="middle" class="t" transform="rotate(-90 671 536)">AIRLOCK / THRESHOLD</text>
+  <path d="M625 538H651" stroke="#f8d277" stroke-width="12"/><text x="637" y="565" class="k">D-01</text>
+  <!-- building outer shell -->
+  <rect x="717" y="225" width="418" height="690" rx="4" fill="#2f3546" class="room"/>
+  <!-- rooms -->
+  <rect x="742" y="250" width="168" height="215" fill="#51445c" class="room"/><text x="826" y="345" class="t" text-anchor="middle">LOBBY</text><text x="826" y="369" class="k" text-anchor="middle">close encounter / intake</text>
+  <rect x="934" y="250" width="176" height="215" fill="#465b68" class="room"/><text x="1022" y="345" class="t" text-anchor="middle">SECURITY</text><text x="1022" y="369" class="k" text-anchor="middle">key / power condition</text>
+  <rect x="742" y="489" width="368" height="108" fill="#3d5661" class="room"/><text x="926" y="550" class="t" text-anchor="middle">MAIN CORRIDOR</text>
+  <rect x="742" y="621" width="170" height="269" fill="#5a4a3c" class="room"/><text x="827" y="737" class="t" text-anchor="middle">SERVICE</text><text x="827" y="760" class="k" text-anchor="middle">bypass loop</text>
+  <rect x="936" y="621" width="174" height="269" fill="#504c68" class="room"/><text x="1023" y="721" class="t" text-anchor="middle">RELAY ROOM</text><text x="1023" y="744" class="k" text-anchor="middle">objective / final state</text>
+  <!-- Doors openings annotations -->
+  <path d="M908 357H935M825 464V490M1020 464V490M911 736H937" stroke="#f2c96e" stroke-width="9"/>
+  <text x="893" y="337" class="k">D-02</text><text x="805" y="484" class="k">D-03</text><text x="1000" y="484" class="k">D-04</text><text x="890" y="716" class="k">D-05</text>
+  <!-- collision strips -->
+  <path d="M115 225H625M115 915H625M115 225V915M625 225V477M625 651V915M717 225H1135V915H717" class="thin" stroke-dasharray="4 4"/>
+  <!-- route -->
+  <path d="M190 820 C255 733,310 631,400 562 S545 531,650 556 L760 545 L850 545 L1023 745" class="route"/>
+  <path d="M1023 775 C930 800,880 805,826 778 L760 738 L740 620 L651 590" class="route" opacity=".55"/>
+ </g>
+ <!-- annotations -->
+ <g><path d="M400 562L1234 311H1438" class="call"/><text x="1218" y="278" class="t">1 · Exterior movement proof</text><text x="1218" y="301" class="p">Measure walk vs. sprint distance, camera</text><text x="1218" y="322" class="p">rotation and cover collision before art.</text></g>
+ <g><path d="M671 565L1234 452H1438" class="call"/><text x="1218" y="419" class="t">2 · Threshold continuity</text><text x="1218" y="442" class="p">D-01 must block, unlock, preload, open and</text><text x="1218" y="463" class="p">close without teleport, state loss or clipping.</text></g>
+ <g><path d="M926 544L1234 601H1438" class="call"/><text x="1218" y="568" class="t">3 · Interior collision &amp; combat</text><text x="1218" y="591" class="p">Doorframes/corners support firing, reload and</text><text x="1218" y="612" class="p">interaction test routes at close/medium range.</text></g>
+ <g><path d="M1023 757L1234 789H1438" class="call"/><text x="1218" y="756" class="t">4 · Clear ending and return</text><text x="1218" y="779" class="p">Objective resolves visibly, then validates the</text><text x="1218" y="800" class="p">return path / final mission transition.</text></g>
+ <!-- legend -->
+ <rect x="80" y="975" width="1355" height="70" rx="12" fill="#102333" stroke="#365973"/>
+ <rect x="105" y="997" width="18" height="18" fill="#1c4a59" stroke="#72a6b7"/><text x="136" y="1012" class="p">exterior</text>
+ <rect x="255" y="997" width="18" height="18" fill="#51445c" stroke="#9eb1c2"/><text x="286" y="1012" class="p">interior room</text>
+ <rect x="443" y="997" width="18" height="18" fill="#735a3c" stroke="#efc26e"/><text x="474" y="1012" class="p">threshold / explicit door</text>
+ <path d="M704 1006h30" class="route"/><text x="748" y="1012" class="p">critical path</text>
+ <path d="M914 1006h30" class="thin" stroke-dasharray="4 4"/><text x="958" y="1012" class="p">collision boundary / authored proxy</text>
+ <text x="1420" y="1012" class="k" text-anchor="end">All visual content remains to be selected after blockout playtest and license clearance.</text>
+</svg>

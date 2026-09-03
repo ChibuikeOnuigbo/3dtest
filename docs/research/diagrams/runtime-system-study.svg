@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Research runtime system diagram for a future independent browser FPS</title>
+  <desc id="desc">A layered diagram showing browser input, simulation, mission state, asset loading, renderer and future QA evidence. It is an authored research diagram and not gameplay evidence.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#101b2d"/></linearGradient>
+    <linearGradient id="header" x1="0" x2="1"><stop stop-color="#102b42"/><stop offset="1" stop-color="#163650"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".3"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#78d9d1"/></marker>
+    <marker id="arrowMuted" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#75859a"/></marker>
+    <style>
+      .h {font:700 28px system-ui,Segoe UI,sans-serif; fill:#f1f6fb}.sub {font:500 15px system-ui,Segoe UI,sans-serif;fill:#b6c6d7}.l {font:700 13px system-ui,Segoe UI,sans-serif;letter-spacing:1.5px;fill:#8da7bc}.t {font:600 17px system-ui,Segoe UI,sans-serif;fill:#e8f0f7}.p {font:400 14px system-ui,Segoe UI,sans-serif;fill:#b8c9d7}.tiny {font:600 12px system-ui,Segoe UI,sans-serif;fill:#a9bac9}.box {stroke-width:1.5}.line {fill:none;stroke:#78d9d1;stroke-width:2.4;marker-end:url(#arrow)}.muted {fill:none;stroke:#75859a;stroke-width:1.8;stroke-dasharray:6 6;marker-end:url(#arrowMuted)}
+    </style>
+  </defs>
+  <rect width="1600" height="1040" fill="url(#bg)"/>
+  <rect x="32" y="28" width="1536" height="92" rx="16" fill="url(#header)" stroke="#35607d"/>
+  <text x="64" y="69" class="h">Future independent FPS runtime — research architecture</text>
+  <text x="64" y="98" class="sub">Selective lessons from Enari Engine and FPS2 • all code and assets are independently reimplemented • diagram, not gameplay QA</text>
+  <rect x="1322" y="52" width="205" height="42" rx="21" fill="#442b31" stroke="#d8796c"/>
+  <text x="1424" y="78" text-anchor="middle" class="tiny" fill="#ffb4a9">RESEARCH ONLY · NOT QA</text>
+
+  <text x="66" y="163" class="l">01 · BROWSER INPUT</text>
+  <g filter="url(#shadow)">
+    <rect x="62" y="186" width="270" height="160" rx="15" fill="#122a3c" stroke="#3986a4" class="box"/>
+    <text x="88" y="220" class="t">Pointer lock + devices</text>
+    <text x="88" y="249" class="p">mouse yaw / pitch</text><text x="88" y="272" class="p">keyboard / gamepad actions</text><text x="88" y="295" class="p">focus / pause / accessibility</text>
+    <rect x="88" y="310" width="157" height="22" rx="11" fill="#1b475c"/><text x="166" y="326" text-anchor="middle" class="tiny">raw input never owns state</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="390" y="186" width="270" height="160" rx="15" fill="#132a38" stroke="#3e9a8f" class="box"/>
+    <text x="416" y="220" class="t">ActionState</text>
+    <text x="416" y="249" class="p">move, look, sprint, fire</text><text x="416" y="272" class="p">reload, interact, pause</text><text x="416" y="295" class="p">one normalized frame intent</text>
+    <rect x="416" y="310" width="182" height="22" rx="11" fill="#1d504b"/><text x="507" y="326" text-anchor="middle" class="tiny">testable input contract</text>
+  </g>
+  <path d="M332 266H389" class="line"/>
+
+  <text x="66" y="412" class="l">02 · AUTHORITATIVE SIMULATION (FIXED STEP)</text>
+  <g filter="url(#shadow)">
+    <rect x="62" y="435" width="285" height="184" rx="15" fill="#1d2638" stroke="#7187b4" class="box"/>
+    <text x="88" y="470" class="t">PlayerMotor</text>
+    <text x="88" y="499" class="p">upright capsule • swept / slide</text><text x="88" y="522" class="p">ground probe • walk / sprint</text><text x="88" y="545" class="p">camera pose + movement events</text>
+    <rect x="88" y="567" width="201" height="26" rx="13" fill="#303d5b"/><text x="188" y="585" text-anchor="middle" class="tiny">no render-mesh collision inference</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="396" y="435" width="285" height="184" rx="15" fill="#33233a" stroke="#aa6eaf" class="box"/>
+    <text x="422" y="470" class="t">WeaponStateMachine</text>
+    <text x="422" y="499" class="p">equipped / ready / firing</text><text x="422" y="522" class="p">reload / empty / cooldown</text><text x="422" y="545" class="p">ammo, hitscan, impact events</text>
+    <rect x="422" y="567" width="185" height="26" rx="13" fill="#553b60"/><text x="514" y="585" text-anchor="middle" class="tiny">authoritative before animation</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="730" y="435" width="285" height="184" rx="15" fill="#382d1e" stroke="#c79b5b" class="box"/>
+    <text x="756" y="470" class="t">SpatialQuery</text>
+    <text x="756" y="499" class="p">static collision registry</text><text x="756" y="522" class="p">interaction ray • line of sight</text><text x="756" y="545" class="p">door slabs • portal bounds</text>
+    <rect x="756" y="567" width="173" height="26" rx="13" fill="#5c492c"/><text x="842" y="585" text-anchor="middle" class="tiny">coarse authored primitives</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1064" y="435" width="285" height="184" rx="15" fill="#183631" stroke="#57a78d" class="box"/>
+    <text x="1090" y="470" class="t">MissionState</text>
+    <text x="1090" y="499" class="p">objectives • inventory • doors</text><text x="1090" y="522" class="p">zone readiness • save boundary</text><text x="1090" y="545" class="p">event journal / clear ending</text>
+    <rect x="1090" y="567" width="194" height="26" rx="13" fill="#28584b"/><text x="1187" y="585" text-anchor="middle" class="tiny">interior ↔ exterior continuity</text>
+  </g>
+  <path d="M526 346V405H204V434" class="line"/>
+  <path d="M347 527H395" class="line"/><path d="M681 527H729" class="line"/><path d="M1015 527H1063" class="line"/>
+  <path d="M872 619V671H539V619" class="muted"/>
+
+  <text x="66" y="691" class="l">03 · ASSET / ZONE GATE</text>
+  <g filter="url(#shadow)">
+    <rect x="62" y="714" width="365" height="164" rx="15" fill="#142b3f" stroke="#3986a4" class="box"/>
+    <text x="88" y="749" class="t">AssetManifest + validation</text>
+    <text x="88" y="778" class="p">exact source • license • credit • Kenney-ban check</text><text x="88" y="801" class="p">file/texture/triangle budgets • semantic clips</text><text x="88" y="824" class="p">approved assets only; fallback on failure</text>
+    <text x="88" y="854" class="tiny">Research repositories are blocked, never runtime dependencies.</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="475" y="714" width="365" height="164" rx="15" fill="#142f38" stroke="#42a699" class="box"/>
+    <text x="501" y="749" class="t">Async ZoneLoader</text>
+    <text x="501" y="778" class="p">yard / threshold / interior roots</text><text x="501" y="801" class="p">preload before door can open</text><text x="501" y="824" class="p">activate/deactivate visuals &amp; audio</text>
+    <text x="501" y="854" class="tiny">collision + interaction records stay authoritative.</text>
+  </g>
+  <path d="M427 796H474" class="line"/><path d="M840 796H920V619" class="line"/>
+
+  <text x="915" y="691" class="l">04 · PRESENTATION + OBSERVABILITY</text>
+  <g filter="url(#shadow)">
+    <rect x="894" y="714" width="320" height="164" rx="15" fill="#2b2437" stroke="#9a75b2" class="box"/>
+    <text x="920" y="749" class="t">Render composition</text>
+    <text x="920" y="778" class="p">world scene + dynamic lights</text><text x="920" y="801" class="p">clear depth → viewmodel scene</text><text x="920" y="824" class="p">quality profile / post effects</text>
+    <text x="920" y="854" class="tiny">renderer observes state; it never authorizes it.</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1264" y="714" width="286" height="164" rx="15" fill="#362827" stroke="#c47d63" class="box"/>
+    <text x="1290" y="749" class="t">HUD / audio / animation</text>
+    <text x="1290" y="778" class="p">event-driven feedback</text><text x="1290" y="801" class="p">objective / ammo / door status</text><text x="1290" y="824" class="p">motion, impact, zone mix</text>
+    <text x="1290" y="854" class="tiny">accessible UI; user gesture audio unlock.</text>
+  </g>
+  <path d="M1207 619V674H1054V713" class="line"/><path d="M1214 796H1263" class="line"/>
+
+  <g filter="url(#shadow)">
+    <rect x="62" y="923" width="1488" height="75" rx="15" fill="#121d2b" stroke="#38536c"/>
+    <text x="88" y="953" class="t">Future evidence rail</text>
+    <text x="88" y="978" class="p">Playwright drives real pointer/movement/weapons/doors • state assertions verify transitions • screenshots record actual browser frames • console and frame metrics decide QA score</text>
+    <path d="M1303 956h165" class="muted"/><text x="1494" y="962" class="tiny" text-anchor="end">required, not optional</text>
+  </g>
+</svg>

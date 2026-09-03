@@ -1,0 +1,758 @@
+{
+  "schema": "fps2-runtime-registry/v1",
+  "generated_by": "tools/repo_research/build_fps2_registry.py",
+  "reference": {
+    "repository": "Parking-Master/FPS2",
+    "revision": "f8a2997798a969deb546ef5b6014cc031b04b01d",
+    "license_file": "MIT (repository code license; does not itself clear bundled third-party assets)",
+    "source_file": "src.html",
+    "source_url": "https://github.com/Parking-Master/FPS2/blob/f8a2997798a969deb546ef5b6014cc031b04b01d/src.html"
+  },
+  "method": [
+    "Parsed local inventory GLB/glTF structural metadata.",
+    "Matched the source startup loader's literal weapon model paths.",
+    "Classified gameplay usage from explicit default-loadout and pickup branches.",
+    "Did not run or redistribute reference code/assets; no production asset is approved here."
+  ],
+  "weapons_loaded_by_startup": [
+    {
+      "runtime_key": "Assault_Rifle",
+      "category": "firearm",
+      "reference_path": "models/weapons/Assault_Rifle.glb",
+      "bytes": 17114932,
+      "glb_structure": {
+        "nodes": 87,
+        "meshes": 3,
+        "materials": 3,
+        "textures": 6,
+        "skins": 3,
+        "animations": 12,
+        "indexed_triangles": 35848
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1688",
+        "default_loadout": true,
+        "slayer_pickup": false,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README names Animated AK-47 arms and AK-47 rifle sources, both only described as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Desert_Eagle",
+      "category": "firearm",
+      "reference_path": "models/weapons/Desert_Eagle.glb",
+      "bytes": 29580224,
+      "glb_structure": {
+        "nodes": 106,
+        "meshes": 11,
+        "materials": 9,
+        "textures": 7,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 486104
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1694",
+        "default_loadout": true,
+        "slayer_pickup": false,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README links a Desert Eagle source described only as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Sniper_Rifle",
+      "category": "firearm",
+      "reference_path": "models/weapons/Sniper_Rifle.glb",
+      "bytes": 17741596,
+      "glb_structure": {
+        "nodes": 175,
+        "meshes": 44,
+        "materials": 3,
+        "textures": 7,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 41665
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1734",
+        "default_loadout": false,
+        "slayer_pickup": false,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README links a Sniper Rifle source described only as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Rail_Gun",
+      "category": "science-fiction firearm",
+      "reference_path": "models/weapons/Rail_Gun.glb",
+      "bytes": 16240224,
+      "glb_structure": {
+        "nodes": 126,
+        "meshes": 19,
+        "materials": 3,
+        "textures": 8,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 31394
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1741",
+        "default_loadout": false,
+        "slayer_pickup": false,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "absent",
+        "readme_provenance_note": "No matching upstream asset credit was found in README credits.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "P90_SMG",
+      "category": "firearm",
+      "reference_path": "models/weapons/P90_SMG.glb",
+      "bytes": 20406136,
+      "glb_structure": {
+        "nodes": 94,
+        "meshes": 4,
+        "materials": 4,
+        "textures": 10,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 34728
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1750",
+        "default_loadout": false,
+        "slayer_pickup": true,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README links a P90 SMG source described only as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Grenade_Launcher",
+      "category": "firearm",
+      "reference_path": "models/weapons/Grenade_Launcher.glb",
+      "bytes": 13803188,
+      "glb_structure": {
+        "nodes": 107,
+        "meshes": 11,
+        "materials": 4,
+        "textures": 6,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 30841
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1761",
+        "default_loadout": false,
+        "slayer_pickup": true,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README links an M32 Grenade Launcher source described only as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Remington_Shotgun",
+      "category": "firearm",
+      "reference_path": "models/weapons/Remington_Shotgun.glb",
+      "bytes": 18119288,
+      "glb_structure": {
+        "nodes": 124,
+        "meshes": 15,
+        "materials": 3,
+        "textures": 7,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 35708
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1770",
+        "default_loadout": false,
+        "slayer_pickup": true,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README links a Remington Shotgun source described only as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Rocket_Launcher",
+      "category": "firearm",
+      "reference_path": "models/weapons/Rocket_Launcher.glb",
+      "bytes": 13737672,
+      "glb_structure": {
+        "nodes": 95,
+        "meshes": 4,
+        "materials": 4,
+        "textures": 6,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 27243
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1779",
+        "default_loadout": false,
+        "slayer_pickup": true,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "indirect, ambiguous",
+        "readme_provenance_note": "README links a Rocket Launcher source described only as \u2018CC 4.0\u2019.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Nuke_Launcher",
+      "category": "science-fiction firearm",
+      "reference_path": "models/weapons/Nuke_Launcher.glb",
+      "bytes": 25230704,
+      "glb_structure": {
+        "nodes": 147,
+        "meshes": 29,
+        "materials": 4,
+        "textures": 10,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 56316
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1788",
+        "default_loadout": false,
+        "slayer_pickup": false,
+        "oddball_pickup": false,
+        "fiesta_candidate": false
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "absent",
+        "readme_provenance_note": "No matching upstream asset credit was found in README credits.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "9mm_Pistol",
+      "category": "firearm",
+      "reference_path": "models/weapons/9mm_Pistol.glb",
+      "bytes": 19512940,
+      "glb_structure": {
+        "nodes": 99,
+        "meshes": 4,
+        "materials": 4,
+        "textures": 10,
+        "skins": 2,
+        "animations": 12,
+        "indexed_triangles": 31115
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1797",
+        "default_loadout": false,
+        "slayer_pickup": false,
+        "oddball_pickup": false,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "absent",
+        "readme_provenance_note": "No matching upstream asset credit was found in README credits.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    },
+    {
+      "runtime_key": "Odd_Ball",
+      "category": "objective/melee object",
+      "reference_path": "models/weapons/Odd_Ball.glb",
+      "bytes": 13460004,
+      "glb_structure": {
+        "nodes": 117,
+        "meshes": 11,
+        "materials": 4,
+        "textures": 4,
+        "skins": 2,
+        "animations": 13,
+        "indexed_triangles": 36056
+      },
+      "animation_clip_names": [
+        "metarig|start",
+        "metarig|idle",
+        "metarig|Fire",
+        "metarig|Reload",
+        "metarig|Reload_empty",
+        "metarig|Reload_empty2",
+        "metarig|walk",
+        "metarig|run",
+        "metarig|run2_start",
+        "metarig|run2",
+        "metarig|run2_end",
+        "metarig|end",
+        "CINEMA_4D_Main"
+      ],
+      "runtime_usage": {
+        "loaded_by_startup_loader": true,
+        "loader_evidence": "src.html:1806",
+        "default_loadout": false,
+        "slayer_pickup": false,
+        "oddball_pickup": true,
+        "fiesta_candidate": true
+      },
+      "production_reuse": {
+        "status": "BLOCKED",
+        "why": "Reference repository MIT applies to its code, not automatically to embedded third-party model/media rights.",
+        "provenance_visibility": "absent",
+        "readme_provenance_note": "No matching upstream asset credit was found in README credits.",
+        "required_before_any_reuse": [
+          "Verify the original asset page and exact license version/terms.",
+          "Verify that the packaged GLB is the credited asset and that its animations/textures are covered.",
+          "Record attribution, modification, and redistribution obligations.",
+          "Confirm visual fit, performance budget, and Kenney-ban compliance."
+        ]
+      }
+    }
+  ],
+  "separate_support_and_character_models": [
+    {
+      "reference_path": "models/muzzle_flash.glb",
+      "bytes": 338828,
+      "structure": {
+        "nodes": 3,
+        "meshes": 3,
+        "materials": 1,
+        "textures": 2,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 22
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/bullet_shell.glb",
+      "bytes": 232336,
+      "structure": {
+        "nodes": 3,
+        "meshes": 1,
+        "materials": 1,
+        "textures": 0,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 8660
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/gun_clip.glb",
+      "bytes": 3989032,
+      "structure": {
+        "nodes": 31,
+        "meshes": 6,
+        "materials": 2,
+        "textures": 3,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 53513
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/weapons/grenades/frag.glb",
+      "bytes": 5076924,
+      "structure": {
+        "nodes": 22,
+        "meshes": 9,
+        "materials": 1,
+        "textures": 3,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 5244
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/weapon_box.glb",
+      "bytes": 2769012,
+      "structure": {
+        "nodes": 6,
+        "meshes": 2,
+        "materials": 2,
+        "textures": 6,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 6844
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/odd_ball.glb",
+      "bytes": 370616,
+      "structure": {
+        "nodes": 27,
+        "meshes": 10,
+        "materials": 3,
+        "textures": 0,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 9776
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/vehicles/humvee.glb",
+      "bytes": 2078136,
+      "structure": {
+        "nodes": 17,
+        "meshes": 7,
+        "materials": 1,
+        "textures": 2,
+        "skins": 0,
+        "animations": 0,
+        "indexed_triangles": 1528
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/characters/steve/scene.gltf",
+      "bytes": 191955,
+      "structure": {
+        "nodes": 125,
+        "meshes": 3,
+        "materials": 4,
+        "textures": 9,
+        "skins": 2,
+        "animations": 10,
+        "indexed_triangles": 95054
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    },
+    {
+      "reference_path": "models/characters/max/scene.gltf",
+      "bytes": 282830,
+      "structure": {
+        "nodes": 227,
+        "meshes": 24,
+        "materials": 12,
+        "textures": 26,
+        "skins": 2,
+        "animations": 10,
+        "indexed_triangles": 185024
+      },
+      "production_reuse": "BLOCKED: not individually cleared."
+    }
+  ],
+  "maps_loaded_by_startup_selector": [
+    {
+      "runtime_query_key": "CARGO",
+      "readme_display_name": "Cargo Port",
+      "reference_path": "models/maps/CARGO/scene.gltf",
+      "bytes": 11433902,
+      "gltf_structure": {
+        "nodes": 75,
+        "meshes": 4,
+        "materials": 4,
+        "textures": 8,
+        "indexed_triangles": 1290
+      },
+      "external_uris": [],
+      "runtime_usage": "One selected scene.gltf is loaded from the URL map parameter at startup; no runtime map replacement implementation was found.",
+      "production_reuse": "BLOCKED pending upstream asset provenance, exact licensing, visual review, and performance review."
+    },
+    {
+      "runtime_query_key": "CITY",
+      "readme_display_name": "Abandoned City",
+      "reference_path": "models/maps/CITY/scene.gltf",
+      "bytes": 23426096,
+      "gltf_structure": {
+        "nodes": 2267,
+        "meshes": 920,
+        "materials": 23,
+        "textures": 13,
+        "indexed_triangles": 23950
+      },
+      "external_uris": [],
+      "runtime_usage": "One selected scene.gltf is loaded from the URL map parameter at startup; no runtime map replacement implementation was found.",
+      "production_reuse": "BLOCKED pending upstream asset provenance, exact licensing, visual review, and performance review."
+    },
+    {
+      "runtime_query_key": "GHOST",
+      "readme_display_name": "Ghost City",
+      "reference_path": "models/maps/GHOST/scene.gltf",
+      "bytes": 39828629,
+      "gltf_structure": {
+        "nodes": 75,
+        "meshes": 28,
+        "materials": 28,
+        "textures": 81,
+        "indexed_triangles": 46860
+      },
+      "external_uris": [],
+      "runtime_usage": "One selected scene.gltf is loaded from the URL map parameter at startup; no runtime map replacement implementation was found.",
+      "production_reuse": "BLOCKED pending upstream asset provenance, exact licensing, visual review, and performance review."
+    },
+    {
+      "runtime_query_key": "VERTEX",
+      "readme_display_name": "Vertex",
+      "reference_path": "models/maps/VERTEX/scene.gltf",
+      "bytes": 26861794,
+      "gltf_structure": {
+        "nodes": 129,
+        "meshes": 6,
+        "materials": 5,
+        "textures": 10,
+        "indexed_triangles": 125914
+      },
+      "external_uris": [],
+      "runtime_usage": "One selected scene.gltf is loaded from the URL map parameter at startup; no runtime map replacement implementation was found.",
+      "production_reuse": "BLOCKED pending upstream asset provenance, exact licensing, visual review, and performance review."
+    }
+  ],
+  "totals": {
+    "weapon_glbs_loaded_by_startup": 11,
+    "weapon_glb_bytes": 204946908,
+    "all_entries_are_production_blocked": true
+  }
+}

@@ -1,16 +1,14 @@
-# dependencies and builds
+# Dependencies, generated build output, and automated browser reports.
 node_modules/
 dist/
 coverage/
 playwright-report/
 test-results/
 
-# Reference laboratories are deliberately cloned for local research only.
-# They are large third-party checkouts and must never become runtime assets or Git history.
+# Third-party repositories are local research laboratories, never runtime assets or Git history.
 research/github_repos/
 
-# Reference-video acquisition creates only curated text/frame evidence; temporary downloads are disposable.
-research/videos/*.mp4
-research/videos/*.webm
-research/videos/*.mkv
+# Retain only curated research evidence; never full downloaded reference videos.
+research/videos/*
+!research/videos/source_index.json
 research/video_frames/**/frame-extraction.log

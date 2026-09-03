@@ -1,0 +1,375 @@
+{
+  "repository": "/home/user/3dtest/research/github_repos/enari-engine",
+  "file_count": 97,
+  "total_bytes": 26461044,
+  "extension_counts": {
+    ".blend": 3,
+    ".glb": 9,
+    ".html": 1,
+    ".js": 2,
+    ".json": 8,
+    ".md": 2,
+    ".mp3": 1,
+    ".png": 7,
+    ".svg": 2,
+    ".ts": 56,
+    ".wasm": 2,
+    ".webp": 1,
+    "[none]": 3
+  },
+  "directory_summary": {
+    ".gitignore": {
+      "files": 1,
+      "bytes": 253
+    },
+    ".prettierrc": {
+      "files": 1,
+      "bytes": 118
+    },
+    "LICENSE": {
+      "files": 1,
+      "bytes": 1064
+    },
+    "README.md": {
+      "files": 1,
+      "bytes": 3844
+    },
+    "index.html": {
+      "files": 1,
+      "bytes": 3769
+    },
+    "package-lock.json": {
+      "files": 1,
+      "bytes": 31664
+    },
+    "package.json": {
+      "files": 1,
+      "bytes": 625
+    },
+    "public": {
+      "files": 24,
+      "bytes": 25546451
+    },
+    "src": {
+      "files": 64,
+      "bytes": 872441
+    },
+    "tsconfig.json": {
+      "files": 1,
+      "bytes": 723
+    },
+    "vite.config.ts": {
+      "files": 1,
+      "bytes": 92
+    }
+  },
+  "models": [
+    {
+      "path": "public/9mm2douille.glb",
+      "extension": ".glb",
+      "bytes": 18256,
+      "category": "model",
+      "sha256": "4323c387a54a6c6307b3d126b83836320ca560bc3c2d8174ba9fc8d3fcc93d10",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 18256,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 3,
+        "meshes": 1,
+        "materials": 1,
+        "textures": 0,
+        "skins": 0,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 414
+      }
+    },
+    {
+      "path": "public/RobotExpressive.glb",
+      "extension": ".glb",
+      "bytes": 463988,
+      "category": "model",
+      "sha256": "047f5e5fb3bb6d378bd1df16ca6137f2a596c99b3a1b5690b4020c05aaf6f319",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 463988,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 74,
+        "meshes": 14,
+        "materials": 3,
+        "textures": 0,
+        "skins": 2,
+        "animations": 14,
+        "animation_names": [
+          "Dance",
+          "Death",
+          "Idle",
+          "Jump",
+          "No",
+          "Punch",
+          "Running",
+          "Sitting",
+          "Standing",
+          "ThumbsUp",
+          "Walking",
+          "WalkJump",
+          "Wave",
+          "Yes"
+        ],
+        "indexed_triangles": 3237
+      }
+    },
+    {
+      "path": "public/collision-world.glb",
+      "extension": ".glb",
+      "bytes": 117964,
+      "category": "model",
+      "sha256": "a751f8d022c85419aa7bb64ad10c0b3d7835be2c6becf330671649a097dbbfc3",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 117964,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 13,
+        "meshes": 9,
+        "materials": 1,
+        "textures": 1,
+        "skins": 0,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1788
+      }
+    },
+    {
+      "path": "public/fps_mine_sketch.blend",
+      "extension": ".blend",
+      "bytes": 3410424,
+      "category": "model",
+      "sha256": "629c51378dac5a9a85c0b0712399c31b54d4e0820e18781ccd0ccdd2d5c2e60b"
+    },
+    {
+      "path": "public/fps_mine_sketch.glb",
+      "extension": ".glb",
+      "bytes": 4401932,
+      "category": "model",
+      "sha256": "af51e5203fc64c5ef657ec44b9e9e962101c70d2ec0389efa291fd1ee5acacd9",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 4401932,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 62,
+        "meshes": 4,
+        "materials": 5,
+        "textures": 4,
+        "skins": 2,
+        "animations": 2,
+        "animation_names": [
+          "Animation",
+          "Animation"
+        ],
+        "indexed_triangles": 11170
+      }
+    },
+    {
+      "path": "public/fps_mine_sketch_compressed.glb",
+      "extension": ".glb",
+      "bytes": 2658612,
+      "category": "model",
+      "sha256": "b710e7f20f7578bab200eb6a27eee6b6a70af8957da04a97fa2158bb433a5476",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 2658612,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 64,
+        "meshes": 3,
+        "materials": 5,
+        "textures": 4,
+        "skins": 2,
+        "animations": 2,
+        "animation_names": [
+          "Animation",
+          "Animation"
+        ],
+        "indexed_triangles": 11066
+      }
+    },
+    {
+      "path": "public/fps_mine_sketch_galil.blend",
+      "extension": ".blend",
+      "bytes": 4162244,
+      "category": "model",
+      "sha256": "cc3e6524683dc15312ca6df16c118bbf340332fc9a8ef819615870fb8fb2ddb2"
+    },
+    {
+      "path": "public/fps_mine_sketch_galil.glb",
+      "extension": ".glb",
+      "bytes": 2165360,
+      "category": "model",
+      "sha256": "9c23f15c8ceece2f7abb3ecf972ee741102d18a4d0e4ec469fcfaea4791b5230",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 2165360,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 59,
+        "meshes": 2,
+        "materials": 4,
+        "textures": 3,
+        "skins": 2,
+        "animations": 2,
+        "animation_names": [
+          "HandsAction",
+          "HandsAction"
+        ],
+        "indexed_triangles": 14091
+      }
+    },
+    {
+      "path": "public/fps_mine_sketch_m9.blend",
+      "extension": ".blend",
+      "bytes": 3870664,
+      "category": "model",
+      "sha256": "73697682d19d8701ca0c6f89c9ae458471d8ae542298c8a47a950b3fbc1315cc"
+    },
+    {
+      "path": "public/fps_mine_sketch_m9.glb",
+      "extension": ".glb",
+      "bytes": 2179376,
+      "category": "model",
+      "sha256": "66b0a319e482b7ee84dcc8a7443c70784f5dae04a22705113acda7da8fdc933a",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 2179376,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 62,
+        "meshes": 3,
+        "materials": 4,
+        "textures": 2,
+        "skins": 2,
+        "animations": 2,
+        "animation_names": [
+          "M9 bayonet ",
+          "M9 bayonet "
+        ],
+        "indexed_triangles": 11868
+      }
+    },
+    {
+      "path": "public/pool_day_baked.glb",
+      "extension": ".glb",
+      "bytes": 1934552,
+      "category": "model",
+      "sha256": "3fae87a6ccb0b5a8e7a3cb5028ee5d5deaf021fb3aec0d767321360b6c79db82",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 1934552,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 6,
+        "meshes": 6,
+        "materials": 6,
+        "textures": 6,
+        "skins": 0,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 8168
+      }
+    },
+    {
+      "path": "public/small.glb",
+      "extension": ".glb",
+      "bytes": 21532,
+      "category": "model",
+      "sha256": "6c04699f525d647f3ee6ef373f40ceb939124306094b3479cd001f87d8cb18c0",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 21532,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 14,
+        "meshes": 14,
+        "materials": 2,
+        "textures": 0,
+        "skins": 0,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 168
+      }
+    }
+  ],
+  "images": [
+    {
+      "path": "public/CubeNormal.png",
+      "extension": ".png",
+      "bytes": 21557,
+      "category": "image"
+    },
+    {
+      "path": "public/CubeTexture.png",
+      "extension": ".png",
+      "bytes": 9981,
+      "category": "image"
+    },
+    {
+      "path": "public/crosshair.png",
+      "extension": ".png",
+      "bytes": 1317,
+      "category": "image"
+    },
+    {
+      "path": "public/palette.png",
+      "extension": ".png",
+      "bytes": 694,
+      "category": "image"
+    },
+    {
+      "path": "public/particle.png",
+      "extension": ".png",
+      "bytes": 5564,
+      "category": "image"
+    },
+    {
+      "path": "public/valveLoading.webp",
+      "extension": ".webp",
+      "bytes": 13154,
+      "category": "image"
+    },
+    {
+      "path": "public/vite.svg",
+      "extension": ".svg",
+      "bytes": 1497,
+      "category": "image"
+    },
+    {
+      "path": "src/Physics/Collider/bullet_cheat_sheet_zpsy2fruylc.png",
+      "extension": ".png",
+      "bytes": 202310,
+      "category": "image"
+    },
+    {
+      "path": "src/View/Renderer/PlayerRenderer/dot.png",
+      "extension": ".png",
+      "bytes": 722,
+      "category": "image"
+    },
+    {
+      "path": "src/typescript.svg",
+      "extension": ".svg",
+      "bytes": 1435,
+      "category": "image"
+    }
+  ],
+  "audio": [
+    {
+      "path": "public/valveLoading.mp3",
+      "extension": ".mp3",
+      "bytes": 83657,
+      "category": "audio"
+    }
+  ]
+}

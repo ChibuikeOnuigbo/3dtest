@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+ <title id="title">Axonometric research diagram showing a single mission with exterior and interior zones</title>
+ <desc id="desc">An abstract building and yard on an axonometric grid. Colored volumes label persistent threshold, yard, interior areas, collision and visual zone roles. It is not a screenshot or production art.</desc>
+ <defs>
+  <pattern id="grid" width="42" height="24" patternUnits="userSpaceOnUse" patternTransform="skewY(-30)"><path d="M0 24H42M0 0H42" stroke="#244158" stroke-width=".7" opacity=".65"/></pattern>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#08182a"/><stop offset="1" stop-color="#0f2735"/></linearGradient>
+  <linearGradient id="yardTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#274c5a"/><stop offset="1" stop-color="#1d3747"/></linearGradient>
+  <linearGradient id="buildingTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4d5169"/><stop offset="1" stop-color="#323747"/></linearGradient>
+  <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".35"/></filter>
+  <style>.h{font:700 28px system-ui,sans-serif;fill:#f2f7fb}.sub{font:500 15px system-ui,sans-serif;fill:#b8cbd7}.l{font:700 13px system-ui,sans-serif;fill:#92adbe;letter-spacing:1.3px}.t{font:700 16px system-ui,sans-serif;fill:#e8f1f6}.p{font:400 14px system-ui,sans-serif;fill:#c0d1da}.k{font:600 12px system-ui,sans-serif;fill:#aabdc9}.call{stroke:#91ded4;stroke-width:1.7;fill:none}.dash{stroke:#8a9aad;stroke-width:1.5;stroke-dasharray:5 5;fill:none}</style>
+ </defs>
+ <rect width="1600" height="1080" fill="url(#sky)"/>
+ <rect x="32" y="28" width="1536" height="90" rx="16" fill="#102c42" stroke="#386482"/>
+ <text x="64" y="68" class="h">One persistent mission: exterior yard → threshold → enclosed building</text>
+ <text x="64" y="96" class="sub">Axonometric research topology • zone roots change presentation priority, not player/objective state • not a level asset or browser capture</text>
+ <rect x="1328" y="51" width="199" height="42" rx="21" fill="#452d32" stroke="#d8796c"/><text x="1428" y="78" text-anchor="middle" class="k" fill="#ffb8aa">RESEARCH ONLY · NOT QA</text>
+
+ <text x="64" y="165" class="l">CANDIDATE COMPOSITION MODEL</text>
+ <g filter="url(#s)">
+  <polygon points="183,783 709,463 1303,681 776,1001" fill="url(#yardTop)" stroke="#4c8292" stroke-width="2"/>
+  <polygon points="183,783 776,1001 776,1040 183,823" fill="#173644" opacity=".9"/>
+  <polygon points="776,1001 1303,681 1303,720 776,1040" fill="#16303e" opacity=".9"/>
+  <polygon points="215,769 708,492 1002,602 506,891" fill="url(#buildingTop)" stroke="#8e98b5" stroke-width="2"/>
+  <polygon points="215,769 506,891 506,579 215,492" fill="#2a3040" stroke="#737d9a" stroke-width="2"/>
+  <polygon points="506,891 1002,602 1002,292 506,579" fill="#252b3a" stroke="#737d9a" stroke-width="2"/>
+  <polygon points="215,492 708,212 1002,292 506,579" fill="#596077" stroke="#9ca8c5" stroke-width="2"/>
+ </g>
+ <!-- cutaway rooms on front/right side -->
+ <polygon points="545,827 652,766 652,611 545,672" fill="#5b465f" stroke="#ca98cf"/>
+ <polygon points="655,765 774,696 774,540 655,611" fill="#415a68" stroke="#86d4dd"/>
+ <polygon points="777,694 895,626 895,469 777,540" fill="#4b4e69" stroke="#a6a7dc"/>
+ <polygon points="548,670 652,610 774,540 895,468 758,416" fill="#796079" opacity=".85"/>
+ <polygon points="896,625 968,584 968,427 896,468" fill="#584832" stroke="#dbb16f"/>
+ <!-- roof popped to make enclosure visible -->
+ <polygon points="449,406 708,257 914,324 657,474" fill="#65708a" opacity=".75" stroke="#bdc8df" stroke-dasharray="7 6"/>
+ <text x="650" y="307" class="k" text-anchor="middle">roof / skyline shell (visual layer)</text>
+ <!-- yard cover -->
+ <g stroke="#799bab" stroke-width="1.5"><polygon points="284,780 362,736 405,751 325,795" fill="#345569"/><polygon points="284,780 325,795 325,835 284,820" fill="#203d4d"/><polygon points="325,795 405,751 405,791 325,835" fill="#294757"/>
+ <polygon points="1033,715 1110,670 1155,687 1077,733" fill="#345569"/><polygon points="1033,715 1077,733 1077,773 1033,755" fill="#203d4d"/><polygon points="1077,733 1155,687 1155,727 1077,773" fill="#294757"/>
+ <polygon points="899,837 974,793 1019,810 943,854" fill="#345569"/><polygon points="899,837 943,854 943,895 899,877" fill="#203d4d"/><polygon points="943,854 1019,810 1019,850 943,895" fill="#294757"/></g>
+ <!-- door/gateway -->
+ <polygon points="504,736 548,711 548,643 504,668" fill="#d3a452" stroke="#ffe09b" stroke-width="2"/><text x="527" y="699" class="k" text-anchor="middle" transform="rotate(-30 527 699)">D-01</text>
+ <path d="M509 765C537 747 561 725 580 696" class="dash"/>
+ <!-- route -->
+ <path d="M232 847 L383 767 L495 709 L600 679 L710 618 L850 538 L936 489" fill="none" stroke="#ffcf72" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 8"/>
+ <circle cx="232" cy="847" r="10" fill="#f3cf75"/><circle cx="936" cy="489" r="10" fill="#f3cf75"/>
+ <!-- labels left -->
+ <g><path d="M294 851 L112 913 H54" class="call"/><text x="54" y="941" class="t">YARD zone</text><text x="54" y="965" class="p">Exterior navigation, cover,</text><text x="54" y="986" class="p">sprint/sightline testing.</text></g>
+ <g><path d="M523 692 L341 640 H78" class="call"/><text x="54" y="615" class="t">THRESHOLD (D-01)</text><text x="54" y="639" class="p">Persistent door state, preload</text><text x="54" y="660" class="p">interior before opening.</text></g>
+ <g><path d="M610 728 L482 884 H329" class="call"/><text x="91" y="903" class="t">LOBBY / SECURITY</text><text x="91" y="927" class="p">Enclosed close-range space;</text><text x="91" y="948" class="p">collision around frames.</text></g>
+ <!-- labels right -->
+ <g><path d="M713 623 L1125 455 H1452" class="call"/><text x="1165" y="432" class="t">SERVICE BYPASS</text><text x="1165" y="456" class="p">Short alternate loop; preserves</text><text x="1165" y="477" class="p">one readable critical route.</text></g>
+ <g><path d="M826 579 L1127 643 H1452" class="call"/><text x="1165" y="620" class="t">INTERIOR CORE</text><text x="1165" y="644" class="p">Main corridor &amp; room visual root;</text><text x="1165" y="665" class="p">static collision remains active.</text></g>
+ <g><path d="M935 494 L1127 815 H1452" class="call"/><text x="1165" y="793" class="t">OBJECTIVE / RETURN</text><text x="1165" y="817" class="p">Terminal or relay state; returning</text><text x="1165" y="838" class="p">crosses same portal without map swap.</text></g>
+ <!-- legend -->
+ <rect x="64" y="186" width="390" height="208" rx="14" fill="#101d2a" stroke="#35546b"/>
+ <text x="88" y="218" class="t">Operational layers</text>
+ <rect x="88" y="242" width="18" height="18" rx="3" fill="#315a69"/><text x="120" y="257" class="p">Zone visual / audio roots may activate by proximity.</text>
+ <rect x="88" y="274" width="18" height="18" rx="3" fill="#796079"/><text x="120" y="289" class="p">Interior rooms remain one mission-state graph.</text>
+ <rect x="88" y="306" width="18" height="18" rx="3" fill="#d3a452"/><text x="120" y="321" class="p">Explicit interaction / door entity, never node-name inference.</text>
+ <path d="M90 349 H106" stroke="#ffcf72" stroke-width="4" stroke-dasharray="6 4"/><text x="120" y="354" class="p">Critical path must be browser-playtested before decoration.</text>
+ <text x="88" y="382" class="k">This is an original technical topology, not a representation of source maps.</text>
+</svg>
