@@ -1,5 +1,0 @@
-{
-  "url": "https://www.youtube.com/watch?v=jBDJ5VUi0gs",
-  "status": "failed",
-  "error": "ERROR: [youtube] jBDJ5VUi0gs: Unable to download API page: TLS/SSL connection has been closed (EOF) (_ssl.c:992) (caused by SSLError('TLS/SSL connection has been closed (EOF) (_ssl.c:992)')); please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U\n"
-}
