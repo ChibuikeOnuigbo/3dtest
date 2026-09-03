@@ -1,0 +1,6 @@
+[
+  {"name":"security-door-open","source":"Original procedural transform","license":"Project original","target":"security-door panel","format":"runtime transform","duration":0.8,"loop":false,"root_motion":false,"notes":"Hinge rotation; collision state follows door progress."},
+  {"name":"thermal-fuse-install","source":"Original procedural transform","license":"Project original","target":"power socket/fuse","format":"runtime transform","duration":0.45,"loop":false,"root_motion":false,"notes":"Socket accepts only after fuse collection."},
+  {"name":"breaker-reset","source":"Original procedural transform","license":"Project original","target":"shore breaker lever","format":"runtime transform","duration":0.35,"loop":false,"root_motion":false,"notes":"Triggers power/audio/lighting/door state exactly once."},
+  {"name":"transmitter-controls","source":"Original procedural transform","license":"Project original","target":"dials/button/beacon","format":"runtime transform","duration":0.12,"loop":false,"root_motion":false,"notes":"Dials use discrete increments; final beacon uses looping emissive modulation."}
+]

@@ -1,0 +1,16 @@
+# dependencies and builds
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Reference laboratories are deliberately cloned for local research only.
+# They are large third-party checkouts and must never become runtime assets or Git history.
+research/github_repos/
+
+# Reference-video acquisition creates only curated text/frame evidence; temporary downloads are disposable.
+research/videos/*.mp4
+research/videos/*.webm
+research/videos/*.mkv
+research/video_frames/**/frame-extraction.log

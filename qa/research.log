@@ -1,0 +1,26 @@
+2026-09-03 | PHASE 0 / repository inspection | COMPLETE
+- Repository contained only README.md at base commit 0413b4c; no existing game architecture or assets to preserve.
+- Research-first directory structure and non-retentive yt-dlp pipeline created.
+- SKETCHFAB_API_KEY availability checked without revealing any value: not set.
+- Next: install/verify yt-dlp, process all unique supplied video URLs, then clone and inspect the user-ranked top five GitHub references.
+
+2026-09-03 | PHASE 1 / video research | PARTIALLY COMPLETE WITH DOCUMENTED NETWORK BLOCKER
+- Processed all 11 unique URLs; duplicated jBDJ5VUi0gs processed once.
+- yt-dlp metadata/caption/temporary-frame requests attempted for every source; TLS failure logs retained.
+- Public-page metadata/transcript/chapter evidence documented in docs/reference-study.md and research/video_analysis/videos.json.
+- Frame extraction acceptance blocked: no local image frame was obtained; no false claim made.
+
+2026-09-03 | PHASE 2–5 / concept, reference, architecture, assets | COMPLETE FOR SELECTED SCOPE
+- Five requested reference repositories cloned (top three plus two extra), inspected and scored.
+- Selected The Last Signal following scored concept comparison; story maps and room graph established.
+- Architecture and asset records created. Sketchfab candidates inspected/rejected; no API secret available or used.
+
+2026-09-03 | PHASE 6–17 / blockout to deterministic QA | IMPLEMENTED AND STATICALLY VERIFIED
+- Five-room PBR environment, AABB collision, door, interactions, state objectives, mechanical animation, procedural audio and UI implemented.
+- First collision QA caught tunnelling; repaired with swept substeps and regression test.
+- npm run build and npm run qa pass. Asset check passes.
+
+2026-09-03 | PHASE 18–22 / browser playthrough, visual inspection, final verification | BLOCKED
+- Playwright test authored but Chromium cannot be downloaded due TLS resets; no installed browser alternative.
+- Live preview host returns HTTP 200; screenshot/browser evaluation still required.
+- Browser recovery was attempted through Playwright Chromium installer and the system package manager. Both failed due unavailable network/TLS/apt mirrors. Browser gate remains blocked.

@@ -1,0 +1,10 @@
+[
+  {"id":"fault-console","type":"inspect","prompt":"Inspect fault console","condition":"always","action":"inspectFault","state_change":"introSeen"},
+  {"id":"work-order","type":"read","prompt":"Read duty log","condition":"introSeen","action":"readNote","state_change":"noteRead"},
+  {"id":"thermal-fuse","type":"pickup","prompt":"Collect marked thermal fuse","condition":"noteRead","action":"collectFuse","state_change":"fuseCollected"},
+  {"id":"fuse-socket","type":"install","prompt":"Install thermal fuse","condition":"fuseCollected","action":"installFuse","state_change":"fuseInstalled"},
+  {"id":"shore-breaker","type":"switch","prompt":"Reset shore breaker","condition":"fuseInstalled","action":"resetBreaker","state_change":"powerOn"},
+  {"id":"gallery-door","type":"door","prompt":"Open transmitter gallery","condition":"powerOn","action":"toggleDoor","state_change":"galleryOpened"},
+  {"id":"dial-{0,1,2}","type":"dial","prompt":"Turn channel dial","condition":"powerOn && galleryOpened","action":"turnDial","state_change":"dials"},
+  {"id":"transmit-button","type":"button","prompt":"Transmit storm warning","condition":"frequencySet","action":"transmit","state_change":"transmitted"}
+]

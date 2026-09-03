@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07111a" />
+    <meta name="description" content="The Last Signal — a compact first-person weather-relay mystery." />
+    <title>The Last Signal</title>
+  </head>
+  <body>
+    <main id="game-shell" aria-label="The Last Signal game">
+      <canvas id="game-canvas" aria-label="3D game view"></canvas>
+      <div id="vignette" aria-hidden="true"></div>
+      <div id="hud" aria-live="polite">
+        <header class="hud-top">
+          <div class="brand"><span class="brand-mark">R</span><span>RAVENSCAR<br />COASTAL RELAY</span></div>
+          <div class="objective-wrap"><span class="eyebrow">CURRENT TASK</span><p id="objective">Enter the relay station.</p></div>
+          <div class="system-readout"><span id="power-status">GRID / OFFLINE</span><span id="signal-status">SIGNAL / STANDBY</span></div>
+        </header>
+        <div id="reticle" aria-hidden="true"><i></i><b></b><em></em><strong></strong></div>
+        <div id="interaction" class="hidden"><span class="keycap">E</span><span id="interaction-label">INTERACT</span></div>
+        <div id="message" role="status"></div>
+        <footer class="hud-bottom"><span>W A S D / MOVE</span><span>MOUSE / LOOK</span><span>E / INTERACT</span><button id="reset-button" type="button">RESET SHIFT</button></footer>
+      </div>
+      <section id="start-screen" class="panel">
+        <div class="panel-line"></div>
+        <p class="eyebrow">RAVENSCAR COASTAL SERVICE // 02:17</p>
+        <h1>THE LAST<br /><span>SIGNAL</span></h1>
+        <p class="intro-copy">A tide-surge relay has gone dark. Restore the warning transmitter before the storm reaches the shore.</p>
+        <button id="begin-button" type="button">BEGIN SHIFT <span>↗</span></button>
+        <p class="microcopy">HEADPHONES RECOMMENDED · POINTER LOCK ENABLED AFTER START</p>
+      </section>
+      <section id="end-screen" class="panel hidden" aria-live="assertive">
+        <div class="panel-line success"></div>
+        <p class="eyebrow">RAVENSCAR COASTAL SERVICE</p>
+        <h2>WARNING<br /><span>ACKNOWLEDGED</span></h2>
+        <p class="intro-copy">The relay holds. Its signal has reached the shore before the tide.</p>
+        <button id="restart-button" type="button">RUN ANOTHER SHIFT <span>↗</span></button>
+      </section>
+      <div id="loading"><span class="loading-mark">R</span><span>INITIALIZING RELAY</span></div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

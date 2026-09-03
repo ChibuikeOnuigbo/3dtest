@@ -1,0 +1,8 @@
+2026-09-03 | ANIMATION RESEARCH / VALIDATION
+
+- Required animation manifest read: assets/animations/animation_manifest.json.
+- Animated requirements are all mechanical transforms: security door, fuse, breaker, transmitter dials/button/beacon.
+- No humanoid or creature model exists in the final game; no skeletal animation was claimed, imported or required.
+- No GLB animation candidate was selected, so skeleton/clip inspection is not applicable to runtime assets.
+- Tooling is available in tools/animation_tools/ for future GLB candidates; conversion tooling correctly stops when Blender is absent rather than faking conversion.
+- Status: PASS for selected scope; runtime browser exercise remains part of blocked Playwright validation.

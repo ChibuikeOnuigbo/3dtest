@@ -1,0 +1,47 @@
+[
+  {
+    "name":"Concrete 034 PBR surface maps (downsized runtime derivative)",
+    "source":"ambientCG",
+    "url":"https://ambientcg.com/view?id=Concrete034",
+    "license":"CC0 1.0 / Public Domain dedication",
+    "author":"ambientCG",
+    "format":"JPG (albedo, normal GL, roughness)",
+    "category":"material",
+    "visual_style":"weathered neutral concrete PBR",
+    "textures":true,
+    "animations":[],
+    "intended_use":"floors, structural walls, threshold slabs",
+    "room":"all rooms",
+    "notes":"Selected from local research clone only after upstream provenance review; 2K sources downscaled to max 1024 for runtime."
+  },
+  {
+    "name":"Metal 049 A PBR surface maps (downsized runtime derivative)",
+    "source":"ambientCG",
+    "url":"https://ambientcg.com/view?id=Metal049A",
+    "license":"CC0 1.0 / Public Domain dedication",
+    "author":"ambientCG",
+    "format":"JPG (albedo, normal GL, roughness, metalness)",
+    "category":"material",
+    "visual_style":"brushed silver-grey metal PBR",
+    "textures":true,
+    "animations":[],
+    "intended_use":"equipment housings, doors, cable trays, railings",
+    "room":"all rooms",
+    "notes":"2K sources downscaled to max 1024 for runtime."
+  },
+  {
+    "name":"Wood 092 PBR surface maps (downsized runtime derivative)",
+    "source":"ambientCG",
+    "url":"https://ambientcg.com/view?id=Wood092",
+    "license":"CC0 1.0 / Public Domain dedication",
+    "author":"ambientCG",
+    "format":"JPG (albedo, normal GL, roughness)",
+    "category":"material",
+    "visual_style":"fine matte wood PBR",
+    "textures":true,
+    "animations":[],
+    "intended_use":"single duty-office desk and clipboard backing only",
+    "room":"office",
+    "notes":"2K sources downscaled to max 1024 for runtime; limited use prevents a generic wood-heavy interior."
+  }
+]

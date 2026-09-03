@@ -1,0 +1,61 @@
+2026-09-03 | PLAYWRIGHT BROWSER PLAYTHROUGH | BLOCKED
+
+Attempted:
+  npx playwright install chromium
+Result:
+  FAILED after retry attempts: CDN connection reset before TLS was established.
+  No Chromium/Chrome executable is installed in the sandbox.
+
+Impact:
+  tests/critical-path.spec.js is present and performs a genuine browser sequence through live ray-focused interactions (begin → console → log → fuse → socket → breaker → door → dials → transmit). It could not be executed in this environment because the required browser binary cannot be obtained.
+
+Honesty gate:
+  Do NOT describe Playwright visual/browser validation as passed. Deterministic headless state/collision/asset QA did pass and is recorded in qa/build.log. Run `npx playwright install chromium && npm run test:playthrough` in a browser-capable environment before release.
+
+--- playwright execution attempt ---
+
+> the-last-signal@1.0.0 test:playthrough
+> playwright test
+
+
+Running 2 tests using 1 worker
+
+  ✘  1 tests/critical-path.spec.js:3:1 › full critical path uses focused live interactions and reaches acknowledgement (1ms)
+  ✘  2 tests/critical-path.spec.js:18:1 › early fusion and transmission are rejected without corrupting state (2ms)
+
+
+  1) tests/critical-path.spec.js:3:1 › full critical path uses focused live interactions and reaches acknowledgement 
+
+    Error: browserType.launch: Executable doesn't exist at /home/user/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/critical-path-full-critica-80a3d-and-reaches-acknowledgement/error-context.md
+
+  2) tests/critical-path.spec.js:18:1 › early fusion and transmission are rejected without corrupting state 
+
+    Error: browserType.launch: Executable doesn't exist at /home/user/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/critical-path-early-fusion-e78ef-ed-without-corrupting-state/error-context.md
+
+  2 failed
+    tests/critical-path.spec.js:3:1 › full critical path uses focused live interactions and reaches acknowledgement 
+    tests/critical-path.spec.js:18:1 › early fusion and transmission are rejected without corrupting state 
+
+--- system browser recovery attempt ---
+Attempted: sudo apt-get update && sudo apt-get install -y chromium
+Result: FAILED. Debian mirrors were unreachable (connection failures), then package chromium could not be located. This confirms no fallback browser was available.
