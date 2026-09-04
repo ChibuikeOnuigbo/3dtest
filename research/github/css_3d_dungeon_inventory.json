@@ -1,0 +1,353 @@
+{
+  "repository": "/home/user/3dtest/research/github_repos/CSS-3D-Dungeon",
+  "file_count": 57,
+  "total_bytes": 6787230,
+  "extension_counts": {
+    ".css": 1,
+    ".gif": 2,
+    ".html": 1,
+    ".ico": 1,
+    ".js": 1,
+    ".json": 1,
+    ".md": 1,
+    ".mp3": 23,
+    ".png": 1,
+    ".svg": 1,
+    ".ttf": 1,
+    ".webp": 22,
+    "[none]": 1
+  },
+  "directory_summary": {
+    ".vscode": {
+      "files": 1,
+      "bytes": 39
+    },
+    "LICENSE": {
+      "files": 1,
+      "bytes": 1074
+    },
+    "README.md": {
+      "files": 1,
+      "bytes": 628
+    },
+    "assets": {
+      "files": 45,
+      "bytes": 2399164
+    },
+    "favicon.ico": {
+      "files": 1,
+      "bytes": 235582
+    },
+    "favicon.svg": {
+      "files": 1,
+      "bytes": 2467
+    },
+    "github extras": {
+      "files": 6,
+      "bytes": 4085097
+    },
+    "index.html": {
+      "files": 1,
+      "bytes": 63179
+    }
+  },
+  "models": [],
+  "images": [
+    {
+      "path": "assets/boxTexture-YUpuPpZt.webp",
+      "extension": ".webp",
+      "bytes": 6094,
+      "category": "image"
+    },
+    {
+      "path": "assets/bugSpell2-Cm5zSMJV.webp",
+      "extension": ".webp",
+      "bytes": 15710,
+      "category": "image"
+    },
+    {
+      "path": "assets/chromeIcon-6AafjOUF.webp",
+      "extension": ".webp",
+      "bytes": 4584,
+      "category": "image"
+    },
+    {
+      "path": "assets/cloth1-43r0y5ei.webp",
+      "extension": ".webp",
+      "bytes": 7970,
+      "category": "image"
+    },
+    {
+      "path": "assets/cloth3-6vNq66ks.webp",
+      "extension": ".webp",
+      "bytes": 6398,
+      "category": "image"
+    },
+    {
+      "path": "assets/controls-B7TdfvLk.webp",
+      "extension": ".webp",
+      "bytes": 35980,
+      "category": "image"
+    },
+    {
+      "path": "assets/healSpell-CF2h-dMI.webp",
+      "extension": ".webp",
+      "bytes": 15968,
+      "category": "image"
+    },
+    {
+      "path": "assets/pikachuIcon-DaePS4PL.webp",
+      "extension": ".webp",
+      "bytes": 4234,
+      "category": "image"
+    },
+    {
+      "path": "assets/playerHands2-DjZUx0pg.webp",
+      "extension": ".webp",
+      "bytes": 16488,
+      "category": "image"
+    },
+    {
+      "path": "assets/scrollTexture1-DMVVX3pS.webp",
+      "extension": ".webp",
+      "bytes": 5348,
+      "category": "image"
+    },
+    {
+      "path": "assets/scrollopenedTexture-CompUeIl.webp",
+      "extension": ".webp",
+      "bytes": 13988,
+      "category": "image"
+    },
+    {
+      "path": "assets/shieldItem-D1W7U8yV.webp",
+      "extension": ".webp",
+      "bytes": 19914,
+      "category": "image"
+    },
+    {
+      "path": "assets/spiderWebTexture2-CgSg0vOy.webp",
+      "extension": ".webp",
+      "bytes": 108332,
+      "category": "image"
+    },
+    {
+      "path": "assets/spiderWebTexture3-DJMz1UsW.webp",
+      "extension": ".webp",
+      "bytes": 52898,
+      "category": "image"
+    },
+    {
+      "path": "assets/spiderWebTexture4-5BlUzp5U.webp",
+      "extension": ".webp",
+      "bytes": 60776,
+      "category": "image"
+    },
+    {
+      "path": "assets/spiderWebTexture5-1_aAS1j_.webp",
+      "extension": ".webp",
+      "bytes": 73158,
+      "category": "image"
+    },
+    {
+      "path": "assets/teleportImage-gknhYZ1J.webp",
+      "extension": ".webp",
+      "bytes": 32282,
+      "category": "image"
+    },
+    {
+      "path": "assets/wallFlag-DDlb7_z4.webp",
+      "extension": ".webp",
+      "bytes": 14832,
+      "category": "image"
+    },
+    {
+      "path": "assets/wallTexture4-CgW2bZgE.webp",
+      "extension": ".webp",
+      "bytes": 73518,
+      "category": "image"
+    },
+    {
+      "path": "favicon.svg",
+      "extension": ".svg",
+      "bytes": 2467,
+      "category": "image"
+    },
+    {
+      "path": "github extras/github poster x12991293.webp",
+      "extension": ".webp",
+      "bytes": 60292,
+      "category": "image"
+    },
+    {
+      "path": "github extras/preview 1_x41231283.gif",
+      "extension": ".gif",
+      "bytes": 1037507,
+      "category": "image"
+    },
+    {
+      "path": "github extras/preview 1_x41231284.webp",
+      "extension": ".webp",
+      "bytes": 860264,
+      "category": "image"
+    },
+    {
+      "path": "github extras/preview 2_x41231283.gif",
+      "extension": ".gif",
+      "bytes": 1125136,
+      "category": "image"
+    },
+    {
+      "path": "github extras/preview 2_x41231284.webp",
+      "extension": ".webp",
+      "bytes": 973972,
+      "category": "image"
+    },
+    {
+      "path": "github extras/tech stack x_1274981237.png",
+      "extension": ".png",
+      "bytes": 27926,
+      "category": "image"
+    }
+  ],
+  "audio": [
+    {
+      "path": "assets/awakening-IXf4Hg04.mp3",
+      "extension": ".mp3",
+      "bytes": 255497,
+      "category": "audio"
+    },
+    {
+      "path": "assets/bugSound1-EMBBF4e7.mp3",
+      "extension": ".mp3",
+      "bytes": 15090,
+      "category": "audio"
+    },
+    {
+      "path": "assets/closeScroll-DyWrKHh_.mp3",
+      "extension": ".mp3",
+      "bytes": 6778,
+      "category": "audio"
+    },
+    {
+      "path": "assets/glassWallSound-C6Ngg83U.mp3",
+      "extension": ".mp3",
+      "bytes": 14302,
+      "category": "audio"
+    },
+    {
+      "path": "assets/healSpell-CAjP4s2k.mp3",
+      "extension": ".mp3",
+      "bytes": 55432,
+      "category": "audio"
+    },
+    {
+      "path": "assets/lvlBg1-BCpvHAv4.mp3",
+      "extension": ".mp3",
+      "bytes": 86024,
+      "category": "audio"
+    },
+    {
+      "path": "assets/lvlBg2-B6OrQPDs.mp3",
+      "extension": ".mp3",
+      "bytes": 56216,
+      "category": "audio"
+    },
+    {
+      "path": "assets/lvlBg3-DimI71Fj.mp3",
+      "extension": ".mp3",
+      "bytes": 56216,
+      "category": "audio"
+    },
+    {
+      "path": "assets/lvlBg4-DFBmE6BG.mp3",
+      "extension": ".mp3",
+      "bytes": 28568,
+      "category": "audio"
+    },
+    {
+      "path": "assets/lvlEnd-CEbtbjIs.mp3",
+      "extension": ".mp3",
+      "bytes": 553711,
+      "category": "audio"
+    },
+    {
+      "path": "assets/menuBg-imybSe60.mp3",
+      "extension": ".mp3",
+      "bytes": 207850,
+      "category": "audio"
+    },
+    {
+      "path": "assets/notEnoughMana-CdSSmsr4.mp3",
+      "extension": ".mp3",
+      "bytes": 29704,
+      "category": "audio"
+    },
+    {
+      "path": "assets/pickingSpell-CBS3eXs7.mp3",
+      "extension": ".mp3",
+      "bytes": 4545,
+      "category": "audio"
+    },
+    {
+      "path": "assets/pickingSword-Bqp9lTmr.mp3",
+      "extension": ".mp3",
+      "bytes": 10809,
+      "category": "audio"
+    },
+    {
+      "path": "assets/portalRoomSound-DQ8fU5AU.mp3",
+      "extension": ".mp3",
+      "bytes": 82086,
+      "category": "audio"
+    },
+    {
+      "path": "assets/scream-sound-CqeQI6YH.mp3",
+      "extension": ".mp3",
+      "bytes": 84145,
+      "category": "audio"
+    },
+    {
+      "path": "assets/scrollOpen-6aM9WvK5.mp3",
+      "extension": ".mp3",
+      "bytes": 5193,
+      "category": "audio"
+    },
+    {
+      "path": "assets/taskDoneOST-Btik36xs.mp3",
+      "extension": ".mp3",
+      "bytes": 12682,
+      "category": "audio"
+    },
+    {
+      "path": "assets/torch1-BpZCX03b.mp3",
+      "extension": ".mp3",
+      "bytes": 18435,
+      "category": "audio"
+    },
+    {
+      "path": "assets/transformSpell-B-sXcrcY.mp3",
+      "extension": ".mp3",
+      "bytes": 14960,
+      "category": "audio"
+    },
+    {
+      "path": "assets/wallOpen-B0TEyY2m.mp3",
+      "extension": ".mp3",
+      "bytes": 21406,
+      "category": "audio"
+    },
+    {
+      "path": "assets/wall_btn_press-DLMP_USe.mp3",
+      "extension": ".mp3",
+      "bytes": 9704,
+      "category": "audio"
+    },
+    {
+      "path": "assets/wall_btn_unpress-DK6S7Oyl.mp3",
+      "extension": ".mp3",
+      "bytes": 5524,
+      "category": "audio"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+2026-09-04 | PLAYWRIGHT RESEARCH PREREQUISITE | BLOCKED (no screenshots produced)
+
+Purpose
+- User requires real Playwright browser validation and captured browser images.
+- This was an attempt to make that possible for research inspection of Enari Engine, not a claim that a game was tested.
+
+Commands actually attempted
+1. node --version  -> v22.22.3
+2. npx playwright --version -> Version 1.62.1
+3. cd research/github_repos/enari-engine && npm ci --no-audit --no-fund
+4. npx playwright install chromium
+5. Checked standard Chromium/Chrome/Firefox executable locations and ~/.cache browser artifacts.
+
+Observed results
+- Enari npm install stopped at its GitHub-hosted `three-lens-distortion` dependency:
+  `UNABLE_TO_VERIFY_LEAF_SIGNATURE` when requesting codeload.github.com.
+  No `research/github_repos/enari-engine/node_modules` directory was created.
+- Playwright Chromium provision retried five times and each attempt failed before a TLS connection was established:
+  `ECONNRESET` while downloading from cdn.playwright.dev.
+- No Chromium, Chrome, Firefox, Firefox ESR, or Playwright browser cache executable was installed in this environment.
+
+Integrity result
+- A real Playwright run and screenshot cannot be honestly produced until a browser executable can be securely provisioned or made available.
+- No generated image, static page capture, or previous/stale screenshot has been substituted.
+- The strict QA rubric remains unscored; this is a blocking environment prerequisite, not a passing or failing gameplay result.

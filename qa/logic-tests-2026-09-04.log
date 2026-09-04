@@ -1,0 +1,40 @@
+
+> pale-beacon@0.1.0 test:logic
+> node --test tests/mission.test.mjs
+
+TAP version 13
+# Subtest: mission chain has explicit gates and a final completed state
+ok 1 - mission chain has explicit gates and a final completed state
+  ---
+  duration_ms: 1.037824
+  type: 'test'
+  ...
+# Subtest: locked doors deny traversal state changes; unlocked doors toggle deterministically
+ok 2 - locked doors deny traversal state changes; unlocked doors toggle deterministically
+  ---
+  duration_ms: 0.179208
+  type: 'test'
+  ...
+# Subtest: pulse tool spends a charge once, enforces cooldown, and cannot fire while unissued
+ok 3 - pulse tool spends a charge once, enforces cooldown, and cannot fire while unissued
+  ---
+  duration_ms: 0.221716
+  type: 'test'
+  ...
+# Subtest: circle collision blocks a closed door proxy and allows the same move when opened
+ok 4 - circle collision blocks a closed door proxy and allows the same move when opened
+  ---
+  duration_ms: 1.517898
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69.334052
+
+exit=0

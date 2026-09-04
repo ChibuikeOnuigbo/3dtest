@@ -1,0 +1,50 @@
+{
+  "repository": "research/github_repos/threejs-fps-tps-starterkit-advanced",
+  "literal_asset_references": [],
+  "pattern_matches": {
+    "gltf_loader": [
+      {
+        "source": "index.html",
+        "count": 4
+      }
+    ],
+    "obj_loader": [],
+    "animation_mixer": [
+      {
+        "source": "index.html",
+        "count": 12
+      }
+    ],
+    "pointer_lock": [
+      {
+        "source": "index.html",
+        "count": 3
+      }
+    ],
+    "collision": [
+      {
+        "source": "index.html",
+        "count": 58
+      }
+    ],
+    "audio": [
+      {
+        "source": "index.html",
+        "count": 7
+      }
+    ],
+    "render_loop": [
+      {
+        "source": "index.html",
+        "count": 1
+      }
+    ],
+    "network": [],
+    "shadow": [
+      {
+        "source": "index.html",
+        "count": 11
+      }
+    ]
+  }
+}
