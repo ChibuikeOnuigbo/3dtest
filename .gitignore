@@ -1,0 +1,18 @@
+# Dependencies, generated build output, and automated browser reports.
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Third-party repositories are local research laboratories, never runtime assets or Git history.
+research/github_repos/
+
+# Retain only curated research evidence; never full downloaded reference videos.
+research/videos/*
+!research/videos/source_index.json
+research/video_frames/**/frame-extraction.log
+
+# Python bytecode is reproducible tooling output.
+__pycache__/
+*.py[cod]

@@ -1,0 +1,49 @@
+2026-09-04 | PHASE 0 / fresh research restart | STARTED
+- The new build begins from research. No prior game architecture, world, asset set, story,
+  implementation, test result, or completion claim is treated as authoritative.
+- User requested intensive study of Enari Engine and FPS2 before selecting a production
+  architecture, map, asset, or weapon plan.
+
+2026-09-04 | PHASE 1 / source evidence, diagrams, and QA policy | COMPLETE FOR THIS WORK PACKAGE
+- Cloned ignored Enari Engine and FPS2 laboratory checkouts and generated reproducible
+  inventories/reference scans.
+- Completed source-level Enari and FPS2 studies; created a repeatable FPS2 weapon/model
+  registry. Reference code and every reference asset remain blocked from production.
+- Authored independent 2D plan, axonometric interior/exterior map composition diagram,
+  runtime system diagram, and map strategy. These are explicitly not browser QA images.
+- Defined strict future Playwright browser rubric. No production game or browser QA claim
+  has been made in this research phase.
+
+2026-09-04 | PLAYWRIGHT browser prerequisite | BLOCKED, EVIDENCE LOGGED
+- Enari's secure npm install stopped at `UNABLE_TO_VERIFY_LEAF_SIGNATURE` for its GitHub-hosted dependency.
+- Playwright Chromium provisioning made five secure download attempts and each failed with TLS `ECONNRESET`; no browser executable/cached browser exists.
+- No browser image was fabricated or substituted. See `qa/browser-prerequisite-2026-09-04.log`.
+
+2026-09-04 | PHASE 1 / supplied video collection | BLOCKED, EVIDENCE PRESERVED
+- The metadata/caption/thumbnail-only yt-dlp pipeline processed every one of the 11 unique supplied YouTube IDs once; duplicate jBDJ5VUi0gs was indexed once.
+- Secure YouTube connections repeatedly ended in TLS EOF before verified media/metadata/captions could be obtained. No full video, transcript, selected frame, visual inference or video-derived design claim was retained.
+- `research/video_analysis/MASTER_VIDEO_RESEARCH.md` and `docs/reference-study.md` make this a documented blocker rather than fabricated research.
+
+2026-09-04 | PHASE 2–7 / concept, source, asset, environment, animation planning | IN PROGRESS
+- Wrote clean-room intensive reports for Enari, FPS2, CSS-3D-Dungeon, Three.js FPS/TPS starter and FPS Asset Kit; all source/media remains blocked from production.
+- Selected the smallest feasibility-scored story concept, Pale Beacon, and its room/state mapping. The locked base is an original modular coastal signal outpost, not prior-world preservation.
+- Public Sketchfab pages were inspected without an API key/download/bypass. All candidates are hold/rejected; no external asset is approved. Browser visual inspection remains needed before any candidate can be adopted.
+
+2026-09-04 | PHASE 8 / independent production blockout and core loop | STARTED
+- Removed obsolete prior-world research diagrams and stopped their static preview. They were neither a new-game implementation nor QA evidence.
+- Created the separate Vite/Three.js Pale Beacon runtime: original procedural coastal outpost blockout, pointer lock, player/camera, swept circle-vs-authored-AABB collision, animated collision-aware doors, focus/range interactions, finite mission state, pulse tool, three finite sentries, synthetic Web Audio cues and HUD/end state.
+- `npm run test:logic` passed 4 reducer/collision tests. `npm run build` completed. The build reports a 566.32 kB unminified entry bundle (145.11 kB gzip) and Vite's >500 kB warning; this is recorded as a future performance-review item, not suppressed.
+- Vite preview is live on port 4174 with Arena preview-host allowance. HTTP check with the preview Host header returned 200.
+
+2026-09-04 | PHASE 13 / actual Playwright execution | BLOCKED, ATTEMPT RECORDED
+- Executed `npm run test:e2e` against the newly created game. Playwright discovered C01/C05 but could not launch because `chromium_headless_shell-1234` is absent. No browser action, screenshot, trace playback or test pass occurred; output/exit 1 is saved in `qa/playwright-attempt-2026-09-04.log`.
+- Do not represent test files or the code's read-only probe as a successful browser playthrough. Browser provisioning remains a release blocker.
+
+2026-09-04 | PHASE 8 / spatial planning artifact | IN PROGRESS
+- Added a coordinate-backed 2D room map and blockout spec. It maps five purposeful spaces, doors, interaction positions, camera clearance and expected screenshots to the production blockout source.
+- These planning artifacts are expressly not browser captures or room approvals; all real movement/visual/performance checks remain unexecuted due the missing browser.
+
+2026-09-04 | STATIC IMPLEMENTATION CHECKS | PARTIAL PASS ONLY
+- Re-ran `npm run test:logic`: four Node tests passed (mission gates, door transitions, pulse gate/cooldown, closed/open collision proxy). Complete output is `qa/logic-tests-2026-09-04.log`.
+- Re-ran `npm run build`: Vite transformed 17 modules and emitted production artifacts successfully. Complete output including its non-suppressed >500 kB advisory is `qa/build-2026-09-04.log`.
+- Added explicit technical-debt and recurring-knowledge records. These static checks do not downgrade the browser/visual/asset/QA blockers.

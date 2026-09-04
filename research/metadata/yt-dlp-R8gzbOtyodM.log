@@ -1,0 +1,19 @@
+command: /tmp/yt-dlp-venv/bin/yt-dlp --no-playlist --skip-download --write-info-json --write-thumbnail --write-subs --write-auto-subs --sub-langs en,en-US,en-GB,en.* --convert-subs vtt --output research/videos/%(id)s.%(ext)s <source-url-redacted>
+
+[youtube] Extracting URL: https://www.youtube.com/watch?v=R8gzbOtyodM
+[youtube] R8gzbOtyodM: Downloading webpage
+WARNING: [youtube] TLS/SSL connection has been closed (EOF) (_ssl.c:992). Retrying (1/3)...
+[youtube] R8gzbOtyodM: Downloading webpage
+WARNING: [youtube] TLS/SSL connection has been closed (EOF) (_ssl.c:992). Retrying (2/3)...
+[youtube] R8gzbOtyodM: Downloading webpage
+WARNING: [youtube] TLS/SSL connection has been closed (EOF) (_ssl.c:992). Retrying (3/3)...
+[youtube] R8gzbOtyodM: Downloading webpage
+WARNING: [youtube] R8gzbOtyodM: Unable to download webpage: TLS/SSL connection has been closed (EOF) (_ssl.c:992) (caused by SSLError('TLS/SSL connection has been closed (EOF) (_ssl.c:992)')); please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U. Giving up after 3 retries
+[youtube] R8gzbOtyodM: Downloading initial data API JSON
+WARNING: [youtube] TLS/SSL connection has been closed (EOF) (_ssl.c:992). Retrying (1/3)...
+[youtube] R8gzbOtyodM: Downloading initial data API JSON
+WARNING: [youtube] TLS/SSL connection has been closed (EOF) (_ssl.c:992). Retrying (2/3)...
+[youtube] R8gzbOtyodM: Downloading initial data API JSON
+WARNING: [youtube] TLS/SSL connection has been closed (EOF) (_ssl.c:992). Retrying (3/3)...
+[youtube] R8gzbOtyodM: Downloading initial data API JSON
+ERROR: [youtube] R8gzbOtyodM: Unable to download API page: TLS/SSL connection has been closed (EOF) (_ssl.c:992) (caused by SSLError('TLS/SSL connection has been closed (EOF) (_ssl.c:992)')); please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U

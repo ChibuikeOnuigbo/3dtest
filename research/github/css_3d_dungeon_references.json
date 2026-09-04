@@ -1,0 +1,133 @@
+{
+  "repository": "research/github_repos/CSS-3D-Dungeon",
+  "literal_asset_references": [
+    {
+      "source": "index.html",
+      "asset_path": "./assets/BLKCHCRY-CqdkX8Ci.TTF"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/index-DonjZd4W.js"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/index-CMNx9I6k.css"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/teleportImage-gknhYZ1J.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/wallFlag-DDlb7_z4.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/cloth1-43r0y5ei.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/cloth1-43r0y5ei.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/cloth1-43r0y5ei.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/scrollTexture1-DMVVX3pS.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/healSpell-CF2h-dMI.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/pikachuIcon-DaePS4PL.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/scrollTexture1-DMVVX3pS.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/wallFlag-DDlb7_z4.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/wallFlag-DDlb7_z4.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/cloth3-6vNq66ks.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/bugSpell2-Cm5zSMJV.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/shieldItem-D1W7U8yV.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/playerHands2-DjZUx0pg.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/controls-B7TdfvLk.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/chromeIcon-6AafjOUF.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./assets/scrollopenedTexture-CompUeIl.webp"
+    }
+  ],
+  "pattern_matches": {
+    "gltf_loader": [],
+    "obj_loader": [],
+    "animation_mixer": [],
+    "pointer_lock": [
+      {
+        "source": "index.html",
+        "count": 1
+      },
+      {
+        "source": "assets/index-CMNx9I6k.css",
+        "count": 2
+      },
+      {
+        "source": "assets/index-DonjZd4W.js",
+        "count": 6
+      }
+    ],
+    "collision": [
+      {
+        "source": "assets/index-DonjZd4W.js",
+        "count": 5
+      }
+    ],
+    "audio": [
+      {
+        "source": "assets/index-DonjZd4W.js",
+        "count": 41
+      }
+    ],
+    "render_loop": [
+      {
+        "source": "assets/index-DonjZd4W.js",
+        "count": 2
+      }
+    ],
+    "network": [
+      {
+        "source": "assets/index-DonjZd4W.js",
+        "count": 1
+      }
+    ],
+    "shadow": []
+  }
+}

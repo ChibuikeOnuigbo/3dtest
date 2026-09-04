@@ -1,0 +1,116 @@
+{
+  "schema": "video-reference-index/v1",
+  "policy": "Each unique supplied video is processed once with yt-dlp metadata/caption/thumbnail requests only. Full video files are not retained. Selected clips are only eligible after a successful metadata review and separate extraction decision.",
+  "sources": [
+    {
+      "id": "GoVNCfBSxPA",
+      "url": "https://www.youtube.com/watch?v=GoVNCfBSxPA",
+      "label": "user-supplied-01",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-GoVNCfBSxPA.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "hFf9FB8F0dc",
+      "url": "https://www.youtube.com/watch?v=hFf9FB8F0dc",
+      "label": "user-supplied-02",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-hFf9FB8F0dc.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "jBDJ5VUi0gs",
+      "url": "https://www.youtube.com/watch?v=jBDJ5VUi0gs",
+      "label": "user-supplied-03",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-jBDJ5VUi0gs.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "CGYuUc9pPtQ",
+      "url": "https://www.youtube.com/watch?v=CGYuUc9pPtQ",
+      "label": "user-supplied-04",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-CGYuUc9pPtQ.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "C3upVqVOgrM",
+      "url": "https://www.youtube.com/watch?v=C3upVqVOgrM",
+      "label": "user-supplied-05",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-C3upVqVOgrM.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "mHu6vcsDVL0",
+      "url": "https://www.youtube.com/watch?v=mHu6vcsDVL0",
+      "label": "user-supplied-06",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-mHu6vcsDVL0.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "R8gzbOtyodM",
+      "url": "https://www.youtube.com/watch?v=R8gzbOtyodM",
+      "label": "user-supplied-07",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-R8gzbOtyodM.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "jPU-mvM_OSQ",
+      "url": "https://www.youtube.com/watch?v=jPU-mvM_OSQ",
+      "label": "user-supplied-08",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-jPU-mvM_OSQ.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "goJaqtAnJFQ",
+      "url": "https://www.youtube.com/watch?v=goJaqtAnJFQ",
+      "label": "user-supplied-09",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-goJaqtAnJFQ.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "bz4MuYw8FBA",
+      "url": "https://www.youtube.com/watch?v=bz4MuYw8FBA",
+      "label": "user-supplied-10",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-bz4MuYw8FBA.log",
+      "full_video_retained": false
+    },
+    {
+      "id": "to032deYr-Q",
+      "url": "https://youtu.be/to032deYr-Q",
+      "label": "enari-tutorial",
+      "status": "blocked",
+      "attempt_date": "2026-09-04",
+      "returncode": 1,
+      "log": "metadata/yt-dlp-to032deYr-Q.log",
+      "full_video_retained": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "repository": "/home/user/3dtest/research/github_repos/threejs-fps-tps-starterkit-advanced",
+  "file_count": 3,
+  "total_bytes": 51168,
+  "extension_counts": {
+    ".css": 1,
+    ".html": 1,
+    ".md": 1
+  },
+  "directory_summary": {
+    "README.md": {
+      "files": 1,
+      "bytes": 1553
+    },
+    "index.html": {
+      "files": 1,
+      "bytes": 48109
+    },
+    "main.css": {
+      "files": 1,
+      "bytes": 1506
+    }
+  },
+  "models": [],
+  "images": [],
+  "audio": []
+}
