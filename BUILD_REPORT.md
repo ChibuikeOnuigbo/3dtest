@@ -27,7 +27,7 @@ animation/audio and UI. It is not a final-art implementation.
 - Playwright: the normal official Chromium installer, dependency and headless-shell routes
   were attempted; installed Chrome/Chromium/Edge channels were also checked. Package
   dependency retrieval/system package availability and secure CDN TLS connection failures
-  prevented browser provision. A one-time normal Debian apt-get install chromium attempt also failed because the configured Debian endpoints were unreachable and the package could not be located. No Playwright game action/screenshot
+  prevented browser provision. A one-time normal Debian apt-get install chromium attempt also failed because the configured Debian endpoints were unreachable and the package could not be located. The requested direct chromium-browser package check also reported that package unavailable. No Playwright game action/screenshot
   or quality score exists.
 
 ## Known limitations / approval
