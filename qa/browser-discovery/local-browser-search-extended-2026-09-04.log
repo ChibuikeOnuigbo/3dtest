@@ -1,0 +1,27 @@
+WHAT: Extended read-only local browser/cache/archive discovery.
+WHY: Cover parent /home and common sandbox browser/cache locations after primary scan returned no binary.
+DATE: 2026-09-04T13:13:59+00:00
+SEARCHED_DIRECTORIES:
+/
+/home
+/home/user
+/home/user/3dtest
+/tmp
+/opt
+/usr/local
+/usr/bin
+/usr/lib
+/usr/share
+/var/cache
+/var/lib
+/root/.cache
+/home/user/.cache
+/home/user/.npm
+CANDIDATE_EXECUTABLES:
+CANDIDATE_ARCHIVES_OR_DEBS:
+KNOWN_PLAYWRIGHT_LOCATIONS:
+ABSENT /ms-playwright
+ABSENT /root/.cache/ms-playwright
+ABSENT /home/user/.cache/ms-playwright
+ABSENT /home/user/3dtest/node_modules/playwright-core/.local-browsers
+ABSENT /home/user/3dtest/node_modules/playwright-core/browsers.json

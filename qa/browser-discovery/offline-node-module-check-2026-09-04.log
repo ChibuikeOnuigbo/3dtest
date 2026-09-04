@@ -1,0 +1,4 @@
+WHAT: Offline dependency-cache availability check.
+WHY: Determine whether the current checkout can recreate Playwright/Puppeteer without a network request.
+RESULT: node_modules is absent. `npm ci --offline --no-audit --no-fund` returned ENOTCACHED because the Vite tarball is not in npm's cache.
+INTERPRETATION: No installed Playwright/Puppeteer package or bundled driver can be invoked from this checkout. This is distinct from, and consistent with, the browser-binary search.

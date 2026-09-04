@@ -4,3 +4,5 @@ RESULT: PLAYWRIGHT_BLOCKED.
 ERROR: The normal official `playwright install chromium` attempt and the --with-deps/--only-shell alternatives failed through secure CDN TLS ECONNRESET or unavailable apt packages. Installed Chrome, Chromium and Edge channel discovery found none. No browser executable/channel exists.
 FIX: No insecure workaround used.
 NEXT: When an official browser is securely available, run C01–C06 and preserve captures/console output here.
+
+FOLLOW-UP: Read-only local search covered workspace, /home parent, /tmp, /opt, /usr/local, /usr/bin, /usr/lib, /usr/share, /var/cache, /var/lib, root/user caches and npm cache. It found no browser executable, archive, local Playwright cache, or offline Node driver.

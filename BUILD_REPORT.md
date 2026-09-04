@@ -31,6 +31,5 @@ animation/audio and UI. It is not a final-art implementation.
   or quality score exists.
 
 ## Known limitations / approval
-No final credits/licence file, approved third-party model, final materials, asset visual
-inspection, browser playthrough, room score, performance data, screenshot review or final
-approval exists. This report is deliberately not a completion report.
+No approved third-party model, final materials, asset visual
+inspection, browser playthrough, room score, performance data, screenshot review or final approval exists. A later local-binary/offline-cache search also found no browser archive/driver and the earlier Vite process is no longer active after sandbox reset. This report is deliberately not a completion report.
