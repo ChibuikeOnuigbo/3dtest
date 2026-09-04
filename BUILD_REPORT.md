@@ -24,9 +24,10 @@ animation/audio and UI. It is not a final-art implementation.
 - Node mission/collision tests: passed (four test cases; prior log).
 - Production Vite build: passed with a >500 kB advisory.
 - Static spatial map validator: pass with browser validation required.
-- Playwright: official Chromium installation with dependencies and headless shell was
-  attempted. Package dependency retrieval/system package availability and secure CDN TLS
-  connection failures prevented browser provision. No Playwright game action/screenshot
+- Playwright: the normal official Chromium installer, dependency and headless-shell routes
+  were attempted; installed Chrome/Chromium/Edge channels were also checked. Package
+  dependency retrieval/system package availability and secure CDN TLS connection failures
+  prevented browser provision. No Playwright game action/screenshot
   or quality score exists.
 
 ## Known limitations / approval

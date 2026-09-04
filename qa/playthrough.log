@@ -1,6 +1,6 @@
 WHAT: Start-to-ending browser playthrough.
 WHY: Required final evidence.
 RESULT: PLAYWRIGHT_BLOCKED.
-ERROR: Official Playwright Chromium installation with --with-deps --only-shell failed because apt repositories were unavailable; --only-shell retry hit secure CDN TLS ECONNRESET. No browser executable/channel exists.
+ERROR: The normal official `playwright install chromium` attempt and the --with-deps/--only-shell alternatives failed through secure CDN TLS ECONNRESET or unavailable apt packages. Installed Chrome, Chromium and Edge channel discovery found none. No browser executable/channel exists.
 FIX: No insecure workaround used.
 NEXT: When an official browser is securely available, run C01–C06 and preserve captures/console output here.
