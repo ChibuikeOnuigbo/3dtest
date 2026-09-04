@@ -1,18 +1,187 @@
 {
-  "schema": "pale-beacon-blockout/v1",
+  "schema": "ariadne-signal-conservatory/v2",
   "status": "PROTOTYPE_UNVERIFIED_IN_BROWSER",
-  "spawn": {"room": "R1", "position": [0, 0, 20.5]},
+  "spawn": {
+    "room": "R1",
+    "position": [
+      0,
+      0,
+      20.5
+    ]
+  },
   "rooms": [
-    {"id": "R1", "name": "Arrival Jetty", "bounds": {"x": [-7, 7], "z": [12, 24]}, "landmark": "emergency receiver", "objective": "receiver"},
-    {"id": "R2", "name": "Keeper's Hall", "bounds": {"x": [-5, 5], "z": [4, 12]}, "landmark": "pulse cabinet", "objective": "cabinet"},
-    {"id": "R3", "name": "Signal Court", "bounds": {"x": [-5, 5], "z": [-4, 4]}, "landmark": "signal spindle", "objective": "relay-01"},
-    {"id": "R4", "name": "Generator Bay", "bounds": {"x": [-12, -5], "z": [-8, -1]}, "landmark": "isolator", "objective": "isolator"},
-    {"id": "R5", "name": "Radio Workshop and Lantern Gallery", "bounds": {"x": [2, 12], "z": [-16, -1]}, "landmark": "beacon lens", "objective": "radio/beacon"}
+    {
+      "id": "R1",
+      "name": "Arrival Jetty",
+      "bounds": {
+        "x": [
+          -7,
+          7
+        ],
+        "z": [
+          12,
+          24
+        ]
+      },
+      "landmark": "emergency receiver",
+      "objective": "receiver"
+    },
+    {
+      "id": "R2",
+      "name": "Keeper's Hall",
+      "bounds": {
+        "x": [
+          -5,
+          5
+        ],
+        "z": [
+          4,
+          12
+        ]
+      },
+      "landmark": "pulse cabinet",
+      "objective": "cabinet"
+    },
+    {
+      "id": "R3",
+      "name": "Signal Court and Orrery",
+      "bounds": {
+        "x": [
+          -5,
+          5
+        ],
+        "z": [
+          -4,
+          4
+        ]
+      },
+      "landmark": "three-axis signal orrery",
+      "objective": "relay-01"
+    },
+    {
+      "id": "R4",
+      "name": "Generator Bay",
+      "bounds": {
+        "x": [
+          -12,
+          -5
+        ],
+        "z": [
+          -8,
+          -1
+        ]
+      },
+      "landmark": "isolator",
+      "objective": "isolator"
+    },
+    {
+      "id": "R5",
+      "name": "Radio Workshop",
+      "bounds": {
+        "x": [
+          5,
+          12
+        ],
+        "z": [
+          -8,
+          -1
+        ]
+      },
+      "landmark": "rotating receiver antenna",
+      "objective": "radio"
+    },
+    {
+      "id": "R6",
+      "name": "Lantern Gallery",
+      "bounds": {
+        "x": [
+          2,
+          12
+        ],
+        "z": [
+          -16,
+          -8
+        ]
+      },
+      "landmark": "brass observatory arch and beacon lens",
+      "objective": "beacon"
+    }
   ],
   "doors": [
-    {"id": "entry", "connects": ["R1", "R2"], "position": [0, 12]},
-    {"id": "generator", "connects": ["R3", "R4"], "position": [-5, -1.8]},
-    {"id": "workshop", "connects": ["R3", "R5"], "position": [5, -1.8]},
-    {"id": "gallery", "connects": ["R5", "R5"], "position": [7.6, -8]}
-  ]
+    {
+      "id": "entry",
+      "connects": [
+        "R1",
+        "R2"
+      ],
+      "position": [
+        0,
+        12
+      ]
+    },
+    {
+      "id": "generator",
+      "connects": [
+        "R3",
+        "R4"
+      ],
+      "position": [
+        -5,
+        -1.8
+      ]
+    },
+    {
+      "id": "workshop",
+      "connects": [
+        "R3",
+        "R5"
+      ],
+      "position": [
+        5,
+        -1.8
+      ]
+    },
+    {
+      "id": "gallery",
+      "connects": [
+        "R5",
+        "R6"
+      ],
+      "position": [
+        7.6,
+        -8
+      ]
+    }
+  ],
+  "source_note": "Derived spatial plan combines independently authored patterns from supplied references; it does not reproduce or import their map geometry/media.",
+  "vertical_layers": [
+    {
+      "id": "L0",
+      "name": "tide and exterior effects",
+      "y": [
+        -0.24,
+        0
+      ],
+      "collision": "non-walkable dressing"
+    },
+    {
+      "id": "L1",
+      "name": "mission floor",
+      "y": [
+        0,
+        4.6
+      ],
+      "collision": "authored room/door/prop proxy planes"
+    },
+    {
+      "id": "L2",
+      "name": "sky and hanging landmark layer",
+      "y": [
+        3.0,
+        16
+      ],
+      "collision": "non-colliding visual hierarchy"
+    }
+  ],
+  "reference_combination": "See COMBINED_REFERENCE_MAP_3D_TREE.md for architecture tree, source-pattern attribution and exact non-copy boundary."
 }

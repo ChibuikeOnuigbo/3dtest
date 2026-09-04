@@ -22,9 +22,9 @@
       "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
     },
     {
-      "id": "door-gallery-internal-transition",
-      "result": "REVIEW",
-      "note": "Internal gallery threshold requires runtime collision verification."
+      "id": "door-gallery-connectivity",
+      "result": "PASS",
+      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
     },
     {
       "id": "normal-object-support",
