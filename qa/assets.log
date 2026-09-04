@@ -1,0 +1,6 @@
+WHAT: Read-only forensic scan of nine supplied GitHub repositories and public Sketchfab candidate metadata.
+WHY: Determine format/size/hash/source status before any import.
+RESULT: 815 reference assets catalogued in asset_forensics_all_nine.json; no third-party asset approved or copied.
+ERROR: Individual media provenance remains unavailable/insufficient; no secure Sketchfab OAuth/API token is configured.
+FIX: Use normal authorized download only after individual source/license/visual decision.
+NEXT: Inspect selected legal archive in model/texture tools and record hash/credit/room use.

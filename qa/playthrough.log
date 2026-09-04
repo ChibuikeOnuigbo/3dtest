@@ -1,0 +1,6 @@
+WHAT: Start-to-ending browser playthrough.
+WHY: Required final evidence.
+RESULT: PLAYWRIGHT_BLOCKED.
+ERROR: Official Playwright Chromium installation with --with-deps --only-shell failed because apt repositories were unavailable; --only-shell retry hit secure CDN TLS ECONNRESET. No browser executable/channel exists.
+FIX: No insecure workaround used.
+NEXT: When an official browser is securely available, run C01–C06 and preserve captures/console output here.

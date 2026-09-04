@@ -1,0 +1,116 @@
+{
+  "schema": "video-analysis-ledger/v1",
+  "policy": "No visual or gameplay observation is recorded without corresponding locally collected media or caption evidence.",
+  "videos": [
+    {
+      "video_id": "GoVNCfBSxPA",
+      "source_url": "https://www.youtube.com/watch?v=GoVNCfBSxPA",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-GoVNCfBSxPA.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "hFf9FB8F0dc",
+      "source_url": "https://www.youtube.com/watch?v=hFf9FB8F0dc",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-hFf9FB8F0dc.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "jBDJ5VUi0gs",
+      "source_url": "https://www.youtube.com/watch?v=jBDJ5VUi0gs",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-jBDJ5VUi0gs.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "CGYuUc9pPtQ",
+      "source_url": "https://www.youtube.com/watch?v=CGYuUc9pPtQ",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-CGYuUc9pPtQ.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "C3upVqVOgrM",
+      "source_url": "https://www.youtube.com/watch?v=C3upVqVOgrM",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-C3upVqVOgrM.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "mHu6vcsDVL0",
+      "source_url": "https://www.youtube.com/watch?v=mHu6vcsDVL0",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-mHu6vcsDVL0.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "R8gzbOtyodM",
+      "source_url": "https://www.youtube.com/watch?v=R8gzbOtyodM",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-R8gzbOtyodM.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "jPU-mvM_OSQ",
+      "source_url": "https://www.youtube.com/watch?v=jPU-mvM_OSQ",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-jPU-mvM_OSQ.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "goJaqtAnJFQ",
+      "source_url": "https://www.youtube.com/watch?v=goJaqtAnJFQ",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-goJaqtAnJFQ.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "bz4MuYw8FBA",
+      "source_url": "https://www.youtube.com/watch?v=bz4MuYw8FBA",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-bz4MuYw8FBA.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    },
+    {
+      "video_id": "to032deYr-Q",
+      "source_url": "https://youtu.be/to032deYr-Q",
+      "collection_status": "blocked",
+      "metadata_log": "metadata/yt-dlp-to032deYr-Q.log",
+      "caption_files": [],
+      "selected_frame_files": [],
+      "observation_status": "blocked_no_verified_media",
+      "observations": []
+    }
+  ]
+}

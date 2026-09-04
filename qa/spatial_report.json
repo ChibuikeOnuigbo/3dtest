@@ -1,0 +1,43 @@
+{
+  "schema": "pale-beacon-spatial-report/v1",
+  "scope": "Static planned positions/support classifications. Browser physics, rendered mesh intersections, door timing and player traps remain UNVERIFIED.",
+  "findings": [
+    {
+      "id": "spawn-in-declared-room",
+      "result": "PASS"
+    },
+    {
+      "id": "door-entry-connectivity",
+      "result": "PASS",
+      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+    },
+    {
+      "id": "door-generator-connectivity",
+      "result": "PASS",
+      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+    },
+    {
+      "id": "door-workshop-connectivity",
+      "result": "PASS",
+      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+    },
+    {
+      "id": "door-gallery-internal-transition",
+      "result": "REVIEW",
+      "note": "Internal gallery threshold requires runtime collision verification."
+    },
+    {
+      "id": "normal-object-support",
+      "result": "PASS",
+      "supported": 8,
+      "normal_placeable": 8,
+      "score": 1.0,
+      "exceptions": [
+        "sentry-01",
+        "sentry-02",
+        "sentry-03"
+      ]
+    }
+  ],
+  "overall": "PASS_WITH_BROWSER_VALIDATION_REQUIRED"
+}

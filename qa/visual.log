@@ -1,0 +1,6 @@
+WHAT: Player-height visual inspection of every room and ending.
+WHY: Check composition, scale, material, light, support, clipping and readability.
+RESULT: UNRATED_BROWSER_BLOCKED.
+ERROR: No real browser screenshot/playthrough available.
+FIX: Do not substitute generated images or source-page thumbnails for in-game captures.
+NEXT: Score each room after an actual Playwright/browser run.

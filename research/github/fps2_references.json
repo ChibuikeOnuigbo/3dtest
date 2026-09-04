@@ -1,0 +1,585 @@
+{
+  "repository": "research/github_repos/FPS2",
+  "literal_asset_references": [
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Modern_Metal.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Rusty_Metal.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Picket_Planks.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Unsanded_Wood.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Chunky_Tree.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Soft_Grass.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Hard_Grass.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/White_Grass.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Dirty_Dirt.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Light_Rocks.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/textures/Modern_Metal.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/props/Rock.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/props/Tree.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/props/Water.gif"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/props/Sky.png"
+    },
+    {
+      "source": "forge.html",
+      "asset_path": "forge/props/Cloud.png"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./forge.html"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "/images/maps/cargo.png"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "/images/maps/vertex.png"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "/images/maps/ghost.png"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "/images/maps/city.png"
+    },
+    {
+      "source": "preferences.html",
+      "asset_path": "images/${x.split("
+    },
+    {
+      "source": "preferences.html",
+      "asset_path": "images/${data.split("
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/maps/cargo.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/kill.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/punch.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/ricochet1.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/ricochet2.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/ricochet3.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/explosion.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/walking.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/ambience.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Desert_Eagle/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Assault_Rifle/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Sniper_Rifle/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Rail_Gun/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/P90_SMG/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Grenade_Launcher/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Remington_Shotgun/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Rocket_Launcher/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Nuke_Launcher/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/9mm_Pistol/fire.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/countdown.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/game_over.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/timewarning.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/punch.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/mouseup.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/mousedown.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/surge.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Assault_Rifle/easy.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Assault_Rifle/full.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Desert_Eagle/easy.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Desert_Eagle/full.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Sniper_Rifle/easy.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Sniper_Rifle/full.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Rail_Gun/easy.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Rail_Gun/full.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/P90_SMG/easy.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/P90_SMG/full.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/9mm_Pistol/easy.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/9mm_Pistol/full.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/vignette.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/assault.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/scopes/0.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/scopes/1.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/hit.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/spark.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/smoke.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/flame.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/bullethole.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/scratch.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/clouds.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Assault_Rifle.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Desert_Eagle.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/muzzle_flash.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/maps/"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/characters/"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/bullet_shell.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/gun_clip.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/characters/"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Sniper_Rifle.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Rail_Gun.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/P90_SMG.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/vehicles/humvee.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Grenade_Launcher.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Remington_Shotgun.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Rocket_Launcher.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Nuke_Launcher.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/9mm_Pistol.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/Odd_Ball.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "/models/vehicles/humvee.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Nuke_Launcher/recoil.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Nuke_Launcher/hit.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "sounds/guns/Nuke_Launcher/hit.mp3"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/textures/explosion.png"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "models/weapons/grenades/frag.glb"
+    },
+    {
+      "source": "src.html",
+      "asset_path": "images/maps/"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/characters/Steve_Soldier.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/characters/Max_Soldier.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/characters/Kenny_Soldier.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/loadouts/Assault_Eagle.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/loadouts/P90_Pistol.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/loadouts/Sniper_Shotgun.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/red.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/green.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/blue.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/yellow.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/orange.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/brown.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/white.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/gray.png"
+    },
+    {
+      "source": "store.html",
+      "asset_path": "images/colors/black.png"
+    }
+  ],
+  "pattern_matches": {
+    "gltf_loader": [
+      {
+        "source": "forge.html",
+        "count": 3
+      },
+      {
+        "source": "src.html",
+        "count": 22
+      },
+      {
+        "source": "js/GLTFLoader.js",
+        "count": 29
+      }
+    ],
+    "obj_loader": [
+      {
+        "source": "forge.html",
+        "count": 2
+      },
+      {
+        "source": "js/OBJLoader.js",
+        "count": 5
+      }
+    ],
+    "animation_mixer": [
+      {
+        "source": "src.html",
+        "count": 109
+      }
+    ],
+    "pointer_lock": [
+      {
+        "source": "forge.html",
+        "count": 22
+      },
+      {
+        "source": "src.html",
+        "count": 30
+      }
+    ],
+    "collision": [
+      {
+        "source": "src.html",
+        "count": 29
+      },
+      {
+        "source": "js/GLTFLoader.js",
+        "count": 1
+      },
+      {
+        "source": "js/bot.js",
+        "count": 8
+      }
+    ],
+    "audio": [
+      {
+        "source": "src.html",
+        "count": 76
+      }
+    ],
+    "render_loop": [
+      {
+        "source": "forge.html",
+        "count": 1
+      },
+      {
+        "source": "src.html",
+        "count": 1
+      },
+      {
+        "source": "js/GamepadControls.min.js",
+        "count": 1
+      }
+    ],
+    "network": [
+      {
+        "source": "chat.html",
+        "count": 16
+      },
+      {
+        "source": "index.html",
+        "count": 105
+      },
+      {
+        "source": "src.html",
+        "count": 186
+      }
+    ],
+    "shadow": [
+      {
+        "source": "src.html",
+        "count": 18
+      }
+    ]
+  }
+}

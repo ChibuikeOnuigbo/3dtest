@@ -1,0 +1,6 @@
+WHAT: Metadata/caption/thumbnail evidence for 11 unique supplied YouTube videos.
+WHY: Obtain evidence without retaining unnecessary full reference media.
+RESULT: Canonical thumbnail links recorded; zero media/thumbnail/caption/metadata artifacts retrieved.
+ERROR: yt-dlp and direct i.ytimg.com requests hit TLS EOF under normal verification.
+FIX: None attempted that weakens TLS. Watch-page retry avoided because it duplicates a known blocked method.
+NEXT: Retry only when secure network behavior changes; then extract metadata/captions before selecting frames.

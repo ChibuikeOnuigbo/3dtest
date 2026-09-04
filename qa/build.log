@@ -1,0 +1,6 @@
+WHAT: Production Vite build for current Signal Court prototype.
+WHY: Catch bundling/import errors before browser validation.
+RESULT: PASS on 2026-09-04; 17 modules transformed. Main JavaScript output: 568.31 kB minified / 145.67 kB gzip.
+ERROR: No fatal build error. Vite retains a >500 kB advisory.
+FIX: Not yet; measure real browser load before code splitting. Do not suppress the warning.
+NEXT: Browser performance trace once official Playwright Chromium can launch.

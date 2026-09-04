@@ -1,0 +1,2 @@
+# Built-in Python only for the current structural inspectors.
+# Install trimesh/pygltflib only if a selected licensed asset requires deeper geometry conversion.

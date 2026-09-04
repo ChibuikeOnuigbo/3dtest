@@ -1,0 +1,6 @@
+WHAT: Browser rendering/load/performance review.
+WHY: Measure frame timing, draw calls, memory, texture/model budget and load time.
+RESULT: UNVERIFIED_BROWSER_BLOCKED.
+ERROR: No Playwright browser executable means no genuine browser measurements.
+FIX: Static build output recorded separately; it is not a performance pass.
+NEXT: Capture initial load, p50/p1 frame time, room transition timing and active render cost in an actual browser.

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#09131b" />
+    <title>Pale Beacon — Signal held</title>
+  </head>
+  <body>
+    <main id="app" aria-label="Pale Beacon game">
+      <canvas id="game-canvas" aria-label="Pale Beacon 3D game view"></canvas>
+      <section id="hud" aria-live="polite" aria-label="Mission status">
+        <div class="topbar">
+          <div class="brand"><span class="brand-mark">◒</span><span>PALE BEACON</span></div>
+          <div id="system-status" class="system-status">SYSTEM / STANDBY</div>
+        </div>
+        <div class="objective-panel">
+          <p class="eyebrow">CURRENT TASK</p>
+          <p id="objective">Inspect the emergency receiver.</p>
+        </div>
+        <div class="readouts">
+          <div><span class="readout-label">PULSE</span><strong id="charges">—</strong></div>
+          <div><span class="readout-label">BEACON</span><strong id="beacon-state">OFFLINE</strong></div>
+        </div>
+        <div id="crosshair" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div id="prompt" class="prompt" aria-live="assertive"></div>
+        <div id="toast" class="toast" aria-live="polite"></div>
+        <div class="control-hint">WASD move <span>·</span> SHIFT sprint <span>·</span> E interact <span>·</span> CLICK pulse <span>·</span> ESC pause</div>
+      </section>
+      <section id="title-screen" class="overlay">
+        <div class="title-card">
+          <p class="kicker">KORI BAY CIVIL SAFETY NETWORK · 06:12</p>
+          <h1>PALE<br /><em>BEACON</em></h1>
+          <p class="lede">A dawn squall has muted the emergency beacon. An inbound rescue ferry is relying on its last visible route marker.</p>
+          <div class="briefing-rule"></div>
+          <p class="briefing"><b>YOUR BRIEF</b> Enter the signal outpost. Restore power, route the backup channel, and arm the lantern before the water closes in.</p>
+          <button id="start-button" type="button">BEGIN MAINTENANCE <span>↗</span></button>
+          <p class="access-note">Audio begins after you start. Mouse input is captured only while playing.</p>
+        </div>
+      </section>
+      <section id="pause-screen" class="overlay compact hidden" aria-hidden="true">
+        <div class="pause-card"><p class="kicker">TRANSMISSION PAUSED</p><h2>Signal waiting.</h2><button id="resume-button" type="button">RETURN TO OUTPOST</button></div>
+      </section>
+      <section id="ending-screen" class="overlay hidden" aria-hidden="true">
+        <div class="title-card ending-card">
+          <p class="kicker">KORI BAY CHANNEL · CONFIRMED</p>
+          <h1>LINE<br /><em>HELD</em></h1>
+          <p class="lede">“Beacon acquired. We have the channel.” The lens turns over black water, and the ferry answers with one steady horn.</p>
+          <div class="briefing-rule"></div>
+          <p class="briefing">You restored the signal, cleared the safety lock, and gave the crew a way home.</p>
+          <button id="restart-button" type="button">RUN MAINTENANCE AGAIN <span>↻</span></button>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "schema": "sketchfab-candidate-research/v1",
+  "api_authorization": "BLOCKED: no secure SKETCHFAB_API_TOKEN or SKETCHFAB_OAUTH_ACCESS_TOKEN configured; no private credential copied from chat or used.",
+  "candidates": [
+    {
+      "id": "sf-804fbe0",
+      "name": "Simple Factory Scene",
+      "url": "https://sketchfab.com/3d-models/simple-factory-scene-804fbe0cd1fa44fa9ca86ae42c82d63d",
+      "uid": "804fbe0cd1fa44fa9ca86ae42c82d63d",
+      "creator": "Pickeri (uglythree)",
+      "license": "CC BY 4.0 displayed on public page",
+      "triangles": 269600,
+      "classification": "complete scene",
+      "format_availability": "download control shown; archive not requested",
+      "status": "REJECTED",
+      "reason": "Too heavy for a first browser scene, sparse description, and its factory framing would force a setting rather than support evidence-led selection."
+    },
+    {
+      "id": "sf-4b3cc28",
+      "name": "Small Industrial scene",
+      "url": "https://sketchfab.com/3d-models/small-industrial-scene-4b3cc287c76c4ede92c433f9d19c1006",
+      "uid": "4b3cc287c76c4ede92c433f9d19c1006",
+      "creator": "Brendan Wood",
+      "license": "CC BY 4.0 displayed on public page",
+      "triangles": 48300,
+      "classification": "small environment scene",
+      "format_availability": "download control shown; archive not requested",
+      "status": "CANDIDATE",
+      "reason": "Reasonable scene size and stated realistic UV/environment intent. Requires normal authorized download, exact archive inspection, visual review and attribution before a decision."
+    },
+    {
+      "id": "sf-5366cbf",
+      "name": "maps",
+      "url": "https://sketchfab.com/3d-models/maps-5366cbf0508543e9832f2e38af3e8f57",
+      "uid": "5366cbf0508543e9832f2e38af3e8f57",
+      "creator": "photon (that one larry)",
+      "license": "CC BY 4.0 displayed on public page",
+      "triangles": 24600,
+      "classification": "ported map",
+      "format_availability": "download control shown; archive not requested",
+      "status": "REJECTED",
+      "reason": "The page says it is an SFM-lab port, so original-source chain is incomplete; tags/theme conflict with a coherent game environment."
+    },
+    {
+      "id": "sf-ba5e083",
+      "name": "Modular Inside Building Kit",
+      "url": "https://sketchfab.com/3d-models/modular-inside-building-kit-ba5e083bde2440cab0f448c0e8e20867",
+      "uid": "ba5e083bde2440cab0f448c0e8e20867",
+      "creator": "Gustavo Cambraia",
+      "license": "CC BY 4.0 displayed on public page",
+      "triangles": 528300,
+      "classification": "modular environment kit",
+      "format_availability": "download control shown; archive not requested",
+      "status": "CANDIDATE",
+      "reason": "Useful architectural coverage, but full-kit cost is too high. Only a selective, inspected subset could be considered."
+    }
+  ]
+}
