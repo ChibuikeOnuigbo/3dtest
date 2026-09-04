@@ -92,6 +92,7 @@ export class BeaconWorld {
     this.beaconAssembly = new THREE.Group();
     this.beaconLight = null;
     this.rain = null;
+    this.animatedDetails = [];
     this.build();
   }
 
@@ -233,6 +234,7 @@ export class BeaconWorld {
     this.addPractical(-5.9, 20.4, 0xd5f4ff, 1.25, 10);
     this.addPractical(5.9, 20.4, 0xd5f4ff, 1.25, 10);
     this.addPractical(0, 14.2, 0xffd99a, 1.4, 9);
+    this.buildArrivalLandmarks();
   }
 
   buildHall() {
@@ -258,6 +260,7 @@ export class BeaconWorld {
     this.indicators.cabinet = door;
     const table = box(new THREE.BoxGeometry(2.3, 0.84, 0.8), this.materials.trim, 2.1, 0.42, 8.1);
     this.addSolid('prop:desk', table, 0.95, 3.25, 7.7, 8.5);
+    this.buildHallLandmarks();
   }
 
   buildRelay() {
@@ -279,6 +282,7 @@ export class BeaconWorld {
     this.addPractical(0, 2.5, 0xd4f4ff, 1.1, 8);
     const trunk = box(new THREE.BoxGeometry(0.4, 0.4, 5.4), this.materials.trim, -3.7, 0.28, -0.2);
     this.addSolid('prop:cabletrunk', trunk, -3.9, -3.5, -2.9, 2.5);
+    this.buildRelayLandmarks();
   }
 
   buildGenerator() {
@@ -303,6 +307,7 @@ export class BeaconWorld {
     this.addSolid('prop:isolator', isolator, -6.95, -6.05, -5.83, -5.57);
     this.addInteractive('isolator', lever, 'Failed isolator', isolator.position);
     this.indicators.isolator = lever;
+    this.buildGeneratorLandmarks();
   }
 
   buildWorkshop() {
@@ -321,6 +326,7 @@ export class BeaconWorld {
     this.addConsole('radio', new THREE.Vector3(8.8, 0, -5.2), 'BACKUP CHANNEL', this.materials.blue);
     const shelf = box(new THREE.BoxGeometry(1.2, 2.4, 0.55), this.materials.trim, 11, 1.2, -5.5);
     this.addSolid('prop:shelf', shelf, 10.4, 11.6, -5.78, -5.22);
+    this.buildWorkshopLandmarks();
   }
 
   buildGallery() {
@@ -334,6 +340,7 @@ export class BeaconWorld {
     this.addPractical(3.3, -10.5, 0xd2f4ff, 1.3, 9);
     this.addPractical(10.7, -13.7, 0xffd39b, 1.25, 8);
     this.buildBeacon(new THREE.Vector3(7, 0, -12.3));
+    this.buildGalleryLandmarks();
   }
 
   buildBeacon(position) {
@@ -396,6 +403,185 @@ export class BeaconWorld {
     }
   }
 
+  makeMosaicTexture(symbol, primary = '#e6c064', secondary = '#183248') {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = secondary;
+    ctx.fillRect(0, 0, 512, 512);
+    ctx.strokeStyle = '#e8dcb0';
+    ctx.globalAlpha = 0.82;
+    ctx.lineWidth = 9;
+    ctx.strokeRect(18, 18, 476, 476);
+    ctx.strokeStyle = primary;
+    ctx.lineWidth = 20;
+    if (symbol === 'wave') {
+      for (let y = 115; y < 430; y += 80) {
+        ctx.beginPath();
+        ctx.moveTo(45, y);
+        ctx.bezierCurveTo(125, y - 70, 210, y + 70, 290, y);
+        ctx.bezierCurveTo(365, y - 65, 432, y + 30, 476, y - 12);
+        ctx.stroke();
+      }
+    } else if (symbol === 'star') {
+      ctx.translate(256, 256);
+      for (let i = 0; i < 12; i += 1) {
+        ctx.rotate(Math.PI / 6);
+        ctx.fillStyle = i % 2 ? primary : '#73d9d1';
+        ctx.fillRect(0, -13, 225, 26);
+      }
+      ctx.beginPath(); ctx.fillStyle = '#f6eab7'; ctx.arc(0, 0, 56, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.arc(256, 256, 150, 0, Math.PI * 2);
+      ctx.stroke();
+      for (let i = 0; i < 8; i += 1) {
+        const a = i * Math.PI / 4;
+        ctx.fillStyle = i % 2 ? primary : '#6fd4d2';
+        ctx.beginPath();
+        ctx.arc(256 + Math.cos(a) * 106, 256 + Math.sin(a) * 106, 34, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+  }
+
+  addMosaic(symbol, x, y, z, rotation = 0, width = 1.35, height = 1.8) {
+    const mosaic = new THREE.Mesh(
+      new THREE.PlaneGeometry(width, height),
+      new THREE.MeshStandardMaterial({ map: this.makeMosaicTexture(symbol), roughness: 0.49, metalness: 0.18, emissive: '#122232', emissiveIntensity: 0.28 }),
+    );
+    mosaic.position.set(x, y, z);
+    mosaic.rotation.y = rotation;
+    mosaic.castShadow = false;
+    this.scene.add(mosaic);
+    return mosaic;
+  }
+
+  addColumn(x, z, height = 3.7, material = this.materials.copper) {
+    const group = new THREE.Group();
+    group.position.set(x, 0, z);
+    group.add(box(new THREE.CylinderGeometry(0.3, 0.42, 0.22, 16), this.materials.trim, 0, 0.11, 0, false, true));
+    group.add(box(new THREE.CylinderGeometry(0.17, 0.23, height - 0.46, 16), material, 0, height / 2, 0, false, true));
+    group.add(box(new THREE.CylinderGeometry(0.37, 0.25, 0.24, 16), this.materials.rail, 0, height - 0.12, 0, false, true));
+    this.scene.add(group);
+    return group;
+  }
+
+  addHangingLantern(x, z, color = '#ffd36a', drop = 1.2) {
+    const group = new THREE.Group();
+    group.position.set(x, WALL_HEIGHT - drop, z);
+    const cord = box(new THREE.CylinderGeometry(0.016, 0.016, drop, 8), this.materials.rail, 0, drop / 2, 0, false, false);
+    const cap = box(new THREE.CylinderGeometry(0.26, 0.35, 0.16, 12), this.materials.trim, 0, 0.07, 0, false, false);
+    const globe = box(new THREE.SphereGeometry(0.21, 16, 12), new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 2.1, roughness: 0.22 }), 0, -0.16, 0, false, false);
+    group.add(cord, cap, globe);
+    this.scene.add(group);
+    const light = new THREE.PointLight(color, 0.82, 4.2, 2);
+    light.position.copy(globe.getWorldPosition(new THREE.Vector3()));
+    this.scene.add(light);
+  }
+
+  addPipeRun(points, material = this.materials.copper, radius = 0.12) {
+    for (let index = 1; index < points.length; index += 1) {
+      const start = new THREE.Vector3(...points[index - 1]);
+      const end = new THREE.Vector3(...points[index]);
+      const delta = end.clone().sub(start);
+      const pipe = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, delta.length(), 12), material);
+      pipe.position.copy(start.clone().add(end).multiplyScalar(0.5));
+      pipe.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), delta.normalize());
+      pipe.castShadow = true;
+      this.scene.add(pipe);
+      const collar = new THREE.Mesh(new THREE.TorusGeometry(radius + 0.035, 0.035, 8, 12), this.materials.rail);
+      collar.position.copy(pipe.position);
+      collar.quaternion.copy(pipe.quaternion);
+      this.scene.add(collar);
+    }
+  }
+
+  buildArrivalLandmarks() {
+    // A small tide observatory replaces generic crates: each piece describes the signal keeper's work.
+    this.addColumn(-5.9, 14.1, 3.2, this.materials.rail);
+    this.addColumn(5.9, 14.1, 3.2, this.materials.rail);
+    this.addMosaic('wave', -6.83, 2.15, 19.2, Math.PI / 2, 1.5, 2.0);
+    this.addMosaic('wave', 6.83, 2.15, 19.2, -Math.PI / 2, 1.5, 2.0);
+    for (const x of [-4.6, -2.3, 2.3, 4.6]) this.addHangingLantern(x, 21.8, '#8de6e1', 1.6);
+    const compass = new THREE.Mesh(new THREE.TorusGeometry(1.24, 0.12, 12, 32), this.materials.rail);
+    compass.rotation.x = Math.PI / 2;
+    compass.position.set(4.7, 0.2, 21.8);
+    this.scene.add(compass);
+  }
+
+  buildHallLandmarks() {
+    this.addMosaic('star', -4.83, 2.25, 9.5, Math.PI / 2, 1.62, 2.15);
+    this.addMosaic('star', 4.83, 2.25, 6.5, -Math.PI / 2, 1.62, 2.15);
+    this.addPipeRun([[-4.52, 3.65, 4.4], [-4.52, 3.65, 11.6], [-2.1, 3.65, 11.6]], this.materials.rail, 0.065);
+    this.addPipeRun([[4.52, 3.65, 4.4], [4.52, 3.65, 11.6], [2.1, 3.65, 11.6]], this.materials.rail, 0.065);
+    for (const x of [-2.5, 0, 2.5]) this.addHangingLantern(x, 8.1, '#ffe3a5', 1.45);
+  }
+
+  buildRelayLandmarks() {
+    // A three-axis signal orrery turns the central court into a landmark rather than an empty hub.
+    const orrery = new THREE.Group();
+    orrery.position.set(0, 2.45, 0.65);
+    const rings = [
+      [1.55, this.materials.rail, 0.2],
+      [2.12, this.materials.violet, -0.62],
+      [2.72, this.materials.blue, 0.92],
+    ];
+    rings.forEach(([radius, material, tilt], index) => {
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.055, 8, 48), material);
+      ring.rotation.set(tilt, index * 0.74, Math.PI / 2 - tilt * 0.25);
+      orrery.add(ring);
+      this.animatedDetails.push({ mesh: ring, speed: (index + 1) * (index % 2 ? -0.16 : 0.12), axis: index === 1 ? 'x' : 'y' });
+    });
+    const core = new THREE.Mesh(new THREE.SphereGeometry(0.29, 24, 16), this.materials.warm);
+    orrery.add(core);
+    this.scene.add(orrery);
+    this.addMosaic('signal', -4.83, 2.2, 0.1, Math.PI / 2, 1.56, 2.05);
+    this.addMosaic('signal', 4.83, 2.2, 0.1, -Math.PI / 2, 1.56, 2.05);
+    this.addPipeRun([[-3.95, 3.6, 3.35], [-3.95, 3.6, -2.5], [-1.4, 3.6, -2.5]], this.materials.copper);
+    this.addPipeRun([[3.95, 3.6, 3.35], [3.95, 3.6, -2.5], [1.4, 3.6, -2.5]], this.materials.copper);
+  }
+
+  buildGeneratorLandmarks() {
+    this.addColumn(-11.25, -2.2, 3.5, this.materials.copper);
+    this.addColumn(-11.25, -6.8, 3.5, this.materials.copper);
+    this.addPipeRun([[-11.5, 3.35, -2.3], [-9.1, 3.35, -2.3], [-9.1, 2.35, -3.1]], this.materials.copper, 0.16);
+    this.addPipeRun([[-11.5, 3.35, -6.8], [-9.1, 3.35, -6.8], [-9.1, 2.35, -5.5]], this.materials.copper, 0.16);
+    const gauge = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.08, 8, 24), this.materials.rail);
+    gauge.rotation.x = Math.PI / 2;
+    gauge.position.set(-11.82, 1.72, -4.45);
+    this.scene.add(gauge);
+    this.addMosaic('wave', -11.83, 2.4, -5.6, Math.PI / 2, 0.9, 1.26);
+  }
+
+  buildWorkshopLandmarks() {
+    this.addMosaic('signal', 11.83, 2.2, -3.35, -Math.PI / 2, 1.2, 1.65);
+    this.addPipeRun([[11.35, 3.62, -6.9], [11.35, 3.62, -2.25], [8.95, 3.62, -2.25]], this.materials.rail, 0.07);
+    const antenna = new THREE.Group();
+    antenna.position.set(6.45, 1.35, -6.8);
+    for (const radius of [0.36, 0.58, 0.8]) {
+      const hoop = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.034, 8, 24), this.materials.copper);
+      hoop.rotation.y = Math.PI / 2;
+      antenna.add(hoop);
+    }
+    antenna.add(box(new THREE.CylinderGeometry(0.08, 0.08, 2.5, 12), this.materials.rail, 0, 0, 0, false, false));
+    this.scene.add(antenna);
+    this.animatedDetails.push({ mesh: antenna, speed: -0.085, axis: 'y' });
+  }
+
+  buildGalleryLandmarks() {
+    this.addMosaic('star', 2.18, 2.35, -13.3, Math.PI / 2, 1.3, 1.8);
+    this.addMosaic('star', 11.82, 2.35, -10.7, -Math.PI / 2, 1.3, 1.8);
+    for (const x of [3.7, 10.3]) this.addHangingLantern(x, -14.4, '#d3b3ff', 1.5);
+    const arch = new THREE.Mesh(new THREE.TorusGeometry(2.65, 0.12, 12, 40, Math.PI), this.materials.rail);
+    arch.position.set(7, 2.55, -15.76);
+    arch.rotation.y = Math.PI;
+    this.scene.add(arch);
+  }
+
   buildDressing() {
     const water = new THREE.Mesh(new THREE.PlaneGeometry(90, 72), new THREE.MeshStandardMaterial({ color: '#071824', roughness: 0.2, metalness: 0.78, transparent: true, opacity: 0.88 }));
     water.rotation.x = -Math.PI / 2;
@@ -440,6 +626,7 @@ export class BeaconWorld {
       }
       positions.needsUpdate = true;
     }
+    this.animatedDetails.forEach(({ mesh, speed, axis }) => { mesh.rotation[axis] += delta * speed; });
     if (this.beaconAssembly.userData.lensFrame) this.beaconAssembly.userData.lensFrame.rotation.y = elapsed * (this.beaconLight?.intensity ? 0.9 : 0.1);
   }
 

@@ -28,14 +28,15 @@ renderer.toneMappingExposure = 1.28;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#86bed4');
-scene.fog = new THREE.FogExp2('#82b7cd', 0.017);
+// A stormy teal-to-amber palette keeps the glass observatory readable without reverting to grey industrial monotony.
+scene.background = new THREE.Color('#31546a');
+scene.fog = new THREE.FogExp2('#55788b', 0.014);
 const camera = new THREE.PerspectiveCamera(67, window.innerWidth / window.innerHeight, 0.08, 100);
 camera.position.y = 1.62;
 
-const hemisphere = new THREE.HemisphereLight('#d9f3ff', '#31525b', 2.2);
+const hemisphere = new THREE.HemisphereLight('#c5f5ed', '#182a4b', 2.0);
 scene.add(hemisphere);
-const moonLight = new THREE.DirectionalLight('#fff2d5', 2.55);
+const moonLight = new THREE.DirectionalLight('#ffdca3', 2.25);
 moonLight.position.set(-13, 24, 9);
 moonLight.castShadow = true;
 moonLight.shadow.mapSize.set(1024, 1024);
