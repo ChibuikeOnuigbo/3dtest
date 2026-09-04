@@ -32,7 +32,7 @@
 2026-09-04 | PHASE 8 / independent production blockout and core loop | STARTED
 - Removed obsolete prior-world research diagrams and stopped their static preview. They were neither a new-game implementation nor QA evidence.
 - Created the separate Vite/Three.js Pale Beacon runtime: original procedural coastal outpost blockout, pointer lock, player/camera, swept circle-vs-authored-AABB collision, animated collision-aware doors, focus/range interactions, finite mission state, pulse tool, three finite sentries, synthetic Web Audio cues and HUD/end state.
-- `npm run test:logic` passed 4 reducer/collision tests. `npm run build` completed. The build reports a 566.32 kB unminified entry bundle (145.11 kB gzip) and Vite's >500 kB warning; this is recorded as a future performance-review item, not suppressed.
+- `npm run test:logic` passed 4 reducer/collision tests. `npm run build` completed. The build reports a 566.32 kB minified entry bundle (145.11 kB gzip) and Vite's >500 kB warning; this is recorded as a future performance-review item, not suppressed.
 - Vite preview is live on port 4174 with Arena preview-host allowance. HTTP check with the preview Host header returned 200.
 
 2026-09-04 | PHASE 13 / actual Playwright execution | BLOCKED, ATTEMPT RECORDED
