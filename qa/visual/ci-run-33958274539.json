@@ -1,0 +1,30 @@
+{
+  "schema": "rivet-run-ci-browser-evidence/v1",
+  "run_url": "https://github.com/ChibuikeOnuigbo/3dtest/actions/runs/33958274539",
+  "job_url": "https://github.com/ChibuikeOnuigbo/3dtest/actions/runs/33958274539/job/101285450100",
+  "workflow": "Browser QA evidence",
+  "event": "push",
+  "commit": "671b979eadd1cedcbf962f02a54e8b6f0b7fa29d",
+  "completed_at": "2026-09-05T09:35:52Z",
+  "result": "SUCCESS",
+  "completed_steps": [
+    "locked dependency install",
+    "explicit Playwright Chromium and Linux dependency install",
+    "resolved browser path report",
+    "browser smoke test",
+    "local Vite startup",
+    "real first-person player-input capture command",
+    "artifact upload"
+  ],
+  "artifact": {
+    "name": "rivet-run-browser-qa-33958274539",
+    "retention_days": 14,
+    "download_status_in_arena": "BLOCKED_NORMAL_TLS_EOF",
+    "download_attempt": "gh run download returned EOF from GitHub Actions' Azure Blob artifact endpoint; no proxy, mirror, TLS bypass, or invented files were used."
+  },
+  "semantic_visual_review": {
+    "status": "NOT_PERFORMED_ARTIFACT_FRAMES_UNAVAILABLE_IN_WORKSPACE",
+    "scores": null,
+    "reason": "A successful capture command/artifact upload does not permit visual approval until the actual PNGs can be inspected."
+  }
+}

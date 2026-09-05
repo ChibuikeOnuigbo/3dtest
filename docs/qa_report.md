@@ -13,7 +13,7 @@
 | Production build | pass | `npm run build`, after reconstruction. Build output carries Vite's non-fatal over-500kB chunk warning. |
 | Static spatial graph | pass with browser validation required | `python3 qa/spatial_validator.py`; validates declared anchors/edges/surfaces only. |
 | Poly Haven normal-TLS download | blocked | Official public acquisition attempt logged in `qa/asset_tests/polyhaven-aerial-asphalt-download-2026-09-05.log`; TLS returned `SSL_ERROR_SYSCALL`. No bypass was used and no asset was imported. |
-| GitHub-hosted browser alternative | ready, not yet run | `.github/workflows/browser-qa.yml` explicitly provisions Chromium in a GitHub runner, runs smoke/capture, and stores output as a short-lived artifact. See `research/playwright/2026-09-05-mcp-fixes-review.md`. |
+| GitHub-hosted browser alternative | runner pass; semantic inspection blocked | Run [`33958274539`](https://github.com/ChibuikeOnuigbo/3dtest/actions/runs/33958274539) explicitly provisioned Chromium, passed smoke/capture and uploaded its artifact. Normal TLS artifact download from this Arena environment ended in EOF, so no PNG has been inspected or scored. Exact record: `qa/visual/ci-run-33958274539.json`. |
 
 ## Required visual capture matrix
 

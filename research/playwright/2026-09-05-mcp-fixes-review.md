@@ -36,6 +36,17 @@ This is a lawful CI environment, not a TLS bypass, proxy/mirror, browser binary
 commit, or claimed local-browser fix. Browser evidence generated there must still
 be inspected semantically before visual scores/pass claims are made.
 
+## First CI execution
+
+Push run [`33958274539`](https://github.com/ChibuikeOnuigbo/3dtest/actions/runs/33958274539),
+for commit `671b979eadd1cedcbf962f02a54e8b6f0b7fa29d`, completed successfully on
+2026-09-05. The runner explicitly installed Chromium, passed the direct browser
+smoke test, executed the player-input capture command and uploaded
+`rivet-run-browser-qa-33958274539` for 14 days. An immediate normal-TLS artifact
+download attempt from this Arena environment failed with EOF at GitHub Actions'
+artifact endpoint. The actual PNGs have therefore not been viewed here and the
+visual score remains `null`. See `qa/visual/ci-run-33958274539.json`.
+
 ## Local-environment boundary
 
 This Arena environment still has Playwright packages but no usable local
