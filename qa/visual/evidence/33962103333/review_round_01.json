@@ -1,0 +1,122 @@
+{
+  "schema": "rivet-run-semantic-visual-review/v2",
+  "review_round": 1,
+  "reviewed_capture": "qa/visual/evidence/33962103333/capture_record.json",
+  "review_basis": "Actual GitHub-hosted Chromium player-height PNGs were visually inspected, not inferred from tests or image metrics.",
+  "status": "INSPECTED_NEEDS_MAJOR_REBUILD",
+  "approved": false,
+  "whole_run_approved": false,
+  "score": null,
+  "critical_defects": [
+    {
+      "id": "VC-001",
+      "title": "The player sees an empty beige sky instead of a credible exterior world",
+      "frames": ["01-dispatch-spawn", "02-dispatch-look-east", "03-dispatch-look-west", "04-intake-motion", "05-switch-house-arrival", "06-transfer-beacon", "07-east-span-runup", "08-east-span-transfer", "09-boiler-court-arrival", "10-boiler-court-look"],
+      "what_is_visible": "Most of each frame is a uniform beige field. The playable foreground occupies a narrow lower strip.",
+      "why_it_fails": "It recreates the rejected empty-world failure in a different colour. There is no layered horizon, atmospheric hierarchy or sense of a larger harbour district.",
+      "required_fix": "Replace the flat sky treatment with physically shaded atmosphere and raise/contrast lower, adjacent and distant city silhouettes in normal player sight lines. Capture a fresh look-around from the same spawn after the change."
+    },
+    {
+      "id": "VC-002",
+      "title": "The route reads as giant mustard blockout geometry",
+      "frames": ["01-dispatch-spawn", "04-intake-motion", "05-switch-house-arrival", "09-boiler-court-arrival"],
+      "what_is_visible": "Large flat ochre ramps/rectangles dominate the centre; their surfaces have no convincing assembly, edge treatment, scale detail or material separation.",
+      "why_it_fails": "This is visibly a Three.js prototype rather than roof/industrial architecture. The accent colour is disproportionately large and destroys the intended material hierarchy.",
+      "required_fix": "Reduce ochre to narrow safety/route accents. Replace primary foreground slabs with dark roof membrane, concrete risers, metal nosings, parapets, seams and a believable roof circulation structure."
+    },
+    {
+      "id": "VC-003",
+      "title": "Background window arrays float as repeated copy-paste rectangles",
+      "frames": ["01-dispatch-spawn", "02-dispatch-look-east", "03-dispatch-look-west", "05-switch-house-arrival", "07-east-span-runup"],
+      "what_is_visible": "Rows of blue-grey and occasional yellow rectangular window panels stand against the sky with little or no readable facade mass behind them.",
+      "why_it_fails": "The scene audit's 862 facade-window instances are visible as the exact procedural-copy pattern the review must reject. The city does not read as constructed volume.",
+      "required_fix": "Make the parent building masses legible at player height; reduce/cap window density; use clustered facade bays, structural piers, recessed glazing and silhouette variation. Do not retain window planes as standalone scenery."
+    },
+    {
+      "id": "VC-004",
+      "title": "Foreground occlusion and near-black shapes obstruct route readability",
+      "frames": ["01-dispatch-spawn", "04-intake-motion", "05-switch-house-arrival", "07-east-span-runup", "09-boiler-court-arrival"],
+      "what_is_visible": "Large near-black wedges at the lower right and dark planes across the lower frame hide the route; some appear as an oversized viewmodel/near geometry.",
+      "why_it_fails": "The first-person composition loses the landing/route at the moment a player needs it most. It looks like a camera collision or unfinished mesh, not an intentional equipment viewmodel.",
+      "required_fix": "Shrink/reposition the pulse device and audit nearby roof/parapet geometry. The lower-right screen must preserve a clear view of the next landing."
+    },
+    {
+      "id": "VC-005",
+      "title": "The capture sequence does not traverse the declared route",
+      "frames": ["05-switch-house-arrival", "06-transfer-beacon", "07-east-span-runup", "08-east-span-transfer", "09-boiler-court-arrival", "10-boiler-court-look"],
+      "what_is_visible": "The declared frame names promise Switch House, East Span and Boiler Court, but capture metadata places the player around Z 35 to 33, before the intake/switch-house transition.",
+      "why_it_fails": "These frames are real captures but not valid evidence for the named regions. This is a navigation/capture defect, not a substitute for region review.",
+      "required_fix": "Use the recorded real-player path only; classify region from actual position, fail a requested capture on a navigation miss, add fluid maintenance risers/step handling, and recapture."
+    }
+  ],
+  "critic_reviews": [
+    {
+      "role": "AAA/INDIE GAME ART DIRECTOR",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"composition": 1.5, "visual_identity": 2.0, "colour_hierarchy": 1.5},
+      "findings": "The beige sky consumes the composition; ochre blocks become the only focal point. There is no premium visual hierarchy, landmark silhouette or authored exterior image.",
+      "action": "Build a darker, layered harbour silhouette and reserve amber for signals/route marks rather than whole platforms."
+    },
+    {
+      "role": "LEVEL DESIGNER",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"route_readability": 1.5, "transition_readability": 1.0, "choice_readability": 1.0},
+      "findings": "The next destination is a tiny Kinetic Permit sign over a large undifferentiated step. No landing, branch, recovery line or route priority is legible in the frame.",
+      "action": "Frame each approach with a destination volume, visible landing and a clear distinction between primary, fast and safe lines."
+    },
+    {
+      "role": "ENVIRONMENT ARTIST",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"believable_construction": 2.0, "materials": 1.5, "world_depth": 1.0},
+      "findings": "The screenshots do not yet describe a functioning roof/utility district. Window grids float, primary surfaces read flat, and no coherent lower world is visible.",
+      "action": "Prioritise silhouette-bearing buildings, roof machinery mounted to believable bases, facade depth and a lower rail/harbour world before adding more segments."
+    },
+    {
+      "role": "TECHNICAL ARTIST",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"scene_coherence": 1.5, "repetition_control": 1.0, "lighting_readability": 2.0},
+      "findings": "The captured result exposes repeated facade panels, near-black occlusion and very weak contrast between background mass and sky. The capture record also reports 727 cool-glazing instances and 862 facade-window objects.",
+      "action": "Reduce panel count, batch/rework facades into readably solid assemblies, establish albedo contrast before emission, and verify the player view after each geometry pass."
+    },
+    {
+      "role": "PARKOUR DESIGNER",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"takeoff_landing_read": 1.5, "mechanic_legibility": 1.0, "route_flow_evidence": 0.5},
+      "findings": "Large coloured slabs obscure rather than communicate a specific movement decision, and the automation did not reach the requested parkour regions.",
+      "action": "Add meaningful stair/threshold flow, expose take-off/landing surfaces in view, and recapture successful east/west route movement before judging skill expression."
+    },
+    {
+      "role": "FIRST-PERSON MOVEMENT DESIGNER",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"camera_comfort": 2.0, "motion_readability": 1.5, "landing_visibility": 1.0},
+      "findings": "The resting view has excessive upper sky and an obstructed lower-right quadrant. The recorded player path stalled before the planned region sequence.",
+      "action": "Bias default camera slightly toward the landing plane, shrink the wrist tool, add verified step handling and measure capture positions against requested regions."
+    },
+    {
+      "role": "PLAYER / FUN TESTER",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"curiosity": 1.5, "sense_of_place": 1.0, "moment_to_moment_appeal": 1.5},
+      "findings": "The scene gives little reason to explore because the player sees blank sky, repetitive grids and generic ramps rather than a destination or lived-in exterior.",
+      "action": "Make the player see a striking connected city/bridge/harbour image and concrete route promise from the first second."
+    },
+    {
+      "role": "PERFORMANCE REVIEWER",
+      "status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"visible_cost_justification": 2.5, "scalability": 2.5},
+      "findings": "The record reports 1,273 registered scene objects, dominated by tiny repeated window planes, while the output still looks sparse. Browser console records GPU ReadPixels stalls during capture; it does not prove in-game frame rate but supports reducing visual waste.",
+      "action": "Spend geometry on a few high-value silhouette layers and facade assemblies instead of hundreds of individual window cards; profile after the visual rebuild."
+    },
+    {
+      "role": "HOSTILE QUALITY CRITIC",
+      "status": "FAILED",
+      "scores": {"prototype_signal": 1.0, "placeholder_detection": 1.0, "dead_zone_control": 0.5, "overall": 1.4},
+      "findings": "This is visibly an unfinished prototype: a mostly blank sky, coloured slabs, black wedges and detached window grids. It is not acceptable as a real parkour-game presentation.",
+      "action": "Reject the current visual build. Rebuild the spawn/exterior hierarchy first; do not advance to score or polish later regions until the first 20 seconds are visually credible."
+    }
+  ],
+  "iteration_directive": {
+    "invalidated_areas": ["dispatch-bay", "intake-steps", "switch-house", "east-span", "boiler-court"],
+    "next_capture_requirement": "After the major spawn/exterior and first-transition changes, capture the same player-height dispatch forward/east/west views plus verified arrival frames. Do not reuse this review after that geometry/material revision.",
+    "approval_rule": "No critic is approving these frames. Scores are diagnostic for this immutable review round only and must not be treated as a completion score."
+  }
+}

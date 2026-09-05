@@ -37,15 +37,36 @@ async function snapshot() {
   return page.evaluate(() => window.__rivetRunProbe?.snapshot());
 }
 
-async function capture(frameId, region, intent) {
+function classifyCoordinateRegion([x, y, z]) {
+  // Retained only as a diagnostic cross-check. Region arrival below is earned from
+  // resolved collision contact with authored support geometry, not this estimate.
+  if (z > 35) return 'dispatch-bay';
+  if (z > 27) return 'intake-steps';
+  if (z > 12) return 'switch-house';
+  if (z > -5 && x < -5) return 'west-shaft';
+  if (z > -5 && x > 5) return 'east-span';
+  if (z > -22) return 'boiler-court';
+  if (z > -34) return 'control-bridge';
+  if (z > -54) return 'sunline-bridge';
+  return y < -6 ? 'below-route-recovery' : 'outside-authored-route';
+}
+
+async function capture(frameId, requestedRegion, intent) {
   const state = await snapshot();
   if (!state) throw new Error(`CAPTURE_PROBE_UNAVAILABLE for ${frameId}`);
+  const traversal = state.player.traversalRegion || {};
+  const region = traversal.id || 'unsupported-or-airborne';
+  const hasAuthoredSupport = traversal.verification === 'AUTHORED_SUPPORT_CONTACT' && state.player.grounded;
   const file = path.join(evidenceDir, `${frameId}.png`);
   await fs.mkdir(path.dirname(file), { recursive: true });
   await page.screenshot({ path: file, fullPage: false });
   frameRecords.push({
     frame_id: frameId,
     region,
+    requested_region: requestedRegion,
+    navigation_status: hasAuthoredSupport && region === requestedRegion ? 'REACHED_REQUESTED_REGION' : 'CAPTURED_NAVIGATION_MISS',
+    runtime_region_evidence: traversal,
+    coordinate_region_diagnostic: classifyCoordinateRegion(state.player.position),
     intent,
     image: path.relative(root, file),
     camera_position: state.cameraPosition,
@@ -75,51 +96,73 @@ async function jumpWhileMoving(keys, leadMs = 300, followMs = 530) {
   for (const key of [...keys].reverse()) await page.keyboard.up(key);
 }
 
-async function lookBy(deltaX, deltaY = 0) {
-  // Pointer lock converts these real mouse moves into the same movement events a player uses.
-  await page.mouse.move(720, 450);
-  await page.mouse.move(720 + deltaX, 450 + deltaY, { steps: 12 });
+async function moveUntilAuthoredRegion(keys, requestedRegion, timeoutMs) {
+  // Bounded real keyboard input. This cannot move the player directly: it only stops
+  // when the runtime reports grounded contact on the intended authored route surface.
+  for (const key of keys) await page.keyboard.down(key);
+  const deadline = Date.now() + timeoutMs;
+  try {
+    while (Date.now() < deadline) {
+      await page.waitForTimeout(90);
+      const state = await snapshot();
+      const traversal = state?.player?.traversalRegion;
+      if (state?.player?.grounded && traversal?.verification === 'AUTHORED_SUPPORT_CONTACT' && traversal.id === requestedRegion) return true;
+    }
+    return false;
+  } finally {
+    for (const key of [...keys].reverse()) await page.keyboard.up(key);
+  }
+}
+
+let mouseX = 720;
+async function lookBy(deltaX) {
+  // Pointer lock converts this horizontal player mouse movement into the same look input
+  // a player uses. Keeping Y constant prevents accidental vertical sky-only captures.
+  mouseX += deltaX;
+  await page.mouse.move(mouseX, 450, { steps: 12 });
   await page.waitForTimeout(180);
 }
 
 try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => Boolean(window.__rivetRunProbe && document.querySelector('#game-canvas')?.width));
+  // Centre the physical pointer before requesting lock: no synthetic sky-facing camera start.
+  await page.mouse.move(720, 450);
   await page.getByRole('button', { name: /start run/i }).click();
-  await page.locator('#game-canvas').click();
+  await page.mouse.move(720, 450);
+  await page.locator('#game-canvas').click({ position: { x: 720, y: 450 } });
   await page.waitForTimeout(850); // actual WebGL first render + pointer-lock transition
   await capture('01-dispatch-spawn', 'dispatch-bay', 'first-person spawn and forward route readability');
-  await lookBy(-310);
+  await lookBy(250);
   await capture('02-dispatch-look-east', 'dispatch-bay', 'real player look-around: adjacent east city/route context');
-  await lookBy(620);
+  await lookBy(-500);
   await capture('03-dispatch-look-west', 'dispatch-bay', 'real player look-around: adjacent west city/route context');
-  await lookBy(-310);
+  await lookBy(250);
 
-  // Built route: start roof -> intake -> switch house. These inputs are intentionally
-  // ordinary gameplay input and are recorded with every screenshot; no camera teleport is used.
-  await keyHold(['KeyW'], 980);
-  await jumpWhileMoving(['KeyW'], 340, 620);
-  await capture('04-intake-motion', 'yard-roof', 'player-height intake jump/landing approach');
-  await jumpWhileMoving(['KeyW'], 250, 730);
-  await keyHold(['KeyW'], 600);
-  await capture('05-switch-house-arrival', 'switch-house', 'permit terminal and covered transition arrival');
-  await keyHold(['KeyW'], 760);
-  await capture('06-transfer-beacon', 'switch-house', 'checkpoint and branch-read frame');
+  // The controlled first route uses walkable maintenance risers, then meets the mounted
+  // terminal at player height. No camera/position manipulation is used. Each travel
+  // phase is bounded and capture still records a navigation miss if real play fails.
+  await moveUntilAuthoredRegion(['KeyW'], 'switch-house', 6500);
+  await capture('04-switch-house-arrival', 'switch-house', 'permit terminal and covered transition arrival');
+  await keyHold(['KeyW'], 620);
+  await capture('05-transfer-beacon', 'switch-house', 'checkpoint and branch-read frame');
 
-  // East is the dash branch: diagonal movement, speed transfer, supported landing, then court.
-  await keyHold(['KeyW', 'KeyD'], 1320);
-  await capture('07-east-span-runup', 'east-span', 'real approach to the supported dash branch');
+  // East is the dash branch: diagonal player movement, a speed transfer, then the shared court.
+  await moveUntilAuthoredRegion(['KeyW', 'KeyD'], 'east-span', 5200);
+  await capture('06-east-span-runup', 'east-span', 'real approach to the supported dash branch');
   await page.keyboard.down('KeyW');
   await page.keyboard.press('ShiftLeft');
-  await page.waitForTimeout(520);
+  await page.waitForTimeout(300);
   await page.keyboard.press('Space');
-  await page.waitForTimeout(560);
+  await page.waitForTimeout(980);
   await page.keyboard.up('KeyW');
-  await capture('08-east-span-transfer', 'east-span', 'dash/jump transfer with viaduct support in frame');
-  await keyHold(['KeyW'], 900);
-  await capture('09-boiler-court-arrival', 'boiler-court', 'court arrival, mounted-relay context and exit read');
-  await lookBy(-240);
-  await capture('10-boiler-court-look', 'boiler-court', 'player look-around across court architecture');
+  await capture('07-east-span-transfer', 'east-span', 'dash/jump transfer with viaduct support in frame');
+  await jumpWhileMoving(['KeyW'], 230, 820);
+  await moveUntilAuthoredRegion(['KeyW'], 'boiler-court', 2800);
+  await capture('08-boiler-court-arrival', 'boiler-court', 'court arrival, mounted-relay context and exit read');
+  await lookBy(-210);
+  await capture('09-boiler-court-look', 'boiler-court', 'player look-around across court architecture');
+  await lookBy(210);
 
   const endState = await snapshot();
   await fs.mkdir(evidenceDir, { recursive: true });

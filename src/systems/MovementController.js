@@ -21,18 +21,24 @@ export class MovementController {
     this.camera = camera;
     this.getSolids = getSolids;
     this.radius = 0.34;
+    this.maxStepHeight = 0.46;
     this.standingHeight = 1.66;
     this.crouchingHeight = 1.05;
     this.height = this.standingHeight;
     this.velocity = new THREE.Vector3();
     this.yaw = 0;
-    this.pitch = -0.06;
+    // A very slight downwards resting view prioritises the near route and its landing
+    // surface; it avoids spending the spawn composition on an empty upper sky.
+    this.pitch = 0.10;
     this.grounded = true;
     this.coyote = 0;
     this.jumpBuffer = 0;
     this.airJumpsUsed = 0;
     this.wallJumpCount = 0;
     this.wallNormal = null;
+    // The colliding floor actually supporting the player this frame. Capture evidence
+    // uses this to distinguish a real authored-surface arrival from a coordinate label.
+    this.supportSolidId = null;
     this.dashTime = 0;
     this.dashCooldown = 0;
     this.slideTime = 0;
@@ -56,6 +62,7 @@ export class MovementController {
     this.airJumpsUsed = 0;
     this.wallJumpCount = 0;
     this.wallNormal = null;
+    this.supportSolidId = null;
     this.dashTime = 0;
     this.dashCooldown = 0;
     this.slideTime = 0;
@@ -104,6 +111,22 @@ export class MovementController {
         const test = position.clone();
         test[axis] = candidate;
         if (!overlapsXZ(test, this.radius, solid)) continue;
+        // A small, walkable lip should behave like a stair/roof threshold, not like a
+        // full-height wall. This keeps built maintenance steps fluid without allowing
+        // a player to climb cover, shaft walls, or low ceilings.
+        const stepUp = solid.max.y - position.y;
+        const canStep = solid.walkable && this.velocity.y <= 0 && stepUp > EPSILON && stepUp <= this.maxStepHeight;
+        if (canStep) {
+          const steppedBottom = solid.max.y + EPSILON;
+          const blockedAtHead = solids.some((other) => other !== solid
+            && overlapsXZ(test, this.radius, other)
+            && other.min.y < steppedBottom + verticalHeight - EPSILON
+            && other.max.y > steppedBottom + EPSILON);
+          if (!blockedAtHead) {
+            position.y = steppedBottom;
+            continue;
+          }
+        }
         if (axis === 'x') {
           candidate = amount > 0 ? Math.min(candidate, solid.min.x - this.radius) : Math.max(candidate, solid.max.x + this.radius);
           wallNormal = new THREE.Vector3(amount > 0 ? -1 : 1, 0, 0);
@@ -119,11 +142,15 @@ export class MovementController {
     const previousBottom = position.y;
     let nextBottom = position.y + this.velocity.y * delta;
     let grounded = false;
+    let supportSolid = null;
     if (this.velocity.y <= 0) {
       let floorTop = -Infinity;
       for (const solid of solids) {
         if (!overlapsXZ(position, this.radius * 0.84, solid)) continue;
-        if (previousBottom >= solid.max.y - 0.05 && nextBottom <= solid.max.y + EPSILON && solid.max.y > floorTop) floorTop = solid.max.y;
+        if (previousBottom >= solid.max.y - 0.05 && nextBottom <= solid.max.y + EPSILON && solid.max.y > floorTop) {
+          floorTop = solid.max.y;
+          supportSolid = solid;
+        }
       }
       if (floorTop > -Infinity) {
         if (!this.grounded) this.lastLandingVelocity = Math.abs(this.velocity.y);
@@ -144,7 +171,7 @@ export class MovementController {
     }
     position.y = nextBottom;
     this.root.position.copy(position);
-    return { grounded, wallNormal };
+    return { grounded, wallNormal, supportSolid };
   }
 
   update(delta, movement) {
@@ -206,6 +233,7 @@ export class MovementController {
     const beforeGround = this.grounded;
     const result = this.resolveMovement(delta);
     this.grounded = result.grounded;
+    this.supportSolidId = result.grounded ? result.supportSolid?.id || null : null;
     this.wallNormal = !result.grounded && result.wallNormal ? result.wallNormal : null;
     if (this.grounded) {
       this.coyote = 0.12;
@@ -227,6 +255,7 @@ export class MovementController {
   snapshot() {
     return {
       state: this.state, grounded: this.grounded, position: this.root.position.toArray(), velocity: this.velocity.toArray(),
+      supportSolidId: this.supportSolidId,
       doubleJumpUnlocked: this.doubleJumpUnlocked, wallJumpCount: this.wallJumpCount,
       dashCooldown: Number(this.dashCooldown.toFixed(3)), crouching: this.height < 1.4, slam: this.slam,
     };

@@ -68,3 +68,32 @@ test('standing is prevented under a low ceiling after a crouch', () => {
   for (let frame = 0; frame < 20; frame += 1) controller.update(1 / 60, { x: 0, z: 0, sprint: false });
   assert.ok(controller.height < controller.standingHeight - 0.2);
 });
+
+test('walkable maintenance risers climb in bounded increments without bypassing a cover-height wall', () => {
+  const step = (id, z, top) => ({
+    id,
+    min: new THREE.Vector3(-2, 0, z - 0.3),
+    max: new THREE.Vector3(2, top, z + 0.3),
+    walkable: true,
+  });
+  const solids = [
+    ...floor(),
+    step('riser-one', -1, 0.33),
+    step('riser-two', -1.55, 0.66),
+    step('riser-three', -2.1, 0.99),
+    { id: 'cover-wall', min: new THREE.Vector3(-2, 0, -3.4), max: new THREE.Vector3(2, 1.8, -3.1), walkable: true },
+  ];
+  const controller = new MovementController(new THREE.PerspectiveCamera(), () => solids);
+  controller.reset(new THREE.Vector3(0, 0, 0));
+  let highestStep = 0;
+  const contactedSurfaces = new Set();
+  for (let frame = 0; frame < 60; frame += 1) {
+    controller.update(1 / 60, { x: 0, z: 1, sprint: false });
+    highestStep = Math.max(highestStep, controller.root.position.y);
+    if (controller.supportSolidId) contactedSurfaces.add(controller.supportSolidId);
+  }
+  assert.ok(highestStep > 0.95, 'small connected risers should be walked up');
+  assert.deepEqual([...contactedSurfaces].filter((id) => id.startsWith('riser-')), ['riser-one', 'riser-two', 'riser-three']);
+  for (let frame = 0; frame < 45; frame += 1) controller.update(1 / 60, { x: 0, z: 1, sprint: false });
+  assert.ok(controller.root.position.z > -3.1 + controller.radius - 0.01, 'the bounded step rule must not climb a cover-height wall');
+});

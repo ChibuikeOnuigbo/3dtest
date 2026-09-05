@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Sky } from 'three/addons/objects/Sky.js';
 import './styles.css';
 import { MovementController } from './systems/MovementController.js';
 import { HighlineDistrict } from './world/HighlineDistrict.js';
@@ -45,12 +46,21 @@ renderer.toneMappingExposure = 1.18;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const scene = new THREE.Scene();
-// Late-afternoon industrial haze, deliberately muted so the built horizon—not a cyan void—carries depth.
-scene.background = new THREE.Color('#b8a998');
-scene.fog = new THREE.FogExp2('#b8a998', 0.008);
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 220);
+// Physically shaded sky plus a cool harbour haze. The full lower skyline is actual
+// geometry; the sky is atmospheric background rather than an exposed cyan void.
+scene.background = new THREE.Color('#71808a');
+scene.fog = new THREE.FogExp2('#71808a', 0.0062);
+const sky = new Sky();
+sky.scale.setScalar(200000);
+sky.material.uniforms.turbidity.value = 5.7;
+sky.material.uniforms.rayleigh.value = 1.15;
+sky.material.uniforms.mieCoefficient.value = 0.007;
+sky.material.uniforms.mieDirectionalG.value = 0.77;
+sky.material.uniforms.sunPosition.value.set(-0.42, 0.18, -0.88).normalize().multiplyScalar(400000);
+scene.add(sky);
+const camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 0.05, 220);
 camera.position.set(0, 1.62, 0);
-const sun = new THREE.DirectionalLight('#ffe0a1', 3.15);
+const sun = new THREE.DirectionalLight('#ffd59a', 3.05);
 sun.position.set(-36, 49, 32); sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -48; sun.shadow.camera.right = 48; sun.shadow.camera.top = 48; sun.shadow.camera.bottom = -48;
 scene.add(sun);
@@ -64,10 +74,11 @@ const dashLight = new THREE.PointLight('#e9b36b', 0, 7, 2);
 dashLight.position.set(0, 0.3, -0.4);
 player.cameraRig.add(dashLight);
 const pulseTool = new THREE.Group();
-const glove = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.13, 0.38), new THREE.MeshStandardMaterial({ color: '#17355a', roughness: 0.3, metalness: 0.84 }));
-const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 0.12), new THREE.MeshStandardMaterial({ color: '#f4d293', emissive: '#b96729', emissiveIntensity: 1.8, roughness: 0.2 }));
-emitter.position.z = -0.27;
-pulseTool.add(glove, emitter); pulseTool.position.set(0.34, -0.29, -0.48); pulseTool.rotation.set(-0.1, -0.22, 0); camera.add(pulseTool);
+// A restrained wrist unit leaves the lower-right composition open for route/landing read.
+const glove = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.06, 0.14), new THREE.MeshStandardMaterial({ color: '#51646a', roughness: 0.42, metalness: 0.68 }));
+const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.052, 0.052, 0.052), new THREE.MeshStandardMaterial({ color: '#e6bd77', emissive: '#9b5627', emissiveIntensity: 1.25, roughness: 0.25 }));
+emitter.position.z = -0.12;
+pulseTool.add(glove, emitter); pulseTool.position.set(0.27, -0.43, -0.86); pulseTool.rotation.set(-0.1, -0.22, 0); camera.add(pulseTool);
 const raycaster = new THREE.Raycaster(); raycaster.far = 50;
 const clock = new THREE.Clock();
 
@@ -165,7 +176,7 @@ function updateGame(delta) {
   }
   const dashVisual = player.dashTime > 0 ? 1 : 0;
   dashLight.intensity = THREE.MathUtils.damp(dashLight.intensity, dashVisual * 2.3, 15, delta);
-  camera.fov = THREE.MathUtils.damp(camera.fov, 75 + Math.min(player.lastSpeed, 15) * 0.75 + dashVisual * 7, 10, delta); camera.updateProjectionMatrix();
+  camera.fov = THREE.MathUtils.damp(camera.fov, 72 + Math.min(player.lastSpeed, 15) * 0.65 + dashVisual * 5, 10, delta); camera.updateProjectionMatrix();
 }
 function animate() {
   requestAnimationFrame(animate);
@@ -177,7 +188,7 @@ function animate() {
 }
 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75)); renderer.setSize(window.innerWidth, window.innerHeight); });
 window.__rivetRunProbe = Object.freeze({ snapshot: () => Object.freeze({
-  player: player.snapshot(),
+  player: { ...player.snapshot(), traversalRegion: course.traversalRegionForSolid(player.supportSolidId) },
   cameraPosition: camera.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(3))),
   cameraDirection: player.facingDirection(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(4))),
   elapsed: Number(elapsed.toFixed(3)),

@@ -7,7 +7,7 @@ const UP = new THREE.Vector3(0, 1, 0);
 
 const REGION_PLAN = Object.freeze([
   { id: 'yard-roof', region: 'yard', x: 0, z: 43, top: 0, width: 16, depth: 16, support: 21, material: 'roof', purpose: 'spawn / teach acceleration' },
-  { id: 'intake-steps', region: 'yard', x: 0, z: 31, top: 0.78, width: 8.2, depth: 7, support: 16, material: 'steel', purpose: 'short-rise jump line' },
+  { id: 'intake-steps', region: 'yard', x: 0, z: 31, top: 0.42, width: 8.2, depth: 7, support: 16, material: 'steel', purpose: 'short-rise jump line' },
   { id: 'switch-house', region: 'transfer', x: 0, z: 19, top: 1.75, width: 17, depth: 13, support: 22, material: 'concrete', purpose: 'ability terminal / route read' },
   { id: 'wall-shaft-roof', region: 'west-shaft', x: -9.2, z: 6.1, top: 2.25, width: 5.4, depth: 10.2, support: 24, material: 'roof', purpose: 'wall route staging' },
   { id: 'dash-viaduct-start', region: 'east-viaduct', x: 9.2, z: 6.1, top: 2.25, width: 5.4, depth: 10.2, support: 24, material: 'roof', purpose: 'dash route staging' },
@@ -112,18 +112,18 @@ function createMaterials() {
     return result;
   };
   return {
-    roof: standard('roof_membrane', concreteMap, '#5b6161', 0.9, 0.08),
-    concrete: standard('weathered_concrete', concreteMap, '#c1ae91', 0.88, 0.02),
-    brick: standard('weathered_brick', concreteMap, '#845f4d', 0.93, 0),
-    steel: standard('painted_route_steel', metalMap, '#506d76', 0.52, 0.54),
-    safety: standard('safety_painted_steel', metalMap, '#c47a3d', 0.47, 0.48),
-    trim: material('charcoal_structural_trim', { color: '#26373b', roughness: 0.56, metalness: 0.68 }),
-    shadow: material('charcoal_utility_surface', { color: '#1b2427', roughness: 0.82, metalness: 0.15 }),
-    window: material('cool_utility_glazing', { color: '#496872', emissive: '#142932', emissiveIntensity: 0.4, roughness: 0.24, metalness: 0.62 }),
-    windowWarm: material('warm_occupied_glazing', { color: '#dca55d', emissive: '#be6a31', emissiveIntensity: 0.8, roughness: 0.42, metalness: 0.2 }),
-    routePaint: material('ochre_route_paint', { color: '#d5b362', emissive: '#5f431d', emissiveIntensity: 0.16, roughness: 0.38, metalness: 0.36 }),
-    relay: material('amber_relay_panel', { color: '#e0bd74', emissive: '#a35c25', emissiveIntensity: 1.25, roughness: 0.26, metalness: 0.68 }),
-    routeGlow: material('amber_utility_lamp', { color: '#f1d08a', emissive: '#be7731', emissiveIntensity: 1.1, roughness: 0.25, metalness: 0.4 }),
+    roof: standard('roof_membrane', concreteMap, '#596064', 0.93, 0.06),
+    concrete: standard('weathered_concrete', concreteMap, '#7b7369', 0.9, 0.03),
+    brick: standard('weathered_brick', concreteMap, '#584a43', 0.92, 0.01),
+    steel: standard('painted_route_steel', metalMap, '#45606a', 0.58, 0.5),
+    safety: standard('safety_painted_steel', metalMap, '#8d5938', 0.55, 0.44),
+    trim: material('charcoal_structural_trim', { color: '#202c2f', roughness: 0.61, metalness: 0.62 }),
+    shadow: material('charcoal_utility_surface', { color: '#182022', roughness: 0.86, metalness: 0.13 }),
+    window: material('cool_utility_glazing', { color: '#355765', emissive: '#10212a', emissiveIntensity: 0.26, roughness: 0.3, metalness: 0.52 }),
+    windowWarm: material('warm_occupied_glazing', { color: '#a36f3d', emissive: '#6b3519', emissiveIntensity: 0.46, roughness: 0.48, metalness: 0.16 }),
+    routePaint: material('ochre_route_paint', { color: '#a66e32', emissive: '#432716', emissiveIntensity: 0.08, roughness: 0.46, metalness: 0.3 }),
+    relay: material('amber_relay_panel', { color: '#b67c3d', emissive: '#683317', emissiveIntensity: 0.74, roughness: 0.34, metalness: 0.56 }),
+    routeGlow: material('amber_utility_lamp', { color: '#d4a663', emissive: '#9d5927', emissiveIntensity: 0.72, roughness: 0.3, metalness: 0.35 }),
   };
 }
 
@@ -272,8 +272,10 @@ export class HighlineDistrict {
     const windowMaterial = this.materials.window;
     const warmMaterial = this.materials.windowWarm;
     const baseY = top - height * 0.42;
-    const rows = Math.max(2, Math.floor(height / 4.1));
-    const cols = Math.max(2, Math.floor(width / 2.4));
+    // Window bands are intentionally sparse enough to read as architecture rather than
+    // a screen-space grid of cloned floating rectangles.
+    const rows = Math.max(2, Math.min(5, Math.floor(height / 5.4)));
+    const cols = Math.max(3, Math.min(7, Math.floor(width / 3.1)));
     for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < cols; column += 1) {
         const wx = x - width / 2 + 1.2 + column * ((width - 2.4) / Math.max(1, cols - 1));
@@ -288,9 +290,14 @@ export class HighlineDistrict {
     this.addVisual('facade-pilaster', [0.42, height + 0.3, 0.45], this.materials.trim, [x + width / 2 - 0.15, top - height / 2, z + depth / 2 + 0.12]);
   }
 
-  addCityBuilding([x, z, width, depth, height, family], index) {
-    const top = -3.8 + this.random() * 2.6;
-    this.addFacade(`city-block-${index}`, x, z, width, depth, top, height, family, 0.08 + this.random() * 0.1);
+  addCityBuilding([x, z, width, depth, nominalHeight, family], index) {
+    // City blocks begin at the below-route foundation and rise into player-height
+    // vistas. They therefore form a real lower/distant world instead of a window grid
+    // hovering beneath a blank sky.
+    const base = -23.8;
+    const top = 2.4 + this.random() * 8.4;
+    const height = Math.max(nominalHeight, top - base);
+    this.addFacade(`city-block-${index}`, x, z, width, depth, top, height, family, 0.06 + this.random() * 0.08);
     const roofTop = top + 0.22;
     // Antennas are visibly roof-mounted square masts, never arbitrary floating lines.
     if (this.random() > 0.35) {
@@ -352,6 +359,18 @@ export class HighlineDistrict {
     this.scene.add(group);
     this.targets.set(id, { id, group, active: true, body, sensor });
     this.animated.push({ mesh: sensor, kind: 'relay', base: 1 });
+  }
+
+  addStairFlight(id, x, startZ, fromTop, toTop, count, width = 5.4) {
+    const rise = (toTop - fromTop) / count;
+    for (let index = 1; index <= count; index += 1) {
+      const top = fromTop + rise * index;
+      const z = startZ - (index - 1) * 0.5;
+      // Each tread is a full supported riser from the previous roof height; these are
+      // circulation architecture, not a stack of arbitrary obstacle cubes.
+      this.addSolid(`${id}-${index}`, [x, top, z], [width, top - fromTop, 0.54], this.materials.steel, { walkable: true, stair: true });
+      this.addVisual(`${id}-nosing-${index}`, [width + 0.08, 0.08, 0.09], this.materials.safety, [x, top + 0.025, z - 0.235]);
+    }
   }
 
   addKineticTerminal() {
@@ -457,7 +476,7 @@ export class HighlineDistrict {
     // Stepped terrain anchors the far city in a horizon and breaks a blank pastel sky.
     for (let index = 0; index < 11; index += 1) {
       const x = -88 + index * 17;
-      const height = 10 + this.random() * 14;
+      const height = 29 + this.random() * 18;
       this.addVisual('distant-ridge', [19, height, 16], index % 2 ? this.materials.concrete : this.materials.brick, [x, -23.8 + height / 2, -99 - this.random() * 9], false);
     }
     // A rail belt under the playable heights establishes scale and destination depth.
@@ -493,8 +512,8 @@ export class HighlineDistrict {
     // fixed near-route buildings preserve landmark clarity and navigation.
     SECONDARY_SKYLINE_SITES.forEach(([x, z, width, depth, family], index) => {
       if (this.random() >= 0.3) {
-        const height = 14 + Math.round(this.random() * 20);
-        const top = -4.2 + Math.round(this.random() * 18) / 10;
+        const top = 3.6 + Math.round(this.random() * 80) / 10;
+        const height = top + 23.8;
         this.addFacade(`seed-skyline-${index}`, x, z, width, depth, top, height, family, 0.05 + this.random() * 0.13);
         this.seedChoices.push({ type: 'skyline-building', index, position: [x, top, z], height, family });
       }
@@ -510,6 +529,10 @@ export class HighlineDistrict {
   build() {
     this.buildBackdrop();
     REGION_PLAN.forEach((region) => this.addRoofRegion(region));
+    this.addStairFlight('transfer-risers', 0, 27.15, 0.42, 1.75, 4);
+    this.addStairFlight('west-branch-risers', -9.2, 11.95, 1.75, 2.25, 2, 4.4);
+    this.addStairFlight('east-branch-risers', 9.2, 11.95, 1.75, 2.25, 2, 4.4);
+    this.addStairFlight('court-exit-risers', 0, -21.72, 4.65, 5.45, 2, 5.8);
     this.buildSeedLayer();
     this.addKineticTerminal();
     this.addCheckpoint();
@@ -563,6 +586,34 @@ export class HighlineDistrict {
 
   activeTargetCount() { return [...this.targets.values()].filter((target) => target.active).length; }
   targetObjects() { return [...this.targets.values()].flatMap(({ group, active }) => active ? [group] : []); }
+
+  traversalRegionForSolid(supportSolidId) {
+    // This is deliberately keyed from MovementController's resolved ground contact,
+    // rather than camera coordinates. A capture therefore proves that a player is
+    // standing on a declared authored support surface when it claims a route region.
+    const routeSurfaces = [
+      ['yard-roof', 'dispatch-bay'],
+      ['intake-steps', 'intake-steps'],
+      ['transfer-risers-', 'intake-steps'],
+      ['switch-house', 'switch-house'],
+      ['west-branch-risers-', 'west-shaft'],
+      ['wall-shaft-roof', 'west-shaft'],
+      ['wall-shaft-cap', 'west-shaft'],
+      ['east-branch-risers-', 'east-span'],
+      ['dash-viaduct-start', 'east-span'],
+      ['dash-viaduct-landing', 'east-span'],
+      ['boiler-court', 'boiler-court'],
+      ['court-exit-risers-', 'control-bridge'],
+      ['bridge-control', 'control-bridge'],
+      ['sunline-bridge', 'sunline-bridge'],
+    ];
+    const match = routeSurfaces.find(([surface]) => supportSolidId === surface || supportSolidId?.startsWith(surface));
+    return {
+      id: match?.[1] || 'unsupported-or-airborne',
+      support_surface_id: supportSolidId || null,
+      verification: match ? 'AUTHORED_SUPPORT_CONTACT' : 'NO_AUTHORED_SUPPORT_CONTACT',
+    };
+  }
 
   sceneAudit() {
     // This is deliberately a composition-risk diagnostic, never a replacement for

@@ -78,3 +78,32 @@ Do **not** set a visual pass based on build, tests, screenshots existing, FPS or
 pixel metrics. Each category must be at least **7.5/10**, overall average at
 least **8.5/10**, and there can be **no critical issue** in every region and a
 whole-run walkthrough. The current numeric score is deliberately `null`.
+
+## Visual semantic review — GitHub Actions run 33962103333 (round 01, rejected)
+
+**Evidence:** [`qa/visual/evidence/33962103333/`](../qa/visual/evidence/33962103333/) — ten actual Chromium player-height captures and the original capture record. This was a manual semantic review of what is visible in every PNG, not a build, metric, or screenshot-existence pass. Detailed independent-role findings are preserved in [`review_round_01.json`](../qa/visual/evidence/33962103333/review_round_01.json).
+
+| Frame | Requested / recorded region | Inspection result | Approval |
+| --- | --- | --- | --- |
+| `01-dispatch-spawn` | Dispatch Bay / `dispatch-bay` | **INSPECTED_NEEDS_FIXES** — blank beige sky dominates, mustard route mass and black foreground occlusion read as unfinished prototype geometry. | `false` |
+| `02-dispatch-look-east` | Dispatch Bay / `dispatch-bay` | **INSPECTED_NEEDS_FIXES** — east look still has no convincing exterior depth; detached window-strip pattern is visible. | `false` |
+| `03-dispatch-look-west` | Dispatch Bay / `dispatch-bay` | **INSPECTED_NEEDS_FIXES** — west look repeats the same sparse grid/empty-sky composition. | `false` |
+| `04-intake-motion` | Intake Steps / `intake-steps` | **INSPECTED_NEEDS_FIXES** — actual position is only at the early terminal-facing area; route is dominated by giant flat ochre surfaces. | `false` |
+| `05-switch-house-arrival` | Switch House / `switch-house` claimed | **INSPECTED_NEEDS_FIXES** — claimed label is invalid: actual camera position remains near Z 35 before the intake/switch-house transition. | `false` |
+| `06-transfer-beacon` | Transfer Beacon / `transfer-beacon` claimed | **INSPECTED_NEEDS_FIXES** — same near-spawn terminal-facing scene; not evidence of arrival. | `false` |
+| `07-east-span-runup` | East Span / `east-span` claimed | **INSPECTED_NEEDS_FIXES** — same early scene and no east-span run-up is semantically visible. | `false` |
+| `08-east-span-transfer` | East Span / `east-span` claimed | **INSPECTED_NEEDS_FIXES** — actual position remains in the early coordinate band; later-region claim rejected. | `false` |
+| `09-boiler-court-arrival` | Boiler Court / `boiler-court` claimed | **INSPECTED_NEEDS_FIXES** — no boiler-court construction is visible; capture remains near early route. | `false` |
+| `10-boiler-court-look` | Boiler Court / `boiler-court` claimed | **INSPECTED_NEEDS_FIXES** — same failed composition, not a boiler-court vista. | `false` |
+
+### Batch verdict
+
+`CAPTURED: true` — browser launch, pointer lock, gameplay input and PNG generation occurred.
+
+`INSPECTED: true` — every committed frame was manually semantically examined.
+
+`APPROVED: false` — no image earns approval and this batch is **not** proof of a whole-route walkthrough.
+
+The capture record's original planned labels are retained as capture facts, but must not be used as region-arrival proof: frames nominally representing Switch House through Boiler Court remain in the early route coordinate band. No scores were retroactively inserted into the original capture record. The review-round scores in the companion JSON are diagnostic critic findings, not approval scores.
+
+**Concrete rebuild gate before the next evidence batch:** replace the blank-sky/ochre-block composition with a readable physical atmosphere plus foreground → playable roof → adjacent construction → lower world → distant skyline layers; reduce and structurally embed repeated facade windows; remove lower-right camera occlusion; make stair/threshold movement reach the declared regions; fail requested captures on navigation miss; then recapture and re-review every affected player-height frame.
