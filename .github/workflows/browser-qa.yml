@@ -59,7 +59,12 @@ jobs:
         run: |
           node --input-type=module -e "import { chromium } from '@playwright/test'; console.log('Chromium executable:', chromium.executablePath())"
 
+      # Keep collecting real-player diagnostics if the smoke assertion fails, then fail
+      # the job at the end. This never turns a failed test green; it prevents a generic
+      # smoke failure from hiding the player-height browser evidence needed to diagnose it.
       - name: Run browser smoke test
+        id: browser_smoke
+        continue-on-error: true
         run: npm run test:e2e
 
       - name: Start local game server for real capture
@@ -77,6 +82,7 @@ jobs:
           exit 1
 
       - name: Capture real first-person browser evidence
+        id: player_capture
         env:
           VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}
         run: |
@@ -84,7 +90,7 @@ jobs:
           node tools/qa/capture_visual_views.mjs
 
       - name: Commit captured PNGs and uninspected frame records
-        if: success()
+        if: steps.player_capture.outcome == 'success'
         run: |
           git config user.name 'rivet-run-browser-qa[bot]'
           git config user.email 'rivet-run-browser-qa[bot]@users.noreply.github.com'
@@ -95,6 +101,12 @@ jobs:
           fi
           git commit -m "qa: add captured player-height frames for run $GITHUB_RUN_ID"
           git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Fail after collecting diagnostics when browser smoke failed
+        if: steps.browser_smoke.outcome == 'failure'
+        run: |
+          echo 'Browser smoke test failed; player-height evidence was still collected for diagnosis.' >&2
+          exit 1
 
       - name: Stop local game server
         if: always()
