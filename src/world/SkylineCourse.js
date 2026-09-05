@@ -10,34 +10,20 @@ function meshBox(size, material, position, cast = true) {
   return mesh;
 }
 
-function createRouteTexture(primary, secondary, arrow = false) {
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 256;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = primary;
-  ctx.fillRect(0, 0, 256, 256);
-  ctx.strokeStyle = secondary;
-  ctx.globalAlpha = 0.75;
-  ctx.lineWidth = 9;
-  for (let x = -128; x < 340; x += 62) {
-    ctx.beginPath();
-    ctx.moveTo(x, 256);
-    ctx.lineTo(x + 256, 0);
-    ctx.stroke();
-  }
-  if (arrow) {
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = '#f8f6df';
-    for (let y = 22; y < 256; y += 84) {
-      ctx.beginPath();
-      ctx.moveTo(128, y + 49); ctx.lineTo(78, y); ctx.lineTo(178, y); ctx.closePath(); ctx.fill();
-    }
-  }
-  const texture = new THREE.CanvasTexture(canvas);
+function loadTexture(path, repeat) {
+  const texture = new THREE.TextureLoader().load(path);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(2, 2);
+  texture.repeat.set(...repeat);
+  texture.anisotropy = 8;
   return texture;
+}
+
+function addSquareFrame(group, width, height, depth, material) {
+  group.add(meshBox([width, depth, depth], material, [0, height / 2, 0]));
+  group.add(meshBox([width, depth, depth], material, [0, -height / 2, 0]));
+  group.add(meshBox([depth, height, depth], material, [-width / 2, 0, 0]));
+  group.add(meshBox([depth, height, depth], material, [width / 2, 0, 0]));
 }
 
 function makeLabel(text, accent = '#9df6ff') {
@@ -61,14 +47,14 @@ function makeLabel(text, accent = '#9df6ff') {
 }
 
 function createMaterials() {
-  const route = createRouteTexture('#ef6d35', '#203a69', true);
-  const jump = createRouteTexture('#2c7096', '#73eef0', true);
+  const concreteTexture = loadTexture('/textures/sunlit-concrete-tile.png', [3.5, 3.5]);
+  const routeTexture = loadTexture('/textures/painted-route-metal.png', [2.2, 2.2]);
   return {
-    concrete: new THREE.MeshStandardMaterial({ color: '#d8d4c5', roughness: 0.83, metalness: 0.04 }),
-    cobalt: new THREE.MeshStandardMaterial({ color: '#183b71', roughness: 0.48, metalness: 0.53 }),
-    orange: new THREE.MeshStandardMaterial({ map: route, color: '#f58e45', roughness: 0.45, metalness: 0.4 }),
-    route: new THREE.MeshStandardMaterial({ map: jump, color: '#68dce0', roughness: 0.4, metalness: 0.42 }),
-    slate: new THREE.MeshStandardMaterial({ color: '#294154', roughness: 0.63, metalness: 0.38 }),
+    concrete: new THREE.MeshStandardMaterial({ map: concreteTexture, color: '#e8e1cb', roughness: 0.86, metalness: 0.03 }),
+    cobalt: new THREE.MeshStandardMaterial({ map: routeTexture, color: '#31538a', roughness: 0.51, metalness: 0.48 }),
+    orange: new THREE.MeshStandardMaterial({ map: routeTexture, color: '#f3a057', roughness: 0.45, metalness: 0.42 }),
+    route: new THREE.MeshStandardMaterial({ map: routeTexture, color: '#79e5e0', roughness: 0.41, metalness: 0.45 }),
+    slate: new THREE.MeshStandardMaterial({ map: routeTexture, color: '#49677c', roughness: 0.65, metalness: 0.36 }),
     brass: new THREE.MeshStandardMaterial({ color: '#edc45f', roughness: 0.24, metalness: 0.9 }),
     magenta: new THREE.MeshStandardMaterial({ color: '#ff6ba7', emissive: '#c01f65', emissiveIntensity: 1.45, roughness: 0.28 }),
     cyan: new THREE.MeshStandardMaterial({ color: '#a5ffff', emissive: '#14cbd0', emissiveIntensity: 2.5, roughness: 0.2 }),
@@ -137,8 +123,7 @@ export class SkylineCourse {
     const group = new THREE.Group();
     group.position.set(x, top, z);
     group.add(meshBox([0.18, height, 0.18], this.materials.dark, [0, height / 2, 0]));
-    const cap = new THREE.Mesh(new THREE.OctahedronGeometry(0.23), new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 2.3 }));
-    cap.position.y = height;
+    const cap = meshBox([0.32, 0.32, 0.32], new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 2.3 }), [0, height, 0], false);
     group.add(cap);
     const light = new THREE.PointLight(color, 1.3, 6, 2);
     light.position.y = height;
@@ -150,13 +135,13 @@ export class SkylineCourse {
   addPowerup() {
     const group = new THREE.Group();
     group.position.set(0, 1.35, 10);
-    const outer = new THREE.Mesh(new THREE.OctahedronGeometry(0.55), this.materials.cyan);
-    const inner = new THREE.Mesh(new THREE.OctahedronGeometry(0.24), this.materials.white);
-    inner.rotation.z = Math.PI / 4;
+    const outer = meshBox([0.68, 0.68, 0.68], this.materials.cyan, [0, 0, 0], false);
+    const inner = meshBox([0.26, 0.26, 0.26], this.materials.white, [0, 0, 0], false);
     group.add(outer, inner);
-    const halo = new THREE.Mesh(new THREE.TorusGeometry(0.76, 0.045, 8, 32), this.materials.cyan);
-    halo.rotation.x = Math.PI / 2;
-    group.add(halo);
+    const squareHalo = new THREE.Group();
+    addSquareFrame(squareHalo, 1.5, 1.5, 0.06, this.materials.cyan);
+    squareHalo.rotation.x = Math.PI / 2;
+    group.add(squareHalo);
     const light = new THREE.PointLight('#65fbfa', 2.5, 8, 2);
     group.add(light);
     group.userData.kind = 'powerup';
@@ -170,10 +155,10 @@ export class SkylineCourse {
     const group = new THREE.Group();
     group.position.set(...position);
     const stem = meshBox([0.22, 1.0, 0.22], this.materials.dark, [0, -0.5, 0]);
-    const body = new THREE.Mesh(new THREE.IcosahedronGeometry(0.5, 1), this.materials.magenta);
-    const sensor = new THREE.Mesh(new THREE.SphereGeometry(0.17, 16, 12), new THREE.MeshStandardMaterial({ color: '#fff5d5', emissive: color, emissiveIntensity: 3 }));
-    sensor.position.z = 0.4;
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.68, 0.055, 8, 28), this.materials.violet);
+    const body = meshBox([0.82, 0.82, 0.38], this.materials.magenta, [0, 0, 0], false);
+    const sensor = meshBox([0.28, 0.28, 0.08], new THREE.MeshStandardMaterial({ color: '#fff5d5', emissive: color, emissiveIntensity: 3 }), [0, 0, 0.24], false);
+    const ring = new THREE.Group();
+    addSquareFrame(ring, 1.36, 1.36, 0.055, this.materials.violet);
     ring.rotation.x = Math.PI / 2;
     group.add(stem, body, sensor, ring);
     group.traverse((object) => { object.userData.targetId = id; });
@@ -229,8 +214,10 @@ export class SkylineCourse {
     this.addSolid('court-platform-right', [7.2, 6.4, -17], [4.2, 0.5, 5.4], this.materials.concrete, { walkable: true });
     this.addSolid('court-cover-a', [-3.2, 5.9, -18.8], [1.4, 1.4, 2.5], this.materials.cobalt, { walkable: false });
     this.addSolid('court-cover-b', [3.2, 5.9, -15.1], [1.4, 1.4, 2.5], this.materials.cobalt, { walkable: false });
-    const halo = new THREE.Mesh(new THREE.TorusGeometry(4.1, 0.14, 12, 48), this.materials.magenta);
-    halo.position.set(0, 9.1, -17); halo.rotation.x = Math.PI / 2;
+    const halo = new THREE.Group();
+    halo.position.set(0, 9.1, -17);
+    addSquareFrame(halo, 8.2, 8.2, 0.16, this.materials.magenta);
+    halo.rotation.x = Math.PI / 2;
     this.scene.add(halo); this.animated.push({ mesh: halo, type: 'spin', base: 1 });
     this.addTruss(0, 4.8, -22.3, 16, 8, 2.3, this.materials.magenta);
     this.addSign('TARGET COURT // CLEAR 3', [0, 10.6, -21.7], '#ff80b9');
@@ -249,16 +236,15 @@ export class SkylineCourse {
     this.addRail(2.9, 8.9, -30.5, 7);
     const gate = new THREE.Group();
     gate.position.set(0, 8.4, -33);
-    gate.add(new THREE.Mesh(new THREE.TorusGeometry(1.55, 0.13, 12, 36), this.materials.brass));
-    const gateCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.4), this.materials.cyan);
+    addSquareFrame(gate, 3.1, 3.1, 0.18, this.materials.brass);
+    const gateCore = meshBox([0.62, 0.62, 0.62], this.materials.cyan, [0, 0, 0], false);
     gate.add(gateCore);
     const gateLight = new THREE.PointLight('#fff0b0', 2.2, 10, 2); gate.add(gateLight);
     this.scene.add(gate); this.finishGate = gate; this.animated.push({ mesh: gate, type: 'gate', base: 8.4 });
     this.addSign('SUNRISE GATE', [0, 11.6, -32.8], '#ffe4a1');
 
     // Intentional exterior context: water plane and simple horizon pylons, not an empty skybox.
-    const water = new THREE.Mesh(new THREE.PlaneGeometry(180, 180), new THREE.MeshStandardMaterial({ color: '#1a7390', roughness: 0.32, metalness: 0.7, transparent: true, opacity: 0.72 }));
-    water.rotation.x = -Math.PI / 2; water.position.y = -1.58;
+    const water = meshBox([180, 0.05, 180], new THREE.MeshStandardMaterial({ color: '#1a7390', roughness: 0.32, metalness: 0.7, transparent: true, opacity: 0.72 }), [0, -1.58, 0], false);
     this.scene.add(water);
     for (const [x, z, h] of [[-24, 9, 10], [22, -10, 13], [-21, -26, 8], [25, 23, 7]]) this.addTruss(x, -1.4, z, 3.6, h, 3.2, this.materials.cobalt);
   }

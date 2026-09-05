@@ -1,0 +1,18 @@
+{
+  "room": "launch-dock",
+  "score": null,
+  "status": "BLOCKED_NO_BROWSER_BINARY",
+  "critical": [],
+  "major": [],
+  "medium": [],
+  "minor": [],
+  "move": [],
+  "remove": [],
+  "add": [],
+  "replace": [],
+  "composition": "UNREVIEWED \u2014 needs meaningful player-height render captures.",
+  "navigation": "UNREVIEWED \u2014 needs actual movement/input captures.",
+  "style": "UNREVIEWED \u2014 needs semantic image review.",
+  "lighting": "UNREVIEWED \u2014 needs rendered exposure/shadow review.",
+  "most_important_fix": "Capture entry/focal/path views in a supported browser before grading."
+}

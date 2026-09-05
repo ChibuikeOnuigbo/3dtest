@@ -1,0 +1,26 @@
+{
+  "room_id": "split-route",
+  "room_name": "Split Route",
+  "purpose": "Teach a visible choice between wall link and dash span.",
+  "expected_focal_point": "blue checkpoint tower and two colored routes",
+  "expected_player_route": "west cobalt wall shaft or east orange dash span",
+  "expected_important_objects": "cobalt wall panels, orange bridge, truss supports",
+  "expected_lighting": "cobalt/orange route color coding",
+  "environment_pack": "Original project-authored Skyline Relay course; no external environment pack.",
+  "asset_list": [
+    "public/textures/sunlit-concrete-tile.png",
+    "public/textures/painted-route-metal.png",
+    "original procedural cube/box course geometry"
+  ],
+  "objective": "Teach a visible choice between wall link and dash span.",
+  "visual_target_reference": "research/design/environment_board.md and docs/LEVEL_MAP.md",
+  "capture_requirement": [
+    "entry.png",
+    "focal.png",
+    "path.png",
+    "interaction.png",
+    "exit.png",
+    "secondary.png"
+  ],
+  "vertical_requirement": true
+}

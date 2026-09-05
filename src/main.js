@@ -64,7 +64,7 @@ dashLight.position.set(0, 0.3, -0.4);
 player.cameraRig.add(dashLight);
 const pulseTool = new THREE.Group();
 const glove = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.13, 0.38), new THREE.MeshStandardMaterial({ color: '#17355a', roughness: 0.3, metalness: 0.84 }));
-const emitter = new THREE.Mesh(new THREE.OctahedronGeometry(0.075), new THREE.MeshStandardMaterial({ color: '#cafff3', emissive: '#1fcfd0', emissiveIntensity: 2.4, roughness: 0.2 }));
+const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 0.12), new THREE.MeshStandardMaterial({ color: '#cafff3', emissive: '#1fcfd0', emissiveIntensity: 2.4, roughness: 0.2 }));
 emitter.position.z = -0.27;
 pulseTool.add(glove, emitter); pulseTool.position.set(0.34, -0.29, -0.48); pulseTool.rotation.set(-0.1, -0.22, 0); camera.add(pulseTool);
 const raycaster = new THREE.Raycaster(); raycaster.far = 50;

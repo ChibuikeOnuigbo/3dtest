@@ -18,6 +18,11 @@ horror, not abandoned, not a bunker.
 1. Route surfaces use color and silhouette; do not rely on darkness or horror fog.
 2. Geometry clusters describe real structural purpose: crane, bridge, stair, support,
    service equipment, railing. No random prop scatter.
-3. Generated concept images may inform later moodboards but are not game textures.
-4. External environmental assets require their own licence/provenance/technical review
-   before use; the current course uses original procedural geometry.
+3. The current course deliberately uses square/cube/rectangular structural modules only;
+   no spheres, toruses, cylinders, icosahedrons or generic “vector” hero shapes. A future
+   triangle may appear only as a clearly defined grapple marker/route mechanic.
+4. Two original 1024×1024 raster base-colour textures now provide real material variation:
+   sunlit concrete tile and worn cobalt/orange route metal. They are recorded in
+   `research/assets/vector_run_texture_manifest.json`.
+5. External environmental assets require their own licence/provenance/technical review
+   before use; the current course uses original authored geometry and approved local textures.
