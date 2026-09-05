@@ -1,0 +1,982 @@
+{
+  "schema": "rivet-run-player-height-capture/v2",
+  "run_id": "33962103333",
+  "capture_mode": "real first-person player input and pointer-lock mouse movement; no free/editor camera, no position teleport",
+  "base_url": "http://127.0.0.1:5173/?seed=",
+  "status": "CAPTURED_UNINSPECTED",
+  "seed": "rivet-run-highline-01",
+  "frames": [
+    {
+      "frame_id": "01-dispatch-spawn",
+      "region": "dispatch-bay",
+      "intent": "first-person spawn and forward route readability",
+      "image": "qa/visual/evidence/33962103333/01-dispatch-spawn.png",
+      "camera_position": [
+        -0.237,
+        1.54,
+        43.444
+      ],
+      "camera_direction": [
+        0.4473,
+        0.311,
+        -0.8386
+      ],
+      "player_position": [
+        0,
+        0,
+        43
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "02-dispatch-look-east",
+      "region": "dispatch-bay",
+      "intent": "real player look-around: adjacent east city/route context",
+      "image": "qa/visual/evidence/33962103333/02-dispatch-look-east.png",
+      "camera_position": [
+        0.065,
+        1.54,
+        43.499
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        0,
+        0,
+        43
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "03-dispatch-look-west",
+      "region": "dispatch-bay",
+      "intent": "real player look-around: adjacent west city/route context",
+      "image": "qa/visual/evidence/33962103333/03-dispatch-look-west.png",
+      "camera_position": [
+        -0.497,
+        1.54,
+        42.92
+      ],
+      "camera_direction": [
+        0.9384,
+        0.311,
+        0.1507
+      ],
+      "player_position": [
+        0,
+        0,
+        43
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "04-intake-motion",
+      "region": "yard-roof",
+      "intent": "player-height intake jump/landing approach",
+      "image": "qa/visual/evidence/33962103333/04-intake-motion.png",
+      "camera_position": [
+        -0.533,
+        2.237,
+        38.927
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        -0.5978134442057181,
+        0.6974999999999996,
+        38.42736952745713
+      ],
+      "player_state": "AIR",
+      "player_grounded": false,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "05-switch-house-arrival",
+      "region": "switch-house",
+      "intent": "permit terminal and covered transition arrival",
+      "image": "qa/visual/evidence/33962103333/05-switch-house-arrival.png",
+      "camera_position": [
+        -1.111,
+        1.54,
+        35.339
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        -1.1760260675567222,
+        0,
+        34.84
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "06-transfer-beacon",
+      "region": "switch-house",
+      "intent": "checkpoint and branch-read frame",
+      "image": "qa/visual/evidence/33962103333/06-transfer-beacon.png",
+      "camera_position": [
+        -1.277,
+        1.54,
+        35.339
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        -1.342676915842414,
+        0,
+        34.84
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "07-east-span-runup",
+      "region": "east-span",
+      "intent": "real approach to the supported dash branch",
+      "image": "qa/visual/evidence/33962103333/07-east-span-runup.png",
+      "camera_position": [
+        -0.537,
+        1.54,
+        35.339
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        -0.602446779157223,
+        0,
+        34.84
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "08-east-span-transfer",
+      "region": "east-span",
+      "intent": "dash/jump transfer with viaduct support in frame",
+      "image": "qa/visual/evidence/33962103333/08-east-span-transfer.png",
+      "camera_position": [
+        -1.423,
+        2.32,
+        35.167
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        -1.4887673438334719,
+        0.78,
+        34.66798091471054
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "09-boiler-court-arrival",
+      "region": "boiler-court",
+      "intent": "court arrival, mounted-relay context and exit read",
+      "image": "qa/visual/evidence/33962103333/09-boiler-court-arrival.png",
+      "camera_position": [
+        -1.634,
+        2.32,
+        33.632
+      ],
+      "camera_direction": [
+        -0.1232,
+        0.311,
+        -0.9424
+      ],
+      "player_position": [
+        -1.6991472823562412,
+        0.78,
+        33.13297447108623
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "10-boiler-court-look",
+      "region": "boiler-court",
+      "intent": "player look-around across court architecture",
+      "image": "qa/visual/evidence/33962103333/10-boiler-court-look.png",
+      "camera_position": [
+        -1.707,
+        2.32,
+        33.618
+      ],
+      "camera_direction": [
+        0.0095,
+        0.311,
+        -0.9504
+      ],
+      "player_position": [
+        -1.701497995683861,
+        0.78,
+        33.114384243839844
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "seed": "rivet-run-highline-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    }
+  ],
+  "final_probe": {
+    "player": {
+      "state": "GROUND",
+      "grounded": true,
+      "position": [
+        -1.701497995683861,
+        0.78,
+        33.114384243839844
+      ],
+      "velocity": [
+        -3.4180010825184073e-16,
+        0,
+        -2.614402375854874e-15
+      ],
+      "doubleJumpUnlocked": false,
+      "wallJumpCount": 0,
+      "dashCooldown": 0,
+      "crouching": false,
+      "slam": false
+    },
+    "cameraPosition": [
+      -1.707,
+      2.32,
+      33.618
+    ],
+    "cameraDirection": [
+      0.0095,
+      0.311,
+      -0.9504
+    ],
+    "elapsed": 14.7,
+    "relaysRemaining": 3,
+    "checkpoint": [
+      0,
+      0,
+      43
+    ],
+    "objective": "Reach the Kinetic Permit terminal on the switch-house roof.",
+    "bindings": {
+      "MOVE_FORWARD": "KeyW",
+      "MOVE_BACK": "KeyS",
+      "MOVE_LEFT": "KeyA",
+      "MOVE_RIGHT": "KeyD",
+      "JUMP": "Space",
+      "DASH": "ShiftLeft",
+      "CROUCH": "ControlLeft",
+      "RESTART": "KeyR",
+      "PAUSE": "Escape"
+    },
+    "worldSeed": "rivet-run-highline-01",
+    "sceneAudit": {
+      "schema": "rivet-run-scene-audit/v1",
+      "diagnostic_only": true,
+      "total_registered_objects": 1273,
+      "seed_controlled_secondary_layer": [
+        {
+          "type": "roof-prop",
+          "region": "yard-roof",
+          "prop": "vent-bank",
+          "position": [
+            -6.25,
+            0,
+            38.4
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "yard-roof",
+          "prop": "water-tank",
+          "position": [
+            6.1,
+            0,
+            46
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "switch-house",
+          "prop": "signal-box",
+          "position": [
+            -6.2,
+            1.75,
+            22.7
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "switch-house",
+          "prop": "vent-bank",
+          "position": [
+            6.35,
+            1.75,
+            17.2
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "wall-shaft-roof",
+          "prop": "signal-box",
+          "position": [
+            -10.85,
+            2.25,
+            8.8
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "dash-viaduct-start",
+          "prop": "vent-bank",
+          "position": [
+            10.85,
+            2.25,
+            8.6
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "boiler-court",
+          "prop": "switchgear",
+          "position": [
+            10.25,
+            4.65,
+            -8.9
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "bridge-control",
+          "prop": "signal-box",
+          "position": [
+            5.2,
+            5.45,
+            -30.5
+          ]
+        },
+        {
+          "type": "skyline-building",
+          "index": 1,
+          "position": [
+            -42,
+            -2.9000000000000004,
+            -27
+          ],
+          "height": 16,
+          "family": "concrete"
+        },
+        {
+          "type": "skyline-building",
+          "index": 2,
+          "position": [
+            -39,
+            -2.9000000000000004,
+            -64
+          ],
+          "height": 19,
+          "family": "brick"
+        },
+        {
+          "type": "skyline-building",
+          "index": 3,
+          "position": [
+            42,
+            -3.5,
+            25
+          ],
+          "height": 33,
+          "family": "concrete"
+        },
+        {
+          "type": "skyline-building",
+          "index": 4,
+          "position": [
+            43,
+            -3.5,
+            -38
+          ],
+          "height": 18,
+          "family": "brick"
+        },
+        {
+          "type": "pipe-rack",
+          "id": "seed-pipe-rack-0",
+          "x": -34,
+          "z": 2,
+          "length": 22,
+          "height": -11.250364511739463
+        },
+        {
+          "type": "pipe-rack",
+          "id": "seed-pipe-rack-1",
+          "x": 34,
+          "z": -9,
+          "length": 19,
+          "height": -15.146091683767736
+        },
+        {
+          "type": "pipe-rack",
+          "id": "seed-pipe-rack-2",
+          "x": -31,
+          "z": -51,
+          "length": 18,
+          "height": -13.209968586917967
+        }
+      ],
+      "material_instance_counts": {
+        "charcoal_utility_surface": 48,
+        "unnamed": 1,
+        "weathered_brick": 21,
+        "warm_occupied_glazing": 138,
+        "cool_utility_glazing": 727,
+        "charcoal_structural_trim": 142,
+        "amber_utility_lamp": 10,
+        "weathered_concrete": 30,
+        "painted_route_steel": 39,
+        "safety_painted_steel": 60,
+        "roof_membrane": 3,
+        "ochre_route_paint": 31,
+        "prop:vent-bank": 6,
+        "prop:ac-unit": 3,
+        "prop:switchgear": 3,
+        "prop:water-tank": 2,
+        "prop:ladder-cage": 2,
+        "prop:signal-box": 7
+      },
+      "repeated_asset_families": [
+        {
+          "id": "facade-window",
+          "count": 862,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "facade-cornice",
+          "count": 19,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "facade-pilaster",
+          "count": 38,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "roof-mast",
+          "count": 10,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "roof-mast-tip",
+          "count": 10,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "distant-ridge",
+          "count": 11,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "rail-sleeper",
+          "count": 26,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "parapet",
+          "count": 40,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "parapet-opening-mark",
+          "count": 20,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "roof-seam",
+          "count": 46,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "route-paint",
+          "count": 15,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "bridge-diagonal",
+          "count": 22,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        },
+        {
+          "id": "rail-post",
+          "count": 14,
+          "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+        }
+      ],
+      "regular_spacing_candidates": [
+        {
+          "id": "rail-sleeper",
+          "axis": "z",
+          "deltas": [
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2,
+            5.2
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        },
+        {
+          "id": "rail-post",
+          "axis": "z",
+          "deltas": [
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        }
+      ],
+      "required_human_review": "Use player-height frames to judge visual repetition, dead zones, support plausibility and placement. Do not infer approval from these counts."
+    }
+  },
+  "scene_audit": {
+    "schema": "rivet-run-scene-audit/v1",
+    "diagnostic_only": true,
+    "total_registered_objects": 1273,
+    "seed_controlled_secondary_layer": [
+      {
+        "type": "roof-prop",
+        "region": "yard-roof",
+        "prop": "vent-bank",
+        "position": [
+          -6.25,
+          0,
+          38.4
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "yard-roof",
+        "prop": "water-tank",
+        "position": [
+          6.1,
+          0,
+          46
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "switch-house",
+        "prop": "signal-box",
+        "position": [
+          -6.2,
+          1.75,
+          22.7
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "switch-house",
+        "prop": "vent-bank",
+        "position": [
+          6.35,
+          1.75,
+          17.2
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "wall-shaft-roof",
+        "prop": "signal-box",
+        "position": [
+          -10.85,
+          2.25,
+          8.8
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "dash-viaduct-start",
+        "prop": "vent-bank",
+        "position": [
+          10.85,
+          2.25,
+          8.6
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "boiler-court",
+        "prop": "switchgear",
+        "position": [
+          10.25,
+          4.65,
+          -8.9
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "bridge-control",
+        "prop": "signal-box",
+        "position": [
+          5.2,
+          5.45,
+          -30.5
+        ]
+      },
+      {
+        "type": "skyline-building",
+        "index": 1,
+        "position": [
+          -42,
+          -2.9000000000000004,
+          -27
+        ],
+        "height": 16,
+        "family": "concrete"
+      },
+      {
+        "type": "skyline-building",
+        "index": 2,
+        "position": [
+          -39,
+          -2.9000000000000004,
+          -64
+        ],
+        "height": 19,
+        "family": "brick"
+      },
+      {
+        "type": "skyline-building",
+        "index": 3,
+        "position": [
+          42,
+          -3.5,
+          25
+        ],
+        "height": 33,
+        "family": "concrete"
+      },
+      {
+        "type": "skyline-building",
+        "index": 4,
+        "position": [
+          43,
+          -3.5,
+          -38
+        ],
+        "height": 18,
+        "family": "brick"
+      },
+      {
+        "type": "pipe-rack",
+        "id": "seed-pipe-rack-0",
+        "x": -34,
+        "z": 2,
+        "length": 22,
+        "height": -11.250364511739463
+      },
+      {
+        "type": "pipe-rack",
+        "id": "seed-pipe-rack-1",
+        "x": 34,
+        "z": -9,
+        "length": 19,
+        "height": -15.146091683767736
+      },
+      {
+        "type": "pipe-rack",
+        "id": "seed-pipe-rack-2",
+        "x": -31,
+        "z": -51,
+        "length": 18,
+        "height": -13.209968586917967
+      }
+    ],
+    "material_instance_counts": {
+      "charcoal_utility_surface": 48,
+      "unnamed": 1,
+      "weathered_brick": 21,
+      "warm_occupied_glazing": 138,
+      "cool_utility_glazing": 727,
+      "charcoal_structural_trim": 142,
+      "amber_utility_lamp": 10,
+      "weathered_concrete": 30,
+      "painted_route_steel": 39,
+      "safety_painted_steel": 60,
+      "roof_membrane": 3,
+      "ochre_route_paint": 31,
+      "prop:vent-bank": 6,
+      "prop:ac-unit": 3,
+      "prop:switchgear": 3,
+      "prop:water-tank": 2,
+      "prop:ladder-cage": 2,
+      "prop:signal-box": 7
+    },
+    "repeated_asset_families": [
+      {
+        "id": "facade-window",
+        "count": 862,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "facade-cornice",
+        "count": 19,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "facade-pilaster",
+        "count": 38,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "roof-mast",
+        "count": 10,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "roof-mast-tip",
+        "count": 10,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "distant-ridge",
+        "count": 11,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "rail-sleeper",
+        "count": 26,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "parapet",
+        "count": 40,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "parapet-opening-mark",
+        "count": 20,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "roof-seam",
+        "count": 46,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "route-paint",
+        "count": 15,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "bridge-diagonal",
+        "count": 22,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      },
+      {
+        "id": "rail-post",
+        "count": 14,
+        "review": "Inspect in player frames for copy-paste repetition; repetition may be structurally intentional."
+      }
+    ],
+    "regular_spacing_candidates": [
+      {
+        "id": "rail-sleeper",
+        "axis": "z",
+        "deltas": [
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2,
+          5.2
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      },
+      {
+        "id": "rail-post",
+        "axis": "z",
+        "deltas": [
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      }
+    ],
+    "required_human_review": "Use player-height frames to judge visual repetition, dead zones, support plausibility and placement. Do not infer approval from these counts."
+  },
+  "console_events": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x289c0014a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x289c0014a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x289c0014a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x289c0014a200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "approval": {
+    "approved": false,
+    "score": null,
+    "reason": "A vision-capable critic must inspect the actual PNG files; capture existence is not approval."
+  }
+}
