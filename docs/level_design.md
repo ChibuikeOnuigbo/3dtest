@@ -43,11 +43,14 @@ without becoming a giant empty course.
 
 ## Deterministic variation
 
-One master seed (`rivet-run-highline-01`, configurable via `?seed=`) controls
-only safe presentation variation: some distant window lamps, roof mast placement
-and ridge stepping. Route deck coordinates, gap widths, collision, objectives,
-route options and transition framing remain human-authored and invariant. This
-prevents procedural dumps from changing level fairness.
+One master seed (`rivet-run-highline-01`, configurable via `?seed=`) controls a
+real but bounded secondary world layer: roof-edge machinery, secondary skyline
+warehouses/window occupancy, lower-world pipe racks, mast placement, distant
+ridge stepping and related ambient-light distribution. The same seed is
+reproducible and every choice is carried into the capture scene audit. Route deck
+coordinates, gap widths, collision, objectives, required route options and
+transition framing remain human-authored and invariant. This lets the world look
+meaningfully different without allowing a procedural dump to change fairness.
 
 ## Non-negotiable verification
 

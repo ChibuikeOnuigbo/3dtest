@@ -25,7 +25,9 @@ on:
       - 'tools/qa/**'
 
 permissions:
-  contents: read
+  # A small, immutable QA evidence set is committed to the same protected Arena branch
+  # after a successful capture. Browser binaries/traces remain short-lived artifacts.
+  contents: write
 
 jobs:
   browser-smoke-and-capture:
@@ -75,9 +77,24 @@ jobs:
           exit 1
 
       - name: Capture real first-person browser evidence
+        env:
+          VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
           node tools/qa/capture_visual_views.mjs
+
+      - name: Commit captured PNGs and uninspected frame records
+        if: success()
+        run: |
+          git config user.name 'rivet-run-browser-qa[bot]'
+          git config user.email 'rivet-run-browser-qa[bot]@users.noreply.github.com'
+          git add qa/visual/evidence
+          if git diff --cached --quiet; then
+            echo 'No player-height evidence generated.'
+            exit 1
+          fi
+          git commit -m "qa: add captured player-height frames for run $GITHUB_RUN_ID"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Stop local game server
         if: always()

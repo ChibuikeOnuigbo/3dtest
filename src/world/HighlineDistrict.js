@@ -25,6 +25,22 @@ const DISTRICT_BUILDINGS = Object.freeze([
   [-55, 5, 22, 24, 24, 'concrete'], [55, -8, 26, 27, 30, 'brick'], [-54, -48, 23, 17, 35, 'brick'], [52, -53, 25, 20, 40, 'concrete'],
 ]);
 
+// These anchors deliberately sit away from primary lines. The seed can make a roof
+// feel occupied differently without moving a required take-off, landing, wall or gate.
+const SECONDARY_ROOF_ANCHORS = Object.freeze([
+  ['yard-roof', -6.25, 0, 38.4, 'vent-bank'], ['yard-roof', 6.1, 0, 46, 'water-tank'],
+  ['switch-house', -6.2, 1.75, 22.7, 'signal-box'], ['switch-house', 6.35, 1.75, 17.2, 'vent-bank'],
+  ['wall-shaft-roof', -10.85, 2.25, 8.8, 'signal-box'], ['dash-viaduct-start', 10.85, 2.25, 8.6, 'vent-bank'],
+  ['boiler-court', -10.25, 4.65, -18.1, 'water-tank'], ['boiler-court', 10.25, 4.65, -8.9, 'switchgear'],
+  ['bridge-control', -5.2, 5.45, -25, 'vent-bank'], ['bridge-control', 5.2, 5.45, -30.5, 'signal-box'],
+  ['sunline-bridge', -2.5, 7.25, -45.8, 'signal-box'],
+]);
+
+const SECONDARY_SKYLINE_SITES = Object.freeze([
+  [-43, 13, 11, 13, 'brick'], [-42, -27, 13, 12, 'concrete'], [-39, -64, 12, 13, 'brick'],
+  [42, 25, 12, 14, 'concrete'], [43, -38, 12, 15, 'brick'], [36, -70, 11, 12, 'concrete'],
+]);
+
 function hashText(text) {
   let hash = 2166136261;
   for (let index = 0; index < text.length; index += 1) {
@@ -85,20 +101,29 @@ function makeLabel(text, accent = '#dca75c') {
 function createMaterials() {
   const concreteMap = loadTexture('/textures/sunlit-concrete-tile.png', [3.6, 3.6]);
   const metalMap = loadTexture('/textures/painted-route-metal.png', [2.3, 2.3]);
-  const standard = (map, color, roughness, metalness = 0) => new THREE.MeshStandardMaterial({ map, color, roughness, metalness });
+  const standard = (name, map, color, roughness, metalness = 0) => {
+    const material = new THREE.MeshStandardMaterial({ map, color, roughness, metalness });
+    material.name = name;
+    return material;
+  };
+  const material = (name, options) => {
+    const result = new THREE.MeshStandardMaterial(options);
+    result.name = name;
+    return result;
+  };
   return {
-    roof: standard(concreteMap, '#5b6161', 0.9, 0.08),
-    concrete: standard(concreteMap, '#c1ae91', 0.88, 0.02),
-    brick: standard(concreteMap, '#845f4d', 0.93, 0),
-    steel: standard(metalMap, '#506d76', 0.52, 0.54),
-    safety: standard(metalMap, '#c47a3d', 0.47, 0.48),
-    trim: new THREE.MeshStandardMaterial({ color: '#26373b', roughness: 0.56, metalness: 0.68 }),
-    shadow: new THREE.MeshStandardMaterial({ color: '#1b2427', roughness: 0.82, metalness: 0.15 }),
-    window: new THREE.MeshStandardMaterial({ color: '#496872', emissive: '#142932', emissiveIntensity: 0.4, roughness: 0.24, metalness: 0.62 }),
-    windowWarm: new THREE.MeshStandardMaterial({ color: '#dca55d', emissive: '#be6a31', emissiveIntensity: 0.8, roughness: 0.42, metalness: 0.2 }),
-    routePaint: new THREE.MeshStandardMaterial({ color: '#d5b362', emissive: '#5f431d', emissiveIntensity: 0.16, roughness: 0.38, metalness: 0.36 }),
-    relay: new THREE.MeshStandardMaterial({ color: '#e0bd74', emissive: '#a35c25', emissiveIntensity: 1.25, roughness: 0.26, metalness: 0.68 }),
-    routeGlow: new THREE.MeshStandardMaterial({ color: '#f1d08a', emissive: '#be7731', emissiveIntensity: 1.1, roughness: 0.25, metalness: 0.4 }),
+    roof: standard('roof_membrane', concreteMap, '#5b6161', 0.9, 0.08),
+    concrete: standard('weathered_concrete', concreteMap, '#c1ae91', 0.88, 0.02),
+    brick: standard('weathered_brick', concreteMap, '#845f4d', 0.93, 0),
+    steel: standard('painted_route_steel', metalMap, '#506d76', 0.52, 0.54),
+    safety: standard('safety_painted_steel', metalMap, '#c47a3d', 0.47, 0.48),
+    trim: material('charcoal_structural_trim', { color: '#26373b', roughness: 0.56, metalness: 0.68 }),
+    shadow: material('charcoal_utility_surface', { color: '#1b2427', roughness: 0.82, metalness: 0.15 }),
+    window: material('cool_utility_glazing', { color: '#496872', emissive: '#142932', emissiveIntensity: 0.4, roughness: 0.24, metalness: 0.62 }),
+    windowWarm: material('warm_occupied_glazing', { color: '#dca55d', emissive: '#be6a31', emissiveIntensity: 0.8, roughness: 0.42, metalness: 0.2 }),
+    routePaint: material('ochre_route_paint', { color: '#d5b362', emissive: '#5f431d', emissiveIntensity: 0.16, roughness: 0.38, metalness: 0.36 }),
+    relay: material('amber_relay_panel', { color: '#e0bd74', emissive: '#a35c25', emissiveIntensity: 1.25, roughness: 0.26, metalness: 0.68 }),
+    routeGlow: material('amber_utility_lamp', { color: '#f1d08a', emissive: '#be7731', emissiveIntensity: 1.1, roughness: 0.25, metalness: 0.4 }),
   };
 }
 
@@ -112,8 +137,10 @@ export class HighlineDistrict {
     this.scene = scene;
     this.seed = seed;
     this.random = seededRandom(seed);
+    this.seedChoices = [];
     this.materials = createMaterials();
     this.solids = [];
+    this.sceneObjects = [];
     this.targets = new Map();
     this.animated = [];
     this.powerupCollected = false;
@@ -126,6 +153,7 @@ export class HighlineDistrict {
     const mesh = meshBox(size, material, position, cast);
     mesh.userData.worldObject = id;
     this.scene.add(mesh);
+    this.sceneObjects.push({ id, kind: 'visual', material: material.name || 'unnamed', position: [...position], size: [...size] });
     return mesh;
   }
 
@@ -135,6 +163,7 @@ export class HighlineDistrict {
     const mesh = meshBox(size, material, [x, top - height / 2, z]);
     mesh.userData.solidId = id;
     this.scene.add(mesh);
+    this.sceneObjects.push({ id, kind: 'solid', material: material.name || 'unnamed', position: [x, top - height / 2, z], size: [...size] });
     this.solids.push({
       id,
       min: new THREE.Vector3(x - width / 2, top - height, z - depth / 2),
@@ -235,6 +264,7 @@ export class HighlineDistrict {
     group.userData.worldObject = id;
     group.traverse((child) => { child.castShadow = true; child.receiveShadow = true; });
     this.scene.add(group);
+    this.sceneObjects.push({ id, kind: 'mounted-prop', material: `prop:${type}`, position: [x, top, z], size: [0, 0, 0] });
   }
 
   addFacade(id, x, z, width, depth, top, height, family, accentRate = 0.18) {
@@ -437,9 +467,50 @@ export class HighlineDistrict {
     this.addSign('HARBOR LINE // 08', [0, 6.9, -76], '#d3aa67', 1.2);
   }
 
+  addSeededPipeRack(id, x, z, length, height) {
+    // Square-section pipes and portal frames intentionally read as a mounted utility rack,
+    // not as a floating curve or an arbitrary obstacle.
+    const baseTop = -23.8;
+    for (const offset of [-0.58, 0.58]) this.addVisual(`${id}-pipe`, [0.28, 0.28, length], this.materials.steel, [x + offset, height, z]);
+    for (const localZ of [-length / 2 + 0.45, 0, length / 2 - 0.45]) {
+      const supportHeight = height - baseTop;
+      this.addVisual(`${id}-support`, [0.3, supportHeight, 0.3], this.materials.trim, [x, baseTop + supportHeight / 2, z + localZ]);
+      this.addVisual(`${id}-crossbeam`, [2.05, 0.22, 0.22], this.materials.safety, [x, height - 0.18, z + localZ]);
+    }
+    this.seedChoices.push({ type: 'pipe-rack', id, x, z, length, height });
+  }
+
+  buildSeedLayer() {
+    // Secondary roof equipment changes per seed but is kept outside primary traversal lanes.
+    for (const [region, x, top, z, type] of SECONDARY_ROOF_ANCHORS) {
+      if (this.random() >= 0.46) {
+        const id = `seed-${region}-${type}-${x}-${z}`;
+        this.addRoofProp(id, x, top, z, type);
+        this.seedChoices.push({ type: 'roof-prop', region, prop: type, position: [x, top, z] });
+      }
+    }
+    // A varying second skyline ring gives each seed a different distant silhouette while
+    // fixed near-route buildings preserve landmark clarity and navigation.
+    SECONDARY_SKYLINE_SITES.forEach(([x, z, width, depth, family], index) => {
+      if (this.random() >= 0.3) {
+        const height = 14 + Math.round(this.random() * 20);
+        const top = -4.2 + Math.round(this.random() * 18) / 10;
+        this.addFacade(`seed-skyline-${index}`, x, z, width, depth, top, height, family, 0.05 + this.random() * 0.13);
+        this.seedChoices.push({ type: 'skyline-building', index, position: [x, top, z], height, family });
+      }
+    });
+    // Two of four pre-authored foundation rack sites become an optional visual/set-dressing
+    // layer. They have no collider and never alter the primary route's fairness.
+    const pipeSites = [[-34, 2, 22], [34, -9, 19], [-31, -51, 18], [31, -62, 20]];
+    pipeSites.forEach(([x, z, length], index) => {
+      if (this.random() >= 0.42) this.addSeededPipeRack(`seed-pipe-rack-${index}`, x, z, length, -10 - this.random() * 6);
+    });
+  }
+
   build() {
     this.buildBackdrop();
     REGION_PLAN.forEach((region) => this.addRoofRegion(region));
+    this.buildSeedLayer();
     this.addKineticTerminal();
     this.addCheckpoint();
     this.addSwitchHouse();
@@ -492,6 +563,37 @@ export class HighlineDistrict {
 
   activeTargetCount() { return [...this.targets.values()].filter((target) => target.active).length; }
   targetObjects() { return [...this.targets.values()].flatMap(({ group, active }) => active ? [group] : []); }
+
+  sceneAudit() {
+    // This is deliberately a composition-risk diagnostic, never a replacement for
+    // a human/vision semantic review of the rendered frame.
+    const byAsset = new Map();
+    const byMaterial = new Map();
+    for (const object of this.sceneObjects) {
+      byAsset.set(object.id, [...(byAsset.get(object.id) || []), object]);
+      byMaterial.set(object.material, (byMaterial.get(object.material) || 0) + 1);
+    }
+    const repeatedAssets = [...byAsset.entries()]
+      .filter(([, instances]) => instances.length >= 7)
+      .map(([id, instances]) => ({ id, count: instances.length, review: 'Inspect in player frames for copy-paste repetition; repetition may be structurally intentional.' }));
+    const regularRows = [];
+    for (const [id, instances] of byAsset.entries()) {
+      if (instances.length < 5) continue;
+      const positions = instances.map(({ position }) => position).sort((a, b) => a[2] - b[2]);
+      const deltas = positions.slice(1).map((entry, index) => Number((entry[2] - positions[index][2]).toFixed(2)));
+      if (deltas.length && new Set(deltas).size <= 2) regularRows.push({ id, axis: 'z', deltas, review: 'Check whether the regular spacing reads as credible construction or visible copy-paste.' });
+    }
+    return {
+      schema: 'rivet-run-scene-audit/v1',
+      diagnostic_only: true,
+      total_registered_objects: this.sceneObjects.length,
+      seed_controlled_secondary_layer: this.seedChoices,
+      material_instance_counts: Object.fromEntries(byMaterial),
+      repeated_asset_families: repeatedAssets,
+      regular_spacing_candidates: regularRows,
+      required_human_review: 'Use player-height frames to judge visual repetition, dead zones, support plausibility and placement. Do not infer approval from these counts.',
+    };
+  }
 
   reset() {
     this.powerupCollected = false;

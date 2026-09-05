@@ -6,6 +6,9 @@ playwright-report/
 test-results/
 # Generated real-browser evidence is stored as a short-lived CI artifact, not source history.
 qa/visual/**/*.png
+!qa/visual/evidence/
+!qa/visual/evidence/**/*.png
+!qa/visual/evidence/**/*.json
 qa/visual/**/*.zip
 qa/visual/playthrough_context.json
 

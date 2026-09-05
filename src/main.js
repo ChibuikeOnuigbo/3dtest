@@ -176,5 +176,16 @@ function animate() {
   renderer.render(scene, camera);
 }
 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75)); renderer.setSize(window.innerWidth, window.innerHeight); });
-window.__rivetRunProbe = Object.freeze({ snapshot: () => Object.freeze({ player: player.snapshot(), elapsed: Number(elapsed.toFixed(3)), relaysRemaining: course.activeTargetCount(), checkpoint: checkpoint.toArray(), objective, bindings, worldSeed: course.seed }) });
+window.__rivetRunProbe = Object.freeze({ snapshot: () => Object.freeze({
+  player: player.snapshot(),
+  cameraPosition: camera.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(3))),
+  cameraDirection: player.facingDirection(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(4))),
+  elapsed: Number(elapsed.toFixed(3)),
+  relaysRemaining: course.activeTargetCount(),
+  checkpoint: checkpoint.toArray(),
+  objective,
+  bindings,
+  worldSeed: course.seed,
+  sceneAudit: course.sceneAudit(),
+}) });
 renderControls(); updateHud(); animate();
