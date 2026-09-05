@@ -80,7 +80,11 @@ const pulseTool = new THREE.Group();
 const glove = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.06, 0.14), new THREE.MeshStandardMaterial({ color: '#51646a', roughness: 0.42, metalness: 0.68 }));
 const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.052, 0.052, 0.052), new THREE.MeshStandardMaterial({ color: '#e6bd77', emissive: '#9b5627', emissiveIntensity: 1.25, roughness: 0.25 }));
 emitter.position.z = -0.12;
-pulseTool.add(glove, emitter); pulseTool.position.set(0.27, -0.43, -0.86); pulseTool.rotation.set(-0.1, -0.22, 0); camera.add(pulseTool);
+pulseTool.add(glove, emitter); pulseTool.position.set(0.34, -0.62, -1.04); pulseTool.rotation.set(-0.1, -0.22, 0);
+// Keep the equipment out of ordinary traversal composition; it becomes visible only
+// as short firing feedback, avoiding a permanently disembodied block in player views.
+pulseTool.visible = false;
+camera.add(pulseTool);
 const raycaster = new THREE.Raycaster(); raycaster.far = 50;
 const clock = new THREE.Clock();
 
@@ -127,7 +131,8 @@ function firePulse() {
   const end = hit ? hit.point : origin.clone().add(player.facingDirection(new THREE.Vector3()).multiplyScalar(18));
   const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([origin, end]), new THREE.LineBasicMaterial({ color: hit ? '#fff0ba' : '#e2a764', transparent: true, opacity: 0.9 }));
   scene.add(line); pulseVisuals.push({ line, life: 0.11 });
-  pulseTool.rotation.x = -0.3; window.setTimeout(() => { pulseTool.rotation.x = -0.1; }, 75);
+  pulseTool.visible = true; pulseTool.rotation.x = -0.3;
+  window.setTimeout(() => { pulseTool.rotation.x = -0.1; pulseTool.visible = false; }, 110);
   if (hit && course.hitTarget(hit.object.userData.targetId)) { tone(720, 0.11, 'square', 0.07); showToast(`Relay switched — ${course.activeTargetCount()} remaining.`); if (course.activeTargetCount() === 0) { objective = 'Relays live. Cross the control bridge to Sunline Exit.'; showToast('YARD LIVE — take the control bridge.'); tone(980, 0.25, 'sine', 0.08); } } else tone(330, 0.035, 'triangle', 0.025);
 }
 function keyIs(action, code) { return bindings[action] === code; }

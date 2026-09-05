@@ -7,7 +7,9 @@ const UP = new THREE.Vector3(0, 1, 0);
 
 const REGION_PLAN = Object.freeze([
   { id: 'yard-roof', region: 'yard', x: 0, z: 43, top: 0, width: 16, depth: 16, support: 21, material: 'roof', purpose: 'spawn / teach acceleration' },
-  { id: 'intake-steps', region: 'yard', x: 0, z: 31, top: 0.42, width: 8.2, depth: 7, support: 16, material: 'steel', purpose: 'short-rise jump line' },
+  // Overlaps the Dispatch roof by half a metre and rises only 0.32 m: the first
+  // circulation transition is a dependable maintenance threshold, not a blind gap.
+  { id: 'intake-steps', region: 'yard', x: 0, z: 31.3, top: 0.32, width: 8.2, depth: 8.4, support: 16, material: 'steel', purpose: 'short-rise jump line' },
   { id: 'switch-house', region: 'transfer', x: 0, z: 19, top: 1.75, width: 17, depth: 13, support: 22, material: 'concrete', purpose: 'ability terminal / route read' },
   { id: 'wall-shaft-roof', region: 'west-shaft', x: -9.2, z: 6.1, top: 2.25, width: 5.4, depth: 10.2, support: 24, material: 'roof', purpose: 'wall route staging' },
   { id: 'dash-viaduct-start', region: 'east-viaduct', x: 9.2, z: 6.1, top: 2.25, width: 5.4, depth: 10.2, support: 24, material: 'roof', purpose: 'dash route staging' },
@@ -112,18 +114,18 @@ function createMaterials() {
     return result;
   };
   return {
-    roof: standard('roof_membrane', concreteMap, '#596064', 0.93, 0.06),
-    concrete: standard('weathered_concrete', concreteMap, '#7b7369', 0.9, 0.03),
-    brick: standard('weathered_brick', concreteMap, '#584a43', 0.92, 0.01),
-    steel: standard('painted_route_steel', metalMap, '#45606a', 0.58, 0.5),
-    safety: standard('safety_painted_steel', metalMap, '#8d5938', 0.55, 0.44),
-    trim: material('charcoal_structural_trim', { color: '#202c2f', roughness: 0.61, metalness: 0.62 }),
-    shadow: material('charcoal_utility_surface', { color: '#182022', roughness: 0.86, metalness: 0.13 }),
-    window: material('cool_utility_glazing', { color: '#355765', emissive: '#10212a', emissiveIntensity: 0.26, roughness: 0.3, metalness: 0.52 }),
-    windowWarm: material('warm_occupied_glazing', { color: '#a36f3d', emissive: '#6b3519', emissiveIntensity: 0.46, roughness: 0.48, metalness: 0.16 }),
-    routePaint: material('ochre_route_paint', { color: '#a66e32', emissive: '#432716', emissiveIntensity: 0.08, roughness: 0.46, metalness: 0.3 }),
-    relay: material('amber_relay_panel', { color: '#b67c3d', emissive: '#683317', emissiveIntensity: 0.74, roughness: 0.34, metalness: 0.56 }),
-    routeGlow: material('amber_utility_lamp', { color: '#d4a663', emissive: '#9d5927', emissiveIntensity: 0.72, roughness: 0.3, metalness: 0.35 }),
+    roof: standard('roof_membrane', concreteMap, '#555f61', 0.94, 0.06),
+    concrete: standard('weathered_concrete', concreteMap, '#726d65', 0.9, 0.03),
+    brick: standard('weathered_brick', concreteMap, '#5b5149', 0.92, 0.01),
+    steel: standard('painted_route_steel', metalMap, '#4b6871', 0.56, 0.5),
+    safety: standard('safety_painted_steel', metalMap, '#75462e', 0.57, 0.42),
+    trim: material('charcoal_structural_trim', { color: '#354548', roughness: 0.57, metalness: 0.58 }),
+    shadow: material('charcoal_utility_surface', { color: '#28383a', roughness: 0.82, metalness: 0.12 }),
+    window: material('cool_utility_glazing', { color: '#315662', emissive: '#10242c', emissiveIntensity: 0.22, roughness: 0.32, metalness: 0.48 }),
+    windowWarm: material('warm_occupied_glazing', { color: '#92643b', emissive: '#643016', emissiveIntensity: 0.38, roughness: 0.5, metalness: 0.14 }),
+    routePaint: material('oxide_route_paint', { color: '#744523', emissive: '#3d2010', emissiveIntensity: 0.05, roughness: 0.52, metalness: 0.25 }),
+    relay: material('amber_relay_panel', { color: '#a66f37', emissive: '#643116', emissiveIntensity: 0.65, roughness: 0.36, metalness: 0.52 }),
+    routeGlow: material('amber_utility_lamp', { color: '#d0a25f', emissive: '#925123', emissiveIntensity: 0.68, roughness: 0.32, metalness: 0.32 }),
   };
 }
 
@@ -290,10 +292,30 @@ export class HighlineDistrict {
         this.addVisual('facade-window', [1.08, 1.74, 0.07], material, [wx, wy, z + depth / 2 + 0.04], false);
       }
     }
-    // Deep cornices and side pilasters give façade silhouette without loose decoration.
+    // Visible side faces carry the same constructed logic. This prevents a city block
+    // viewed obliquely from becoming a single unarticulated brown wall.
+    const sideCols = Math.max(2, Math.min(4, Math.floor(depth / 3.5)));
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < sideCols; column += 1) {
+        const wz = z - depth / 2 + 1.1 + column * ((depth - 2.2) / Math.max(1, sideCols - 1));
+        const wy = baseY + row * 3.2;
+        const material = this.random() < accentRate * 0.55 ? warmMaterial : windowMaterial;
+        this.addVisual('facade-side-window', [0.07, 1.52, 0.96], material, [x - width / 2 - 0.04, wy, wz], false);
+      }
+    }
+    // Cornices, restrained floor belts and piers turn a mass into facade assembly rather
+    // than using hundreds of floating cards as the only architectural detail.
     this.addVisual('facade-cornice', [width + 0.34, 0.32, depth + 0.34], this.materials.trim, [x, top + 0.08, z]);
-    this.addVisual('facade-pilaster', [0.42, height + 0.3, 0.45], this.materials.trim, [x - width / 2 + 0.15, top - height / 2, z + depth / 2 + 0.12]);
-    this.addVisual('facade-pilaster', [0.42, height + 0.3, 0.45], this.materials.trim, [x + width / 2 - 0.15, top - height / 2, z + depth / 2 + 0.12]);
+    for (let level = 1; level < rows; level += 1) {
+      const bandY = baseY + level * 3.2 - 1.08;
+      this.addVisual('facade-service-band', [width + 0.1, 0.12, 0.16], this.materials.trim, [x, bandY, z + depth / 2 + 0.09]);
+      this.addVisual('facade-side-band', [0.16, 0.12, depth + 0.1], this.materials.trim, [x - width / 2 - 0.09, bandY, z]);
+    }
+    const frontBays = Math.max(2, Math.min(4, Math.floor(width / 5.5)));
+    for (let index = 0; index <= frontBays; index += 1) {
+      const px = x - width / 2 + index * (width / frontBays);
+      this.addVisual('facade-pilaster', [0.28, height + 0.3, 0.35], this.materials.trim, [px, top - height / 2, z + depth / 2 + 0.12]);
+    }
   }
 
   addCityBuilding([x, z, width, depth, nominalHeight, family], index) {
@@ -375,7 +397,7 @@ export class HighlineDistrict {
       // Each tread is a full supported riser from the previous roof height; these are
       // circulation architecture, not a stack of arbitrary obstacle cubes.
       this.addSolid(`${id}-${index}`, [x, top, z], [width, top - fromTop, 0.54], this.materials.steel, { walkable: true, stair: true });
-      this.addVisual(`${id}-nosing-${index}`, [width + 0.08, 0.08, 0.09], this.materials.safety, [x, top + 0.025, z - 0.235]);
+      this.addVisual(`${id}-nosing-${index}`, [width - 0.24, 0.05, 0.07], this.materials.routePaint, [x, top + 0.02, z - 0.235]);
     }
   }
 
@@ -474,11 +496,33 @@ export class HighlineDistrict {
     this.addSign('SUNLINE EXIT', [0, 11.65, -49.1], '#e8c57e', 0.83);
   }
 
+  addHarbourLandmarks() {
+    // Fixed silhouette landmarks are intentionally below and beyond the rooftop line.
+    // They make the opener a place above a harbour district rather than a platform in
+    // an empty sky, while seed-driven peripheral buildings remain secondary variation.
+    const base = -23.8;
+    [
+      [-17, -37, 15, 14, 5.4, 'concrete'],
+      [18, -44, 17, 16, 4.3, 'brick'],
+      [0, -70, 28, 13, 2.2, 'concrete'],
+    ].forEach(([x, z, width, depth, top, family], index) => {
+      this.addFacade(`harbour-landmark-${index}`, x, z, width, depth, top, top - base, family, 0.04);
+    });
+    // A rectilinear transfer gantry has explicit legs down to the district foundation.
+    const gantryTop = 5.7;
+    this.addVisual('harbour-gantry-beam', [54, 0.42, 0.62], this.materials.steel, [0, gantryTop, -56]);
+    for (const x of [-25, -8, 8, 25]) {
+      this.addVisual('harbour-gantry-leg', [0.52, gantryTop - base, 0.52], this.materials.trim, [x, base + (gantryTop - base) / 2, -56]);
+      this.addVisual('harbour-gantry-foot', [1.16, 0.3, 1.16], this.materials.concrete, [x, base + 0.15, -56]);
+    }
+  }
+
   buildBackdrop() {
     // The environment below the route is a city/rail foundation, not a colour void.
     this.addVisual('district-foundation', [160, 4, 170], this.materials.shadow, [0, -25.8, -16]);
     this.addVisual('harbour-water', [180, 0.4, 62], new THREE.MeshStandardMaterial({ color: '#304d59', roughness: 0.31, metalness: 0.72 }), [0, -23.65, -113], false);
     DISTRICT_BUILDINGS.forEach((building, index) => this.addCityBuilding(building, index));
+    this.addHarbourLandmarks();
     // Stepped terrain anchors the far city in a horizon and breaks a blank pastel sky.
     for (let index = 0; index < 11; index += 1) {
       const x = -88 + index * 17;
@@ -535,9 +579,12 @@ export class HighlineDistrict {
   build() {
     this.buildBackdrop();
     REGION_PLAN.forEach((region) => this.addRoofRegion(region));
-    this.addStairFlight('transfer-risers', 0, 27.15, 0.42, 1.75, 4);
+    this.addStairFlight('transfer-risers', 0, 27.15, 0.32, 1.75, 4);
     this.addStairFlight('west-branch-risers', -9.2, 11.95, 1.75, 2.25, 2, 4.4);
     this.addStairFlight('east-branch-risers', 9.2, 11.95, 1.75, 2.25, 2, 4.4);
+    // The shared court is reached from the East landing through actual shallow risers,
+    // avoiding an untelegraphed one-and-a-half-metre jump into the next region.
+    this.addStairFlight('east-court-risers', 9.2, -5.45, 3.18, 4.65, 4, 5.0);
     this.addStairFlight('court-exit-risers', 0, -21.72, 4.65, 5.45, 2, 5.8);
     this.buildSeedLayer();
     this.addKineticTerminal();
@@ -608,6 +655,7 @@ export class HighlineDistrict {
       ['east-branch-risers-', 'east-span'],
       ['dash-viaduct-start', 'east-span'],
       ['dash-viaduct-landing', 'east-span'],
+      ['east-court-risers-', 'boiler-court'],
       ['boiler-court', 'boiler-court'],
       ['court-exit-risers-', 'control-bridge'],
       ['bridge-control', 'control-bridge'],

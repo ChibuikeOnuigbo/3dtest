@@ -96,21 +96,42 @@ async function jumpWhileMoving(keys, leadMs = 300, followMs = 530) {
   for (const key of [...keys].reverse()) await page.keyboard.up(key);
 }
 
-async function moveUntilAuthoredRegion(keys, requestedRegion, timeoutMs) {
-  // Bounded real keyboard input. This cannot move the player directly: it only stops
-  // when the runtime reports grounded contact on the intended authored route surface.
-  for (const key of keys) await page.keyboard.down(key);
+function supportMatches(traversal, expectedSurfaceIds) {
+  const support = traversal?.support_surface_id || '';
+  return expectedSurfaceIds.some((expected) => support === expected || support.startsWith(expected));
+}
+
+async function waitUntilAuthoredSurface(expectedSurfaceIds, timeoutMs) {
   const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    await page.waitForTimeout(90);
+    const state = await snapshot();
+    const traversal = state?.player?.traversalRegion;
+    if (state?.player?.grounded && traversal?.verification === 'AUTHORED_SUPPORT_CONTACT' && supportMatches(traversal, expectedSurfaceIds)) return true;
+  }
+  return false;
+}
+
+async function moveUntilAuthoredSurface(keys, expectedSurfaceIds, timeoutMs) {
+  // Bounded real keyboard input. It can only stop on the named collision surface—not
+  // merely in a matching coordinate band—so a route label cannot hide a fall or reset.
+  for (const key of keys) await page.keyboard.down(key);
   try {
-    while (Date.now() < deadline) {
-      await page.waitForTimeout(90);
-      const state = await snapshot();
-      const traversal = state?.player?.traversalRegion;
-      if (state?.player?.grounded && traversal?.verification === 'AUTHORED_SUPPORT_CONTACT' && traversal.id === requestedRegion) return true;
-    }
-    return false;
+    return await waitUntilAuthoredSurface(expectedSurfaceIds, timeoutMs);
   } finally {
     for (const key of [...keys].reverse()) await page.keyboard.up(key);
+  }
+}
+
+async function dashJumpUntilLanding(expectedSurfaceIds, timeoutMs) {
+  await page.keyboard.down('KeyW');
+  try {
+    await page.keyboard.press('ShiftLeft');
+    await page.waitForTimeout(180);
+    await page.keyboard.press('Space');
+    return await waitUntilAuthoredSurface(expectedSurfaceIds, timeoutMs);
+  } finally {
+    await page.keyboard.up('KeyW');
   }
 }
 
@@ -166,23 +187,19 @@ try {
   // The controlled first route uses walkable maintenance risers, then meets the mounted
   // terminal at player height. No camera/position manipulation is used. Each travel
   // phase is bounded and capture still records a navigation miss if real play fails.
-  await moveUntilAuthoredRegion(['KeyW'], 'switch-house', 6500);
+  await moveUntilAuthoredSurface(['KeyW'], ['switch-house'], 6500);
   await capture('04-switch-house-arrival', 'switch-house', 'permit terminal and covered transition arrival');
-  await keyHold(['KeyW'], 620);
+  await keyHold(['KeyW'], 720);
   await capture('05-transfer-beacon', 'switch-house', 'checkpoint and branch-read frame');
 
-  // East is the dash branch: diagonal player movement, a speed transfer, then the shared court.
-  await moveUntilAuthoredRegion(['KeyW', 'KeyD'], 'east-span', 5200);
+  // East is the dash branch: stay on the transfer roof long enough to align with the
+  // supported entry risers, then require contact on the actual viaduct deck.
+  await keyHold(['KeyW'], 820);
+  await moveUntilAuthoredSurface(['KeyW', 'KeyD'], ['dash-viaduct-start'], 4600);
   await capture('06-east-span-runup', 'east-span', 'real approach to the supported dash branch');
-  await page.keyboard.down('KeyW');
-  await page.keyboard.press('ShiftLeft');
-  await page.waitForTimeout(300);
-  await page.keyboard.press('Space');
-  await page.waitForTimeout(980);
-  await page.keyboard.up('KeyW');
+  await dashJumpUntilLanding(['dash-viaduct-landing'], 2200);
   await capture('07-east-span-transfer', 'east-span', 'dash/jump transfer with viaduct support in frame');
-  await jumpWhileMoving(['KeyW'], 230, 820);
-  await moveUntilAuthoredRegion(['KeyW'], 'boiler-court', 2800);
+  await moveUntilAuthoredSurface(['KeyW'], ['boiler-court'], 4200);
   await capture('08-boiler-court-arrival', 'boiler-court', 'court arrival, mounted-relay context and exit read');
   await lookBy(-210);
   await capture('09-boiler-court-look', 'boiler-court', 'player look-around across court architecture');
