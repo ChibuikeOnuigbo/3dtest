@@ -28,8 +28,8 @@ export class MovementController {
     this.velocity = new THREE.Vector3();
     this.yaw = 0;
     // A very slight downwards resting view prioritises the near route and its landing
-    // surface; it avoids spending the spawn composition on an empty upper sky.
-    this.pitch = 0.10;
+    // surface; positive Three.js X pitch looks upward from the default -Z camera.
+    this.pitch = -0.12;
     this.grounded = true;
     this.coyote = 0;
     this.jumpBuffer = 0;

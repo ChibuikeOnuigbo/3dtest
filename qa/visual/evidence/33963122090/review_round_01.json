@@ -1,0 +1,30 @@
+{
+  "schema": "rivet-run-semantic-visual-review/v2",
+  "review_round": 1,
+  "reviewed_capture": "qa/visual/evidence/33963122090/capture_record.json",
+  "captured_commit": "d0312cfb386ce4a3b7569c7ba81cf48ad2f0a826",
+  "review_basis": "Every GitHub Actions player-height PNG was visually inspected after the pointer-lock calibration change. Browser capture and builds are not treated as visual approval.",
+  "status": "INSPECTED_NEEDS_FIXES",
+  "approved": false,
+  "whole_run_approved": false,
+  "frame_reviews": [
+    {"frame_id":"01-dispatch-spawn","recorded_region":"dispatch-bay","requested_region":"dispatch-bay","navigation_status":"REACHED_REQUESTED_REGION","camera_direction":[0,0.9468,-0.322],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Almost the entire image is sky. Only the detached wrist device is visible; Dispatch architecture and route are outside the player view."},
+    {"frame_id":"02-dispatch-look-east","recorded_region":"dispatch-bay","requested_region":"dispatch-bay","navigation_status":"REACHED_REQUESTED_REGION","camera_direction":[0.1074,0.9468,-0.3035],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"A nominal east look remains sky-only with the same detached viewmodel; no east environment is semantically visible."},
+    {"frame_id":"03-dispatch-look-west","recorded_region":"dispatch-bay","requested_region":"dispatch-bay","navigation_status":"REACHED_REQUESTED_REGION","camera_direction":[-0.1074,0.9468,-0.3035],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"A nominal west look remains sky-only. It cannot judge architecture, material, depth, route or world layers."},
+    {"frame_id":"04-switch-house-arrival","recorded_region":"intake-steps","requested_region":"switch-house","navigation_status":"CAPTURED_NAVIGATION_MISS","camera_direction":[0,0.9468,-0.322],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Sky-only image and runtime support `intake-steps`; this is not Switch House evidence."},
+    {"frame_id":"05-transfer-beacon","recorded_region":"intake-steps","requested_region":"switch-house","navigation_status":"CAPTURED_NAVIGATION_MISS","camera_direction":[0,0.9468,-0.322],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Sky-only image and Intake Steps contact; no transfer-beacon context is visible."},
+    {"frame_id":"06-east-span-runup","recorded_region":"unsupported-or-airborne","requested_region":"east-span","navigation_status":"CAPTURED_NAVIGATION_MISS","camera_direction":[0,0.9468,-0.322],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Sky-only image while unsupported/airborne; it is invalid as East Span run-up proof."},
+    {"frame_id":"07-east-span-transfer","recorded_region":"dispatch-bay","requested_region":"east-span","navigation_status":"CAPTURED_NAVIGATION_MISS","camera_direction":[0,0.9468,-0.322],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Recovery is back on Dispatch Bay; no East Span transfer or landing appears."},
+    {"frame_id":"08-boiler-court-arrival","recorded_region":"intake-steps","requested_region":"boiler-court","navigation_status":"CAPTURED_NAVIGATION_MISS","camera_direction":[0,0.9468,-0.322],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Sky-only image, with runtime contact on the final transfer riser rather than Boiler Court."},
+    {"frame_id":"09-boiler-court-look","recorded_region":"intake-steps","requested_region":"boiler-court","navigation_status":"CAPTURED_NAVIGATION_MISS","camera_direction":[-0.1313,0.9468,-0.294],"critic_status":"INSPECTED_NEEDS_FIXES","scores":null,"approved":false,"finding":"Sky-only image; no Boiler Court architecture, vista or route context is visible."}
+  ],
+  "role_reviews": [
+    {"role":"AAA/INDIE ART DIRECTOR","status":"FAILED","finding":"This calibration attempt is worse than the preceding failed batch: it turns nine game screenshots into a blue-sky field. The tiny floating wrist tool becomes the only object and is an immediate prototype signal."},
+    {"role":"LEVEL DESIGNER","status":"FAILED","finding":"The route cannot be read at all. Six late frames miss their requested authored region and no later gameplay can be evaluated."},
+    {"role":"TECHNICAL ARTIST","status":"FAILED","finding":"The alignment control used an inverted Three.js pitch convention and then clamped virtual mouse movement, causing an unrecoverable near-vertical view. Recorded camera direction Y≈+0.9468 is decisive runtime evidence."},
+    {"role":"FIRST-PERSON MOVEMENT DESIGNER","status":"FAILED","finding":"Positive camera-rig X rotation is upward in this scene. Correct the default to a small negative pitch and drive probe alignment from `asin(direction.y)` using unbounded relative mouse movement only."},
+    {"role":"HOSTILE QUALITY CRITIC","status":"FAILED","finding":"Reject all nine images. This is zero usable visual evidence; screenshots show sky and a detached black wrist shape, not a game world."}
+  ],
+  "required_fix": "Correct the pitch sign and remove virtual-pointer edge clamping. Capture a fresh Dispatch-only calibration batch first, inspect its measured camera directions and visible lower route before attempting later-region traversal again.",
+  "approval_rule": "CAPTURED is true and INSPECTED is true. APPROVED is false. Scores remain null because sky-only technical-invalid screenshots must not receive fabricated artistic grades."
+}

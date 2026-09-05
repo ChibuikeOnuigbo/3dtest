@@ -116,19 +116,18 @@ async function moveUntilAuthoredRegion(keys, requestedRegion, timeoutMs) {
 
 let mouseX = 720;
 let mouseY = 450;
-const MOUSE_MARGIN = 24;
 
 async function lookBy(deltaX, deltaY = 0, steps = 8) {
-  // Pointer lock converts these physical mouse movements into the same look input a
-  // player uses. We retain the browser pointer's virtual position so corrections use
-  // deltas rather than silently writing a camera transform.
-  mouseX = Math.min(1440 - MOUSE_MARGIN, Math.max(MOUSE_MARGIN, mouseX + deltaX));
-  mouseY = Math.min(900 - MOUSE_MARGIN, Math.max(MOUSE_MARGIN, mouseY + deltaY));
+  // Pointer lock accepts unbounded relative pointer motion. Do not clamp the virtual
+  // mouse to viewport edges: a clamp turns a residual pitch into an unrecoverable
+  // sky-facing capture. This is still physical page.mouse input, never a transform edit.
+  mouseX += deltaX;
+  mouseY += deltaY;
   await page.mouse.move(mouseX, mouseY, { steps });
   await page.waitForTimeout(150);
 }
 
-async function orientRouteView(targetYaw = 0, targetPitch = 0.2) {
+async function orientRouteView(targetYaw = 0, targetPitch = -0.18) {
   // Start-button/canvas automation can leave the pointer-lock camera with a residual
   // pitch. Correct from the real camera direction with bounded mouse motion only; no
   // gameplay transform is assigned. The resulting direction remains capture evidence.
@@ -136,7 +135,9 @@ async function orientRouteView(targetYaw = 0, targetPitch = 0.2) {
     const state = await snapshot();
     const [x, y, z] = state?.cameraDirection || [0, 0, -1];
     const yaw = Math.atan2(-x, -z);
-    const pitch = -Math.asin(Math.max(-1, Math.min(1, y)));
+    // Camera.getWorldDirection has Y = sin(cameraRig.rotation.x). Positive pitch
+    // looks up in Three.js, so a negative target makes the route/lower world readable.
+    const pitch = Math.asin(Math.max(-1, Math.min(1, y)));
     const yawError = yaw - targetYaw;
     const pitchError = pitch - targetPitch;
     if (Math.abs(yawError) < 0.025 && Math.abs(pitchError) < 0.025) return true;

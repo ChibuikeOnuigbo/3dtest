@@ -133,3 +133,13 @@ The capture record's original planned labels are retained as capture facts, but 
 `APPROVED: false` — only three Dispatch frames have authenticated authored-support contact; all six later-region claims missed navigation. Even Dispatch remains critically below quality: the physical sky is an improvement over beige but still dominates the composition, while simple brown facade boxes and oversized amber threshold masses retain the prototype read.
 
 Before the next run: (1) feedback-align yaw and pitch with real pointer-lock mouse input before every traversal phase; (2) record only actual grounded authored-support arrivals; (3) remove tall orange threshold blocks by opening the parapets and using thin mounted nosings; and (4) rebuild Dispatch as a layered foreground roof / adjacent constructed building / lower rail-harbour / distant industrial skyline composition. A material or geometry change invalidates this round and requires newly captured, newly inspected frames.
+
+## Visual semantic review — GitHub Actions run 33963122090 (round 01, rejected)
+
+**Evidence:** [`qa/visual/evidence/33963122090/`](../qa/visual/evidence/33963122090/) was fully inspected after the first attempt at pointer-lock direction calibration. Its full per-frame record is [`review_round_01.json`](../qa/visual/evidence/33963122090/review_round_01.json).
+
+`CAPTURED: true` · `INSPECTED: true` · `APPROVED: false`
+
+All nine images are rejected as technical visual evidence. They show almost exclusively a blue sky gradient with a small detached black/gold wrist shape, not player-visible route architecture. The capture metadata records direction Y values of approximately `+0.9468`: the camera is looking nearly vertically upward. The calibration sign was inverted for Three.js (`getWorldDirection().y = sin(cameraRig.rotation.x)`) and virtual-pointer edge clamping prevented correction. The three Dispatch captures retain real Yard Roof support contact but are still unreviewable visually; the six subsequent frames continue to report `CAPTURED_NAVIGATION_MISS`. No scores were fabricated for a sky-only invalid view.
+
+**Required before another region capture:** use a slightly negative default pitch, derive pitch as `asin(cameraDirection.y)`, use real unbounded relative pointer movement for correction, and verify the recorded Dispatch direction/view before asking the run to traverse. This batch cannot be revived or approved by a later code change.
