@@ -115,29 +115,52 @@ async function moveUntilAuthoredRegion(keys, requestedRegion, timeoutMs) {
 }
 
 let mouseX = 720;
-async function lookBy(deltaX) {
-  // Pointer lock converts this horizontal player mouse movement into the same look input
-  // a player uses. Keeping Y constant prevents accidental vertical sky-only captures.
-  mouseX += deltaX;
-  await page.mouse.move(mouseX, 450, { steps: 12 });
-  await page.waitForTimeout(180);
+let mouseY = 450;
+const MOUSE_MARGIN = 24;
+
+async function lookBy(deltaX, deltaY = 0, steps = 8) {
+  // Pointer lock converts these physical mouse movements into the same look input a
+  // player uses. We retain the browser pointer's virtual position so corrections use
+  // deltas rather than silently writing a camera transform.
+  mouseX = Math.min(1440 - MOUSE_MARGIN, Math.max(MOUSE_MARGIN, mouseX + deltaX));
+  mouseY = Math.min(900 - MOUSE_MARGIN, Math.max(MOUSE_MARGIN, mouseY + deltaY));
+  await page.mouse.move(mouseX, mouseY, { steps });
+  await page.waitForTimeout(150);
+}
+
+async function orientRouteView(targetYaw = 0, targetPitch = 0.2) {
+  // Start-button/canvas automation can leave the pointer-lock camera with a residual
+  // pitch. Correct from the real camera direction with bounded mouse motion only; no
+  // gameplay transform is assigned. The resulting direction remains capture evidence.
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const state = await snapshot();
+    const [x, y, z] = state?.cameraDirection || [0, 0, -1];
+    const yaw = Math.atan2(-x, -z);
+    const pitch = -Math.asin(Math.max(-1, Math.min(1, y)));
+    const yawError = yaw - targetYaw;
+    const pitchError = pitch - targetPitch;
+    if (Math.abs(yawError) < 0.025 && Math.abs(pitchError) < 0.025) return true;
+    await lookBy(
+      Math.max(-300, Math.min(300, yawError / 0.002)),
+      Math.max(-260, Math.min(260, pitchError / 0.0018)),
+      1,
+    );
+  }
+  return false;
 }
 
 try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => Boolean(window.__rivetRunProbe && document.querySelector('#game-canvas')?.width));
-  // Centre the physical pointer before requesting lock: no synthetic sky-facing camera start.
-  await page.mouse.move(720, 450);
   await page.getByRole('button', { name: /start run/i }).click();
-  await page.mouse.move(720, 450);
-  await page.locator('#game-canvas').click({ position: { x: 720, y: 450 } });
   await page.waitForTimeout(850); // actual WebGL first render + pointer-lock transition
+  await orientRouteView();
   await capture('01-dispatch-spawn', 'dispatch-bay', 'first-person spawn and forward route readability');
-  await lookBy(250);
+  await lookBy(170);
   await capture('02-dispatch-look-east', 'dispatch-bay', 'real player look-around: adjacent east city/route context');
-  await lookBy(-500);
+  await lookBy(-340);
   await capture('03-dispatch-look-west', 'dispatch-bay', 'real player look-around: adjacent west city/route context');
-  await lookBy(250);
+  await orientRouteView();
 
   // The controlled first route uses walkable maintenance risers, then meets the mounted
   // terminal at player height. No camera/position manipulation is used. Each travel

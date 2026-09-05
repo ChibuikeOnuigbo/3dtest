@@ -107,3 +107,29 @@ whole-run walkthrough. The current numeric score is deliberately `null`.
 The capture record's original planned labels are retained as capture facts, but must not be used as region-arrival proof: frames nominally representing Switch House through Boiler Court remain in the early route coordinate band. No scores were retroactively inserted into the original capture record. The review-round scores in the companion JSON are diagnostic critic findings, not approval scores.
 
 **Concrete rebuild gate before the next evidence batch:** replace the blank-sky/ochre-block composition with a readable physical atmosphere plus foreground → playable roof → adjacent construction → lower world → distant skyline layers; reduce and structurally embed repeated facade windows; remove lower-right camera occlusion; make stair/threshold movement reach the declared regions; fail requested captures on navigation miss; then recapture and re-review every affected player-height frame.
+
+## Visual semantic review — GitHub Actions run 33962715816 (round 01, rejected)
+
+**Evidence:** [`qa/visual/evidence/33962715816/`](../qa/visual/evidence/33962715816/) was produced from the rebuilt branch in GitHub Actions and every one of its nine player-height PNGs was semantically inspected. The durable frame-by-frame and independent-role review is [`review_round_01.json`](../qa/visual/evidence/33962715816/review_round_01.json). This is a rejected evidence round, not an approval report.
+
+| Frame | Actual grounded support / requested region | Semantic result | Approval |
+| --- | --- | --- | --- |
+| `01-dispatch-spawn` | `yard-roof` / Dispatch Bay | **INSPECTED_NEEDS_FIXES** — route contact is genuine, but sky still occupies most of the image and the first read is muddy walls, black sill and amber slabs. | `false` |
+| `02-dispatch-look-east` | `yard-roof` / Dispatch Bay | **INSPECTED_NEEDS_FIXES** — giant unarticulated brown facade, tiny teal slots and sky replace a credible eastern exterior view. | `false` |
+| `03-dispatch-look-west` | `yard-roof` / Dispatch Bay | **INSPECTED_NEEDS_FIXES** — repeated terminal/threshold scene; ridge is only a pale strip and there is no layered harbour vista. | `false` |
+| `04-switch-house-arrival` | `yard-roof` / Switch House | **INSPECTED_NEEDS_FIXES; CAPTURED_NAVIGATION_MISS** — actual Dispatch support, not Switch House. | `false` |
+| `05-transfer-beacon` | `yard-roof` / Switch House | **INSPECTED_NEEDS_FIXES; CAPTURED_NAVIGATION_MISS** — no real transfer arrival or branch read. | `false` |
+| `06-east-span-runup` | `yard-roof` / East Span | **INSPECTED_NEEDS_FIXES; CAPTURED_NAVIGATION_MISS** — still Dispatch imagery, no viaduct/runway. | `false` |
+| `07-east-span-transfer` | no authored support (airborne) / East Span | **INSPECTED_NEEDS_FIXES; CAPTURED_NAVIGATION_MISS** — player has fallen below route support; this is not a transfer landing. | `false` |
+| `08-boiler-court-arrival` | `yard-roof` / Boiler Court | **INSPECTED_NEEDS_FIXES; CAPTURED_NAVIGATION_MISS** — visible checkpoint reset and Yard Roof contact prove recovery, not court arrival. | `false` |
+| `09-boiler-court-look` | `yard-roof` / Boiler Court | **INSPECTED_NEEDS_FIXES; CAPTURED_NAVIGATION_MISS** — another Dispatch frame, invalid for Boiler Court review. | `false` |
+
+### Batch verdict and next rebuild gate
+
+`CAPTURED: true` — real CI Chromium, pointer lock, mouse/keyboard input and player-height screenshots occurred.
+
+`INSPECTED: true` — every PNG was examined for visible architecture, composition and actual location evidence.
+
+`APPROVED: false` — only three Dispatch frames have authenticated authored-support contact; all six later-region claims missed navigation. Even Dispatch remains critically below quality: the physical sky is an improvement over beige but still dominates the composition, while simple brown facade boxes and oversized amber threshold masses retain the prototype read.
+
+Before the next run: (1) feedback-align yaw and pitch with real pointer-lock mouse input before every traversal phase; (2) record only actual grounded authored-support arrivals; (3) remove tall orange threshold blocks by opening the parapets and using thin mounted nosings; and (4) rebuild Dispatch as a layered foreground roof / adjacent constructed building / lower rail-harbour / distant industrial skyline composition. A material or geometry change invalidates this round and requires newly captured, newly inspected frames.

@@ -204,14 +204,20 @@ export class HighlineDistrict {
     const top = region.top + 0.43;
     const inset = 0.28;
     const { x, z, width, depth } = region;
-    for (const [sx, sz, sw, sd] of [
-      [x, z - depth / 2 + inset, width, 0.18], [x, z + depth / 2 - inset, width, 0.18],
-      [x - width / 2 + inset, z, 0.18, depth], [x + width / 2 - inset, z, 0.18, depth],
-    ]) this.addVisual('parapet', [sw, 0.82, sd], this.materials.trim, [sx, top, sz]);
-    // Open the entry/exit edges selectively in the route direction so the building still
-    // has a credible parapet but never traps the player in a box.
-    const openings = [[x, z + depth / 2 - inset, Math.min(4.6, width - 1), 0.22], [x, z - depth / 2 + inset, Math.min(4.6, width - 1), 0.22]];
-    openings.forEach(([ox, oz, ow, od]) => this.addVisual('parapet-opening-mark', [ow, 0.86, od], this.materials[region.material === 'safety' ? 'safety' : 'routePaint'], [ox, top + 0.02, oz]));
+    // The front and exit edges are physically opened rather than painted over with a
+    // tall amber rectangle. This keeps the player sight-line open and lets an actual
+    // roof threshold read as a route entrance rather than a blockout obstacle.
+    const openingWidth = Math.min(4.6, width - 1);
+    const endSpan = Math.max(0.35, (width - openingWidth) / 2);
+    const edgeZs = [z - depth / 2 + inset, z + depth / 2 - inset];
+    for (const edgeZ of edgeZs) {
+      this.addVisual('parapet', [endSpan, 0.82, 0.18], this.materials.trim, [x - (openingWidth + endSpan) / 2, top, edgeZ]);
+      this.addVisual('parapet', [endSpan, 0.82, 0.18], this.materials.trim, [x + (openingWidth + endSpan) / 2, top, edgeZ]);
+      // A low, mounted steel nosing is the only amber route cue at a threshold.
+      this.addVisual('threshold-nosing', [openingWidth - 0.18, 0.07, 0.1], this.materials.routePaint, [x, top + 0.38, edgeZ]);
+    }
+    this.addVisual('parapet', [0.18, 0.82, depth], this.materials.trim, [x - width / 2 + inset, top, z]);
+    this.addVisual('parapet', [0.18, 0.82, depth], this.materials.trim, [x + width / 2 - inset, top, z]);
   }
 
   addRoofDetails(region) {
