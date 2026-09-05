@@ -1,11 +1,15 @@
 {
-  "schema": "vector-run-area-review/v1",
-  "policy": "Scores require real browser screenshots, input-driven traversal and performance evidence. Static tests are not visual/player approval.",
-  "areas": {
-    "A1": {"name": "Launch Dock", "status": "UNRATED_BROWSER_BLOCKED"},
-    "A2": {"name": "Prism Rise", "status": "UNRATED_BROWSER_BLOCKED"},
-    "A3": {"name": "Split Route", "status": "UNRATED_BROWSER_BLOCKED"},
-    "A4": {"name": "Target Court", "status": "UNRATED_BROWSER_BLOCKED"},
-    "A5": {"name": "Sunrise Gate", "status": "UNRATED_BROWSER_BLOCKED"}
+  "schema": "rivet-run-visual-scorecard/v2",
+  "status": "BLOCKED_NO_BROWSER_EXECUTABLE",
+  "scoring_rule": "No player-height capture means no numeric visual score or pass claim.",
+  "overall_score": null,
+  "regions": {
+    "dispatch-bay": {"name": "Dispatch Bay", "status": "UNRATED_BROWSER_BLOCKED", "score": null},
+    "switch-house": {"name": "Switch House", "status": "UNRATED_BROWSER_BLOCKED", "score": null},
+    "west-shaft": {"name": "West Shaft", "status": "UNRATED_BROWSER_BLOCKED", "score": null},
+    "east-span": {"name": "East Span", "status": "UNRATED_BROWSER_BLOCKED", "score": null},
+    "boiler-court": {"name": "Boiler Court", "status": "UNRATED_BROWSER_BLOCKED", "score": null},
+    "control-bridge": {"name": "Control Bridge", "status": "UNRATED_BROWSER_BLOCKED", "score": null},
+    "sunline-bridge": {"name": "Sunline Bridge", "status": "UNRATED_BROWSER_BLOCKED", "score": null}
   }
 }

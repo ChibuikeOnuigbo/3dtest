@@ -1,148 +1,154 @@
 {
-  "schema": "vector-run-level/v1",
-  "title": "Vector Run: Skyline Relay",
-  "status": "IMPLEMENTATION_BLOCKOUT",
-  "theme": "bright coastal freight-training skyline; no horror, bunker, abandoned facility, psychological-horror or old signal-outpost story elements.",
+  "schema": "rivet-run-level/v2",
+  "title": "Rivet Run: Highline District",
+  "status": "AUTHORING_IN_PROGRESS",
+  "seed": {
+    "master": "rivet-run-highline-01",
+    "invariant": "authored traversal geometry stays fixed; skyline antenna/window variation is deterministic per seed"
+  },
+  "theme": "late-afternoon harbour highline: connected roof structures, rail bridge and active utility architecture. No cyan void, floating islands, mascot character, fantasy portal rings, neon-pink clutter, or exposed falls.",
   "spawn": {
-    "id": "spawn-dock",
+    "id": "dispatch-bay",
     "position": [
       0,
       0,
-      20
+      43
     ]
   },
   "nodes": [
     {
-      "id": "spawn-dock",
+      "id": "dispatch-bay",
       "type": "spawn",
       "position": [
         0,
         0,
-        20
+        43
       ],
-      "landmark": "orange launch gantry"
+      "landmark": "framed dispatch bay on a supported yard roof"
     },
     {
-      "id": "jump-core",
+      "id": "permit-terminal",
       "type": "powerup",
       "position": [
         0,
-        1.2,
-        10
+        1.75,
+        20.5
       ],
       "ability": "doubleJump",
-      "landmark": "cyan kinetic prism"
+      "landmark": "mounted Kinetic Permit terminal"
     },
     {
-      "id": "checkpoint-a",
+      "id": "transfer-beacon",
       "type": "checkpoint",
       "position": [
         0,
-        3,
-        1
+        1.75,
+        14.3
       ],
-      "landmark": "blue route beacon"
+      "landmark": "mounted transfer signal mast"
     },
     {
-      "id": "wall-shaft",
+      "id": "west-shaft",
       "type": "traversal",
       "position": [
-        -8,
-        4,
-        -6
+        -9.2,
+        2.25,
+        6.1
       ],
-      "mechanic": "limited wall jump"
+      "mechanic": "wall-jump",
+      "landmark": "supported maintenance shaft"
     },
     {
-      "id": "dash-span",
+      "id": "east-span",
       "type": "traversal",
       "position": [
-        7,
-        5,
-        -5
+        9.2,
+        2.25,
+        6.1
       ],
-      "mechanic": "dash"
+      "mechanic": "dash",
+      "landmark": "supported rail viaduct"
     },
     {
-      "id": "target-court",
+      "id": "boiler-court",
       "type": "arena",
       "position": [
         0,
-        6,
-        -15
+        4.65,
+        -13.5
       ],
-      "landmark": "magenta crane halo",
+      "landmark": "boiler roof relay yard",
       "targets": 3
     },
     {
-      "id": "slide-gate",
+      "id": "maintenance-passage",
       "type": "traversal",
       "position": [
         0,
-        5.5,
-        -25.2
+        5.45,
+        -27.8
       ],
       "mechanic": "slide/crouch",
-      "landmark": "cobalt supported canopy"
+      "landmark": "framed low maintenance passage"
     },
     {
-      "id": "finish-bridge",
+      "id": "sunline-exit",
       "type": "finish",
       "position": [
         0,
-        10,
-        -28
+        7.25,
+        -50.1
       ],
-      "landmark": "sunrise launch gate"
+      "landmark": "mounted Sunline Exit relay on a trussed bridge"
     }
   ],
   "edges": [
     {
-      "from": "spawn-dock",
-      "to": "jump-core",
-      "type": "ramp",
+      "from": "dispatch-bay",
+      "to": "permit-terminal",
+      "type": "roof-rise",
       "mechanic": "ground-jump"
     },
     {
-      "from": "jump-core",
-      "to": "checkpoint-a",
-      "type": "platform-gap",
+      "from": "permit-terminal",
+      "to": "transfer-beacon",
+      "type": "canopy-crossing",
       "mechanic": "double-jump"
     },
     {
-      "from": "checkpoint-a",
-      "to": "wall-shaft",
+      "from": "transfer-beacon",
+      "to": "west-shaft",
       "type": "vertical-shaft",
       "mechanic": "wall-jump"
     },
     {
-      "from": "checkpoint-a",
-      "to": "dash-span",
-      "type": "speed-bridge",
+      "from": "transfer-beacon",
+      "to": "east-span",
+      "type": "supported-viaduct",
       "mechanic": "dash"
     },
     {
-      "from": "wall-shaft",
-      "to": "target-court",
+      "from": "west-shaft",
+      "to": "boiler-court",
+      "type": "cap-roof",
+      "mechanic": "mixed"
+    },
+    {
+      "from": "east-span",
+      "to": "boiler-court",
       "type": "catwalk",
       "mechanic": "mixed"
     },
     {
-      "from": "dash-span",
-      "to": "target-court",
-      "type": "catwalk",
-      "mechanic": "mixed"
-    },
-    {
-      "from": "target-court",
-      "to": "slide-gate",
-      "type": "low-tunnel",
+      "from": "boiler-court",
+      "to": "maintenance-passage",
+      "type": "framed-bridge",
       "mechanic": "slide/crouch"
     },
     {
-      "from": "slide-gate",
-      "to": "finish-bridge",
-      "type": "rise-and-finish",
+      "from": "maintenance-passage",
+      "to": "sunline-exit",
+      "type": "trussed-bridge",
       "mechanic": "jump/dash"
     }
   ],
@@ -154,10 +160,12 @@
     "NON_TRAVERSABLE"
   ],
   "critical_path": [
-    "spawn-dock",
-    "jump-core",
-    "checkpoint-a",
-    "target-court",
-    "finish-bridge"
-  ]
+    "dispatch-bay",
+    "permit-terminal",
+    "transfer-beacon",
+    "boiler-court",
+    "maintenance-passage",
+    "sunline-exit"
+  ],
+  "authored_segment_contract": "game/data/highline_segments.json"
 }

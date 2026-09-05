@@ -1,56 +1,47 @@
-# Vector Run: Skyline Relay
+# Rivet Run: Highline District
 
-A small, original first-person parkour and target-action game built with Three.js.
+A first-person browser parkour/action prototype set in a connected late-afternoon
+harbour utility district. The route starts on a dispatch roof, crosses a switch
+house, splits into a wall-jump shaft or dash viaduct, activates relays in a
+boiler court, slides beneath a maintenance bridge, and ends at Sunline Exit.
 
-**Identity:** speed, momentum, vertical routes, precision jumps, target encounters, fast
-checkpoints and personal-best runs. It is not a horror game, bunker, abandoned facility or
-slow exploration game.
-
-## Controls
-
-| Action | Default binding | Behavior |
-|---|---|---|
-| Move | `W` `A` `S` `D` | Directional movement with air control. |
-| Jump | `Space` | Ground jump, coyote/buffered response; second jump after the prism unlock. |
-| Dash | `Shift` | Short directed dash with cooldown. |
-| Crouch | `Ctrl` | Crouch; while fast on ground it slides, while airborne it ground-slams. |
-| Pulse | mouse click | Clears mechanical targets in the Target Court. |
-| Restart | `R` | Fast checkpoint restart. |
-| Pause | `Escape` | Releases mouse capture. |
-
-The runtime uses action identifiers rather than scattering key-code checks. The HUD reads
-its displayed control labels from the binding map.
-
-## Course
-
-```text
-Launch Dock → Kinetic Prism → Checkpoint / Split Route
-                                ├─ Wall Link
-                                └─ Dash Span
-                              → Target Court → Sunrise Gate
-```
-
-The complete topology, 3D hierarchy, source-pattern synthesis and collision/traversal
-intent are in [`docs/LEVEL_MAP.md`](./docs/LEVEL_MAP.md) and
-[`game/data/level_map.json`](./game/data/level_map.json).
-
-## Development
+## Run locally
 
 ```bash
-npm install
+npm ci
 npm run dev
+```
+
+Open the displayed Vite URL, click **START RUN**, then use mouse look plus:
+
+- `WASD` move
+- `SPACE` jump / double jump once the Kinetic Permit is collected
+- `SHIFT` dash
+- `CTRL` crouch/slide, or ground-slam while airborne
+- Click to pulse the three mounted boiler-court relays
+- `R` reset to the latest checkpoint; `ESC` pause
+
+Use `?seed=your-label` to make a deterministic skyline presentation variant.
+Author-designed route geometry is unchanged by the seed.
+
+## Verification
+
+```bash
 npm run test:logic
+python3 qa/spatial_validator.py
 npm run build
 ```
 
-`npm run test:logic` verifies core jump, double-jump, dash/collision, crouch-clearance and
-level-map path declarations. Browser playthrough and screenshot evidence remain blocked
-until an official Chromium binary can be securely installed in the sandbox; this is not a
-claim that the movement course has passed player QA.
+These checks do **not** establish visual completion. The local browser executable
+is currently unavailable, so player-height capture and semantic visual review
+remain blocked. See `docs/qa_report.md` and `qa/visual/README.md`.
 
-## Credits and provenance
+## Design records
 
-The playable course uses original procedural Three.js geometry/materials and Web Audio
-feedback. Repository studies remain in `research/`; they are design/technical references,
-not bundled external scenes or media. Consult `CREDITS.md` and `LICENSES.md` before any
-external asset is added.
+- `docs/3d_map.md` — world/route spatial contract
+- `docs/level_design.md` — pacing, choices and recovery design
+- `docs/visual_style.md` — material, support, lighting and critic standard
+- `game/data/highline_segments.json` — 40 authored segment contracts
+- `docs/asset_manifest.md` — source/licence/technical asset decisions
+- `research/visual_reference/ATTACHED_BEFORE_FAILURE_ANALYSIS.md` — supplied
+  image set analysed as failure evidence, not target art

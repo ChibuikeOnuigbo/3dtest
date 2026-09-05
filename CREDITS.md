@@ -1,24 +1,28 @@
-# Credits — Vector Run: Skyline Relay
+# Credits — Rivet Run: Highline District
 
-## Code
+## Original project work
 
-- **Vector Run movement, course layout, HUD, target system, collision and Web Audio
-  feedback:** original project work.
-- **Three.js `0.185.1`:** MIT License; rendering dependency.
+- **Rivet Run runtime, Highline District world layout, gameplay systems, HUD,
+  interaction, authored segment plan, original raster textures and documentation:**
+  project production.
 
-## Textures
+## Libraries
 
-- `public/textures/sunlit-concrete-tile.png`: original project-generated 1024×1024 base
-  colour texture for concrete platforms.
-- `public/textures/painted-route-metal.png`: original project-generated 1024×1024 base
-  colour texture for route steel/platforms.
+- **Three.js** `0.185.1` — Three.js contributors — MIT licence.
 
-Both texture records, hashes, source classification and technical state are in
+## Texture assets currently shipped
+
+- `public/textures/sunlit-concrete-tile.png` — original project-authored raster
+  base-colour texture.
+- `public/textures/painted-route-metal.png` — original project-authored raster
+  base-colour texture.
+
+Their dimensions, hashes and limitations are recorded in
 `research/assets/vector_run_texture_manifest.json`.
 
-## Reference projects
+## External assets
 
-The supplied GitHub repositories are technical and level-design references. No third-party
-map, GLTF model, texture, animation, font, UI artwork or audio from those repositories is
-currently bundled in production. This file must expand with attribution and licence terms
-before shipping any selectively copied MIT code or individually approved external asset.
+No external model, texture, HDRI, audio, video, Kenney asset, P3D asset,
+Sketchfab asset, GitHub repository asset, or Poly Haven file is currently
+shipped. Poly Haven's standards and one asphalt candidate were reviewed, but the
+candidate could not be acquired over normal TLS and was not imported.

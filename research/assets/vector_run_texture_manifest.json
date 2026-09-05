@@ -10,7 +10,7 @@
       "bytes": 2450545,
       "sha256": "c0fa8d669705e26bf94237ac49c2a77e98b0c8c9c89d190d9de171d58f6475ec",
       "status": "APPROVED_ORIGINAL_PROJECT_ASSET",
-      "usage": "SkylineCourse structural material map",
+      "usage": "HighlineDistrict material family map",
       "technical_review": "PNG header dimensions/hash read; browser texture rendering remains pending."
     },
     {
@@ -22,7 +22,7 @@
       "bytes": 2533537,
       "sha256": "9cc151210870442f4708c3ccd159dd383912a74b6f01e8252377edad77158d89",
       "status": "APPROVED_ORIGINAL_PROJECT_ASSET",
-      "usage": "SkylineCourse structural material map",
+      "usage": "HighlineDistrict material family map",
       "technical_review": "PNG header dimensions/hash read; browser texture rendering remains pending."
     }
   ]

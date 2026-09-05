@@ -1,18 +1,5 @@
 {
-  "room": "prism-rise",
-  "score": null,
-  "status": "BLOCKED_NO_BROWSER_BINARY",
-  "critical": [],
-  "major": [],
-  "medium": [],
-  "minor": [],
-  "move": [],
-  "remove": [],
-  "add": [],
-  "replace": [],
-  "composition": "UNREVIEWED \u2014 needs meaningful player-height render captures.",
-  "navigation": "UNREVIEWED \u2014 needs actual movement/input captures.",
-  "style": "UNREVIEWED \u2014 needs semantic image review.",
-  "lighting": "UNREVIEWED \u2014 needs rendered exposure/shadow review.",
-  "most_important_fix": "Capture entry/focal/path views in a supported browser before grading."
+  "schema": "retired-skyline-relay-visual-report/v1",
+  "status": "RETIRED_NO_SCORE",
+  "note": "This record belongs to the retired Skyline Relay presentation. Use Highline District coverage in docs/qa_report.md and qa/room_scores.json; no visual pass is transferred."
 }

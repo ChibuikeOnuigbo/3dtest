@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import './styles.css';
 import { MovementController } from './systems/MovementController.js';
-import { SkylineCourse } from './world/SkylineCourse.js';
+import { HighlineDistrict } from './world/HighlineDistrict.js';
 
 const canvas = document.querySelector('#game-canvas');
 const titleScreen = document.querySelector('#title-screen');
@@ -28,9 +28,9 @@ const keyNames = Object.freeze({ KeyW: 'W', KeyA: 'A', KeyS: 'S', KeyD: 'D', Spa
 const pressed = new Set();
 let running = false;
 let elapsed = 0;
-let bestTime = Number(localStorage.getItem('vector-run-best') || 0);
-let checkpoint = new THREE.Vector3(0, 0, 20);
-let objective = 'Reach the cyan kinetic prism.';
+let bestTime = Number(localStorage.getItem('rivet-run-highline-best') || 0);
+let checkpoint = new THREE.Vector3(0, 0, 43);
+let objective = 'Reach the Kinetic Permit terminal on the switch-house roof.';
 let toastTimer = 0;
 let audioContext = null;
 let pulseVisuals = [];
@@ -45,26 +45,27 @@ renderer.toneMappingExposure = 1.18;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#78cbd3');
-scene.fog = new THREE.FogExp2('#76b9c6', 0.012);
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 160);
+// Late-afternoon industrial haze, deliberately muted so the built horizon—not a cyan void—carries depth.
+scene.background = new THREE.Color('#b8a998');
+scene.fog = new THREE.FogExp2('#b8a998', 0.008);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 220);
 camera.position.set(0, 1.62, 0);
-const sun = new THREE.DirectionalLight('#fff0bf', 2.9);
-sun.position.set(-25, 38, 18); sun.castShadow = true;
-sun.shadow.mapSize.set(1024, 1024); sun.shadow.camera.left = -28; sun.shadow.camera.right = 28; sun.shadow.camera.top = 28; sun.shadow.camera.bottom = -28;
+const sun = new THREE.DirectionalLight('#ffe0a1', 3.15);
+sun.position.set(-36, 49, 32); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -48; sun.shadow.camera.right = 48; sun.shadow.camera.top = 48; sun.shadow.camera.bottom = -48;
 scene.add(sun);
-scene.add(new THREE.HemisphereLight('#cffff8', '#1d4776', 2.2));
-const course = new SkylineCourse(scene);
+scene.add(new THREE.HemisphereLight('#e4ceb3', '#263940', 1.9));
+const course = new HighlineDistrict(scene);
 const player = new MovementController(camera, () => course.solids);
 player.reset(checkpoint);
 scene.add(player.root);
 
-const dashLight = new THREE.PointLight('#72ffff', 0, 7, 2);
+const dashLight = new THREE.PointLight('#e9b36b', 0, 7, 2);
 dashLight.position.set(0, 0.3, -0.4);
 player.cameraRig.add(dashLight);
 const pulseTool = new THREE.Group();
 const glove = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.13, 0.38), new THREE.MeshStandardMaterial({ color: '#17355a', roughness: 0.3, metalness: 0.84 }));
-const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 0.12), new THREE.MeshStandardMaterial({ color: '#cafff3', emissive: '#1fcfd0', emissiveIntensity: 2.4, roughness: 0.2 }));
+const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 0.12), new THREE.MeshStandardMaterial({ color: '#f4d293', emissive: '#b96729', emissiveIntensity: 1.8, roughness: 0.2 }));
 emitter.position.z = -0.27;
 pulseTool.add(glove, emitter); pulseTool.position.set(0.34, -0.29, -0.48); pulseTool.rotation.set(-0.1, -0.22, 0); camera.add(pulseTool);
 const raycaster = new THREE.Raycaster(); raycaster.far = 50;
@@ -95,7 +96,7 @@ function tone(frequency = 440, duration = 0.08, type = 'sine', gain = 0.045) {
 
 function beginAudio() { if (!audioContext) audioContext = new AudioContext(); audioContext.resume?.(); }
 function resetRun() {
-  elapsed = 0; checkpoint.set(0, 0, 20); objective = 'Reach the cyan kinetic prism.';
+  elapsed = 0; checkpoint.set(0, 0, 43); objective = 'Reach the Kinetic Permit terminal on the switch-house roof.';
   course.reset(); player.doubleJumpUnlocked = false; player.reset(checkpoint); pulseVisuals.forEach(({ line }) => scene.remove(line)); pulseVisuals = [];
   setOverlay(endingScreen, false); setOverlay(pauseScreen, false); showToast('Fresh line. Keep your speed.');
 }
@@ -111,10 +112,10 @@ function firePulse() {
   const hit = raycaster.intersectObjects(course.targetObjects(), true).find((entry) => entry.object.userData.targetId);
   const origin = camera.getWorldPosition(new THREE.Vector3());
   const end = hit ? hit.point : origin.clone().add(player.facingDirection(new THREE.Vector3()).multiplyScalar(18));
-  const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([origin, end]), new THREE.LineBasicMaterial({ color: hit ? '#fff6b5' : '#6df5f1', transparent: true, opacity: 0.9 }));
+  const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([origin, end]), new THREE.LineBasicMaterial({ color: hit ? '#fff0ba' : '#e2a764', transparent: true, opacity: 0.9 }));
   scene.add(line); pulseVisuals.push({ line, life: 0.11 });
   pulseTool.rotation.x = -0.3; window.setTimeout(() => { pulseTool.rotation.x = -0.1; }, 75);
-  if (hit && course.hitTarget(hit.object.userData.targetId)) { tone(720, 0.11, 'square', 0.07); showToast(`Target cleared — ${course.activeTargetCount()} remaining.`); if (course.activeTargetCount() === 0) { objective = 'All targets clear. Reach the Sunrise Gate.'; showToast('COURT CLEAR — climb to the Sunrise Gate.'); tone(980, 0.25, 'sine', 0.08); } } else tone(330, 0.035, 'triangle', 0.025);
+  if (hit && course.hitTarget(hit.object.userData.targetId)) { tone(720, 0.11, 'square', 0.07); showToast(`Relay switched — ${course.activeTargetCount()} remaining.`); if (course.activeTargetCount() === 0) { objective = 'Relays live. Cross the control bridge to Sunline Exit.'; showToast('YARD LIVE — take the control bridge.'); tone(980, 0.25, 'sine', 0.08); } } else tone(330, 0.035, 'triangle', 0.025);
 }
 function keyIs(action, code) { return bindings[action] === code; }
 window.addEventListener('keydown', (event) => {
@@ -158,9 +159,9 @@ function updateGame(delta) {
   player.update(delta, movement);
   if (player.root.position.y < -8) restartCheckpoint();
   for (const event of course.collectEvents(player.root.position)) {
-    if (event.type === 'powerup') { player.unlockDoubleJump(); objective = 'Use your second jump to reach the blue checkpoint tower.'; showToast('DOUBLE JUMP UNLOCKED — press SPACE once more in air.'); tone(820, 0.28, 'sine', 0.08); }
-    if (event.type === 'checkpoint') { checkpoint.copy(event.position); objective = 'Choose a route, clear the three targets, then reach the Sunrise Gate.'; showToast('CHECKPOINT SET — WALL LINK or DASH SPAN.'); tone(560, 0.16, 'triangle', 0.07); }
-    if (event.type === 'finish') { running = false; const currentBest = !bestTime || elapsed < bestTime; if (currentBest) { bestTime = elapsed; localStorage.setItem('vector-run-best', String(bestTime)); } finishTimeNode.textContent = `${currentBest ? 'NEW BEST — ' : ''}Time: ${formatTime(elapsed)}${bestTime ? ` · Best: ${formatTime(bestTime)}` : ''}`; showToast('SUNRISE GATE CLEARED.'); tone(1040, 0.35, 'sine', 0.09); window.setTimeout(() => setOverlay(endingScreen, true), 850); document.exitPointerLock?.(); }
+    if (event.type === 'powerup') { player.unlockDoubleJump(); objective = 'Permit active. Double-jump to the transfer beacon.'; showToast('DOUBLE JUMP PERMIT — press SPACE once more in air.'); tone(820, 0.28, 'sine', 0.08); }
+    if (event.type === 'checkpoint') { checkpoint.copy(event.position); objective = 'Choose the West Shaft or East Span, switch three relays, then cross to Sunline Exit.'; showToast('TRANSFER BEACON SET — WEST SHAFT or EAST SPAN.'); tone(560, 0.16, 'triangle', 0.07); }
+    if (event.type === 'finish') { running = false; const currentBest = !bestTime || elapsed < bestTime; if (currentBest) { bestTime = elapsed; localStorage.setItem('rivet-run-highline-best', String(bestTime)); } finishTimeNode.textContent = `${currentBest ? 'NEW BEST — ' : ''}Time: ${formatTime(elapsed)}${bestTime ? ` · Best: ${formatTime(bestTime)}` : ''}`; showToast('SUNLINE EXIT CLEARED.'); tone(1040, 0.35, 'sine', 0.09); window.setTimeout(() => setOverlay(endingScreen, true), 850); document.exitPointerLock?.(); }
   }
   const dashVisual = player.dashTime > 0 ? 1 : 0;
   dashLight.intensity = THREE.MathUtils.damp(dashLight.intensity, dashVisual * 2.3, 15, delta);
@@ -175,5 +176,5 @@ function animate() {
   renderer.render(scene, camera);
 }
 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75)); renderer.setSize(window.innerWidth, window.innerHeight); });
-window.__vectorRunProbe = Object.freeze({ snapshot: () => Object.freeze({ player: player.snapshot(), elapsed: Number(elapsed.toFixed(3)), targetsRemaining: course.activeTargetCount(), checkpoint: checkpoint.toArray(), objective, bindings }) });
+window.__rivetRunProbe = Object.freeze({ snapshot: () => Object.freeze({ player: player.snapshot(), elapsed: Number(elapsed.toFixed(3)), relaysRemaining: course.activeTargetCount(), checkpoint: checkpoint.toArray(), objective, bindings, worldSeed: course.seed }) });
 renderControls(); updateHud(); animate();

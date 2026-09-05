@@ -6,8 +6,8 @@ const map = JSON.parse(await readFile(new URL('../game/data/level_map.json', imp
 
 test('level map has a connected critical path from spawn to finish', () => {
   const nodeIds = new Set(map.nodes.map((node) => node.id));
-  assert.equal(map.nodes.find((node) => node.type === 'spawn')?.id, 'spawn-dock');
-  assert.equal(map.nodes.find((node) => node.type === 'finish')?.id, 'finish-bridge');
+  assert.equal(map.nodes.find((node) => node.type === 'spawn')?.id, 'dispatch-bay');
+  assert.equal(map.nodes.find((node) => node.type === 'finish')?.id, 'sunline-exit');
   map.edges.forEach(({ from, to, type, mechanic }) => {
     assert.ok(nodeIds.has(from), `${from} exists`);
     assert.ok(nodeIds.has(to), `${to} exists`);

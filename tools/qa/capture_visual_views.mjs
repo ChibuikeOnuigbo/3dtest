@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Capture player-height Vector Run images only when an already installed Chromium path is
+ * Capture player-height Rivet Run images only when an already installed Chromium path is
  * supplied. This deliberately never installs a browser, uses a mirror, or fabricates a
  * free-camera screenshot. It records real input, console output and a Playwright trace.
  */
@@ -10,7 +10,7 @@ import process from 'node:process';
 import { chromium } from 'playwright';
 
 const executablePath = process.env.BROWSER_EXECUTABLE_PATH;
-const baseURL = process.env.VECTOR_RUN_URL || 'http://127.0.0.1:5173';
+const baseURL = process.env.RIVET_RUN_URL || 'http://127.0.0.1:5173';
 const root = process.cwd();
 const qaRoot = path.join(root, 'qa/visual');
 if (!executablePath) {
@@ -46,22 +46,21 @@ try {
   await page.getByRole('button', { name: /start run/i }).click();
   await page.locator('#game-canvas').click();
   await page.waitForTimeout(250);
-  await shot('launch-dock', 'entry');
+  await shot('dispatch-bay', 'spawn-player-height');
   await page.keyboard.press('Space');
   await move(0.7);
-  await shot('prism-rise', 'path');
+  await shot('dispatch-bay', 'intake-approach-player-height');
   await page.keyboard.press('Space');
   await page.waitForTimeout(150);
   await page.keyboard.press('Space');
   await move(0.8);
-  await shot('split-route', 'entry');
+  await shot('switch-house', 'transfer-approach-player-height');
   await page.keyboard.press('ShiftLeft');
   await move(0.6, 100);
-  await shot('target-court', 'path');
-  await shot('target-court', 'focal');
-  const probe = await page.evaluate(() => window.__vectorRunProbe?.snapshot());
-  await fs.writeFile(path.join(qaRoot, 'playthrough_context.json'), JSON.stringify({ baseURL, probe, consoleEvents, capture_mode: 'real input at player height; no free camera' }, null, 2));
+  await shot('east-span', 'player-input-trace');
+  const probe = await page.evaluate(() => window.__rivetRunProbe?.snapshot());
+  await fs.writeFile(path.join(qaRoot, 'playthrough_context.json'), JSON.stringify({ baseURL, probe, consoleEvents, capture_mode: 'real input at player height; no free camera; coverage is partial and must not be scored until the full matrix is captured' }, null, 2));
 } finally {
-  await context.tracing.stop({ path: path.join(qaRoot, 'vector-run-trace.zip') });
+  await context.tracing.stop({ path: path.join(qaRoot, 'rivet-run-trace.zip') });
   await browser.close();
 }

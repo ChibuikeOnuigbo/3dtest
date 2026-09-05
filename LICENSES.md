@@ -1,26 +1,14 @@
-# Licence manifest — Vector Run: Skyline Relay
+# Licence manifest — Rivet Run: Highline District
 
-## Code
+| Component | Licence / rights | Source | Shipped |
+|---|---|---|---|
+| Project source, Highline District layout and original texture files | Project-owned original work | repository | yes |
+| Three.js `0.185.1` | MIT | npm package / Three.js contributors | yes |
+| Poly Haven `aerial_asphalt_01` candidate | no file acquired or included | official Poly Haven metadata only | **no** |
+| P3D models | no rights assumed | not acquired | **no** |
+| Sketchfab models | no rights assumed; credential treated as compromised | not accessed | **no** |
+| GitHub reference repository assets | no rights assumed | excluded research labs | **no** |
+| OpenGameArt audio | no file acquired or included | not yet curated | **no** |
 
-- Project-authored source: owner/project licence decision still required before public release.
-- `three@0.185.1`: MIT License. Preserve the dependency licence as required by distribution.
-
-## Textures
-
-- `sunlit-concrete-tile.png` and `painted-route-metal.png`: original project-generated
-  base-colour textures, recorded with hashes in
-  `research/assets/vector_run_texture_manifest.json`.
-
-## 3D, animation and audio
-
-- Current course geometry: original project-authored Three.js procedural meshes.
-- Current animation: original procedural rotation/bob/pulse only; no external rig/clip.
-- Current audio: original Web Audio oscillator feedback only; no external audio file.
-
-## External reference assets
-
-- Approved third-party 3D/texture/animation/audio assets in production: **0**.
-- Repository media and Sketchfab/itch candidates remain outside production until each file
-  has source provenance, licence, technical inspection, visual/context review and an
-  explicit approval record.
-- Kenney assets: **0**; excluded by project rule.
+No credential, token, protected-download workaround, disabled TLS validation,
+proxy/mirror acquisition or licence-bypassing asset is included in this project.

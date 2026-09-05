@@ -3,24 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#153b70" />
-    <title>Vector Run: Skyline Relay</title>
+    <meta name="theme-color" content="#302d29" />
+    <title>Rivet Run: Highline District</title>
   </head>
   <body>
-    <main id="app" aria-label="Vector Run first-person parkour game">
-      <canvas id="game-canvas" aria-label="Vector Run 3D game view"></canvas>
+    <main id="app" aria-label="Rivet Run first-person parkour game">
+      <canvas id="game-canvas" aria-label="Rivet Run 3D game view"></canvas>
       <section id="hud" aria-live="polite" aria-label="Run status">
         <header class="topbar">
-          <div class="brand"><span class="brand-mark">↗</span><span>VECTOR RUN</span></div>
+          <div class="brand"><span class="brand-mark">▰</span><span>RIVET RUN</span></div>
           <div id="movement-state" class="system-status">GROUND</div>
         </header>
         <div class="objective-panel">
           <p class="eyebrow">RUN OBJECTIVE</p>
-          <p id="objective">Reach the cyan kinetic prism.</p>
+          <p id="objective">Reach the Kinetic Permit terminal on the switch-house roof.</p>
         </div>
         <div class="readouts">
           <div><span class="readout-label">TIME</span><strong id="timer">00:00.000</strong></div>
-          <div><span class="readout-label">TARGETS</span><strong id="target-count">3 / 3</strong></div>
+          <div><span class="readout-label">RELAYS</span><strong id="target-count">3 / 3</strong></div>
           <div><span class="readout-label">ABILITY</span><strong id="ability">JUMP I</strong></div>
         </div>
         <div id="crosshair" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -29,9 +29,9 @@
       </section>
       <section id="title-screen" class="overlay">
         <div class="title-card">
-          <p class="kicker">SKYLINE RELAY // PERSONAL BEST TRAINING</p>
-          <h1>VECTOR<br /><em>RUN</em></h1>
-          <p class="lede">A fast first-person line through a coastal freight skyline. Build speed, unlock the second jump, choose a route, clear targets, and hit the sunrise gate.</p>
+          <p class="kicker">HIGHLINE DISTRICT // PERSONAL BEST ROUTE</p>
+          <h1>RIVET<br /><em>RUN</em></h1>
+          <p class="lede">A fast first-person line across a working harbour district. Build speed, collect the movement permit, choose a roof route, switch relays, and cross Sunline Bridge.</p>
           <div class="briefing-rule"></div>
           <p class="briefing"><b>RUN CARD</b> <span class="keycap">SPACE</span> jump · <span class="keycap">SHIFT</span> dash · <span class="keycap">CTRL</span> crouch/slide or air-slam · click to pulse targets.</p>
           <button id="start-button" type="button">START RUN <span>↗</span></button>
@@ -43,11 +43,11 @@
       </section>
       <section id="ending-screen" class="overlay hidden" aria-hidden="true">
         <div class="title-card ending-card">
-          <p class="kicker">SUNRISE GATE // LINE COMPLETE</p>
+          <p class="kicker">SUNLINE EXIT // LINE COMPLETE</p>
           <h1>RUN<br /><em>CLEARED</em></h1>
           <p id="finish-time" class="lede">Time: 00:00.000</p>
           <div class="briefing-rule"></div>
-          <p class="briefing">Your best route is saved locally. Restart immediately and use the wall shaft or dash span to cut a cleaner line.</p>
+          <p class="briefing">Your best route is saved locally. Restart immediately and use the West Shaft or East Span to cut a cleaner line.</p>
           <button id="restart-finish-button" type="button">RUN AGAIN <span>↻</span></button>
         </div>
       </section>

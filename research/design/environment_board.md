@@ -1,28 +1,29 @@
-# Vector Run: Skyline Relay — environment board
+# Environment board — Rivet Run: Highline District
 
-**Art direction:** a clean, sunlit coastal freight-training structure built from pale
-concrete, cobalt safety blue, signal orange, cyan route energy, magenta target hardware,
-white canvas shade and brass/copper service details. It is athletic and optimistic—not
-horror, not abandoned, not a bunker.
+**Design status:** rebuilt direction in progress. The character of the level is
+late-afternoon harbour infrastructure: urban roofs, utilitarian steel, dusty
+concrete, amber operational lights and layered city/rail/water depth.
 
-| Area | Target composition | Materials / lighting | Object groups | Navigation and gameplay purpose |
+| Region | Space function | Primary material family | Landmark / support | Route role |
 |---|---|---|---|---|
-| Launch Dock | Long diagonal ramp framing an orange crane and the first prism. | Pale concrete, orange gantry, hard sun, cyan route stripe. | crane legs, safety rail, cable drum, launch sign. | Teaches acceleration and ground jump. |
-| Prism Rise | A vertical cyan object framed by two low platforms. | White tile, cyan glass, cobalt rail, warm daylight. | power prism, supported platforms, route arrows. | Unlock double jump; immediate safe practice gap. |
-| Split Route | One tall blue shaft and one fast orange bridge read from the same checkpoint. | Cobalt panels, orange speed rails, magenta route beacons. | wall panels, catwalk supports, hanging cable trays. | Player chooses wall jump or dash lesson. |
-| Target Court | Broad circular deck with a magenta crane halo and three target plinths. | Slate deck, white/concrete supports, magenta/cyan accents. | target pylons, cover frames, elevated rails, maintenance pods. | Movement-based target encounter, alternate elevations. |
-| Sunrise Gate | Final narrow upward bridge ending at a white-and-gold gate. | White canvas, brass edge, early-sun glow. | bridge truss, finish emitter, signal flags. | Mixed traversal finish, time trial reward. |
+| Dispatch Bay | active roof dispatch zone | roof membrane, brick, dark trim | framed bay, roof vents, visible building mass | spawn / first rhythm |
+| Switch House | electrical transfer roof | warm concrete, steel, dim glazing | canopy, mounted terminal, signal mast | ability / checkpoint / split |
+| West Shaft | vertical maintenance core | coated blue-grey steel, concrete | paired walls, mid shelf, exit frame | skill wall-jump route |
+| East Span | rail viaduct crossover | painted steel, ochre safety paint | rails, truss frame, piers | fast dash route |
+| Boiler Court | operational utility roof | dusty concrete, brick, charcoal stacks | three mounted relays, boiler houses | lateral action / aim task |
+| Control Bridge | compressed maintenance threshold | dark steel, ribs, route paint | framed low canopy and recovery deck | slide transition |
+| Sunline Bridge | elevated exit crossing | coated steel, concrete pier | truss, rails, physical endpoint relay | finish / harbour vista |
 
-## Visual constraints
+## Material and source posture
 
-1. Route surfaces use color and silhouette; do not rely on darkness or horror fog.
-2. Geometry clusters describe real structural purpose: crane, bridge, stair, support,
-   service equipment, railing. No random prop scatter.
-3. The current course deliberately uses square/cube/rectangular structural modules only;
-   no spheres, toruses, cylinders, icosahedrons or generic “vector” hero shapes. A future
-   triangle may appear only as a clearly defined grapple marker/route mechanic.
-4. Two original 1024×1024 raster base-colour textures now provide real material variation:
-   sunlit concrete tile and worn cobalt/orange route metal. They are recorded in
-   `research/assets/vector_run_texture_manifest.json`.
-5. External environmental assets require their own licence/provenance/technical review
-   before use; the current course uses original authored geometry and approved local textures.
+Two original raster maps provide the current base-colour layer. Poly Haven is
+being used as a PBR/scaling/technical quality benchmark; its reviewed asphalt
+candidate is not in the build because official normal-TLS acquisition failed.
+No external model/material has been silently added.
+
+## Image review posture
+
+The supplied cyan-void floating-island screenshots are negative evidence only.
+The Highline District must avoid their sparse cartoony horizon, disconnected
+platforms, toy portal motifs, camera obstruction and accent clutter. See
+`research/visual_reference/ATTACHED_BEFORE_FAILURE_ANALYSIS.md`.

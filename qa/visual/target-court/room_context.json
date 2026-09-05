@@ -1,26 +1,5 @@
 {
-  "room_id": "target-court",
-  "room_name": "Target Court",
-  "purpose": "Movement-led target encounter with multiple elevations.",
-  "expected_focal_point": "magenta square crane halo",
-  "expected_player_route": "raised side decks, cover frames, finish rise",
-  "expected_important_objects": "three square targets, support truss, elevated decks",
-  "expected_lighting": "magenta target contrast / cyan exit line",
-  "environment_pack": "Original project-authored Skyline Relay course; no external environment pack.",
-  "asset_list": [
-    "public/textures/sunlit-concrete-tile.png",
-    "public/textures/painted-route-metal.png",
-    "original procedural cube/box course geometry"
-  ],
-  "objective": "Movement-led target encounter with multiple elevations.",
-  "visual_target_reference": "research/design/environment_board.md and docs/LEVEL_MAP.md",
-  "capture_requirement": [
-    "entry.png",
-    "focal.png",
-    "path.png",
-    "interaction.png",
-    "exit.png",
-    "secondary.png"
-  ],
-  "vertical_requirement": true
+  "schema": "retired-skyline-relay-context/v1",
+  "status": "RETIRED",
+  "note": "Retired with the former Skyline Relay course. It is not evidence for Rivet Run: Highline District."
 }

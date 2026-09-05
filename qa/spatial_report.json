@@ -3,35 +3,35 @@
   "scope": "Navigation graph, route semantics and 3D coordinate declarations only. Runtime collision, wall normal detection, support contact, rendered intersections and playthrough remain UNVERIFIED.",
   "findings": [
     {
-      "id": "edge:spawn-dock->jump-core",
+      "id": "edge:dispatch-bay->permit-terminal",
       "result": "PASS"
     },
     {
-      "id": "edge:jump-core->checkpoint-a",
+      "id": "edge:permit-terminal->transfer-beacon",
       "result": "PASS"
     },
     {
-      "id": "edge:checkpoint-a->wall-shaft",
+      "id": "edge:transfer-beacon->west-shaft",
       "result": "PASS"
     },
     {
-      "id": "edge:checkpoint-a->dash-span",
+      "id": "edge:transfer-beacon->east-span",
       "result": "PASS"
     },
     {
-      "id": "edge:wall-shaft->target-court",
+      "id": "edge:west-shaft->boiler-court",
       "result": "PASS"
     },
     {
-      "id": "edge:dash-span->target-court",
+      "id": "edge:east-span->boiler-court",
       "result": "PASS"
     },
     {
-      "id": "edge:target-court->slide-gate",
+      "id": "edge:boiler-court->maintenance-passage",
       "result": "PASS"
     },
     {
-      "id": "edge:slide-gate->finish-bridge",
+      "id": "edge:maintenance-passage->sunline-exit",
       "result": "PASS"
     },
     {

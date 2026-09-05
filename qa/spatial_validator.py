@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Vector Run's declarative navigation graph and intentional support ledger.
+"""Validate Rivet Run's declarative navigation graph and intentional support ledger.
 
 This is a static data check. It deliberately does not claim rendered collision, physics,
 screenshot, performance or player-playthrough evidence.

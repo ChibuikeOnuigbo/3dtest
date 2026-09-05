@@ -1,31 +1,24 @@
-# Vector Run visual inspection loop
+# Rivet Run player-height visual inspection loop
 
-## Evidence gate
+## Hard evidence rule
 
-A visual approval requires three independent layers:
+There is no visual pass without genuine rendered first-person frames from a
+lawfully available local browser. Builds, static geometry, test passes, traces
+without frames, visual-source code, screenshot filenames, FPS and pixel metrics
+cannot substitute for the review.
 
-1. **Mechanical QA** — world bounds, traversal surfaces, navigation graph, state and
-   collision tests.
-2. **Image QA** — meaningful player-height captures after actual input/movement.
-3. **Visual-reasoning QA** — image inspection against room purpose, expected focal point,
-   route, lighting, assets, scale and the level map.
+## Capture coverage
 
-No area receives a visual score or PASS until all three have evidence. Pixel differences,
-file existence, scene coordinates and build output alone cannot grant approval.
+`tools/qa/capture_visual_views.mjs` must drive/capture Dispatch Bay, Intake
+jump, Kinetic Permit, Switch House canopy/checkpoint, West Shaft, East Span,
+Boiler Court, Control Bridge slide, Sunline Bridge, finish, lower boundary,
+dash, wall contact, slam and landing. Capture default and one `?seed=` variant.
 
-## Capture contract
+## Review rule
 
-When a supported browser is available, `tools/qa/capture_visual_views.mjs` launches it
-using an existing executable only. It captures player-height views following real game
-input and stores action/console context. Its target views are entry, focal point, path,
-interaction, exit, secondary and vertical relationship where relevant.
-
-The visual critic must identify a primary focal point, secondary focal point and navigation
-target, then report only `PASS` or `FAIL` with issue severity/location/recommended fix.
-No generic “looks good” result is accepted.
-
-## Current status
-
-`qa/visual/*/room_context.json` contains the intended review inputs. Screenshots and
-semantic visual review are **BLOCKED_NO_BROWSER_BINARY**, so the reports use null scores
-and make no claim about how the rendered course looks.
+For each region, semantic review must name visible strengths and failures in:
+prototype signal, material quality/repetition, supported construction, accidental
+floating/intersections, composition, scale, route clarity, lighting, colour,
+distant depth, transition readability, environmental storytelling, HUD and
+memorable identity. A pass requires no critical problem, each category >= 7.5,
+and average >= 8.5. Existing scores remain `null` while capture is blocked.

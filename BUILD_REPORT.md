@@ -1,47 +1,37 @@
-# Build report — Vector Run: Skyline Relay (active prototype)
+# Build report — Rivet Run: Highline District
 
-## Final-game direction
+**Date:** 2026-09-05
+**Status:** compile/logic graph verified; visual approval blocked pending a lawful
+local browser executable and actual player-height review.
 
-The previous slow signal-outpost concept has been retired from production. The active game
-is a small, original **fast first-person parkour, exploration and target-action course**:
-*Vector Run: Skyline Relay*. Its core is speed, vertical movement, precise routes, quick
-restarts and readable target encounters. It is not a horror game.
+## Reconstruction scope
 
-## Movement design
+The prior detached bright training-course presentation was replaced by a connected
+harbour highline construction in `src/world/HighlineDistrict.js`:
 
-The current kinematic movement controller has ground jump, buffered/coyote jump response,
-air control, double-jump unlock, three-use wall-jump limit, directional dash/cooldown,
-crouch clearance, ground slide, air ground-slam, fall recovery and explicit movement
-states. Movement values are implementation starting values—not final feel approval.
+- supported rooftops, switch house, bounded wall shaft, trussed dash viaduct,
+  boiler court, framed maintenance bridge and Sunline finish bridge;
+- below-route city/rail/harbour/ridge context to avoid a cyan/infinite void;
+- material families, facade bays, parapets, roof seams, mounted utilities,
+  restrained amber utility lighting and a compact industrial HUD;
+- a master seed that varies only safe skyline details while preserving authored
+  traversal geometry.
 
-## Level design and world
+The 40 authored segment contracts are in `game/data/highline_segments.json`.
+Their `BLOCKED_FOR_PLAYER_HEIGHT_VISUAL_REVIEW` status is intentional: listing a
+segment is not visual approval or proof of a good route.
 
-The authored Skyline Relay course is a bright coastal freight-training structure: launch
-dock, kinetic-prism rise, split wall/dash routes, target court and sunrise gate. Platforms
-are paired with visible gantries, trusses, piers, rails and route markers. The world uses
-original procedural geometry/materials rather than a copied external map.
+## Latest command results
 
-Source-pattern synthesis, 3D tree and route graph are in `docs/LEVEL_MAP.md` and
-`game/data/level_map.json`. Environment planning is in `research/design/environment_board.md`.
+- `npm run test:logic` — **PASS** (6/6)
+- `python3 qa/spatial_validator.py` — **PASS_WITH_BROWSER_VALIDATION_REQUIRED**
+- `npm run build` — **PASS**
 
-## Assets, references and provenance
+Vite continues to report a non-fatal minified JavaScript chunk above 500kB.
 
-Nine supplied GitHub repositories remain technical/design references. Their individual
-asset provenance remains independently controlled. No third-party model, texture, rig,
-map, animation, UI art or audio currently ships in production. Three.js is the only
-third-party runtime dependency.
+## Explicit non-claims
 
-## Current verification
-
-- New movement/level-map logic suite: **6/6 passed** after the Vector Run rebuild.
-- Vite production build: **passed**; bundle advisory remains for the Three.js bundle.
-- `tools/qa/check_playwright.py`: package/version and local-browser diagnostic added.
-- Browser playthrough/screenshots/performance: **BLOCKED**; no secure local browser binary
-  is installed. Normal official installer, local-cache search and requested Debian package
-  attempts are logged in `qa/`.
-
-## Limits
-
-Movement feel, route difficulty, visual composition, browser collision, screenshot review,
-performance profiling, audio mix, settings/remapping UI and full end-to-end playthrough
-need real browser QA before any completion claim.
+This report does not claim screenshot evidence, visual score, browser playthrough,
+route feel, collision observation, material quality, performance or full
+completion. Those remain dependent on genuine browser capture/review as recorded
+in `docs/qa_report.md`.
