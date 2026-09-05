@@ -282,32 +282,37 @@ export class HighlineDistrict {
     const baseY = top - height * 0.42;
     // Window bands are intentionally sparse enough to read as architecture rather than
     // a screen-space grid of cloned floating rectangles.
-    const rows = Math.max(2, Math.min(5, Math.floor(height / 5.4)));
-    const cols = Math.max(3, Math.min(7, Math.floor(width / 3.1)));
+    // Banded, interrupted glazing is much cheaper and more credible than covering each
+    // mass with a wall of cloned window cards. Solid bays/pilasters do most of the
+    // architectural work; glazing marks selectively occupied rooms.
+    const rows = Math.max(2, Math.min(3, Math.floor(height / 7.2)));
+    const cols = Math.max(3, Math.min(5, Math.floor(width / 4.2)));
     for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < cols; column += 1) {
-        const wx = x - width / 2 + 1.2 + column * ((width - 2.4) / Math.max(1, cols - 1));
-        const wy = baseY + row * 3.2;
+        if ((row + column) % 2 === 1) continue;
+        const wx = x - width / 2 + 1.45 + column * ((width - 2.9) / Math.max(1, cols - 1));
+        const wy = baseY + row * 4.05;
         const material = this.random() < accentRate ? warmMaterial : windowMaterial;
-        this.addVisual('facade-window', [1.08, 1.74, 0.07], material, [wx, wy, z + depth / 2 + 0.04], false);
+        this.addVisual('facade-window', [1.34, 1.42, 0.07], material, [wx, wy, z + depth / 2 + 0.04], false);
       }
     }
     // Visible side faces carry the same constructed logic. This prevents a city block
     // viewed obliquely from becoming a single unarticulated brown wall.
-    const sideCols = Math.max(2, Math.min(4, Math.floor(depth / 3.5)));
+    const sideCols = Math.max(2, Math.min(3, Math.floor(depth / 4.8)));
     for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < sideCols; column += 1) {
-        const wz = z - depth / 2 + 1.1 + column * ((depth - 2.2) / Math.max(1, sideCols - 1));
-        const wy = baseY + row * 3.2;
+        if ((row + column) % 2 === 1) continue;
+        const wz = z - depth / 2 + 1.25 + column * ((depth - 2.5) / Math.max(1, sideCols - 1));
+        const wy = baseY + row * 4.05;
         const material = this.random() < accentRate * 0.55 ? warmMaterial : windowMaterial;
-        this.addVisual('facade-side-window', [0.07, 1.52, 0.96], material, [x - width / 2 - 0.04, wy, wz], false);
+        this.addVisual('facade-side-window', [0.07, 1.3, 1.18], material, [x - width / 2 - 0.04, wy, wz], false);
       }
     }
     // Cornices, restrained floor belts and piers turn a mass into facade assembly rather
     // than using hundreds of floating cards as the only architectural detail.
     this.addVisual('facade-cornice', [width + 0.34, 0.32, depth + 0.34], this.materials.trim, [x, top + 0.08, z]);
     for (let level = 1; level < rows; level += 1) {
-      const bandY = baseY + level * 3.2 - 1.08;
+      const bandY = baseY + level * 4.05 - 1.08;
       this.addVisual('facade-service-band', [width + 0.1, 0.12, 0.16], this.materials.trim, [x, bandY, z + depth / 2 + 0.09]);
       this.addVisual('facade-side-band', [0.16, 0.12, depth + 0.1], this.materials.trim, [x - width / 2 - 0.09, bandY, z]);
     }
