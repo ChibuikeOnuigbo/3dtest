@@ -1,0 +1,8 @@
+WHAT: Isolated venv availability for yt-dlp, per PEP 668 guidance.
+WHY: The system Python correctly rejected a global/user install; this does not use --break-system-packages.
+2026-09-05T07:21:50+00:00
+Collecting yt-dlp
+  Downloading yt_dlp-2026.8.19-py3-none-any.whl (3.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 39.3 MB/s eta 0:00:00
+Installing collected packages: yt-dlp
+Successfully installed yt-dlp-2026.8.19

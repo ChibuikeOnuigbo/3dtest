@@ -1,11 +1,11 @@
 {
-  "schema": "room-review/v1",
-  "policy": "A score may be assigned only after real browser screenshot/playthrough/performance evidence. No room is approved from static inspection.",
-  "rooms": {
-    "R1": {"name": "Arrival Jetty", "status": "UNRATED_BROWSER_BLOCKED"},
-    "R2": {"name": "Keeper's Hall", "status": "UNRATED_BROWSER_BLOCKED"},
-    "R3": {"name": "Signal Court", "status": "UNRATED_BROWSER_BLOCKED"},
-    "R4": {"name": "Generator Bay", "status": "UNRATED_BROWSER_BLOCKED"},
-    "R5": {"name": "Radio Workshop and Lantern Gallery", "status": "UNRATED_BROWSER_BLOCKED"}
+  "schema": "vector-run-area-review/v1",
+  "policy": "Scores require real browser screenshots, input-driven traversal and performance evidence. Static tests are not visual/player approval.",
+  "areas": {
+    "A1": {"name": "Launch Dock", "status": "UNRATED_BROWSER_BLOCKED"},
+    "A2": {"name": "Prism Rise", "status": "UNRATED_BROWSER_BLOCKED"},
+    "A3": {"name": "Split Route", "status": "UNRATED_BROWSER_BLOCKED"},
+    "A4": {"name": "Target Court", "status": "UNRATED_BROWSER_BLOCKED"},
+    "A5": {"name": "Sunrise Gate", "status": "UNRATED_BROWSER_BLOCKED"}
   }
 }

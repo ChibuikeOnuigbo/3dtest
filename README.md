@@ -1,48 +1,56 @@
-# Pale Beacon
+# Vector Run: Skyline Relay
 
-**Pale Beacon** is a small, original first-person Three.js mission set in a rain-swept
-coastal civil-safety signal outpost. Restore the receiver, retrieve an emergency pulse
-tool, clear the relay route, reseat power, route the backup channel, and arm the beacon
-for an inbound rescue ferry.
+A small, original first-person parkour and target-action game built with Three.js.
 
-## Run locally
+**Identity:** speed, momentum, vertical routes, precision jumps, target encounters, fast
+checkpoints and personal-best runs. It is not a horror game, bunker, abandoned facility or
+slow exploration game.
+
+## Controls
+
+| Action | Default binding | Behavior |
+|---|---|---|
+| Move | `W` `A` `S` `D` | Directional movement with air control. |
+| Jump | `Space` | Ground jump, coyote/buffered response; second jump after the prism unlock. |
+| Dash | `Shift` | Short directed dash with cooldown. |
+| Crouch | `Ctrl` | Crouch; while fast on ground it slides, while airborne it ground-slams. |
+| Pulse | mouse click | Clears mechanical targets in the Target Court. |
+| Restart | `R` | Fast checkpoint restart. |
+| Pause | `Escape` | Releases mouse capture. |
+
+The runtime uses action identifiers rather than scattering key-code checks. The HUD reads
+its displayed control labels from the binding map.
+
+## Course
+
+```text
+Launch Dock → Kinetic Prism → Checkpoint / Split Route
+                                ├─ Wall Link
+                                └─ Dash Span
+                              → Target Court → Sunrise Gate
+```
+
+The complete topology, 3D hierarchy, source-pattern synthesis and collision/traversal
+intent are in [`docs/LEVEL_MAP.md`](./docs/LEVEL_MAP.md) and
+[`game/data/level_map.json`](./game/data/level_map.json).
+
+## Development
 
 ```bash
 npm install
 npm run dev
+npm run test:logic
+npm run build
 ```
 
-Open the URL printed by Vite. Click **Begin Maintenance** to unlock audio and pointer
-lock. Controls: **WASD** move, **Shift** sprint, **Space** jump, **E** interact, left
-click fires the emergency pulse tool, and **Esc** pauses/releases mouse capture.
+`npm run test:logic` verifies core jump, double-jump, dash/collision, crouch-clearance and
+level-map path declarations. Browser playthrough and screenshot evidence remain blocked
+until an official Chromium binary can be securely installed in the sandbox; this is not a
+claim that the movement course has passed player QA.
 
-## Checks actually run
+## Credits and provenance
 
-```bash
-npm run test:logic   # 4 passing Node logic/collision tests
-npm run build        # Vite production build
-npm run test:e2e     # Playwright browser suite (currently blocked: no browser executable)
-```
-
-The build and logic tests have passed in this workspace. The Playwright invocation was
-attempted against this game and is explicitly blocked by the environment's missing
-Chromium executable; see [`qa/playwright-attempt-2026-09-04.log`](./qa/playwright-attempt-2026-09-04.log).
-No browser capture, quality score, or completion claim is being made.
-
-## Architecture
-
-The runtime is an independently authored Vite/Three.js project with separate input,
-player motor, collision world, mission reducer, interactions, world, drones, audio and
-HUD modules. Gameplay facts are data-driven in `src/data/mission.js`; an immutable
-read-only `window.__paleBeaconTestProbe.snapshot()` supports future browser assertions.
-All environment meshes/materials are original procedural blockout art. No media/code from
-research repositories ships in the game, and no external asset is currently approved.
-
-## Research and provenance
-
-- [Research index and phase status](./research/README.md)
-- [Story bible / state mapping](./research/story/STORY_BIBLE.md)
-- [Visual target and environment lock](./research/VISUAL_TARGET.md)
-- [Source/reference comparison](./research/github/COMPARISON.md)
-- [Asset ledger and license gates](./research/assets/ASSET_LEDGER.md)
-- [Strict browser QA rubric](./qa/strict-fps-qa-rubric.md)
+The playable course uses original procedural Three.js geometry/materials and Web Audio
+feedback. Repository studies remain in `research/`; they are design/technical references,
+not bundled external scenes or media. Consult `CREDITS.md` and `LICENSES.md` before any
+external asset is added.

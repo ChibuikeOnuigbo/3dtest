@@ -1,53 +1,48 @@
 #!/usr/bin/env python3
-"""Static spatial consistency validator for the authored Pale Beacon blockout plan.
+"""Validate Vector Run's declarative navigation graph and intentional support ledger.
 
-This validates declarative layout facts; it is not a substitute for a browser collision
-playthrough. Every unresolved visual/browser concern stays explicitly unverified.
+This is a static data check. It deliberately does not claim rendered collision, physics,
+screenshot, performance or player-playthrough evidence.
 """
 from __future__ import annotations
 import json
+from collections import defaultdict, deque
 from pathlib import Path
 
-PLAN = Path('research/story/3d_map.json')
+PLAN = Path('game/data/level_map.json')
 OUT = Path('qa/spatial_report.json')
-
-
-def inside(point, bounds, margin=0.0):
-    return bounds['x'][0] + margin <= point[0] <= bounds['x'][1] - margin and bounds['z'][0] + margin <= point[1] <= bounds['z'][1] - margin
+REQUIRED_SURFACES = {'WALKABLE', 'WALL_JUMPABLE', 'SLIDE_TUNNEL', 'DASH_ROUTE', 'NON_TRAVERSABLE'}
 
 
 def main():
     plan = json.loads(PLAN.read_text())
-    rooms = {r['id']: r for r in plan['rooms']}
+    nodes = {node['id']: node for node in plan['nodes']}
+    graph = defaultdict(set)
     findings = []
-    spawn = plan['spawn']['position']
-    findings.append({'id': 'spawn-in-declared-room', 'result': 'PASS' if inside((spawn[0], spawn[2]), rooms[plan['spawn']['room']]['bounds'], 0.36) else 'FAIL'})
-    for door in plan['doors']:
-        connected = [rooms[name] for name in door['connects']]
-        if len(connected) == 2 and door['connects'][0] != door['connects'][1]:
-            near_a = inside(door['position'], connected[0]['bounds'], -0.5)
-            near_b = inside(door['position'], connected[1]['bounds'], -0.5)
-            findings.append({'id': f"door-{door['id']}-connectivity", 'result': 'PASS' if near_a or near_b else 'REVIEW', 'note': 'Door lies on a room boundary; exact moving-collider clearance needs browser testing.'})
-        else:
-            findings.append({'id': f"door-{door['id']}-internal-transition", 'result': 'REVIEW', 'note': 'Internal gallery threshold requires runtime collision verification.'})
-    support_objects = [
-        ('receiver', 'R1', 'floor'), ('cabinet', 'R2', 'floor'), ('desk', 'R2', 'floor'),
-        ('signal-spindle', 'R3', 'floor'), ('generator', 'R4', 'floor'), ('isolator', 'R4', 'wall-mounted'),
-        ('radio', 'R5', 'floor'), ('beacon', 'R5', 'floor'), ('sentry-01', 'R3', 'hovering'),
-        ('sentry-02', 'R3', 'hovering'), ('sentry-03', 'R3', 'hovering')
-    ]
-    normal = [entry for entry in support_objects if entry[2] != 'hovering']
-    supported = [entry for entry in normal if entry[2] in {'floor', 'wall-mounted', 'ceiling-mounted'}]
-    score = len(supported) / len(normal) if normal else 1
-    findings.append({'id': 'normal-object-support', 'result': 'PASS' if score >= .95 else 'FAIL', 'supported': len(supported), 'normal_placeable': len(normal), 'score': score, 'exceptions': [x[0] for x in support_objects if x[2] == 'hovering']})
+    for edge in plan['edges']:
+        known = edge['from'] in nodes and edge['to'] in nodes
+        findings.append({'id': f"edge:{edge['from']}->{edge['to']}", 'result': 'PASS' if known and edge.get('type') and edge.get('mechanic') else 'FAIL'})
+        if known:
+            graph[edge['from']].add(edge['to']); graph[edge['to']].add(edge['from'])
+    spawn = plan['spawn']['id']
+    finish = next((node['id'] for node in plan['nodes'] if node['type'] == 'finish'), None)
+    visited, queue = {spawn}, deque([spawn])
+    while queue:
+        current = queue.popleft()
+        for neighbour in graph[current]:
+            if neighbour not in visited: visited.add(neighbour); queue.append(neighbour)
+    findings.append({'id': 'critical-path-reachable', 'result': 'PASS' if finish in visited and set(plan['critical_path']).issubset(visited) else 'FAIL'})
+    findings.append({'id': 'required-traversal-surface-vocabulary', 'result': 'PASS' if REQUIRED_SURFACES.issubset(set(plan['surfaces'])) else 'FAIL'})
+    position_ok = all(len(node['position']) == 3 for node in plan['nodes'])
+    findings.append({'id': 'all-navigation-nodes-have-3d-coordinates', 'result': 'PASS' if position_ok else 'FAIL'})
     report = {
-        'schema': 'pale-beacon-spatial-report/v1',
-        'scope': 'Static planned positions/support classifications. Browser physics, rendered mesh intersections, door timing and player traps remain UNVERIFIED.',
+        'schema': 'vector-run-spatial-report/v1',
+        'scope': 'Navigation graph, route semantics and 3D coordinate declarations only. Runtime collision, wall normal detection, support contact, rendered intersections and playthrough remain UNVERIFIED.',
         'findings': findings,
-        'overall': 'PASS_WITH_BROWSER_VALIDATION_REQUIRED' if not any(x['result'] == 'FAIL' for x in findings) else 'FAIL'
+        'overall': 'PASS_WITH_BROWSER_VALIDATION_REQUIRED' if not any(item['result'] == 'FAIL' for item in findings) else 'FAIL'
     }
     OUT.write_text(json.dumps(report, indent=2) + '\n')
     print(report['overall'])
-    for finding in findings: print(f"{finding['result']:6} {finding['id']}")
+    for finding in findings: print(f"{finding['result']:4} {finding['id']}")
 
 if __name__ == '__main__': main()

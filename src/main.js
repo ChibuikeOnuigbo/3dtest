@@ -1,14 +1,7 @@
 import * as THREE from 'three';
 import './styles.css';
-import { MissionStore } from './systems/MissionStore.js';
-import { CollisionWorld } from './systems/CollisionWorld.js';
-import { Input } from './systems/Input.js';
-import { PlayerMotor } from './systems/PlayerMotor.js';
-import { InteractionSystem } from './systems/InteractionSystem.js';
-import { AudioSystem } from './systems/AudioSystem.js';
-import { BeaconWorld } from './world/Environment.js';
-import { Drones } from './world/Drones.js';
-import { Hud } from './ui/Hud.js';
+import { MovementController } from './systems/MovementController.js';
+import { SkylineCourse } from './world/SkylineCourse.js';
 
 const canvas = document.querySelector('#game-canvas');
 const titleScreen = document.querySelector('#title-screen');
@@ -17,6 +10,30 @@ const endingScreen = document.querySelector('#ending-screen');
 const startButton = document.querySelector('#start-button');
 const resumeButton = document.querySelector('#resume-button');
 const restartButton = document.querySelector('#restart-button');
+const restartFinishButton = document.querySelector('#restart-finish-button');
+const objectiveNode = document.querySelector('#objective');
+const timerNode = document.querySelector('#timer');
+const targetNode = document.querySelector('#target-count');
+const abilityNode = document.querySelector('#ability');
+const movementStateNode = document.querySelector('#movement-state');
+const toastNode = document.querySelector('#toast');
+const controlHint = document.querySelector('#control-hint');
+const finishTimeNode = document.querySelector('#finish-time');
+
+const bindings = Object.freeze({
+  MOVE_FORWARD: 'KeyW', MOVE_BACK: 'KeyS', MOVE_LEFT: 'KeyA', MOVE_RIGHT: 'KeyD',
+  JUMP: 'Space', DASH: 'ShiftLeft', CROUCH: 'ControlLeft', RESTART: 'KeyR', PAUSE: 'Escape',
+});
+const keyNames = Object.freeze({ KeyW: 'W', KeyA: 'A', KeyS: 'S', KeyD: 'D', Space: 'SPACE', ShiftLeft: 'SHIFT', ControlLeft: 'CTRL', KeyR: 'R', Escape: 'ESC' });
+const pressed = new Set();
+let running = false;
+let elapsed = 0;
+let bestTime = Number(localStorage.getItem('vector-run-best') || 0);
+let checkpoint = new THREE.Vector3(0, 0, 20);
+let objective = 'Reach the cyan kinetic prism.';
+let toastTimer = 0;
+let audioContext = null;
+let pulseVisuals = [];
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
@@ -24,209 +41,139 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.28;
+renderer.toneMappingExposure = 1.18;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const scene = new THREE.Scene();
-// A stormy teal-to-amber palette keeps the glass observatory readable without reverting to grey industrial monotony.
-scene.background = new THREE.Color('#31546a');
-scene.fog = new THREE.FogExp2('#55788b', 0.014);
-const camera = new THREE.PerspectiveCamera(67, window.innerWidth / window.innerHeight, 0.08, 100);
-camera.position.y = 1.62;
+scene.background = new THREE.Color('#78cbd3');
+scene.fog = new THREE.FogExp2('#76b9c6', 0.012);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.05, 160);
+camera.position.set(0, 1.62, 0);
+const sun = new THREE.DirectionalLight('#fff0bf', 2.9);
+sun.position.set(-25, 38, 18); sun.castShadow = true;
+sun.shadow.mapSize.set(1024, 1024); sun.shadow.camera.left = -28; sun.shadow.camera.right = 28; sun.shadow.camera.top = 28; sun.shadow.camera.bottom = -28;
+scene.add(sun);
+scene.add(new THREE.HemisphereLight('#cffff8', '#1d4776', 2.2));
+const course = new SkylineCourse(scene);
+const player = new MovementController(camera, () => course.solids);
+player.reset(checkpoint);
+scene.add(player.root);
 
-const hemisphere = new THREE.HemisphereLight('#c5f5ed', '#182a4b', 2.0);
-scene.add(hemisphere);
-const moonLight = new THREE.DirectionalLight('#ffdca3', 2.25);
-moonLight.position.set(-13, 24, 9);
-moonLight.castShadow = true;
-moonLight.shadow.mapSize.set(1024, 1024);
-moonLight.shadow.camera.left = -22;
-moonLight.shadow.camera.right = 22;
-moonLight.shadow.camera.top = 22;
-moonLight.shadow.camera.bottom = -22;
-scene.add(moonLight);
-
-const collision = new CollisionWorld();
-const world = new BeaconWorld(scene, collision);
-const drones = new Drones(scene);
-const store = new MissionStore();
-const motor = new PlayerMotor(camera, collision);
-scene.add(motor.root);
-const interaction = new InteractionSystem(camera, world);
-const input = new Input(canvas);
-const audio = new AudioSystem();
-const hud = new Hud();
-const raycaster = new THREE.Raycaster();
-raycaster.far = 22;
-
-const headlamp = new THREE.SpotLight('#dffbff', 1.55, 13, Math.PI / 7, 0.62, 1.8);
-headlamp.position.set(0.25, -0.08, 0);
-headlamp.target.position.set(0.1, -0.2, -5);
-camera.add(headlamp, headlamp.target);
-
-const tool = new THREE.Group();
-const toolBody = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.17, 0.62), new THREE.MeshStandardMaterial({ color: '#405b61', roughness: 0.3, metalness: 0.85 }));
-const toolEmitter = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.08, 0.12, 12), new THREE.MeshStandardMaterial({ color: '#9ee9ed', emissive: '#1699a7', emissiveIntensity: 2.5, roughness: 0.22 }));
-toolEmitter.rotation.x = Math.PI / 2;
-toolEmitter.position.z = -0.34;
-tool.add(toolBody, toolEmitter);
-tool.position.set(0.32, -0.29, -0.5);
-tool.rotation.set(-0.08, -0.18, 0);
-tool.visible = false;
-camera.add(tool);
-
+const dashLight = new THREE.PointLight('#72ffff', 0, 7, 2);
+dashLight.position.set(0, 0.3, -0.4);
+player.cameraRig.add(dashLight);
+const pulseTool = new THREE.Group();
+const glove = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.13, 0.38), new THREE.MeshStandardMaterial({ color: '#17355a', roughness: 0.3, metalness: 0.84 }));
+const emitter = new THREE.Mesh(new THREE.OctahedronGeometry(0.075), new THREE.MeshStandardMaterial({ color: '#cafff3', emissive: '#1fcfd0', emissiveIntensity: 2.4, roughness: 0.2 }));
+emitter.position.z = -0.27;
+pulseTool.add(glove, emitter); pulseTool.position.set(0.34, -0.29, -0.48); pulseTool.rotation.set(-0.1, -0.22, 0); camera.add(pulseTool);
+const raycaster = new THREE.Raycaster(); raycaster.far = 50;
 const clock = new THREE.Clock();
-let elapsed = 0;
-let running = false;
-let endingTimeout = null;
-let pulseVisuals = [];
 
-function setOverlay(element, show) {
-  element.classList.toggle('hidden', !show);
-  element.setAttribute('aria-hidden', String(!show));
+function formatTime(time) {
+  const minutes = Math.floor(time / 60).toString().padStart(2, '0');
+  const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+  const millis = Math.floor((time % 1) * 1000).toString().padStart(3, '0');
+  return `${minutes}:${seconds}.${millis}`;
 }
 
-function pulseLine(origin, end, hit) {
-  const geometry = new THREE.BufferGeometry().setFromPoints([origin, end]);
-  const material = new THREE.LineBasicMaterial({ color: hit ? '#a7fff1' : '#6bc9e6', transparent: true, opacity: 0.9 });
-  const line = new THREE.Line(geometry, material);
-  scene.add(line);
-  pulseVisuals.push({ line, life: 0.12 });
+function labelFor(action) { return keyNames[bindings[action]] || bindings[action]; }
+function renderControls() {
+  controlHint.innerHTML = [
+    ['MOVE_FORWARD', 'MOVE'], ['JUMP', 'JUMP'], ['DASH', 'DASH'], ['CROUCH', 'SLIDE / SLAM'], ['RESTART', 'RESTART'],
+  ].map(([action, text]) => `<span class="keycap">${labelFor(action)}</span><span>${text}</span>`).join('<span>·</span>');
+}
+function showToast(text) { toastNode.textContent = text; toastTimer = 2.45; toastNode.classList.add('show'); }
+function setOverlay(element, visible) { element.classList.toggle('hidden', !visible); element.setAttribute('aria-hidden', String(!visible)); }
+function tone(frequency = 440, duration = 0.08, type = 'sine', gain = 0.045) {
+  if (!audioContext) return;
+  const oscillator = audioContext.createOscillator(); const volume = audioContext.createGain();
+  oscillator.type = type; oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+  volume.gain.setValueAtTime(gain, audioContext.currentTime); volume.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+  oscillator.connect(volume).connect(audioContext.destination); oscillator.start(); oscillator.stop(audioContext.currentTime + duration);
 }
 
+function beginAudio() { if (!audioContext) audioContext = new AudioContext(); audioContext.resume?.(); }
+function resetRun() {
+  elapsed = 0; checkpoint.set(0, 0, 20); objective = 'Reach the cyan kinetic prism.';
+  course.reset(); player.doubleJumpUnlocked = false; player.reset(checkpoint); pulseVisuals.forEach(({ line }) => scene.remove(line)); pulseVisuals = [];
+  setOverlay(endingScreen, false); setOverlay(pauseScreen, false); showToast('Fresh line. Keep your speed.');
+}
+function restartCheckpoint() {
+  player.reset(checkpoint); showToast('Checkpoint reset — run it cleaner.'); tone(280, 0.1, 'square');
+  if (!running) { running = true; setOverlay(pauseScreen, false); requestLock(); }
+}
+function begin() { beginAudio(); resetRun(); running = true; setOverlay(titleScreen, false); requestLock(); }
+function requestLock() { window.setTimeout(() => canvas.requestPointerLock?.(), 40); }
 function firePulse() {
-  if (!running || !input.locked || store.state.endingVisible) return;
+  if (!running || document.pointerLockElement !== canvas) return;
+  raycaster.set(camera.getWorldPosition(new THREE.Vector3()), player.facingDirection(new THREE.Vector3()));
+  const hit = raycaster.intersectObjects(course.targetObjects(), true).find((entry) => entry.object.userData.targetId);
   const origin = camera.getWorldPosition(new THREE.Vector3());
-  const direction = motor.facingDirection(new THREE.Vector3());
-  raycaster.set(origin, direction);
-  const hits = raycaster.intersectObjects([...drones.getRayTargets(), ...world.getRayTargets()], true);
-  const first = hits.find((hit) => hit.object.userData.droneId || hit.object.userData.occluder || hit.object.userData.interactionId);
-  const hitDrone = first?.object?.userData?.droneId;
-  const end = first ? first.point : origin.clone().add(direction.multiplyScalar(18));
-  const result = store.send({ type: 'pulse', target: hitDrone });
-  if (result.changed && store.state.tool.equipped && result.cue !== 'tick') {
-    pulseLine(origin, end, Boolean(hitDrone));
-    tool.rotation.x = -0.22;
-    window.setTimeout(() => { tool.rotation.x = -0.08; }, 75);
-  }
+  const end = hit ? hit.point : origin.clone().add(player.facingDirection(new THREE.Vector3()).multiplyScalar(18));
+  const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([origin, end]), new THREE.LineBasicMaterial({ color: hit ? '#fff6b5' : '#6df5f1', transparent: true, opacity: 0.9 }));
+  scene.add(line); pulseVisuals.push({ line, life: 0.11 });
+  pulseTool.rotation.x = -0.3; window.setTimeout(() => { pulseTool.rotation.x = -0.1; }, 75);
+  if (hit && course.hitTarget(hit.object.userData.targetId)) { tone(720, 0.11, 'square', 0.07); showToast(`Target cleared — ${course.activeTargetCount()} remaining.`); if (course.activeTargetCount() === 0) { objective = 'All targets clear. Reach the Sunrise Gate.'; showToast('COURT CLEAR — climb to the Sunrise Gate.'); tone(980, 0.25, 'sine', 0.08); } } else tone(330, 0.035, 'triangle', 0.025);
 }
-
-function interact() {
-  if (!running || !input.locked || store.state.endingVisible) return;
-  const result = interaction.activate(store);
-  if (!result.changed) hud.toast(result.text, result.cue);
-}
-
-function begin() {
-  running = true;
-  titleScreen.classList.add('hidden');
-  setOverlay(pauseScreen, false);
-  setOverlay(endingScreen, false);
-  audio.start();
-  hud.toast('Maintenance channel open. Find the emergency receiver.', 'radio');
-  window.setTimeout(() => input.requestLock(), 40);
-}
-
-function resume() {
-  setOverlay(pauseScreen, false);
-  input.requestLock();
-}
-
-function restart() {
-  clearTimeout(endingTimeout);
-  store.reset();
-  drones.reset();
-  motor.reset();
-  world.applyState(store.state);
-  tool.visible = false;
-  setOverlay(endingScreen, false);
-  running = true;
-  hud.toast('Maintenance sequence reset.', 'tick');
-  window.setTimeout(() => input.requestLock(), 40);
-}
-
-store.subscribe((state, result, event) => {
-  world.applyState(state);
-  hud.update(state);
-  tool.visible = state.tool.equipped;
-  if (result.text) hud.toast(result.text, result.cue);
-  if (result.cue) audio.cue(result.cue);
-  if (event.type === 'pulse' && event.target) drones.disable(event.target);
-  if (state.endingVisible && !endingTimeout) {
-    hud.toast('Signal transmitting. Look out across the bay.', 'beacon');
-    endingTimeout = window.setTimeout(() => {
-      running = false;
-      if (document.pointerLockElement === canvas) document.exitPointerLock?.();
-      setOverlay(endingScreen, true);
-    }, 2800);
-  }
+function keyIs(action, code) { return bindings[action] === code; }
+window.addEventListener('keydown', (event) => {
+  if (event.repeat) return;
+  pressed.add(event.code);
+  if (keyIs('JUMP', event.code)) player.queueJump();
+  if (keyIs('DASH', event.code)) { player.queueDash(); tone(560, 0.06, 'sawtooth', 0.035); }
+  if (keyIs('RESTART', event.code)) restartCheckpoint();
+  if (keyIs('PAUSE', event.code) && running) setOverlay(pauseScreen, true);
 });
-
-input.onLook = (dx, dy) => motor.look(dx, dy);
-input.onFire(() => firePulse());
-input.onInteract(() => interact());
-input.onLock((locked) => {
-  if (!running || store.state.endingVisible) return;
-  if (!locked) setOverlay(pauseScreen, true);
-  else setOverlay(pauseScreen, false);
-});
+window.addEventListener('keyup', (event) => pressed.delete(event.code));
+canvas.addEventListener('mousemove', (event) => { if (running && document.pointerLockElement === canvas) player.look(event.movementX, event.movementY); });
+canvas.addEventListener('mousedown', firePulse);
+document.addEventListener('pointerlockchange', () => { if (running && document.pointerLockElement !== canvas && !course.finished) setOverlay(pauseScreen, true); });
 startButton.addEventListener('click', begin);
-resumeButton.addEventListener('click', resume);
-restartButton.addEventListener('click', restart);
-canvas.addEventListener('click', () => {
-  if (running && !input.locked && !store.state.endingVisible) input.requestLock();
-});
+resumeButton.addEventListener('click', () => { setOverlay(pauseScreen, false); requestLock(); });
+restartButton.addEventListener('click', restartCheckpoint);
+restartFinishButton.addEventListener('click', begin);
 
-function updatePulseVisuals(delta) {
+function updateHud() {
+  timerNode.textContent = formatTime(elapsed);
+  targetNode.textContent = `${course.activeTargetCount()} / 3`;
+  abilityNode.textContent = player.doubleJumpUnlocked ? 'JUMP II' : 'JUMP I';
+  movementStateNode.textContent = player.state.replace('_', ' ');
+  objectiveNode.textContent = objective;
+}
+function updatePulseLines(delta) {
   pulseVisuals = pulseVisuals.filter((pulse) => {
-    pulse.life -= delta;
-    pulse.line.material.opacity = Math.max(0, pulse.life * 8);
+    pulse.life -= delta; pulse.line.material.opacity = Math.max(0, pulse.life * 9);
     if (pulse.life > 0) return true;
-    scene.remove(pulse.line);
-    pulse.line.geometry.dispose();
-    pulse.line.material.dispose();
-    return false;
+    scene.remove(pulse.line); pulse.line.geometry.dispose(); pulse.line.material.dispose(); return false;
   });
 }
-
+function updateGame(delta) {
+  const movement = {
+    x: (pressed.has(bindings.MOVE_RIGHT) ? 1 : 0) - (pressed.has(bindings.MOVE_LEFT) ? 1 : 0),
+    z: (pressed.has(bindings.MOVE_FORWARD) ? 1 : 0) - (pressed.has(bindings.MOVE_BACK) ? 1 : 0),
+    sprint: pressed.has(bindings.DASH),
+  };
+  player.setCrouch(pressed.has(bindings.CROUCH));
+  player.update(delta, movement);
+  if (player.root.position.y < -8) restartCheckpoint();
+  for (const event of course.collectEvents(player.root.position)) {
+    if (event.type === 'powerup') { player.unlockDoubleJump(); objective = 'Use your second jump to reach the blue checkpoint tower.'; showToast('DOUBLE JUMP UNLOCKED — press SPACE once more in air.'); tone(820, 0.28, 'sine', 0.08); }
+    if (event.type === 'checkpoint') { checkpoint.copy(event.position); objective = 'Choose a route, clear the three targets, then reach the Sunrise Gate.'; showToast('CHECKPOINT SET — WALL LINK or DASH SPAN.'); tone(560, 0.16, 'triangle', 0.07); }
+    if (event.type === 'finish') { running = false; const currentBest = !bestTime || elapsed < bestTime; if (currentBest) { bestTime = elapsed; localStorage.setItem('vector-run-best', String(bestTime)); } finishTimeNode.textContent = `${currentBest ? 'NEW BEST — ' : ''}Time: ${formatTime(elapsed)}${bestTime ? ` · Best: ${formatTime(bestTime)}` : ''}`; showToast('SUNRISE GATE CLEARED.'); tone(1040, 0.35, 'sine', 0.09); window.setTimeout(() => setOverlay(endingScreen, true), 850); document.exitPointerLock?.(); }
+  }
+  const dashVisual = player.dashTime > 0 ? 1 : 0;
+  dashLight.intensity = THREE.MathUtils.damp(dashLight.intensity, dashVisual * 2.3, 15, delta);
+  camera.fov = THREE.MathUtils.damp(camera.fov, 75 + Math.min(player.lastSpeed, 15) * 0.75 + dashVisual * 7, 10, delta); camera.updateProjectionMatrix();
+}
 function animate() {
   requestAnimationFrame(animate);
   const delta = Math.min(clock.getDelta(), 0.05);
-  elapsed += delta;
-  store.update(delta);
-  if (running && input.locked) motor.update(delta, input.movement());
-  const focus = running && input.locked ? interaction.update() : null;
-  hud.prompt(running && input.locked ? interaction.prompt(store.state) : '');
-  world.update(delta, elapsed);
-  drones.update(elapsed, motor.root.position, store.state);
-  updatePulseVisuals(delta);
+  if (running && document.pointerLockElement === canvas) { elapsed += delta; updateGame(delta); }
+  course.update(elapsed); updatePulseLines(delta); updateHud();
+  if (toastTimer > 0) { toastTimer -= delta; if (toastTimer <= 0) toastNode.classList.remove('show'); }
   renderer.render(scene, camera);
 }
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-window.__paleBeaconTestProbe = Object.freeze({
-  snapshot: () => Object.freeze({
-    position: { x: Number(motor.root.position.x.toFixed(3)), y: Number(motor.root.position.y.toFixed(3)), z: Number(motor.root.position.z.toFixed(3)) },
-    yaw: Number(motor.yaw.toFixed(4)),
-    pitch: Number(motor.pitchValue.toFixed(4)),
-    grounded: motor.grounded,
-    selectedWeapon: store.state.tool.equipped ? 'emergency-pulse-tool' : null,
-    charges: store.state.tool.charges,
-    phase: store.state.phase,
-    doors: structuredClone(store.state.doors),
-    sentries: structuredClone(store.state.sentries),
-    beaconOnline: store.state.beaconOnline,
-    pointerLocked: input.locked,
-    renderer: { width: renderer.domElement.width, height: renderer.domElement.height },
-  }),
-});
-
-world.applyState(store.state);
-hud.update(store.state);
-animate();
+window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75)); renderer.setSize(window.innerWidth, window.innerHeight); });
+window.__vectorRunProbe = Object.freeze({ snapshot: () => Object.freeze({ player: player.snapshot(), elapsed: Number(elapsed.toFixed(3)), targetsRemaining: course.activeTargetCount(), checkpoint: checkpoint.toArray(), objective, bindings }) });
+renderControls(); updateHud(); animate();

@@ -1,5 +1,5 @@
 {
-  "name": "pale-beacon",
+  "name": "vector-run-skyline-relay",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test:e2e": "playwright test",
-    "test:logic": "node --test tests/mission.test.mjs"
+    "test:logic": "node --test tests/movement.test.mjs tests/level-map.test.mjs"
   },
   "dependencies": {
     "three": "0.185.1"

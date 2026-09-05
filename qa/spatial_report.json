@@ -1,42 +1,50 @@
 {
-  "schema": "pale-beacon-spatial-report/v1",
-  "scope": "Static planned positions/support classifications. Browser physics, rendered mesh intersections, door timing and player traps remain UNVERIFIED.",
+  "schema": "vector-run-spatial-report/v1",
+  "scope": "Navigation graph, route semantics and 3D coordinate declarations only. Runtime collision, wall normal detection, support contact, rendered intersections and playthrough remain UNVERIFIED.",
   "findings": [
     {
-      "id": "spawn-in-declared-room",
+      "id": "edge:spawn-dock->jump-core",
       "result": "PASS"
     },
     {
-      "id": "door-entry-connectivity",
-      "result": "PASS",
-      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+      "id": "edge:jump-core->checkpoint-a",
+      "result": "PASS"
     },
     {
-      "id": "door-generator-connectivity",
-      "result": "PASS",
-      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+      "id": "edge:checkpoint-a->wall-shaft",
+      "result": "PASS"
     },
     {
-      "id": "door-workshop-connectivity",
-      "result": "PASS",
-      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+      "id": "edge:checkpoint-a->dash-span",
+      "result": "PASS"
     },
     {
-      "id": "door-gallery-connectivity",
-      "result": "PASS",
-      "note": "Door lies on a room boundary; exact moving-collider clearance needs browser testing."
+      "id": "edge:wall-shaft->target-court",
+      "result": "PASS"
     },
     {
-      "id": "normal-object-support",
-      "result": "PASS",
-      "supported": 8,
-      "normal_placeable": 8,
-      "score": 1.0,
-      "exceptions": [
-        "sentry-01",
-        "sentry-02",
-        "sentry-03"
-      ]
+      "id": "edge:dash-span->target-court",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:target-court->slide-gate",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:slide-gate->finish-bridge",
+      "result": "PASS"
+    },
+    {
+      "id": "critical-path-reachable",
+      "result": "PASS"
+    },
+    {
+      "id": "required-traversal-surface-vocabulary",
+      "result": "PASS"
+    },
+    {
+      "id": "all-navigation-nodes-have-3d-coordinates",
+      "result": "PASS"
     }
   ],
   "overall": "PASS_WITH_BROWSER_VALIDATION_REQUIRED"

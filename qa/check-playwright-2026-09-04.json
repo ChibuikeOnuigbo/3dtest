@@ -1,0 +1,22 @@
+{
+  "status": "BLOCKED_NO_BROWSER_BINARY",
+  "project_root": "/home/user/3dtest",
+  "node": {
+    "returncode": 0,
+    "version": "v22.22.3",
+    "error": ""
+  },
+  "playwright_packages": [
+    "playwright@1.62.1",
+    "playwright-core@1.62.1"
+  ],
+  "browser_executables": {},
+  "browser_cache_paths": [],
+  "launch_flags_when_binary_exists": [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage",
+    "--headless=new"
+  ],
+  "network_policy": "No browser download is attempted by this diagnostic. It does not change TLS verification or use mirrors."
+}

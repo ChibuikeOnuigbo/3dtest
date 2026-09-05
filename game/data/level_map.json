@@ -1,0 +1,163 @@
+{
+  "schema": "vector-run-level/v1",
+  "title": "Vector Run: Skyline Relay",
+  "status": "IMPLEMENTATION_BLOCKOUT",
+  "theme": "bright coastal freight-training skyline; no horror, bunker, abandoned facility, psychological-horror or old signal-outpost story elements.",
+  "spawn": {
+    "id": "spawn-dock",
+    "position": [
+      0,
+      0,
+      20
+    ]
+  },
+  "nodes": [
+    {
+      "id": "spawn-dock",
+      "type": "spawn",
+      "position": [
+        0,
+        0,
+        20
+      ],
+      "landmark": "orange launch gantry"
+    },
+    {
+      "id": "jump-core",
+      "type": "powerup",
+      "position": [
+        0,
+        1.2,
+        10
+      ],
+      "ability": "doubleJump",
+      "landmark": "cyan kinetic prism"
+    },
+    {
+      "id": "checkpoint-a",
+      "type": "checkpoint",
+      "position": [
+        0,
+        3,
+        1
+      ],
+      "landmark": "blue route beacon"
+    },
+    {
+      "id": "wall-shaft",
+      "type": "traversal",
+      "position": [
+        -8,
+        4,
+        -6
+      ],
+      "mechanic": "limited wall jump"
+    },
+    {
+      "id": "dash-span",
+      "type": "traversal",
+      "position": [
+        7,
+        5,
+        -5
+      ],
+      "mechanic": "dash"
+    },
+    {
+      "id": "target-court",
+      "type": "arena",
+      "position": [
+        0,
+        6,
+        -15
+      ],
+      "landmark": "magenta crane halo",
+      "targets": 3
+    },
+    {
+      "id": "slide-gate",
+      "type": "traversal",
+      "position": [
+        0,
+        5.5,
+        -25.2
+      ],
+      "mechanic": "slide/crouch",
+      "landmark": "cobalt supported canopy"
+    },
+    {
+      "id": "finish-bridge",
+      "type": "finish",
+      "position": [
+        0,
+        10,
+        -28
+      ],
+      "landmark": "sunrise launch gate"
+    }
+  ],
+  "edges": [
+    {
+      "from": "spawn-dock",
+      "to": "jump-core",
+      "type": "ramp",
+      "mechanic": "ground-jump"
+    },
+    {
+      "from": "jump-core",
+      "to": "checkpoint-a",
+      "type": "platform-gap",
+      "mechanic": "double-jump"
+    },
+    {
+      "from": "checkpoint-a",
+      "to": "wall-shaft",
+      "type": "vertical-shaft",
+      "mechanic": "wall-jump"
+    },
+    {
+      "from": "checkpoint-a",
+      "to": "dash-span",
+      "type": "speed-bridge",
+      "mechanic": "dash"
+    },
+    {
+      "from": "wall-shaft",
+      "to": "target-court",
+      "type": "catwalk",
+      "mechanic": "mixed"
+    },
+    {
+      "from": "dash-span",
+      "to": "target-court",
+      "type": "catwalk",
+      "mechanic": "mixed"
+    },
+    {
+      "from": "target-court",
+      "to": "slide-gate",
+      "type": "low-tunnel",
+      "mechanic": "slide/crouch"
+    },
+    {
+      "from": "slide-gate",
+      "to": "finish-bridge",
+      "type": "rise-and-finish",
+      "mechanic": "jump/dash"
+    }
+  ],
+  "surfaces": [
+    "WALKABLE",
+    "WALL_JUMPABLE",
+    "SLIDE_TUNNEL",
+    "DASH_ROUTE",
+    "NON_TRAVERSABLE"
+  ],
+  "critical_path": [
+    "spawn-dock",
+    "jump-core",
+    "checkpoint-a",
+    "target-court",
+    "finish-bridge"
+  ]
+}

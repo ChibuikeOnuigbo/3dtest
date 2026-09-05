@@ -1,35 +1,47 @@
-# Build report — pre-production / prototype status
+# Build report — Vector Run: Skyline Relay (active prototype)
 
-## Game concept
-*Pale Beacon* is currently a small original first-person signal-outpost prototype.
-It is **not approved as the final concept**. The dark linear version was revised to a
-brighter Signal Court blockout after player feedback; current nine-repository and scene-
-candidate research may still require a concept/world rebuild.
+## Final-game direction
 
-## Research
-- Video research: 11 unique supplied sources recorded; secure yt-dlp/thumbnail evidence
-  attempts are blocked before media retrieval. No video visual conclusion exists.
-- GitHub research: nine reference repositories studied at least structurally. Current
-  all-nine asset forensics catalogues 815 source media records.
-- Asset sources: public Sketchfab candidate metadata captured; no credentials and no
-  authorized asset archive download. Itch public pages requested supplied access but
-  returned reader errors.
+The previous slow signal-outpost concept has been retired from production. The active game
+is a small, original **fast first-person parkour, exploration and target-action course**:
+*Vector Run: Skyline Relay*. Its core is speed, vertical movement, precise routes, quick
+restarts and readable target encounters. It is not a horror game.
 
-## Technical architecture / gameplay
-Current independent Vite/Three prototype has player input, camera, authored collision,
-doors, interaction state, objective progression, simple sentries, procedural mechanical
-animation/audio and UI. It is not a final-art implementation.
+## Movement design
 
-## Validation
-- Node mission/collision tests: passed (four test cases; prior log).
-- Production Vite build: passed with a >500 kB advisory.
-- Static spatial map validator: pass with browser validation required.
-- Playwright: the normal official Chromium installer, dependency and headless-shell routes
-  were attempted; installed Chrome/Chromium/Edge channels were also checked. Package
-  dependency retrieval/system package availability and secure CDN TLS connection failures
-  prevented browser provision. A one-time normal Debian apt-get install chromium attempt also failed because the configured Debian endpoints were unreachable and the package could not be located. The requested direct chromium-browser package check also reported that package unavailable. No Playwright game action/screenshot
-  or quality score exists.
+The current kinematic movement controller has ground jump, buffered/coyote jump response,
+air control, double-jump unlock, three-use wall-jump limit, directional dash/cooldown,
+crouch clearance, ground slide, air ground-slam, fall recovery and explicit movement
+states. Movement values are implementation starting values—not final feel approval.
 
-## Known limitations / approval
-No approved third-party model, final materials, asset visual
-inspection, browser playthrough, room score, performance data, screenshot review or final approval exists. A later local-binary/offline-cache search also found no browser archive/driver and the earlier Vite process is no longer active after sandbox reset. This report is deliberately not a completion report.
+## Level design and world
+
+The authored Skyline Relay course is a bright coastal freight-training structure: launch
+dock, kinetic-prism rise, split wall/dash routes, target court and sunrise gate. Platforms
+are paired with visible gantries, trusses, piers, rails and route markers. The world uses
+original procedural geometry/materials rather than a copied external map.
+
+Source-pattern synthesis, 3D tree and route graph are in `docs/LEVEL_MAP.md` and
+`game/data/level_map.json`. Environment planning is in `research/design/environment_board.md`.
+
+## Assets, references and provenance
+
+Nine supplied GitHub repositories remain technical/design references. Their individual
+asset provenance remains independently controlled. No third-party model, texture, rig,
+map, animation, UI art or audio currently ships in production. Three.js is the only
+third-party runtime dependency.
+
+## Current verification
+
+- New movement/level-map logic suite: **6/6 passed** after the Vector Run rebuild.
+- Vite production build: **passed**; bundle advisory remains for the Three.js bundle.
+- `tools/qa/check_playwright.py`: package/version and local-browser diagnostic added.
+- Browser playthrough/screenshots/performance: **BLOCKED**; no secure local browser binary
+  is installed. Normal official installer, local-cache search and requested Debian package
+  attempts are logged in `qa/`.
+
+## Limits
+
+Movement feel, route difficulty, visual composition, browser collision, screenshot review,
+performance profiling, audio mix, settings/remapping UI and full end-to-end playthrough
+need real browser QA before any completion claim.
