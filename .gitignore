@@ -4,6 +4,10 @@ dist/
 coverage/
 playwright-report/
 test-results/
+# Generated real-browser evidence is stored as a short-lived CI artifact, not source history.
+qa/visual/**/*.png
+qa/visual/**/*.zip
+qa/visual/playthrough_context.json
 
 # Third-party repositories are local research laboratories, never runtime assets or Git history.
 research/github_repos/
