@@ -18,8 +18,9 @@ cache.
 
 ## Implemented response
 
-`.github/workflows/browser-qa.yml` is manual-dispatch CI on a GitHub-hosted
-Ubuntu runner. It does the following in an observable order:
+`.github/workflows/browser-qa.yml` is GitHub-hosted Ubuntu CI. It runs on
+relevant pushes to this Arena branch and supports manual dispatch after the
+workflow reaches the default branch. It does the following in an observable order:
 
 1. checks out source and configures Node 22;
 2. runs `npm ci` (locked direct-runner dependencies, no `@latest` MCP handshake);

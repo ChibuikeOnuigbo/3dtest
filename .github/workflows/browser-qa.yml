@@ -1,6 +1,7 @@
 name: Browser QA evidence
 
 on:
+  # A manual dispatch is available after this workflow reaches the default branch.
   workflow_dispatch:
     inputs:
       seed:
@@ -8,6 +9,20 @@ on:
         required: false
         default: rivet-run-highline-01
         type: string
+  # The current Arena branch also runs it for runtime/QA changes, so browser evidence
+  # does not depend on prematurely merging an unreviewed world rebuild to main.
+  push:
+    branches:
+      - arena/01a068f0-3dtest
+    paths:
+      - '.github/workflows/browser-qa.yml'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'playwright.config.js'
+      - 'src/**'
+      - 'tests/**'
+      - 'tools/qa/**'
 
 permissions:
   contents: read
