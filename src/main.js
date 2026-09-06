@@ -35,6 +35,9 @@ let objective = 'Reach the Kinetic Permit terminal on the switch-house roof.';
 let toastTimer = 0;
 let audioContext = null;
 let pulseVisuals = [];
+// Capture uses this observable render heartbeat to ensure it waits for live WebGL,
+// rather than recording an initialized-but-unpainted document.
+let renderFrameCount = 0;
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
@@ -195,6 +198,7 @@ function updateGame(delta) {
 }
 function animate() {
   requestAnimationFrame(animate);
+  renderFrameCount += 1;
   const delta = Math.min(clock.getDelta(), 0.05);
   if (running && document.pointerLockElement === canvas) { elapsed += delta; updateGame(delta); }
   course.update(elapsed); updatePulseLines(delta); updateHud();
@@ -207,6 +211,9 @@ window.__rivetRunProbe = Object.freeze({ snapshot: () => Object.freeze({
   cameraPosition: camera.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(3))),
   cameraDirection: player.facingDirection(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(4))),
   elapsed: Number(elapsed.toFixed(3)),
+  running,
+  pointerLocked: document.pointerLockElement === canvas,
+  renderFrameCount,
   relaysRemaining: course.activeTargetCount(),
   checkpoint: checkpoint.toArray(),
   objective,
