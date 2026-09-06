@@ -24,7 +24,9 @@ on:
       - 'tests/**'
       - 'tools/qa/**'
       - 'tools/assets/**'
-      - 'qa/visual/**'
+      - 'qa/visual/review_contract.schema.json'
+      - 'qa/visual/critics/**'
+      - 'qa/visual/reviews/**'
 
 permissions:
   # A small, immutable QA evidence set is committed to the same protected Arena branch
@@ -91,41 +93,50 @@ jobs:
           cat "$RUNNER_TEMP/rivet-run-vite.log" >&2 || true
           exit 1
 
-      - name: Capture real first-person browser evidence for two deterministic seeds
-        id: player_capture
+      - name: Capture real first-person browser evidence — default seed
+        id: capture_default
+        continue-on-error: true
+        env:
+          VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/default
+          VISUAL_CAPTURE_LABEL: default
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
-          export VISUAL_EVIDENCE_DIR="qa/visual/evidence/${{ github.run_id }}/default"
-          export VISUAL_CAPTURE_LABEL=default
-          node tools/qa/capture_visual_views.mjs
-          export RIVET_RUN_URL="http://127.0.0.1:5173/?seed=qa-harbour-alt-01"
-          export VISUAL_EVIDENCE_DIR="qa/visual/evidence/${{ github.run_id }}/alternate"
-          export VISUAL_CAPTURE_LABEL=alternate
           node tools/qa/capture_visual_views.mjs
 
-      - name: Validate capture versus review states
+      - name: Capture real first-person browser evidence — alternate seed
+        id: capture_alternate
+        continue-on-error: true
+        env:
+          RIVET_RUN_URL: http://127.0.0.1:5173/?seed=qa-harbour-alt-01
+          VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/alternate
+          VISUAL_CAPTURE_LABEL: alternate
+        run: |
+          export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
+          node tools/qa/capture_visual_views.mjs
+
+      - name: Validate default capture versus review states
         if: always()
         env:
           VISUAL_CAPTURE_MANIFEST: qa/visual/evidence/${{ github.run_id }}/default/capture_record.json
         run: node tools/qa/validate_visual_reviews.mjs > qa/visual/review_validation.json
 
-      - name: Commit captured PNGs and uninspected frame records
-        if: steps.player_capture.outcome == 'success'
+      - name: Commit generated player-height evidence
+        if: always()
         run: |
           git config user.name 'rivet-run-browser-qa[bot]'
           git config user.email 'rivet-run-browser-qa[bot]@users.noreply.github.com'
           git add qa/visual/evidence
           if git diff --cached --quiet; then
-            echo 'No player-height evidence generated.'
-            exit 1
+            echo 'No player-height evidence generated; retaining diagnostics in the CI artifact.'
+            exit 0
           fi
           git commit -m "qa: add captured player-height frames for run $GITHUB_RUN_ID"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
-      - name: Fail after collecting diagnostics when browser smoke failed
-        if: steps.browser_smoke.outcome == 'failure'
+      - name: Fail after collecting diagnostics for smoke/capture failure
+        if: steps.browser_smoke.outcome == 'failure' || steps.capture_default.outcome == 'failure' || steps.capture_alternate.outcome == 'failure'
         run: |
-          echo 'Browser smoke test failed; player-height evidence was still collected for diagnosis.' >&2
+          echo 'Smoke test or at least one real player capture failed; any committed partial evidence remains diagnostic only.' >&2
           exit 1
 
       - name: Stop local game server

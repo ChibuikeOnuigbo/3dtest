@@ -180,6 +180,27 @@ async function orientRouteView(targetYaw = 0, targetPitch = -0.18) {
   return false;
 }
 
+async function writeCaptureRecord(status, captureFailure = null) {
+  const endState = await snapshot().catch(() => null);
+  await fs.mkdir(evidenceDir, { recursive: true });
+  const record = {
+    schema: 'rivet-run-player-height-capture/v2',
+    run_id: captureRunId,
+    capture_mode: 'real first-person player input and pointer-lock mouse movement; no free/editor camera, no position teleport',
+    base_url: baseURL,
+    status,
+    seed: endState?.worldSeed || null,
+    frames: frameRecords,
+    final_probe: endState,
+    scene_audit: endState?.sceneAudit || null,
+    input_trace: inputTrace,
+    console_events: consoleEvents,
+    capture_failure: captureFailure,
+    approval: { approved: false, score: null, reason: 'A vision-capable critic must inspect actual PNG files; a partial/failing capture cannot be approved.' },
+  };
+  await fs.writeFile(path.join(evidenceDir, 'capture_record.json'), `${JSON.stringify(record, null, 2)}\n`);
+}
+
 try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => Boolean(window.__rivetRunProbe && document.querySelector('#game-canvas')?.width), null, { timeout: 15_000 });
@@ -234,23 +255,12 @@ try {
   await moveUntilAuthoredSurface(['KeyW', 'ShiftLeft'], ['sunline-bridge'], 5200);
   await capture('11-sunline-bridge-vista', 'sunline-bridge', 'finish bridge player-height exterior vista and destination read');
 
-  const endState = await snapshot();
-  await fs.mkdir(evidenceDir, { recursive: true });
-  const record = {
-    schema: 'rivet-run-player-height-capture/v2',
-    run_id: captureRunId,
-    capture_mode: 'real first-person player input and pointer-lock mouse movement; no free/editor camera, no position teleport',
-    base_url: baseURL,
-    status: 'CAPTURED_UNINSPECTED',
-    seed: endState?.worldSeed || null,
-    frames: frameRecords,
-    final_probe: endState,
-    scene_audit: endState?.sceneAudit || null,
-    input_trace: inputTrace,
-    console_events: consoleEvents,
-    approval: { approved: false, score: null, reason: 'A vision-capable critic must inspect the actual PNG files; capture existence is not approval.' },
-  };
-  await fs.writeFile(path.join(evidenceDir, 'capture_record.json'), `${JSON.stringify(record, null, 2)}\n`);
+  await writeCaptureRecord('CAPTURED_UNINSPECTED');
+} catch (error) {
+  // Persist only real frames generated before the failure, with the exact failure state.
+  // This is diagnostic evidence, never a substitute for the missing coverage.
+  await writeCaptureRecord('CAPTURE_ABORTED_PARTIAL', { name: error.name, message: error.message });
+  throw error;
 } finally {
   await context.tracing.stop({ path: path.join(evidenceDir, 'rivet-run-trace.zip') });
   await browser.close();
