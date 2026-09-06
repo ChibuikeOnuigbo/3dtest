@@ -91,18 +91,22 @@ jobs:
           cat "$RUNNER_TEMP/rivet-run-vite.log" >&2 || true
           exit 1
 
-      - name: Capture real first-person browser evidence
+      - name: Capture real first-person browser evidence for two deterministic seeds
         id: player_capture
-        env:
-          VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
+          export VISUAL_EVIDENCE_DIR="qa/visual/evidence/${{ github.run_id }}/default"
+          export VISUAL_CAPTURE_LABEL=default
+          node tools/qa/capture_visual_views.mjs
+          export RIVET_RUN_URL="http://127.0.0.1:5173/?seed=qa-harbour-alt-01"
+          export VISUAL_EVIDENCE_DIR="qa/visual/evidence/${{ github.run_id }}/alternate"
+          export VISUAL_CAPTURE_LABEL=alternate
           node tools/qa/capture_visual_views.mjs
 
       - name: Validate capture versus review states
         if: always()
         env:
-          VISUAL_CAPTURE_MANIFEST: qa/visual/evidence/${{ github.run_id }}/capture_record.json
+          VISUAL_CAPTURE_MANIFEST: qa/visual/evidence/${{ github.run_id }}/default/capture_record.json
         run: node tools/qa/validate_visual_reviews.mjs > qa/visual/review_validation.json
 
       - name: Commit captured PNGs and uninspected frame records

@@ -114,18 +114,18 @@ function createMaterials() {
     return result;
   };
   return {
-    roof: standard('roof_membrane', concreteMap, '#555f61', 0.94, 0.06),
-    concrete: standard('weathered_concrete', concreteMap, '#726d65', 0.9, 0.03),
-    brick: standard('weathered_brick', concreteMap, '#5b5149', 0.92, 0.01),
-    steel: standard('painted_route_steel', metalMap, '#4b6871', 0.56, 0.5),
-    safety: standard('safety_painted_steel', metalMap, '#75462e', 0.57, 0.42),
-    trim: material('charcoal_structural_trim', { color: '#354548', roughness: 0.57, metalness: 0.58 }),
-    shadow: material('charcoal_utility_surface', { color: '#28383a', roughness: 0.82, metalness: 0.12 }),
-    window: material('cool_utility_glazing', { color: '#315662', emissive: '#10242c', emissiveIntensity: 0.22, roughness: 0.32, metalness: 0.48 }),
-    windowWarm: material('warm_occupied_glazing', { color: '#92643b', emissive: '#643016', emissiveIntensity: 0.38, roughness: 0.5, metalness: 0.14 }),
-    routePaint: material('oxide_route_paint', { color: '#744523', emissive: '#3d2010', emissiveIntensity: 0.05, roughness: 0.52, metalness: 0.25 }),
-    relay: material('amber_relay_panel', { color: '#a66f37', emissive: '#643116', emissiveIntensity: 0.65, roughness: 0.36, metalness: 0.52 }),
-    routeGlow: material('amber_utility_lamp', { color: '#d0a25f', emissive: '#925123', emissiveIntensity: 0.68, roughness: 0.32, metalness: 0.32 }),
+    roof: standard('roof_membrane', concreteMap, '#6d7776', 0.92, 0.06),
+    concrete: standard('weathered_concrete', concreteMap, '#847b70', 0.88, 0.03),
+    brick: standard('weathered_brick', concreteMap, '#6b5a50', 0.9, 0.01),
+    steel: standard('painted_route_steel', metalMap, '#58747b', 0.54, 0.5),
+    safety: standard('safety_painted_steel', metalMap, '#895132', 0.55, 0.42),
+    trim: material('charcoal_structural_trim', { color: '#425357', roughness: 0.56, metalness: 0.58 }),
+    shadow: material('charcoal_utility_surface', { color: '#344246', roughness: 0.8, metalness: 0.12 }),
+    window: material('cool_utility_glazing', { color: '#416773', emissive: '#132c34', emissiveIntensity: 0.28, roughness: 0.3, metalness: 0.48 }),
+    windowWarm: material('warm_occupied_glazing', { color: '#a47443', emissive: '#713a1c', emissiveIntensity: 0.44, roughness: 0.48, metalness: 0.14 }),
+    routePaint: material('oxide_route_paint', { color: '#8a4e27', emissive: '#421f0f', emissiveIntensity: 0.04, roughness: 0.55, metalness: 0.25 }),
+    relay: material('amber_relay_panel', { color: '#b47d42', emissive: '#713a1c', emissiveIntensity: 0.66, roughness: 0.36, metalness: 0.52 }),
+    routeGlow: material('amber_utility_lamp', { color: '#d8ad68', emissive: '#9a592a', emissiveIntensity: 0.74, roughness: 0.32, metalness: 0.32 }),
   };
 }
 
@@ -296,8 +296,8 @@ export class HighlineDistrict {
         this.addVisual('facade-window', [1.34, 1.42, 0.07], material, [wx, wy, z + depth / 2 + 0.04], false);
       }
     }
-    // Visible side faces carry the same constructed logic. This prevents a city block
-    // viewed obliquely from becoming a single unarticulated brown wall.
+    // Both visible orientations need shallow recessed glazing and service bands. Sparse
+    // bays are deliberately varied by floor rather than a dense clone grid.
     const sideCols = Math.max(2, Math.min(3, Math.floor(depth / 4.8)));
     for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < sideCols; column += 1) {
@@ -305,11 +305,11 @@ export class HighlineDistrict {
         const wz = z - depth / 2 + 1.25 + column * ((depth - 2.5) / Math.max(1, sideCols - 1));
         const wy = baseY + row * 4.05;
         const material = this.random() < accentRate * 0.55 ? warmMaterial : windowMaterial;
-        this.addVisual('facade-side-window', [0.07, 1.3, 1.18], material, [x - width / 2 - 0.04, wy, wz], false);
+        this.addVisual('facade-side-window', [0.08, 1.3, 1.18], material, [x - width / 2 - 0.05, wy, wz], false);
       }
     }
-    // Cornices, restrained floor belts and piers turn a mass into facade assembly rather
-    // than using hundreds of floating cards as the only architectural detail.
+    // Cornices, restrained floor belts and piers turn a mass into a facade assembly
+    // without reviving a screen-wide repeated window-card grid.
     this.addVisual('facade-cornice', [width + 0.34, 0.32, depth + 0.34], this.materials.trim, [x, top + 0.08, z]);
     for (let level = 1; level < rows; level += 1) {
       const bandY = baseY + level * 4.05 - 1.08;
@@ -321,6 +321,10 @@ export class HighlineDistrict {
       const px = x - width / 2 + index * (width / frontBays);
       this.addVisual('facade-pilaster', [0.28, height + 0.3, 0.35], this.materials.trim, [px, top - height / 2, z + depth / 2 + 0.12]);
     }
+    // A low service plinth and two visibly mounted conduits stop adjacent buildings
+    // from reading as texture-wrapped monoliths at player height.
+    this.addVisual('facade-loading-plinth', [Math.min(width * 0.46, 5.4), 0.54, 0.28], this.materials.shadow, [x, top - height + 0.28, z + depth / 2 + 0.16]);
+    for (const offset of [-0.52, 0.52]) this.addVisual('facade-conduit', [0.12, Math.min(5.8, height * 0.32), 0.12], this.materials.steel, [x + offset, top - height + Math.min(5.8, height * 0.32) / 2, z + depth / 2 + 0.24]);
   }
 
   addCityBuilding([x, z, width, depth, nominalHeight, family], index) {
@@ -396,13 +400,18 @@ export class HighlineDistrict {
 
   addStairFlight(id, x, startZ, fromTop, toTop, count, width = 5.4) {
     const rise = (toTop - fromTop) / count;
+    const run = 0.72;
     for (let index = 1; index <= count; index += 1) {
       const top = fromTop + rise * index;
-      const z = startZ - (index - 1) * 0.5;
-      // Each tread is a full supported riser from the previous roof height; these are
-      // circulation architecture, not a stack of arbitrary obstacle cubes.
-      this.addSolid(`${id}-${index}`, [x, top, z], [width, top - fromTop, 0.54], this.materials.steel, { walkable: true, stair: true });
-      this.addVisual(`${id}-nosing-${index}`, [width - 0.24, 0.05, 0.07], this.materials.routePaint, [x, top + 0.02, z - 0.235]);
+      const z = startZ - (index - 1) * run;
+      // Each tread rises from the prior roof level. Their two narrow outer stringers
+      // make a maintenance stair read as built circulation, not black/orange bars.
+      this.addSolid(`${id}-${index}`, [x, top, z], [width, top - fromTop, run + 0.06], this.materials.steel, { walkable: true, stair: true });
+      this.addVisual(`${id}-left-stringer-${index}`, [0.12, 0.13, run + 0.12], this.materials.trim, [x - width / 2 + 0.15, top + 0.075, z]);
+      this.addVisual(`${id}-right-stringer-${index}`, [0.12, 0.13, run + 0.12], this.materials.trim, [x + width / 2 - 0.15, top + 0.075, z]);
+      // A safety cue exists only at the first/last tread; repeating it every step was
+      // read in player-height screenshots as prototype obstacle striping.
+      if (index === 1 || index === count) this.addVisual(`${id}-threshold-nosing-${index}`, [Math.min(1.35, width - 0.5), 0.045, 0.09], this.materials.routePaint, [x, top + 0.025, z - run / 2 + 0.05]);
     }
   }
 
@@ -501,6 +510,24 @@ export class HighlineDistrict {
     this.addSign('SUNLINE EXIT', [0, 11.65, -49.1], '#e8c57e', 0.83);
   }
 
+  addHarbourCrane(id, x, z, height, boomLength, direction = 1) {
+    // This is a grounded industrial silhouette: foot, mast, boom, counterweight,
+    // cable and hook all have a visible structural relationship to the foundation.
+    const base = -23.8;
+    this.addVisual(`${id}-foot`, [3.2, 0.55, 3.2], this.materials.concrete, [x, base + 0.28, z]);
+    this.addVisual(`${id}-mast`, [0.62, height, 0.62], this.materials.safety, [x, base + height / 2, z]);
+    this.addVisual(`${id}-boom`, [boomLength, 0.32, 0.52], this.materials.safety, [x + direction * boomLength / 2, base + height - 0.2, z]);
+    this.addVisual(`${id}-counterweight`, [2.25, 1.16, 1.25], this.materials.trim, [x - direction * 1.6, base + height - 0.78, z]);
+    for (const side of [-1, 1]) {
+      const brace = this.addVisual(`${id}-brace`, [0.16, height * 0.72, 0.16], this.materials.trim, [x + side * 0.55, base + height * 0.36, z]);
+      brace.rotation.z = side * 0.25;
+    }
+    const hookX = x + direction * boomLength * 0.6;
+    const cableLength = Math.min(10, height * 0.45);
+    this.addVisual(`${id}-cable`, [0.075, cableLength, 0.075], this.materials.trim, [hookX, base + height - cableLength / 2, z]);
+    this.addVisual(`${id}-hook`, [0.44, 0.62, 0.44], this.materials.trim, [hookX, base + height - cableLength, z]);
+  }
+
   addHarbourLandmarks() {
     // Fixed silhouette landmarks are intentionally below and beyond the rooftop line.
     // They make the opener a place above a harbour district rather than a platform in
@@ -579,12 +606,24 @@ export class HighlineDistrict {
     pipeSites.forEach(([x, z, length], index) => {
       if (this.random() >= 0.42) this.addSeededPipeRack(`seed-pipe-rack-${index}`, x, z, length, -10 - this.random() * 6);
     });
+    // Seeded cranes vary the harbour silhouette in fixed foundation plots. They remain
+    // non-colliding secondary scenery, so changing a seed never changes a jump line.
+    const craneSites = [[31, 8, -1], [-34, -29, 1], [38, -54, -1]];
+    craneSites.forEach(([x, z, direction], index) => {
+      if (this.random() >= 0.38) {
+        const height = 22 + Math.round(this.random() * 9);
+        const boom = 13 + Math.round(this.random() * 7);
+        const id = `seed-harbour-crane-${index}`;
+        this.addHarbourCrane(id, x, z, height, boom, direction);
+        this.seedChoices.push({ type: 'harbour-crane', id, position: [x, z], height, boom, direction });
+      }
+    });
   }
 
   build() {
     this.buildBackdrop();
     REGION_PLAN.forEach((region) => this.addRoofRegion(region));
-    this.addStairFlight('transfer-risers', 0, 27.15, 0.32, 1.75, 4);
+    this.addStairFlight('transfer-risers', 0, 27.1, 0.32, 1.75, 4);
     this.addStairFlight('west-branch-risers', -9.2, 11.95, 1.75, 2.25, 2, 4.4);
     this.addStairFlight('east-branch-risers', 9.2, 11.95, 1.75, 2.25, 2, 4.4);
     // The shared court is reached from the East landing through actual shallow risers,
@@ -676,26 +715,48 @@ export class HighlineDistrict {
 
   sceneAudit() {
     // This is deliberately a composition-risk diagnostic, never a replacement for
-    // a human/vision semantic review of the rendered frame.
+    // a human/vision semantic review of the rendered frame. It reads current mesh
+    // transforms so a post-placement rotation cannot hide a copy/paste pattern.
     const byAsset = new Map();
     const byMaterial = new Map();
     for (const object of this.sceneObjects) {
       byAsset.set(object.id, [...(byAsset.get(object.id) || []), object]);
       byMaterial.set(object.material, (byMaterial.get(object.material) || 0) + 1);
     }
+    const liveTransforms = new Map();
+    this.scene.traverse((mesh) => {
+      if (!mesh.isMesh) return;
+      const id = mesh.userData.worldObject || mesh.userData.solidId;
+      if (!id) return;
+      const worldPosition = mesh.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(2)));
+      const rotation = mesh.rotation.toArray().slice(0, 3).map((value) => Number(value.toFixed(2))).join(',');
+      if (!liveTransforms.has(id)) liveTransforms.set(id, []);
+      liveTransforms.get(id).push({ worldPosition, rotation });
+    });
+    const expectedModules = new Set(['facade-window', 'facade-side-window', 'roof-seam', 'rail-line', 'rail-sleeper', 'distant-ridge']);
     const repeatedAssets = [...byAsset.entries()]
       .filter(([, instances]) => instances.length >= 7)
-      .map(([id, instances]) => ({ id, count: instances.length, review: 'Inspect in player frames for copy-paste repetition; repetition may be structurally intentional.' }));
+      .map(([id, instances]) => {
+        const transforms = liveTransforms.get(id) || [];
+        const rotationCount = new Set(transforms.map(({ rotation }) => rotation)).size;
+        return {
+          id, count: instances.length, expected_module: expectedModules.has(id),
+          distinct_rotations: rotationCount,
+          same_rotation_warning: !expectedModules.has(id) && transforms.length > 4 && rotationCount === 1,
+          review: 'Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous.'
+        };
+      });
     const regularRows = [];
     for (const [id, instances] of byAsset.entries()) {
-      if (instances.length < 5) continue;
-      const positions = instances.map(({ position }) => position).sort((a, b) => a[2] - b[2]);
-      const deltas = positions.slice(1).map((entry, index) => Number((entry[2] - positions[index][2]).toFixed(2)));
-      if (deltas.length && new Set(deltas).size <= 2) regularRows.push({ id, axis: 'z', deltas, review: 'Check whether the regular spacing reads as credible construction or visible copy-paste.' });
+      if (instances.length < 5 || expectedModules.has(id)) continue;
+      for (const [axis, coordinate] of [['x', 0], ['z', 2]]) {
+        const positions = instances.map(({ position }) => position).sort((a, b) => a[coordinate] - b[coordinate]);
+        const deltas = positions.slice(1).map((entry, index) => Number((entry[coordinate] - positions[index][coordinate]).toFixed(2)));
+        if (deltas.length && new Set(deltas).size <= 2) regularRows.push({ id, axis, deltas, review: 'Check whether the regular spacing reads as credible construction or visible copy-paste.' });
+      }
     }
     return {
-      schema: 'rivet-run-scene-audit/v1',
-      diagnostic_only: true,
+      schema: 'rivet-run-scene-audit/v2', diagnostic_only: true,
       total_registered_objects: this.sceneObjects.length,
       seed_controlled_secondary_layer: this.seedChoices,
       material_instance_counts: Object.fromEntries(byMaterial),

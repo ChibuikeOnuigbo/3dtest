@@ -1,7 +1,7 @@
 # QA report — Highline District reconstruction
 
 **Report date:** 2026-09-05
-**Visual status:** **BLOCKED — NO LOCAL BROWSER EXECUTABLE; NOT APPROVED**
+**Visual status:** **REVIEWED_NOT_APPROVED — latest real CI player-height run has nine semantic critic reviews; no visual completion claim**
 
 ## Evidence performed
 
@@ -164,3 +164,40 @@ All nine images are rejected as technical visual evidence. They show almost excl
 The correction is real: the three Dispatch frames are grounded on `yard-roof` with camera direction Y about `-0.18`, and the player can now see the roof and terminal. That is evidence of a camera/capture fix—not a visual pass. The visible world remains a brown/black/orange/teal box prototype: monolithic stained facades, dark barrier blocks, detached window cards, repetitive orange stair noses, little lower harbour/rail context, and only a thin pale distant ridge. Frames 04–09 are still navigation misses: Dispatch, Intake Steps, unsupported air, then Switch House support—not the requested Switch House/East Span/Boiler Court arrivals. Those frames retain null scores and cannot be relabelled as later-region proof.
 
 **Concrete next gate:** overlap and lower the yard-to-intake connection within the verified step bound; require exact authored support surfaces during capture; give East Landing → Boiler Court physical shallow entry risers; remove the persistent floating wrist block; split broad facades into bays/recesses/side-face windows; reduce orange to small mounted nosings; and add a player-visible lower harbour, gantry and distant industrial silhouette. A fresh real-input CI batch must be inspected after those changes.
+
+## Visual semantic review — GitHub Actions run 33964255031 (round 02, rejected)
+
+**Evidence:** [`qa/visual/evidence/33964255031/`](../qa/visual/evidence/33964255031/) contains nine actual committed GitHub Actions Chromium player-height PNGs made from head [`79d6595`](https://github.com/ChibuikeOnuigbo/3dtest/commit/79d6595a9500d503e8bb4fc5ae2f10f97fc3e953). The nine independent role records are in [`qa/visual/reviews/`](../qa/visual/reviews/), with exact camera/player/seed metadata copied from the immutable capture record. `VISUAL_CAPTURE_MANIFEST=qa/visual/evidence/33964255031/capture_record.json node tools/qa/validate_visual_reviews.mjs` returns `REVIEWED_NOT_APPROVED` with all nine roles represented and no metadata mismatch. That validates the review contract—not image quality.
+
+`CAPTURED: true` · `INSPECTED: true` · `APPROVED: false`
+
+| Frames | Actual player-height reading | Result |
+|---|---|---|
+| `01`–`03`, Dispatch Bay | Cracked roof texture and the immediate permit objective are visible, but the scene remains an enclosed textured-box corridor: black horizontal bands, thin oxide nosings, brown wall planes and a small terminal. Both “look” frames barely depart from forward composition and reveal no lower rail/harbour/distant industrial layer. | **NEEDS_FIX** — average role scores remain far below 7.5, particularly depth, place believability and identity. |
+| `04`–`05`, claimed Switch House | Actual support is still `yard-roof` at Z `40.959`/`39.671`; the images repeat Dispatch. | **CAPTURED_NAVIGATION_MISS** — these are not Switch House/Transfer reviews and receive zero requested-region score. |
+| `06`, claimed East Span | Actual support is `intake-steps`; close black stair faces and repeated oxide nosings dominate. | **CAPTURED_NAVIGATION_MISS** — no East Span run-up, gap, truss or landing is shown. |
+| `07`, claimed East transfer | Player is unsupported/airborne at Z `27.866`; no valid receiving deck is visible. | **CAPTURED_NAVIGATION_MISS** — not parkour transfer proof. |
+| `08`–`09`, claimed Boiler Court | Actual support is `switch-house`; the permit canopy/terminal, hanging teal cards and bare roof repeat, with no court, relays or exit vista. | **CAPTURED_NAVIGATION_MISS** — the Boiler Court remains visually unreviewed. |
+
+### All-role verdict and region repair order
+
+1. **Hostile/art/environment critique:** reject the current player view as a
+   textured-box corridor. Open a first-look side sight-line, replace redundant
+   dark/oxide bar stacks with explicitly supported circulation members, construct
+   facade bays/conduits/service clusters, and show foreground → adjacent roof →
+   lower rail/harbour → distant industrial landmark → atmosphere.
+2. **Level/parkour/movement critique:** capture input stalls/fails before the
+   requested regions. Do not relabel a coordinate or airborne shot. Repair and
+   verify each support transition, then require `switch-house`, East Span landing
+   and `boiler-court` contact before their screenshots.
+3. **Technical/performance critique:** inspect actual mesh rotation/spacing and
+   material use as a diagnostic, but judge repetition/shadow value from fresh
+   PNGs. Collect separate runtime performance evidence; screenshot readback cost
+   is not a gameplay frame-rate claim.
+4. **Player/fun critique:** preserve the readable permit objective, but add a
+   meaningful visible destination/side payoff before the first commitment. The
+   current sequence does not yet invite exploration.
+
+This is the first review/fix pass for the rebuilt capture revision. It adds no
+approval and requires at least two further fresh capture/review passes for every
+major region, or continued iteration wherever the 8.5 average has not been met.

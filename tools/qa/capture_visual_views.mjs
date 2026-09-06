@@ -14,7 +14,9 @@ import { chromium } from 'playwright';
 const executablePath = process.env.BROWSER_EXECUTABLE_PATH;
 const baseURL = process.env.RIVET_RUN_URL || 'http://127.0.0.1:5173';
 const root = process.cwd();
-const captureRunId = process.env.GITHUB_RUN_ID || `local-${new Date().toISOString().replace(/[:.]/g, '-')}`;
+const rawRunId = process.env.GITHUB_RUN_ID || `local-${new Date().toISOString().replace(/[:.]/g, '-')}`;
+const captureLabel = (process.env.VISUAL_CAPTURE_LABEL || 'default').replace(/[^a-zA-Z0-9_-]/g, '-');
+const captureRunId = `${rawRunId}-${captureLabel}`;
 const evidenceDir = path.resolve(root, process.env.VISUAL_EVIDENCE_DIR || path.join('qa', 'visual', 'captures', captureRunId));
 if (!executablePath) {
   throw new Error('BLOCKED_NO_BROWSER_BINARY: set BROWSER_EXECUTABLE_PATH to a vetted local Chrome/Chromium executable. No browser download is attempted.');
@@ -30,6 +32,7 @@ await context.tracing.start({ screenshots: true, snapshots: true, sources: true 
 const page = await context.newPage();
 const consoleEvents = [];
 const frameRecords = [];
+const inputTrace = [];
 page.on('console', (message) => consoleEvents.push({ type: message.type(), text: message.text() }));
 page.on('pageerror', (error) => consoleEvents.push({ type: 'pageerror', text: error.message }));
 
@@ -74,6 +77,9 @@ async function capture(frameId, requestedRegion, intent) {
     player_position: state.player.position,
     player_state: state.player.state,
     player_grounded: state.player.grounded,
+    runtime_running: state.running,
+    pointer_locked: state.pointerLocked,
+    rendered_frames: state.renderFrameCount,
     seed: state.worldSeed,
     critic_status: 'CAPTURED_UNINSPECTED',
     critic_findings: [],
@@ -83,6 +89,7 @@ async function capture(frameId, requestedRegion, intent) {
 }
 
 async function keyHold(keys, milliseconds) {
+  inputTrace.push({ action: 'key_hold', keys, milliseconds, at: Date.now() });
   for (const key of keys) await page.keyboard.down(key);
   await page.waitForTimeout(milliseconds);
   for (const key of [...keys].reverse()) await page.keyboard.up(key);
@@ -115,6 +122,7 @@ async function waitUntilAuthoredSurface(expectedSurfaceIds, timeoutMs) {
 async function moveUntilAuthoredSurface(keys, expectedSurfaceIds, timeoutMs) {
   // Bounded real keyboard input. It can only stop on the named collision surface—not
   // merely in a matching coordinate band—so a route label cannot hide a fall or reset.
+  inputTrace.push({ action: 'move_until_authored_surface', keys, expected_surface_ids: expectedSurfaceIds, timeout_ms: timeoutMs, at: Date.now() });
   for (const key of keys) await page.keyboard.down(key);
   try {
     return await waitUntilAuthoredSurface(expectedSurfaceIds, timeoutMs);
@@ -124,6 +132,7 @@ async function moveUntilAuthoredSurface(keys, expectedSurfaceIds, timeoutMs) {
 }
 
 async function dashJumpUntilLanding(expectedSurfaceIds, timeoutMs) {
+  inputTrace.push({ action: 'dash_jump_until_landing', keys: ['KeyW', 'ShiftLeft', 'Space'], expected_surface_ids: expectedSurfaceIds, timeout_ms: timeoutMs, at: Date.now() });
   await page.keyboard.down('KeyW');
   try {
     await page.keyboard.press('ShiftLeft');
@@ -173,37 +182,53 @@ async function orientRouteView(targetYaw = 0, targetPitch = -0.18) {
 
 try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => Boolean(window.__rivetRunProbe && document.querySelector('#game-canvas')?.width));
+  await page.waitForFunction(() => Boolean(window.__rivetRunProbe && document.querySelector('#game-canvas')?.width), null, { timeout: 15_000 });
   await page.getByRole('button', { name: /start run/i }).click();
-  await page.waitForTimeout(850); // actual WebGL first render + pointer-lock transition
+  // A player-input capture is invalid if pointer lock/running state was not granted.
+  // Do not continue with screenshots that merely look like gameplay from an inactive page.
+  await page.waitForFunction(() => {
+    const state = window.__rivetRunProbe?.snapshot?.();
+    return Boolean(state?.running && state?.pointerLocked && state?.renderFrameCount > 8);
+  }, null, { timeout: 15_000 });
+  inputTrace.push({ action: 'start_run_pointer_lock_confirmed', at: Date.now() });
   await orientRouteView();
   await capture('01-dispatch-spawn', 'dispatch-bay', 'first-person spawn and forward route readability');
-  await lookBy(170);
+  // Use an actual lateral scan rather than two near-forward frames. The captured
+  // camera direction remains the proof of the player look input.
+  await lookBy(520);
   await capture('02-dispatch-look-east', 'dispatch-bay', 'real player look-around: adjacent east city/route context');
-  await lookBy(-340);
+  await lookBy(-1040);
   await capture('03-dispatch-look-west', 'dispatch-bay', 'real player look-around: adjacent west city/route context');
   await orientRouteView();
 
   // The controlled first route uses walkable maintenance risers, then meets the mounted
   // terminal at player height. No camera/position manipulation is used. Each travel
   // phase is bounded and capture still records a navigation miss if real play fails.
-  await moveUntilAuthoredSurface(['KeyW'], ['switch-house'], 6500);
+  await moveUntilAuthoredSurface(['KeyW', 'ShiftLeft'], ['switch-house'], 8500);
   await capture('04-switch-house-arrival', 'switch-house', 'permit terminal and covered transition arrival');
-  await keyHold(['KeyW'], 720);
+  await keyHold(['KeyW', 'ShiftLeft'], 900);
   await capture('05-transfer-beacon', 'switch-house', 'checkpoint and branch-read frame');
 
   // East is the dash branch: stay on the transfer roof long enough to align with the
   // supported entry risers, then require contact on the actual viaduct deck.
-  await keyHold(['KeyW'], 820);
-  await moveUntilAuthoredSurface(['KeyW', 'KeyD'], ['dash-viaduct-start'], 4600);
+  await keyHold(['KeyW', 'ShiftLeft'], 1100);
+  await moveUntilAuthoredSurface(['KeyW', 'KeyD', 'ShiftLeft'], ['dash-viaduct-start'], 6200);
   await capture('06-east-span-runup', 'east-span', 'real approach to the supported dash branch');
   await dashJumpUntilLanding(['dash-viaduct-landing'], 2200);
   await capture('07-east-span-transfer', 'east-span', 'dash/jump transfer with viaduct support in frame');
   await moveUntilAuthoredSurface(['KeyW'], ['boiler-court'], 4200);
   await capture('08-boiler-court-arrival', 'boiler-court', 'court arrival, mounted-relay context and exit read');
-  await lookBy(-210);
-  await capture('09-boiler-court-look', 'boiler-court', 'player look-around across court architecture');
-  await lookBy(210);
+  await lookBy(-360);
+  await capture('09-boiler-court-look', 'boiler-court', 'player look-around across court architecture and lower-world vista');
+  await lookBy(360);
+
+  // Continue the real input sequence beyond the encounter: a valid whole-run record
+  // needs the intentional low transition and exposed finish, not just a start-room tour.
+  await moveUntilAuthoredSurface(['KeyW', 'KeyA', 'ShiftLeft'], ['bridge-control', 'court-exit-risers-'], 6200);
+  await capture('10-control-bridge-arrival', 'control-bridge', 'grounded bridge approach and low maintenance transition');
+  await keyHold(['KeyW', 'ControlLeft'], 1300);
+  await moveUntilAuthoredSurface(['KeyW', 'ShiftLeft'], ['sunline-bridge'], 5200);
+  await capture('11-sunline-bridge-vista', 'sunline-bridge', 'finish bridge player-height exterior vista and destination read');
 
   const endState = await snapshot();
   await fs.mkdir(evidenceDir, { recursive: true });
@@ -217,6 +242,7 @@ try {
     frames: frameRecords,
     final_probe: endState,
     scene_audit: endState?.sceneAudit || null,
+    input_trace: inputTrace,
     console_events: consoleEvents,
     approval: { approved: false, score: null, reason: 'A vision-capable critic must inspect the actual PNG files; capture existence is not approval.' },
   };

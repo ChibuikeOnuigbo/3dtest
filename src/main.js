@@ -122,7 +122,10 @@ function restartCheckpoint() {
   if (!running) { running = true; setOverlay(pauseScreen, false); requestLock(); }
 }
 function begin() { beginAudio(); resetRun(); running = true; setOverlay(titleScreen, false); requestLock(); }
-function requestLock() { window.setTimeout(() => canvas.requestPointerLock?.(), 40); }
+// Pointer lock must be requested in the click activation path. Deferring it with a
+// timer can lose the browser's user-gesture permission and silently freeze genuine
+// keyboard movement/capture, even though the title overlay has disappeared.
+function requestLock() { canvas.requestPointerLock?.(); }
 function firePulse() {
   if (!running || document.pointerLockElement !== canvas) return;
   raycaster.set(camera.getWorldPosition(new THREE.Vector3()), player.facingDirection(new THREE.Vector3()));
