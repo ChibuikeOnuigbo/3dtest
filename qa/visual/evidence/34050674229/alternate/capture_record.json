@@ -1,0 +1,1106 @@
+{
+  "schema": "rivet-run-player-height-capture/v2",
+  "run_id": "34050674229-alternate",
+  "capture_mode": "real first-person player input and pointer-lock mouse movement; no free/editor camera, no position teleport",
+  "base_url": "http://127.0.0.1:5173/?seed=qa-harbour-alt-01",
+  "capture_scope": "lookaround",
+  "status": "CAPTURED_UNINSPECTED",
+  "seed": "qa-harbour-alt-01",
+  "frames": [
+    {
+      "frame_id": "01-dispatch-spawn",
+      "region": "dispatch-bay",
+      "requested_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch-bay",
+        "support_surface_id": "yard-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "coordinate_region_diagnostic": "dispatch-bay",
+      "intent": "first-person spawn and forward route readability",
+      "image": "qa/visual/evidence/34050674229/alternate/01-dispatch-spawn.png",
+      "camera_position": [
+        -0.001,
+        1.594,
+        42.711
+      ],
+      "camera_direction": [
+        -0.002,
+        -0.1784,
+        -0.9839
+      ],
+      "player_position": [
+        0,
+        0,
+        43
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 33,
+      "seed": "qa-harbour-alt-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "02-dispatch-look-east",
+      "region": "dispatch-bay",
+      "requested_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch-bay",
+        "support_surface_id": "yard-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "coordinate_region_diagnostic": "dispatch-bay",
+      "intent": "real player look-around: adjacent east city/route context",
+      "image": "qa/visual/evidence/34050674229/alternate/02-dispatch-look-east.png",
+      "camera_position": [
+        0.249,
+        1.594,
+        42.853
+      ],
+      "camera_direction": [
+        0.8476,
+        -0.1784,
+        -0.4998
+      ],
+      "player_position": [
+        0,
+        0,
+        43
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 48,
+      "seed": "qa-harbour-alt-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "03-dispatch-look-west",
+      "region": "dispatch-bay",
+      "requested_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch-bay",
+        "support_surface_id": "yard-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "coordinate_region_diagnostic": "dispatch-bay",
+      "intent": "real player look-around: adjacent west city/route context",
+      "image": "qa/visual/evidence/34050674229/alternate/03-dispatch-look-west.png",
+      "camera_position": [
+        -0.249,
+        1.594,
+        42.854
+      ],
+      "camera_direction": [
+        -0.8486,
+        -0.1784,
+        -0.4981
+      ],
+      "player_position": [
+        0,
+        0,
+        43
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 63,
+      "seed": "qa-harbour-alt-01",
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    }
+  ],
+  "final_probe": {
+    "player": {
+      "state": "GROUND",
+      "grounded": true,
+      "position": [
+        0,
+        0,
+        43
+      ],
+      "velocity": [
+        0,
+        0,
+        0
+      ],
+      "supportSolidId": "yard-roof",
+      "doubleJumpUnlocked": false,
+      "wallJumpCount": 0,
+      "dashCooldown": 0,
+      "crouching": false,
+      "slam": false,
+      "traversalRegion": {
+        "id": "dispatch-bay",
+        "support_surface_id": "yard-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      }
+    },
+    "cameraPosition": [
+      0,
+      1.593,
+      42.708
+    ],
+    "cameraDirection": [
+      0,
+      -0.1802,
+      -0.9836
+    ],
+    "elapsed": 2.8,
+    "running": true,
+    "pointerLocked": true,
+    "renderFrameCount": 75,
+    "relaysRemaining": 3,
+    "checkpoint": [
+      0,
+      0,
+      43
+    ],
+    "objective": "Reach the Kinetic Permit terminal on the switch-house roof.",
+    "bindings": {
+      "MOVE_FORWARD": "KeyW",
+      "MOVE_BACK": "KeyS",
+      "MOVE_LEFT": "KeyA",
+      "MOVE_RIGHT": "KeyD",
+      "JUMP": "Space",
+      "DASH": "ShiftLeft",
+      "CROUCH": "ControlLeft",
+      "RESTART": "KeyR",
+      "PAUSE": "Escape"
+    },
+    "worldSeed": "qa-harbour-alt-01",
+    "sceneAudit": {
+      "schema": "rivet-run-scene-audit/v2",
+      "diagnostic_only": true,
+      "total_registered_objects": 968,
+      "seed_controlled_secondary_layer": [
+        {
+          "type": "roof-prop",
+          "region": "yard-roof",
+          "prop": "water-tank",
+          "position": [
+            6.1,
+            0,
+            46
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "switch-house",
+          "prop": "signal-box",
+          "position": [
+            -6.2,
+            1.75,
+            22.7
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "switch-house",
+          "prop": "vent-bank",
+          "position": [
+            6.35,
+            1.75,
+            17.2
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "boiler-court",
+          "prop": "water-tank",
+          "position": [
+            -10.25,
+            4.65,
+            -18.1
+          ]
+        },
+        {
+          "type": "roof-prop",
+          "region": "sunline-bridge",
+          "prop": "signal-box",
+          "position": [
+            -2.5,
+            7.25,
+            -45.8
+          ]
+        },
+        {
+          "type": "skyline-building",
+          "index": 0,
+          "position": [
+            -43,
+            5.6,
+            13
+          ],
+          "height": 29.4,
+          "family": "brick"
+        },
+        {
+          "type": "skyline-building",
+          "index": 1,
+          "position": [
+            -42,
+            7.2,
+            -27
+          ],
+          "height": 31,
+          "family": "concrete"
+        },
+        {
+          "type": "skyline-building",
+          "index": 2,
+          "position": [
+            -39,
+            7.5,
+            -64
+          ],
+          "height": 31.3,
+          "family": "brick"
+        },
+        {
+          "type": "skyline-building",
+          "index": 3,
+          "position": [
+            42,
+            10.6,
+            25
+          ],
+          "height": 34.4,
+          "family": "concrete"
+        },
+        {
+          "type": "skyline-building",
+          "index": 4,
+          "position": [
+            43,
+            4,
+            -38
+          ],
+          "height": 27.8,
+          "family": "brick"
+        },
+        {
+          "type": "skyline-building",
+          "index": 5,
+          "position": [
+            36,
+            10.2,
+            -70
+          ],
+          "height": 34,
+          "family": "concrete"
+        },
+        {
+          "type": "pipe-rack",
+          "id": "seed-pipe-rack-0",
+          "x": -34,
+          "z": 2,
+          "length": 22,
+          "height": -12.48546380084008
+        },
+        {
+          "type": "pipe-rack",
+          "id": "seed-pipe-rack-1",
+          "x": 34,
+          "z": -9,
+          "length": 19,
+          "height": -11.847195649985224
+        },
+        {
+          "type": "pipe-rack",
+          "id": "seed-pipe-rack-2",
+          "x": -31,
+          "z": -51,
+          "length": 18,
+          "height": -15.527237045112997
+        },
+        {
+          "type": "harbour-crane",
+          "id": "seed-harbour-crane-1",
+          "position": [
+            -34,
+            -29
+          ],
+          "height": 25,
+          "boom": 18,
+          "direction": 1
+        }
+      ],
+      "material_instance_counts": {
+        "charcoal_utility_surface": 72,
+        "unnamed": 1,
+        "weathered_brick": 23,
+        "cool_utility_glazing": 228,
+        "charcoal_structural_trim": 349,
+        "painted_route_steel": 102,
+        "amber_utility_lamp": 8,
+        "weathered_concrete": 38,
+        "warm_occupied_glazing": 21,
+        "safety_painted_steel": 58,
+        "roof_membrane": 3,
+        "oxide_route_paint": 45,
+        "prop:vent-bank": 4,
+        "prop:ac-unit": 3,
+        "prop:switchgear": 2,
+        "prop:water-tank": 3,
+        "prop:ladder-cage": 2,
+        "prop:signal-box": 6
+      },
+      "repeated_asset_families": [
+        {
+          "id": "facade-window",
+          "count": 144,
+          "expected_module": true,
+          "distinct_rotations": 1,
+          "same_rotation_warning": false,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-side-window",
+          "count": 102,
+          "expected_module": true,
+          "distinct_rotations": 1,
+          "same_rotation_warning": false,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-cornice",
+          "count": 24,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-service-band",
+          "count": 48,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-side-band",
+          "count": 48,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-pilaster",
+          "count": 89,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-loading-plinth",
+          "count": 24,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "facade-conduit",
+          "count": 48,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "roof-mast",
+          "count": 8,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "roof-mast-tip",
+          "count": 8,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "distant-ridge",
+          "count": 11,
+          "expected_module": true,
+          "distinct_rotations": 1,
+          "same_rotation_warning": false,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "rail-sleeper",
+          "count": 26,
+          "expected_module": true,
+          "distinct_rotations": 1,
+          "same_rotation_warning": false,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "parapet",
+          "count": 60,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "threshold-nosing",
+          "count": 20,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "roof-seam",
+          "count": 46,
+          "expected_module": true,
+          "distinct_rotations": 1,
+          "same_rotation_warning": false,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "route-paint",
+          "count": 15,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "bridge-diagonal",
+          "count": 22,
+          "expected_module": false,
+          "distinct_rotations": 2,
+          "same_rotation_warning": false,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        },
+        {
+          "id": "rail-post",
+          "count": 14,
+          "expected_module": false,
+          "distinct_rotations": 1,
+          "same_rotation_warning": true,
+          "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+        }
+      ],
+      "regular_spacing_candidates": [
+        {
+          "id": "threshold-nosing",
+          "axis": "x",
+          "deltas": [
+            0,
+            0,
+            0,
+            9.2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            9.2,
+            0,
+            0,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        },
+        {
+          "id": "route-paint",
+          "axis": "x",
+          "deltas": [
+            0,
+            0,
+            0,
+            0,
+            9.2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            9.2,
+            0,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        },
+        {
+          "id": "bridge-pier",
+          "axis": "x",
+          "deltas": [
+            0,
+            0,
+            9.2,
+            0,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        },
+        {
+          "id": "pier-cap",
+          "axis": "x",
+          "deltas": [
+            0,
+            0,
+            9.2,
+            0,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        },
+        {
+          "id": "rail-post",
+          "axis": "x",
+          "deltas": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6.28,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        },
+        {
+          "id": "rail-post",
+          "axis": "z",
+          "deltas": [
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0,
+            2.1,
+            0
+          ],
+          "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+        }
+      ],
+      "required_human_review": "Use player-height frames to judge visual repetition, dead zones, support plausibility and placement. Do not infer approval from these counts."
+    }
+  },
+  "scene_audit": {
+    "schema": "rivet-run-scene-audit/v2",
+    "diagnostic_only": true,
+    "total_registered_objects": 968,
+    "seed_controlled_secondary_layer": [
+      {
+        "type": "roof-prop",
+        "region": "yard-roof",
+        "prop": "water-tank",
+        "position": [
+          6.1,
+          0,
+          46
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "switch-house",
+        "prop": "signal-box",
+        "position": [
+          -6.2,
+          1.75,
+          22.7
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "switch-house",
+        "prop": "vent-bank",
+        "position": [
+          6.35,
+          1.75,
+          17.2
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "boiler-court",
+        "prop": "water-tank",
+        "position": [
+          -10.25,
+          4.65,
+          -18.1
+        ]
+      },
+      {
+        "type": "roof-prop",
+        "region": "sunline-bridge",
+        "prop": "signal-box",
+        "position": [
+          -2.5,
+          7.25,
+          -45.8
+        ]
+      },
+      {
+        "type": "skyline-building",
+        "index": 0,
+        "position": [
+          -43,
+          5.6,
+          13
+        ],
+        "height": 29.4,
+        "family": "brick"
+      },
+      {
+        "type": "skyline-building",
+        "index": 1,
+        "position": [
+          -42,
+          7.2,
+          -27
+        ],
+        "height": 31,
+        "family": "concrete"
+      },
+      {
+        "type": "skyline-building",
+        "index": 2,
+        "position": [
+          -39,
+          7.5,
+          -64
+        ],
+        "height": 31.3,
+        "family": "brick"
+      },
+      {
+        "type": "skyline-building",
+        "index": 3,
+        "position": [
+          42,
+          10.6,
+          25
+        ],
+        "height": 34.4,
+        "family": "concrete"
+      },
+      {
+        "type": "skyline-building",
+        "index": 4,
+        "position": [
+          43,
+          4,
+          -38
+        ],
+        "height": 27.8,
+        "family": "brick"
+      },
+      {
+        "type": "skyline-building",
+        "index": 5,
+        "position": [
+          36,
+          10.2,
+          -70
+        ],
+        "height": 34,
+        "family": "concrete"
+      },
+      {
+        "type": "pipe-rack",
+        "id": "seed-pipe-rack-0",
+        "x": -34,
+        "z": 2,
+        "length": 22,
+        "height": -12.48546380084008
+      },
+      {
+        "type": "pipe-rack",
+        "id": "seed-pipe-rack-1",
+        "x": 34,
+        "z": -9,
+        "length": 19,
+        "height": -11.847195649985224
+      },
+      {
+        "type": "pipe-rack",
+        "id": "seed-pipe-rack-2",
+        "x": -31,
+        "z": -51,
+        "length": 18,
+        "height": -15.527237045112997
+      },
+      {
+        "type": "harbour-crane",
+        "id": "seed-harbour-crane-1",
+        "position": [
+          -34,
+          -29
+        ],
+        "height": 25,
+        "boom": 18,
+        "direction": 1
+      }
+    ],
+    "material_instance_counts": {
+      "charcoal_utility_surface": 72,
+      "unnamed": 1,
+      "weathered_brick": 23,
+      "cool_utility_glazing": 228,
+      "charcoal_structural_trim": 349,
+      "painted_route_steel": 102,
+      "amber_utility_lamp": 8,
+      "weathered_concrete": 38,
+      "warm_occupied_glazing": 21,
+      "safety_painted_steel": 58,
+      "roof_membrane": 3,
+      "oxide_route_paint": 45,
+      "prop:vent-bank": 4,
+      "prop:ac-unit": 3,
+      "prop:switchgear": 2,
+      "prop:water-tank": 3,
+      "prop:ladder-cage": 2,
+      "prop:signal-box": 6
+    },
+    "repeated_asset_families": [
+      {
+        "id": "facade-window",
+        "count": 144,
+        "expected_module": true,
+        "distinct_rotations": 1,
+        "same_rotation_warning": false,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-side-window",
+        "count": 102,
+        "expected_module": true,
+        "distinct_rotations": 1,
+        "same_rotation_warning": false,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-cornice",
+        "count": 24,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-service-band",
+        "count": 48,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-side-band",
+        "count": 48,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-pilaster",
+        "count": 89,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-loading-plinth",
+        "count": 24,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "facade-conduit",
+        "count": 48,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "roof-mast",
+        "count": 8,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "roof-mast-tip",
+        "count": 8,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "distant-ridge",
+        "count": 11,
+        "expected_module": true,
+        "distinct_rotations": 1,
+        "same_rotation_warning": false,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "rail-sleeper",
+        "count": 26,
+        "expected_module": true,
+        "distinct_rotations": 1,
+        "same_rotation_warning": false,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "parapet",
+        "count": 60,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "threshold-nosing",
+        "count": 20,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "roof-seam",
+        "count": 46,
+        "expected_module": true,
+        "distinct_rotations": 1,
+        "same_rotation_warning": false,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "route-paint",
+        "count": 15,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "bridge-diagonal",
+        "count": 22,
+        "expected_module": false,
+        "distinct_rotations": 2,
+        "same_rotation_warning": false,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      },
+      {
+        "id": "rail-post",
+        "count": 14,
+        "expected_module": false,
+        "distinct_rotations": 1,
+        "same_rotation_warning": true,
+        "review": "Inspect in player frames for copy-paste repetition; structurally expected repetition may still be visually monotonous."
+      }
+    ],
+    "regular_spacing_candidates": [
+      {
+        "id": "threshold-nosing",
+        "axis": "x",
+        "deltas": [
+          0,
+          0,
+          0,
+          9.2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9.2,
+          0,
+          0,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      },
+      {
+        "id": "route-paint",
+        "axis": "x",
+        "deltas": [
+          0,
+          0,
+          0,
+          0,
+          9.2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9.2,
+          0,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      },
+      {
+        "id": "bridge-pier",
+        "axis": "x",
+        "deltas": [
+          0,
+          0,
+          9.2,
+          0,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      },
+      {
+        "id": "pier-cap",
+        "axis": "x",
+        "deltas": [
+          0,
+          0,
+          9.2,
+          0,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      },
+      {
+        "id": "rail-post",
+        "axis": "x",
+        "deltas": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6.28,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      },
+      {
+        "id": "rail-post",
+        "axis": "z",
+        "deltas": [
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0,
+          2.1,
+          0
+        ],
+        "review": "Check whether the regular spacing reads as credible construction or visible copy-paste."
+      }
+    ],
+    "required_human_review": "Use player-height frames to judge visual repetition, dead zones, support plausibility and placement. Do not infer approval from these counts."
+  },
+  "input_trace": [
+    {
+      "action": "start_run_pointer_lock_confirmed",
+      "at": 1788718386989
+    }
+  ],
+  "console_events": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x44c0016fc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x44c0016fc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x44c0016fc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x44c0016fc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    }
+  ],
+  "capture_failure": null,
+  "approval": {
+    "approved": false,
+    "score": null,
+    "reason": "A vision-capable critic must inspect actual PNG files; a partial/failing capture cannot be approved."
+  }
+}
