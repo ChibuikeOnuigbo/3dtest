@@ -70,6 +70,16 @@ therefore it is **not shipped**. No claimed Poly Haven asset is in the game.
 - ACES tone mapping is used with a restrained exposure. Per-region lighting
   must remain readable before any post effect is added.
 
+## Seed-driven secondary world layer
+
+One seed changes only peripheral roof machinery, warehouse/window occupancy,
+pipe-rack silhouettes, mast placement, distant-ridge stepping and ambient lights.
+Critical decks, collision bounds, objective locations, recovery logic and the
+main transition framing stay authored. `HighlineDistrict.sceneAudit()` records
+asset/material counts and regular spacing candidates to focus review, but the
+actual player-height frame—not the audit—decides whether repeated objects or a
+dead zone are visually harmful.
+
 ## Approval gate
 
 No region is visually approved based on code, generated geometry, FPS, a

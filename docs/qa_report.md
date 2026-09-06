@@ -32,6 +32,17 @@ Every visual frame must remain in exactly one state:
 `tools/qa/capture_visual_views.mjs` creates the first state. It cannot and does
 not produce the other two.
 
+## Visual-control pipeline
+
+`tools/qa/capture_visual_views.mjs` records only live pointer-locked player
+movement/look input into immutable `capture_record.json` files. The capture tool
+cannot award quality. `qa/visual/review_contract.schema.json`, nine role briefs
+and `tools/qa/validate_visual_reviews.mjs` make the later semantic inspection,
+per-frame identity, dead-zone findings, score gate and `approved: false/true`
+state explicit. The validator only checks review metadata; it never sees pixels
+and can never manufacture an approval. Geometry/art changes require a new run
+and invalidate prior approvals.
+
 ## Required visual capture matrix
 
 Capture actual first-person frames for: Dispatch Bay spawn plus look-around;

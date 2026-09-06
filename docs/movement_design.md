@@ -31,6 +31,15 @@ buffering, moving-body interaction and first-person camera are useful principles
 Porting means independently implementing the behavior in Three.js and validating
 it against our AABB route—not copying its Rust/engine code.
 
+## Official Three.js FPS bounded reference
+
+The official `games_fps` example was studied in
+`research/threejs_fps_example.md`. Its Octree/static-triangle collision,
+`Capsule`, YXZ camera, fixed substeps, gravity/damping and collision-response
+pattern inform only our validation vocabulary. Rivet Run retains an independent
+AABB controller and must not copy example source wholesale or imply that a demo
+proves its player-facing parkour quality.
+
 ## Remaining movement validation
 
 Browser evidence is currently blocked by no lawful local browser executable.

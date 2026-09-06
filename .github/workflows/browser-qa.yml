@@ -23,6 +23,8 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'tools/qa/**'
+      - 'tools/assets/**'
+      - 'qa/visual/**'
 
 permissions:
   # A small, immutable QA evidence set is committed to the same protected Arena branch
@@ -59,6 +61,14 @@ jobs:
         run: |
           node --input-type=module -e "import { chromium } from '@playwright/test'; console.log('Chromium executable:', chromium.executablePath())"
 
+      # Optional authorised asset intake. The token exists only in GitHub Actions memory;
+      # the utility refuses all network acquisition if secret or candidate URLs are absent.
+      - name: Intake authorised Sketchfab candidates
+        env:
+          SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
+          SKETCHFAB_CANDIDATE_URLS: ${{ vars.SKETCHFAB_CANDIDATE_URLS }}
+        run: node tools/assets/sketchfab_intake.mjs
+
       # Keep collecting real-player diagnostics if the smoke assertion fails, then fail
       # the job at the end. This never turns a failed test green; it prevents a generic
       # smoke failure from hiding the player-height browser evidence needed to diagnose it.
@@ -88,6 +98,12 @@ jobs:
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
           node tools/qa/capture_visual_views.mjs
+
+      - name: Validate capture versus review states
+        if: always()
+        env:
+          VISUAL_CAPTURE_MANIFEST: qa/visual/evidence/${{ github.run_id }}/capture_record.json
+        run: node tools/qa/validate_visual_reviews.mjs > qa/visual/review_validation.json
 
       - name: Commit captured PNGs and uninspected frame records
         if: steps.player_capture.outcome == 'success'
@@ -125,7 +141,10 @@ jobs:
           path: |
             qa/visual/**/*.png
             qa/visual/**/*.zip
+            qa/visual/capture_manifest.json
+            qa/visual/review_validation.json
             qa/visual/playthrough_context.json
+            research/sketchfab/latest_intake.json
             playwright-report/
             test-results/
             ${{ runner.temp }}/rivet-run-vite.log

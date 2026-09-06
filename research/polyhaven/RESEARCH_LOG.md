@@ -1,38 +1,46 @@
-# Poly Haven review
+# Poly Haven standards and candidate review
 
-**Review date:** 2026-09-05
-**Role:** quality/technical benchmark and potential lawful material source, not an
-automatic production asset catalogue.
+**Review date:** 2026-09-06
+**Role:** material/lighting/asset quality benchmark and potential lawful CC0 source,
+not an automatic asset dump.
 
-## Sources checked
+## Sources inspected
 
+- <https://polyhaven.com/>
+- <https://polyhaven.com/models>
+- <https://polyhaven.com/collections>
+- <https://polyhaven.com/hdris>
+- <https://polyhaven.com/license>
 - <https://docs.polyhaven.com/en/technical-standards/textures>
 - <https://docs.polyhaven.com/en/technical-standards/models>
-- <https://polyhaven.com/models>
 - <https://api.polyhaven.com/assets?t=textures>
 - <https://api.polyhaven.com/files/aerial_asphalt_01>
 
-## Adopted quality principles
+## Verified standards adopted by Rivet Run
 
-The texture standard describes complete PBR workflows, seamless/non-repetitive
-surface expectations, calibrated physical dimensions, diffuse/roughness/normal/
-displacement/AO/metal maps and clear unlit base colour. The model standard
-emphasises scale with a human reference, clean/UV-unwrapped geometry, no bad
-floating/zero-area geometry, silhouette-aware budgets and sensible LODs. Our
-browser scene must apply the principles proportionately rather than falsely call
-its two original colour maps a complete Poly Haven-equivalent PBR source.
+| Topic | Published reference | Highline application |
+|---|---|---|
+| Texture workflow | Poly Haven describes seamless photo-based PBR material sets (base colour, roughness, OpenGL normal, displacement, AO and metalness where applicable), calibrated real-world dimensions and non-obvious repetition. | Treat the two current original base-colour maps as interim only. Any future imported material needs correctly scaled tiling, colour-space/map-role validation and a visible anti-repetition review. |
+| Model workflow | Its standards stress applied metric scale, human reference, clean UVs/normals, no bad geometry and silhouette-aware poly budgets/LODs. | Design modular structures at human scale; prefer façade/truss/pier silhouettes over arbitrary primitives and add LOD-like low-cost distant context. |
+| HDRI/environment | The HDRI catalogue includes industrial, coast/water, streets/town, mountains/hills and afternoon/sunset filters; the site describes 16K+ unclipped lighting reference. | Use the category/lighting lesson: Highline needs a warm industrial/coastal horizon, directional sun, cool fill and haze. Do not use a cyan void as lighting/environment. |
+| Collections | Collections group models, materials and HDRIs into coherent packs, demonstrating that assets must be selected as a contextual family. | Select future rooftop/utility assets as coherent material/scale families, not isolated attractive downloads. |
+| Rights | Poly Haven states its asset catalogue is CC0; site/API terms still govern service use. | Preserve source/creator/asset URL and use normal lawful acquisition; do not crawl, bypass protection or claim assets not locally received. |
 
-## Candidate review: Aerial Asphalt 01
+## Candidate review — Aerial Asphalt 01
 
 | Field | Record |
 |---|---|
-| Source | official Poly Haven public API |
-| Creator | Rob Tuytel (as returned by official asset metadata) |
-| Context | weathered cracked outdoor asphalt; 30m x 30m, up to 8K; well suited as a roof/road variation after UV scale review |
-| Technical availability | official file manifest exposes 1K–8K diffuse and OpenGL/DirectX normal files; public 1K diffuse is 635,143 bytes and normal 560,227 bytes |
-| Performance plan | start with 1K diffuse/normal and repeat at real-world scale; test browser memory and anisotropy before wider use |
-| Acquisition result | official normal-TLS `curl` to `dl.polyhaven.org` returned `SSL_ERROR_SYSCALL`; exact record is in `qa/asset_tests/polyhaven-aerial-asphalt-download-2026-09-05.log` |
-| Decision | **not acquired / not shipped**; retry only through normal official TLS, no proxy, no certificate bypass |
+| Source / creator | official Poly Haven metadata / Rob Tuytel |
+| Context | 30m × 30m weathered cracked outdoor asphalt, suitable for secondary road/roof surface investigation |
+| Technical offer | public manifest provides diffuse and GL/DX normal files from 1K through 8K; 1K diffuse is listed as 635,143 bytes and 1K GL normal as 560,227 bytes |
+| Intake plan | first use a 1K diffuse + OpenGL normal trial at real-world scale, then inspect texel density/repetition/browser memory before considering higher fidelity |
+| Acquisition | public normal-TLS attempts to `api.polyhaven.com` and `dl.polyhaven.org` returned `SSL_ERROR_SYSCALL` on 2026-09-05 |
+| Decision | **NOT_ACQUIRED / NOT_SHIPPED**. This is an infrastructure result, not a rejection of the asset or a reason to bypass TLS. |
 
-No other Poly Haven asset has passed the required source/licence/material/scale/
-poly/performance/context review.
+## Candidate family outlook
+
+Industrial HDRIs and Project Lighthouse utility props are appropriate discovery
+areas, but they are **not accepted candidates yet**. Each specific asset must
+have creator/source/CC0 verification, preview/material/scale/poly/performance
+review, a Highline semantic placement, and a full asset-manifest entry before
+an actual download/import decision.

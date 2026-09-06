@@ -21,8 +21,10 @@ Open the displayed Vite URL, click **START RUN**, then use mouse look plus:
 - Click to pulse the three mounted boiler-court relays
 - `R` reset to the latest checkpoint; `ESC` pause
 
-Use `?seed=your-label` to make a deterministic skyline presentation variant.
-Author-designed route geometry is unchanged by the seed.
+Use `?seed=your-label` for a deterministic secondary-world variant: roof-edge
+service dressing, peripheral skyline/warehouse silhouette, pipe racks, window
+occupancy and distant lighting change while the authored primary route geometry,
+objectives and critical collision surfaces stay fixed.
 
 ## Verification
 

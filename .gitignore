@@ -11,6 +11,8 @@ qa/visual/**/*.png
 !qa/visual/evidence/**/*.json
 qa/visual/**/*.zip
 qa/visual/playthrough_context.json
+qa/visual/capture_manifest.json
+qa/visual/review_validation.json
 
 # Third-party repositories are local research laboratories, never runtime assets or Git history.
 research/github_repos/
@@ -23,3 +25,6 @@ research/video_frames/**/frame-extraction.log
 # Python bytecode is reproducible tooling output.
 __pycache__/
 *.py[cod]
+
+# External-model acquisition scratch space; never version third-party raw archives or credentials.
+research/sketchfab/intake/

@@ -66,4 +66,5 @@ rather than a cyan background.
   including choice, mechanic and transition. They remain explicitly unapproved
   until their corresponding player-height review is added.
 - `src/world/HighlineDistrict.js` contains the deterministic seed, supported
-  architecture grammar and core collision/runtime construction.
+  architecture grammar, seed-controlled secondary-world recipe/repetition audit
+  and core collision/runtime construction.
