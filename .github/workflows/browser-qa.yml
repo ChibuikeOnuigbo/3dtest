@@ -110,6 +110,7 @@ jobs:
           RIVET_RUN_URL: http://127.0.0.1:5173/?seed=qa-harbour-alt-01
           VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/alternate
           VISUAL_CAPTURE_LABEL: alternate
+          VISUAL_CAPTURE_SCOPE: lookaround
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
           node tools/qa/capture_visual_views.mjs

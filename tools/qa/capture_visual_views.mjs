@@ -17,6 +17,7 @@ const root = process.cwd();
 const rawRunId = process.env.GITHUB_RUN_ID || `local-${new Date().toISOString().replace(/[:.]/g, '-')}`;
 const captureLabel = (process.env.VISUAL_CAPTURE_LABEL || 'default').replace(/[^a-zA-Z0-9_-]/g, '-');
 const captureRunId = `${rawRunId}-${captureLabel}`;
+const captureScope = process.env.VISUAL_CAPTURE_SCOPE || 'traversal';
 const evidenceDir = path.resolve(root, process.env.VISUAL_EVIDENCE_DIR || path.join('qa', 'visual', 'captures', captureRunId));
 if (!executablePath) {
   throw new Error('BLOCKED_NO_BROWSER_BINARY: set BROWSER_EXECUTABLE_PATH to a vetted local Chrome/Chromium executable. No browser download is attempted.');
@@ -28,7 +29,9 @@ const browser = await chromium.launch({
   args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--headless=new'],
 });
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
-await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
+// Keep input/screenshot trace evidence but omit DOM/source snapshots. Full snapshots are
+// expensive in headless CI and previously starved the alternate-seed capture budget.
+await context.tracing.start({ screenshots: true, snapshots: false, sources: false });
 const page = await context.newPage();
 const consoleEvents = [];
 const frameRecords = [];
@@ -188,6 +191,7 @@ async function writeCaptureRecord(status, captureFailure = null) {
     run_id: captureRunId,
     capture_mode: 'real first-person player input and pointer-lock mouse movement; no free/editor camera, no position teleport',
     base_url: baseURL,
+    capture_scope: captureScope,
     status,
     seed: endState?.worldSeed || null,
     frames: frameRecords,
@@ -226,6 +230,11 @@ try {
   await capture('03-dispatch-look-west', 'dispatch-bay', 'real player look-around: adjacent west city/route context');
   await orientRouteView();
 
+  if (captureScope === 'lookaround') {
+    // The alternate seed run is a bounded real player-height look/input comparison.
+    // It does not pretend to be a whole-route traversal; default scope owns that proof.
+    await writeCaptureRecord('CAPTURED_UNINSPECTED');
+  } else {
   // The controlled first route uses walkable maintenance risers, then meets the mounted
   // terminal at player height. No camera/position manipulation is used. Each travel
   // phase is bounded and capture still records a navigation miss if real play fails.
@@ -255,7 +264,8 @@ try {
   await moveUntilAuthoredSurface(['KeyW', 'ShiftLeft'], ['sunline-bridge'], 5200);
   await capture('11-sunline-bridge-vista', 'sunline-bridge', 'finish bridge player-height exterior vista and destination read');
 
-  await writeCaptureRecord('CAPTURED_UNINSPECTED');
+    await writeCaptureRecord('CAPTURED_UNINSPECTED');
+  }
 } catch (error) {
   // Persist only real frames generated before the failure, with the exact failure state.
   // This is diagnostic evidence, never a substitute for the missing coverage.

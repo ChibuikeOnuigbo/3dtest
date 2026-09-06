@@ -124,7 +124,13 @@ function restartCheckpoint() {
   player.reset(checkpoint); showToast('Checkpoint reset — run it cleaner.'); tone(280, 0.1, 'square');
   if (!running) { running = true; setOverlay(pauseScreen, false); requestLock(); }
 }
-function begin() { beginAudio(); resetRun(); running = true; setOverlay(titleScreen, false); requestLock(); }
+function begin() {
+  beginAudio(); resetRun(); running = true; setOverlay(titleScreen, false);
+  // Controls remain on the start briefing; removing the persistent keyboard ribbon
+  // restores the lower player view for landings and environment composition.
+  controlHint.classList.add('hidden');
+  requestLock();
+}
 // Pointer lock must be requested in the click activation path. Deferring it with a
 // timer can lose the browser's user-gesture permission and silently freeze genuine
 // keyboard movement/capture, even though the title overlay has disappeared.

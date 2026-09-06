@@ -1,0 +1,691 @@
+{
+  "schema": "rivet-run-semantic-visual-review/v1",
+  "capture_run_id": "34049702791-default",
+  "captured_head_sha": "42aab0e9c6f0eb7347b21b034de69cfcc9c15e87",
+  "visual_revision": "42aab0e9c6f0eb7347b21b034de69cfcc9c15e87",
+  "reviewer_role": "HOSTILE_QUALITY_CRITIC",
+  "reviewed_at": "2026-09-06T18:10:00Z",
+  "review_basis": "All eleven actual GitHub Actions Chromium PNGs were opened and semantically read at player height with immutable player/contact metadata. No source code, test result, pixel metric or capture filename was used to infer the findings.",
+  "review_focus": "prototype and dead-zone veto",
+  "frames": [
+    {
+      "frame_id": "01-dispatch-spawn",
+      "region": "dispatch-bay",
+      "requested_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "camera_position": [
+        -0.001,
+        1.594,
+        42.711
+      ],
+      "camera_direction": [
+        -0.002,
+        -0.1784,
+        -0.9839
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "A first-person Dispatch roof opener: the permit threshold sits ahead behind black/orange stepped bands; brown surrounding facades and clean blue atmosphere fill the upper field.",
+      "what_looks_bad": [
+        "The frame remains a narrow obstacle corridor. Broad bare roof, slab parapets and striped steps lead to a small buried objective rather than a strong industrial vista."
+      ],
+      "placeholder_signals": [
+        "Textured cuboid roofs, black rails and thin oxide strips carry nearly all form."
+      ],
+      "repetition": [
+        "Roof seams, step edges and orange strips use repeated spacing and alignment."
+      ],
+      "unconvincing_elements": [
+        "The walls give no readable service function or connection to a visible lower harbour."
+      ],
+      "dead_zone_assessment": "The foreground roof has no active detail and the view through the route is blocked, so the layered harbour world is absent.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 1.8,
+        "place_believability": 1.5,
+        "materials": 1.9,
+        "route_readability": 2.0,
+        "depth_scenery": 1.1,
+        "transition": 1.6,
+        "first_person_experience": 1.9,
+        "identity": 1.3,
+        "overall": 1.6
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "02-dispatch-look-east",
+      "region": "dispatch-bay",
+      "requested_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "camera_position": [
+        0.249,
+        1.594,
+        42.853
+      ],
+      "camera_direction": [
+        0.8476,
+        -0.1784,
+        -0.4998
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "A genuine wide east look shows an empty roof corner, a low utility box, close brown facade planes and a bright blank horizon.",
+      "what_looks_bad": [
+        "The promised east city/harbour vista is replaced by blank horizon and two texture-wrapped wall masses."
+      ],
+      "placeholder_signals": [
+        "The lone block with a teal face reads as a placeholder AC unit, and facade teal plates read pasted-on."
+      ],
+      "repetition": [
+        "Identical roof grooves and unbroken brown wall treatment repeat across the large frame."
+      ],
+      "unconvincing_elements": [
+        "Nothing explains the utility box through conduit, base, ventilation or adjacency."
+      ],
+      "dead_zone_assessment": "The east view has no lower city, rail, water, crane or destination; most of its space is roof/facade dead zone.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 1.8,
+        "place_believability": 1.5,
+        "materials": 1.9,
+        "route_readability": 2.0,
+        "depth_scenery": 1.1,
+        "transition": 1.6,
+        "first_person_experience": 1.9,
+        "identity": 1.3,
+        "overall": 1.6
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "03-dispatch-look-west",
+      "region": "dispatch-bay",
+      "requested_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "camera_position": [
+        -0.249,
+        1.594,
+        42.854
+      ],
+      "camera_direction": [
+        -0.8486,
+        -0.1784,
+        -0.4981
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "A genuine west look shows a large dark parapet, broad roof texture and three adjacent brown warehouse masses, with the route at the right edge.",
+      "what_looks_bad": [
+        "This is a wide look but still lacks a layered exterior payoff; wall planes dominate the whole skyline."
+      ],
+      "placeholder_signals": [
+        "Simple large rectangular building silhouettes and small teal/orange cards remain unmistakably modular test art."
+      ],
+      "repetition": [
+        "Facade panels, narrow vertical trims and roof seam patterning are mechanically repeated."
+      ],
+      "unconvincing_elements": [
+        "The scale/read of neighbouring warehouses is not supported by visible loading bays, pipework or lower circulation."
+      ],
+      "dead_zone_assessment": "The lateral view opens onto facades rather than an inhabited lower harbour or a memorable distant structure.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 1.8,
+        "place_believability": 1.5,
+        "materials": 1.9,
+        "route_readability": 2.0,
+        "depth_scenery": 1.1,
+        "transition": 1.6,
+        "first_person_experience": 1.9,
+        "identity": 1.3,
+        "overall": 1.6
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "04-switch-house-arrival",
+      "region": "intake-steps",
+      "requested_region": "switch-house",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        0,
+        1.913,
+        34.44
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "Actual grounded support is Intake Steps, not Switch House. The foreground is a dark metal tread field with repeated orange cross-stripes; Permit is distant.",
+      "what_looks_bad": [
+        "The intended arrival is absent and the eye is trapped by a black stair/grid surface."
+      ],
+      "placeholder_signals": [
+        "Repeated rectangular treads and orange warning bands read as a test stair, not construction."
+      ],
+      "repetition": [
+        "Every cross stripe and tread repeats with the same material/spacing."
+      ],
+      "unconvincing_elements": [
+        "No visible landing/doorway makes this a persuasive threshold into Switch House."
+      ],
+      "dead_zone_assessment": "This is a coverage dead zone for Switch House and a visual dead zone for the harbour behind the steps.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "05-transfer-beacon",
+      "region": "intake-steps",
+      "requested_region": "switch-house",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        0,
+        1.913,
+        29.005
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "Actual grounded support remains Intake Steps. A large black stepped face, orange bars and Kinetic Permit canopy consume the player view.",
+      "what_looks_bad": [
+        "The bars and stairs dominate more than the route or place, while the claimed transfer beacon is absent."
+      ],
+      "placeholder_signals": [
+        "The terminal is still a dark box with one luminous square; the overhead canopy is a single slab."
+      ],
+      "repetition": [
+        "Thin orange rails, black tread bands and teal rectangles recur again."
+      ],
+      "unconvincing_elements": [
+        "The image does not show a believable electrical-transfer enclosure, wiring or route beyond the terminal."
+      ],
+      "dead_zone_assessment": "No branch vista, lower city or checkpoint payoff is visible; this is not meaningful Transfer evidence.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "06-east-span-runup",
+      "region": "switch-house",
+      "requested_region": "east-span",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        4.585,
+        3.343,
+        19.6
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "Actual grounded support is Switch House. Two large teal hanging panels, a close black striped post and dark terminal forms occupy the frame.",
+      "what_looks_bad": [
+        "The near post occludes the eye line and the requested East Span is entirely missing."
+      ],
+      "placeholder_signals": [
+        "Teal sheets suspended in open space and the striped post/black box language look like placeholder composition pieces."
+      ],
+      "repetition": [
+        "Panel proportions, stripe trim and roof seams repeat without a secondary material rhythm."
+      ],
+      "unconvincing_elements": [
+        "The panels lack frames, wiring, hinges, depth or a clear electrical purpose."
+      ],
+      "dead_zone_assessment": "The capture contains no dash take-off, viaduct, rail depth or alternate route\u2014an East Span dead zone.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "07-east-span-transfer",
+      "region": "unsupported-or-airborne",
+      "requested_region": "east-span",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        4.586,
+        3.454,
+        11.966
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "AIR",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "The player is AIR/unsupported in front of a close brown wall, with a small overhead rail/gantry edge and distant signs.",
+      "what_looks_bad": [
+        "A wall fills the frame during the intended dash landing; there is no legible receiving deck or recovery path."
+      ],
+      "placeholder_signals": [
+        "Flat brown walls and a few thin rails do not communicate a designed aerial transfer."
+      ],
+      "repetition": [
+        "The same brown texture and dark rail language is repeated at close range."
+      ],
+      "unconvincing_elements": [
+        "The jump path appears to terminate at an opaque wall rather than a supported landing."
+      ],
+      "dead_zone_assessment": "This is a critical gameplay/visual dead zone because the player has no visible East landing, lower world or exit read.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "08-boiler-court-arrival",
+      "region": "dispatch-bay",
+      "requested_region": "boiler-court",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        0,
+        1.593,
+        41.953
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "The player has reset to Dispatch roof. The Permit stair corridor and a checkpoint-reset toast are visible; Boiler Court is absent.",
+      "what_looks_bad": [
+        "The reset visibly breaks the claimed run and repeats the opening composition."
+      ],
+      "placeholder_signals": [
+        "The same textured blocks, dark step bands and narrow orange route mark reappear unchanged."
+      ],
+      "repetition": [
+        "This is a direct duplicate of opening route language after a failed traversal."
+      ],
+      "unconvincing_elements": [
+        "A whole-run claim is not credible when the player resets before the target region."
+      ],
+      "dead_zone_assessment": "Boiler Court, relays, industrial stacks and exit depth are all absent.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "09-boiler-court-look",
+      "region": "dispatch-bay",
+      "requested_region": "boiler-court",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        -0.193,
+        1.593,
+        42.008
+      ],
+      "camera_direction": [
+        -0.6486,
+        -0.1802,
+        -0.7395
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "The player is again on Dispatch roof, looking laterally at bare roof, brown warehouses and the distant Permit threshold.",
+      "what_looks_bad": [
+        "The requested Boiler look is invalid and the visible side roof is an empty textured plane."
+      ],
+      "placeholder_signals": [
+        "The warehouse/card/utility-box vocabulary remains primitive and unsupported in appearance."
+      ],
+      "repetition": [
+        "Roof seams, facades and safety strips repeat exactly from the opener."
+      ],
+      "unconvincing_elements": [
+        "The space has no readable work function beyond generic rooftop objects."
+      ],
+      "dead_zone_assessment": "No Boiler Court, no lower world and no memorable side vista is visible.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "10-control-bridge-arrival",
+      "region": "dispatch-bay",
+      "requested_region": "control-bridge",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        -4.585,
+        1.593,
+        35.84
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "The player is grounded on Dispatch roof near the intake edge, facing the Permit corridor rather than Control Bridge.",
+      "what_looks_bad": [
+        "The route has reset and the label cannot redeem a repeated first-room image."
+      ],
+      "placeholder_signals": [
+        "The broad roof, low black barriers and small oxide marker retain a blockout look."
+      ],
+      "repetition": [
+        "The opening corridor, roof texture and trim motif recur for a third time."
+      ],
+      "unconvincing_elements": [
+        "No intentional compression/crouch frame or bridge construction is demonstrated."
+      ],
+      "dead_zone_assessment": "Control Bridge and its transition are entirely missing from the player run.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    },
+    {
+      "frame_id": "11-sunline-bridge-vista",
+      "region": "dispatch-bay",
+      "requested_region": "sunline-bridge",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "camera_position": [
+        0,
+        1.593,
+        36.242
+      ],
+      "camera_direction": [
+        0,
+        -0.1802,
+        -0.9836
+      ],
+      "player_state": "GROUND",
+      "seed": "rivet-run-highline-01",
+      "critic_status": "NEEDS_FIX",
+      "what_is_visible": "The player is still on Dispatch roof. Two thick orange foreground bars and a dark striped tread field block much of the lower half while Permit sits far ahead.",
+      "what_looks_bad": [
+        "The claimed final vista is instead the most obstructed Dispatch image; foreground bars dominate composition."
+      ],
+      "placeholder_signals": [
+        "The bars/treads are obvious obstacle-course primitives and do not read as a physical bridge assembly."
+      ],
+      "repetition": [
+        "Repeated orange/black bands overwhelm the otherwise identical roof corridor."
+      ],
+      "unconvincing_elements": [
+        "The foreground obstruction lacks a plausible bridge/rail function at this camera height."
+      ],
+      "dead_zone_assessment": "There is no Sunline Bridge, finish landmark, harbour horizon or final player reward view.",
+      "missing": [
+        "A player-visible foreground, purposeful playable structure, adjacent/lower industrial layer, distant landmark and atmospheric depth in the requested region."
+      ],
+      "replace": [
+        "Replace repeated black/orange bars and texture-wrapped wall planes with fewer constructed, visibly supported assemblies."
+      ],
+      "move": [
+        "Move capture forward only after the requested grounded support is reached; preserve this frame as its actual region."
+      ],
+      "add": [
+        "Add a clear supporting frame, service/wiring detail and an open lateral sight-line toward rail/harbour/industrial skyline."
+      ],
+      "remove": [
+        "Remove eye-level foreground bars and redundant repeated nosings that block landing/route reads."
+      ],
+      "scores": {
+        "composition": 0,
+        "place_believability": 0,
+        "materials": 0,
+        "route_readability": 0,
+        "depth_scenery": 0,
+        "transition": 0,
+        "first_person_experience": 0,
+        "identity": 0,
+        "overall": 0.0
+      },
+      "approved": false
+    }
+  ],
+  "summary": {
+    "strengths": [
+      "Real pointer-locked player input, camera direction, rendered-frame count and actual support contacts are now recorded.",
+      "Wide east/west input is genuinely distinct from the forward view, even though it exposes insufficient world depth."
+    ],
+    "defects": [
+      "Reject. This is a textured obstacle-course corridor with a failed traversal sequence, not a finished parkour place.",
+      "Eight requested destination frames are navigation misses; the route resets before Boiler Court, Control Bridge and Sunline.",
+      "Dispatch and Intake remain dominated by repeated black/orange bars, bare roof planes and monolithic brown facades."
+    ],
+    "priority_fixes": [
+      "Reject. This is a textured obstacle-course corridor with a failed traversal sequence, not a finished parkour place.",
+      "After each concrete repair, recapture with a bounded per-phase timeout and inspect a fresh immutable run; no old review survives the art/geometry change."
+    ]
+  },
+  "approval": {
+    "status": "NOT_APPROVED",
+    "reason": "All category scores are below the 7.5 floor or zero for navigation misses. Dead zones, placeholder construction and an incomplete route make approval impossible."
+  }
+}
