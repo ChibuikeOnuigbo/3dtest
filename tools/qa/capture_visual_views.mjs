@@ -184,6 +184,10 @@ try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => Boolean(window.__rivetRunProbe && document.querySelector('#game-canvas')?.width), null, { timeout: 15_000 });
   await page.getByRole('button', { name: /start run/i }).click();
+  // Mirror the real canvas activation used by the browser smoke test. It keeps the
+  // pointer-lock request in an actual user-input sequence rather than trusting a
+  // title-button click alone on a headless CI compositor.
+  await page.locator('#game-canvas').click({ position: { x: 720, y: 450 } });
   // A player-input capture is invalid if pointer lock/running state was not granted.
   // Do not continue with screenshots that merely look like gameplay from an inactive page.
   await page.waitForFunction(() => {

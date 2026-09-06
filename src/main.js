@@ -149,7 +149,12 @@ window.addEventListener('keydown', (event) => {
 });
 window.addEventListener('keyup', (event) => pressed.delete(event.code));
 canvas.addEventListener('mousemove', (event) => { if (running && document.pointerLockElement === canvas) player.look(event.movementX, event.movementY); });
-canvas.addEventListener('mousedown', firePulse);
+canvas.addEventListener('mousedown', () => {
+  // A second canvas click is a real user gesture fallback in browsers that reject a
+  // title-card-initiated pointer-lock request. It never moves the player or camera.
+  if (running && document.pointerLockElement !== canvas) { requestLock(); return; }
+  firePulse();
+});
 document.addEventListener('pointerlockchange', () => { if (running && document.pointerLockElement !== canvas && !course.finished) setOverlay(pauseScreen, true); });
 startButton.addEventListener('click', begin);
 resumeButton.addEventListener('click', () => { setOverlay(pauseScreen, false); requestLock(); });

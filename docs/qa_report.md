@@ -201,3 +201,7 @@ The correction is real: the three Dispatch frames are grounded on `yard-roof` wi
 This is the first review/fix pass for the rebuilt capture revision. It adds no
 approval and requires at least two further fresh capture/review passes for every
 major region, or continued iteration wherever the 8.5 average has not been met.
+
+## Evidence run 34049064054 — capture failure, no review
+
+The fresh two-seed CI run at [`34049064054`](https://github.com/ChibuikeOnuigbo/3dtest/actions/runs/34049064054) completed smoke/startup steps but the player-capture step exited non-zero. Its capture-commit step was skipped, so it created **no committed PNG/frame record** and therefore no visual review or approval. Normal GitHub log retrieval from this environment returned an Actions-results TLS `EOF`; no bypass or repeated retrieval was used. The next narrowly scoped repair restores a canvas-click pointer-lock gesture fallback and uses that same genuine input pattern in capture. Its outcome remains unverified until a new CI run produces actual frames.
