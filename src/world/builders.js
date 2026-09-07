@@ -253,6 +253,11 @@ export class WorldBuilder {
     const hx = quarter ? 1.22 : length / 2;
     const hz = quarter ? length / 2 : 1.22;
     for (const sx of [-1, 1]) for (const sz of [-1, 1]) this.box('container-corner', this.m.steelDark, [0.2, 2.62, 0.2], [x + sx * hx, y + 1.31, z + sz * hz], { cast: false });
+    // Top/bottom side rails and a painted ID plate: cheap details that stop a 12 m box reading as a slab.
+    for (const sy of [0.12, 2.47]) this.box('container-rail', this.m.steelDark, quarter ? [2.5, 0.12, length + 0.02] : [length + 0.02, 0.12, 2.5], [x, y + sy, z], { rotation: [0, rotationY, 0], cast: false });
+    const plate = quarter ? [1.2, 0.35, 0.02] : [0.02, 0.35, 1.2];
+    const plateOff = quarter ? [0.4, 2.0, -hz - 0.02] : [-hx - 0.02, 2.0, 0.4];
+    this.box('container-plate', this.m.container('#d8d2c2'), plate, [x + plateOff[0], y + plateOff[1], z + plateOff[2]], { rotation: [0, rotationY, 0], cast: false });
     const doorEnd = quarter ? [x, y + 1.3, z + hz + 0.02] : [x + hx + 0.02, y + 1.3, z];
     for (const off of [-0.6, -0.2, 0.2, 0.6]) {
       const p = quarter ? [doorEnd[0] + off, doorEnd[1], doorEnd[2]] : [doorEnd[0], doorEnd[1], doorEnd[2] + off];

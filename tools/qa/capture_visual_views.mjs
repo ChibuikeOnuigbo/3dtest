@@ -144,7 +144,7 @@ const POSES = {
   '06-gallery-interior': { position: [0.9, -1.2, 6.5], yaw: 0, pitch: -0.08 },
   '07-split-deck': { position: [0, 2.5, -16.5], yaw: 0, pitch: -0.1 },
   '08-east-span-gap': { position: [4.2, 2.5, -19.5], yaw: -Math.PI / 2, pitch: -0.12 },
-  '09-container-stack': { position: [14, 2.5, -22.4], yaw: 0, pitch: 0.12 },
+  '09-container-stack': { position: [16.2, 2.5, -19.5], yaw: 0.35, pitch: 0.18 },
   '10-boiler-court': { position: [9, 8.7, -31.5], yaw: Math.PI / 2, pitch: -0.08 },
   '11-boiler-vista': { position: [-3, 8.7, -30], yaw: Math.PI / 2 + 0.6, pitch: 0.02 },
   '12-rack-platform': { position: [-2, 12.4, -38.5], yaw: Math.PI, pitch: -0.05 },

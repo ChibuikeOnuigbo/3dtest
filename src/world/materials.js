@@ -165,7 +165,17 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     glass: flat('glazing', { color: '#9fc3cf', roughness: 0.08, metalness: 0.2, envMapIntensity: 1.2, transparent: true, opacity: 0.28, depthWrite: false, side: THREE.DoubleSide }),
     glassDark: flat('glazing_dark', { color: '#2b3b44', roughness: 0.18, metalness: 0.9, envMapIntensity: 1.2 }),
     container: (hex) => {
-      if (!containerCache.has(hex)) containerCache.set(hex, flat(`container_${hex}`, { color: hex, roughness: 0.62, metalness: 0.45, envMapIntensity: 0.8 }, { macro: true }));
+      if (!containerCache.has(hex)) {
+        const material = flat(`container_${hex}`, { color: hex, roughness: 0.62, metalness: 0.45, envMapIntensity: 0.8 }, { macro: true });
+        if (load) {
+          // Painted corrugated panels: reuse the corrugated normal + roughness maps at container-rib scale (0.6 m tile).
+          material.normalMap = load('/textures/sets/corrugated_steel/normal.jpg', { tile: 0.6 });
+          material.normalScale = new THREE.Vector2(0.55, 0.55);
+          material.roughnessMap = load('/textures/sets/corrugated_steel/roughness.jpg', { tile: 0.6 });
+          material.userData.tile = 0.6;
+        }
+        containerCache.set(hex, material);
+      }
       return containerCache.get(hex);
     },
     water: flat('harbour_water', { color: '#20404a', roughness: 0.14, metalness: 0.05, envMapIntensity: 1.6 }),
