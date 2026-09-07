@@ -163,7 +163,7 @@ const POSES = {
   '06-gallery-interior': { position: [0.9, -1.2, 6.5], yaw: 0, pitch: -0.08 },
   '07-split-deck': { position: [0, 2.5, -16.5], yaw: 0, pitch: -0.1 },
   '07d-bay-door': { position: [-0.4, 2.5, -20.2], yaw: 0, pitch: 0.02 },
-  '07e-bay-door-lifting': { position: [2.6, 2.5, -20.6], yaw: -0.62, pitch: 0.12, door: ['bay-door', 0.55] },
+  '07e-bay-door-lifting': { position: [3.4, 2.5, -20.6], yaw: 0.84, pitch: 0.14, door: ['bay-door', 0.55] }, // from the drive side: hoist, chain, hood, curtain half-wound
   '08-east-span-gap': { position: [4.2, 2.5, -19.5], yaw: -Math.PI / 2, pitch: -0.12 },
   '09-container-stack': { position: [16.2, 2.5, -19.5], yaw: 0.35, pitch: 0.18 },
   '10-boiler-court': { position: [9, 8.7, -31.5], yaw: Math.PI / 2, pitch: -0.08 },
@@ -175,7 +175,7 @@ const POSES = {
   '16-crane-trolley': { position: [7.7, -3.3, -66], yaw: 0, pitch: -0.12 },
   '17-hall-gallery-door': { position: [4, -0.3, -89.5], yaw: Math.PI / 2 - 0.4, pitch: -0.02 },
   '17d-hall-door-front': { position: [0, -0.3, -84.5], yaw: 0, pitch: 0.06 },
-  '17e-hall-door-lifting': { position: [-3.2, -0.3, -86.5], yaw: 0.5, pitch: 0.16, door: ['hall-door', 0.6] },
+  '17e-hall-door-lifting': { position: [-3.4, -0.3, -87.5], yaw: -0.62, pitch: 0.18, door: ['hall-door', 0.6] }, // from the gallery, looking up at the lifted curtain, hood and motor
   '18-sunline-gantry': { position: [0, -0.3, -96], yaw: 0, pitch: -0.06 },
   '19-finish-cab': { position: [0, -0.3, -116], yaw: 0, pitch: -0.05 },
   '20-finish-look-back': { position: [0, -0.3, -121], yaw: Math.PI, pitch: 0.05 },
