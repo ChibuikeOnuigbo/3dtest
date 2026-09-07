@@ -291,7 +291,12 @@ window.__rivetRunProbe = Object.freeze({
     return { staged: true };
   },
   setView: (yaw, pitch) => { stagingMode = true; player.yaw = yaw; player.pitch = pitch; player.applyOrientation(); return { staged: true }; },
-  captureCanvas: (type = 'image/jpeg', quality = 0.85) => { renderer.render(scene, camera); return canvas.toDataURL(type, quality); },
+  captureCanvas: (type = 'image/jpeg', quality = 0.85) => {
+    // preserveDrawingBuffer is off, so re-render synchronously then read back. Shadows are
+    // already up to date from the last presented frame; skip the shadow pass for the readback.
+    const shadows = renderer.shadowMap.autoUpdate; renderer.shadowMap.autoUpdate = false;
+    try { renderer.render(scene, camera); return canvas.toDataURL(type, quality); } finally { renderer.shadowMap.autoUpdate = shadows; }
+  },
   /** DIAGNOSTIC ONLY — toggles a render feature so an external harness can measure wall-clock fps. */
   perfSet: (feature, on) => {
     stagingMode = true;

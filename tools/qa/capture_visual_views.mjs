@@ -45,8 +45,16 @@ const consoleEvents = []; const frameRecords = []; const inputTrace = []; const 
 let staged = mode === 'staged';
 page.on('console', (m) => consoleEvents.push({ type: m.type(), text: m.text().slice(0, 300) }));
 page.on('pageerror', (e) => consoleEvents.push({ type: 'pageerror', text: e.message }));
+page.on('crash', () => consoleEvents.push({ type: 'crash', text: 'renderer process crashed', at: Date.now() }));
+// Keep the probe evaluate() calls light: the renderer is single-threaded under software GL and a
+// heavy evaluate while a frame is rasterising can stall it into a watchdog kill.
+const probeSnapshotTimeoutMs = 90000;
+const evaluateSafe = async (fn, arg) => {
+  let timer; const timeout = new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('PROBE_EVALUATE_TIMEOUT')), probeSnapshotTimeoutMs); });
+  try { return await Promise.race([page.evaluate(fn, arg), timeout]); } finally { clearTimeout(timer); }
+};
 
-const snapshot = () => page.evaluate(() => window.__rivetRunProbe?.snapshot());
+const snapshot = () => evaluateSafe(() => window.__rivetRunProbe?.snapshot());
 const gameTime = async () => (await snapshot())?.elapsed ?? 0;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -59,7 +67,7 @@ async function hold(keys, seconds, until = null) {
   try {
     const wallDeadline = Date.now() + Number(process.env.VISUAL_PHASE_WALL_MS || 240000);
     while (Date.now() < wallDeadline) {
-      await sleep(80);
+      await sleep(250);
       state = await snapshot();
       if (!state) continue;
       if (until && until(state)) { reason = 'condition'; break; }
