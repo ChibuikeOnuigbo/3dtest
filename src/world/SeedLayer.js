@@ -210,7 +210,7 @@ export class SeedLayer {
     const r = this.stream('routeVariants'); const b = this.world.builder; const m = this.world.materials;
     const variants = [];
     if (chance(r, 0.5)) { b.box('variant-crate', m.container('#6b6f5a'), [1.2, 1.0, 1.2], [-6.8, 2.9, -15.2], { collide: true, traits: { walkable: true }, id: 'variant-split-crate' }); variants.push('split-deck-hop-crate'); }
-    if (chance(r, 0.5)) { b.cylinder('variant-shortcut-pipe', m.oxide, 0.35, 10, [7.5, 8.6 + 0.35, -36.5], { rotation: [Math.PI / 2, 0, 0], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' } }); variants.push('boiler-court-pipe-balance'); }
+    if (chance(r, 0.5)) { b.cylinder('variant-shortcut-pipe', m.oxide, 0.35, 8, [5.2, 8.6 + 0.35, -39.5], { rotation: [Math.PI / 2, 0, 0], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' } }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -36.0], { cast: false }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -43.0], { cast: false }); variants.push('boiler-court-pipe-balance'); }
     if (chance(r, 0.5)) { for (let i = 0; i < 3; i += 1) b.box('variant-pallet-stack', m.container('#8b7756'), [1.2, 0.6, 1.0], [-6 - i * 1.6, -14 + 0.3, -70 + i * 0.5], { rotation: [0, range(r, -0.2, 0.2), 0], collide: true, traits: { walkable: true } }); variants.push('turbine-floor-pallets'); }
     if (chance(r, 0.5)) { b.box('variant-billboard', m.windowLit, [6, 2.4, 0.3], [-6, 3.2, 27.9], { cast: false }); variants.push('transfer-gap-billboard'); }
     this.note('routeVariants', { variants });

@@ -52,9 +52,9 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 const atmosphere = subStream(seed, 'atmosphere');
 const timeOfDay = ['late-afternoon', 'golden-hour', 'overcast-warm'][Math.floor(atmosphere() * 3)];
 const atmospherePreset = {
-  'late-afternoon': { fog: '#d2b08f', fogDensity: 0.0032, sun: '#ffd2a1', sunIntensity: 3.1, hemiSky: '#e8d2b8', hemiGround: '#3a3f42', exposure: 0.96, sunDir: [-0.55, 0.32, -0.77] },
-  'golden-hour': { fog: '#e0a878', fogDensity: 0.0038, sun: '#ffb970', sunIntensity: 3.4, hemiSky: '#f0c9a4', hemiGround: '#36393c', exposure: 0.92, sunDir: [-0.7, 0.2, -0.68] },
-  'overcast-warm': { fog: '#c9bfb4', fogDensity: 0.0042, sun: '#ffe6c8', sunIntensity: 2.2, hemiSky: '#d8d0c6', hemiGround: '#3a3c3d', exposure: 1.02, sunDir: [-0.4, 0.5, -0.77] },
+  'late-afternoon': { fog: '#d2b08f', fogDensity: 0.0021, sun: '#ffd2a1', sunIntensity: 3.1, hemiSky: '#e8d2b8', hemiGround: '#3a3f42', exposure: 0.96, sunDir: [-0.55, 0.32, -0.77] },
+  'golden-hour': { fog: '#e0a878', fogDensity: 0.0025, sun: '#ffb970', sunIntensity: 3.4, hemiSky: '#f0c9a4', hemiGround: '#36393c', exposure: 0.92, sunDir: [-0.7, 0.2, -0.68] },
+  'overcast-warm': { fog: '#c9bfb4', fogDensity: 0.0029, sun: '#ffe6c8', sunIntensity: 2.2, hemiSky: '#d8d0c6', hemiGround: '#3a3c3d', exposure: 1.02, sunDir: [-0.4, 0.5, -0.77] },
 }[timeOfDay];
 renderer.toneMappingExposure = atmospherePreset.exposure;
 
@@ -85,6 +85,7 @@ new THREE.TextureLoader(loadingManager).load('/sky/harbour_afternoon_equirect.jp
 });
 
 const camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 0.05, 900);
+camera.position.set(0, 1.62, 0); // eye height above the player's feet (root); the rig handles crouch/bob offsets
 const sun = new THREE.DirectionalLight(atmospherePreset.sun, atmospherePreset.sunIntensity);
 sun.position.set(...atmospherePreset.sunDir).multiplyScalar(120);
 sun.castShadow = true;
@@ -283,5 +284,22 @@ window.__rivetRunProbe = Object.freeze({
   },
   setView: (yaw, pitch) => { stagingMode = true; player.yaw = yaw; player.pitch = pitch; player.applyOrientation(); return { staged: true }; },
   captureCanvas: (type = 'image/jpeg', quality = 0.85) => { renderer.render(scene, camera); return canvas.toDataURL(type, quality); },
+  /** DIAGNOSTIC ONLY — toggles a render feature so an external harness can measure wall-clock fps. */
+  perfSet: (feature, on) => {
+    stagingMode = true;
+    const textures = [];
+    scene.traverse((o) => { const m = o.material; if (!m) return; for (const key of ['map', 'normalMap', 'roughnessMap']) if (m[key] && !textures.includes(m[key])) textures.push(m[key]); });
+    const lights = []; scene.traverse((o) => { if (o.isPointLight && o !== dashLight) lights.push(o); });
+    const refresh = () => scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
+    if (feature === 'shadows') { renderer.shadowMap.enabled = on; refresh(); }
+    if (feature === 'shadow2048') { sun.shadow.mapSize.set(on ? 2048 : 1024, on ? 2048 : 1024); sun.shadow.map?.dispose(); sun.shadow.map = null; }
+    if (feature === 'aniso') for (const t of textures) { t.anisotropy = on ? 8 : 1; t.needsUpdate = true; }
+    if (feature === 'env') scene.environment = on ? (probeState.env || scene.environment) : (probeState.env = scene.environment, null);
+    if (feature === 'pointlights') for (const l of lights) l.visible = on;
+    if (feature === 'fog') { scene.fog = on ? new THREE.FogExp2(atmospherePreset.fog, atmospherePreset.fogDensity) : null; refresh(); }
+    if (feature === 'normalmaps') { scene.traverse((o) => { const m = o.material; if (m && m.userData) { if (!on && m.normalMap) { m.userData.savedNormal = m.normalMap; m.normalMap = null; m.needsUpdate = true; } if (on && m.userData.savedNormal) { m.normalMap = m.userData.savedNormal; m.needsUpdate = true; } } }); }
+    const gl = renderer.getContext(); const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    return { feature, on, glRenderer: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : 'n/a', textures: textures.length, pointLights: lights.length, frame: renderFrameCount };
+  },
 });
 renderControls(); updateHud(); animate();

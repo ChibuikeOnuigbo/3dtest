@@ -88,7 +88,7 @@ export function buildBackdrop(world) {
   b.cylinder('water-tower-stem', m.concreteDark, 2.2, 30, [52, g + 15, 66], { segments: 14, cast: false });
   b.cylinder('water-tower-bowl', m.corrugatedPale, 6.5, 7, [52, g + 33, 66], { segments: 22, cast: false });
   b.cylinder('water-tower-cap', m.steelDark, 6.6, 0.5, [52, g + 36.7, 66], { segments: 22, cast: false });
-  gantryCrane(world, 12, -128, 0.0, 30);
+  gantryCrane(world, 0, -130, 0.0, 30); // the finish cab landing sits inside this crane's landward portal
   gantryCrane(world, -46, -132, 0.05, 34);
   gantryCrane(world, 74, -136, -0.04, 32);
   for (const [x, z, h] of [[30, -100, 48], [36, -104, 40]]) b.stack(`power-stack-${x}`, [x, g, z], 2.4, h, { bands: 5 });

@@ -156,7 +156,10 @@ export class HighlineDistrict {
     const frontZ = shed.z - shed.d / 2;
     b.box('shed-wall', m.corrugatedPale, [2.8, shed.h, 0.2], [shed.x - 2.3, roofY + shed.h / 2, frontZ], { collide: true, traits: { walkable: false }, id: 'shed-front-w' });
     b.box('shed-wall', m.corrugatedPale, [2.8, shed.h, 0.2], [shed.x + 2.3, roofY + shed.h / 2, frontZ], { collide: true, traits: { walkable: false }, id: 'shed-front-e' });
-    b.box('shed-header', m.steelDark, [1.9, 0.5, 0.24], [shed.x, roofY + shed.h - 0.25, frontZ], { collide: true, traits: { walkable: false }, id: 'shed-header' });
+    b.box('shed-header', m.steelPale, [1.9, 0.5, 0.24], [shed.x, roofY + shed.h - 0.25, frontZ], { collide: true, traits: { walkable: false }, id: 'shed-header' });
+    b.box('shed-ceiling', m.steelPale, [shed.w - 0.3, 0.04, shed.d - 0.3], [shed.x, roofY + shed.h - 0.02, shed.z], { cast: false });
+    b.box('shed-door-light-housing', m.steelDark, [0.7, 0.12, 0.2], [shed.x, roofY + shed.h - 0.56, frontZ - 0.22], { cast: false });
+    b.lamp([shed.x, roofY + shed.h - 0.62, frontZ - 0.25], { intensity: 10, distance: 9, size: 0.5 });
     b.box('shed-window', m.windowLit, [1.4, 1.0, 0.06], [shed.x - 2.3, roofY + 1.75, frontZ - 0.08], { cast: false });
     b.box('shed-window', m.windowDim, [1.4, 1.0, 0.06], [shed.x + 2.3, roofY + 1.75, frontZ - 0.08], { cast: false });
     b.box('shed-roof', m.steelDark, [shed.w + 0.6, 0.18, shed.d + 0.6], [shed.x, roofY + shed.h + 0.09, shed.z], { cast: true });
@@ -168,8 +171,8 @@ export class HighlineDistrict {
     b.cabinet('shed-locker-a', [shed.x + 2.6, roofY + 0.06, shed.z + 2.3], 0, { width: 0.8, height: 2.0, depth: 0.5, material: m.steelPale, lit: false });
     b.cabinet('shed-locker-b', [shed.x + 1.7, roofY + 0.06, shed.z + 2.3], 0, { width: 0.8, height: 2.0, depth: 0.5, material: m.steel, lit: false });
     b.sign('DISPATCH 08', [shed.x, roofY + shed.h + 0.55, frontZ - 0.2], '-z', { width: 2.6 });
-    b.lamp([shed.x, roofY + shed.h - 0.12, shed.z], { intensity: 6, distance: 9, size: 0.5 });
-    b.lamp([shed.x - 3.2, roofY + shed.h - 0.3, frontZ - 0.35], { intensity: 5, distance: 8, size: 0.2 });
+    b.lamp([shed.x, roofY + shed.h - 0.14, shed.z], { intensity: 12, distance: 10, size: 0.7 });
+    b.lamp([shed.x - 3.2, roofY + shed.h - 0.3, frontZ - 0.35], { intensity: 5, distance: 8, size: 0.2, light: false });
 
     b.hvacUnit('dispatch-hvac-a', [-9.5, roofY, 40], 0.12);
     b.hvacUnit('dispatch-hvac-b', [9.8, roofY, 36.5], -0.05, [3.2, 1.5, 1.4]);
@@ -177,11 +180,18 @@ export class HighlineDistrict {
     b.skylight('dispatch-skylight-w', [-5.2, roofY, 38], 11, 'z');
     b.skylight('dispatch-skylight-e', [5.2, roofY, 41.5], 8, 'z');
     b.tank('dispatch-tank', [-10.2, roofY, 49], 1.6, 2.6);
-    b.pipeRack('dispatch-rack', [-13, roofY, 31], 22, { axis: 'x', height: 2.6, pipes: 2, frameSpacing: 7 });
+    b.pipeRack('dispatch-rack-w', [-13, roofY, 31], 9.6, { axis: 'x', height: 2.6, pipes: 2, frameSpacing: 4.8 });
+    b.pipeRack('dispatch-rack-e', [3.4, roofY, 31], 9.6, { axis: 'x', height: 2.6, pipes: 2, frameSpacing: 4.8 });
+    for (const sx of [-1, 1]) { b.box('rack-gate-post', m.safetyYellow, [0.16, 2.6, 0.16], [sx * 3.0, roofY + 1.3, 31], { collide: true, id: `rack-gate-${sx}` }); b.box('rack-gate-cap', m.steelDark, [0.3, 0.12, 0.3], [sx * 3.0, roofY + 2.66, 31], { cast: false }); }
     b.cylinder('mast', m.galvanised, 0.12, 9, [12, roofY + 4.5, 53], { segments: 8 });
     b.lamp([12, roofY + 9.1, 53], { material: m.lampRed, color: '#ff3b2f', intensity: 4, distance: 8, light: false, size: 0.26 });
     b.box('cable-tray', m.galvanised, [0.4, 0.08, 20], [12.6, roofY + 0.08, 41], { cast: false });
     b.box('roof-drain', m.steelDark, [0.6, 0.02, 0.6], [-11, roofY + 0.012, 35], { cast: false });
+    b.box('door-crate', m.container('#6b6f5a'), [1.1, 0.9, 1.1], [5.6, roofY + 0.45, 45.5], { rotation: [0, 0.3, 0], collide: true, traits: { walkable: true }, id: 'door-crate' });
+    b.box('door-crate', m.container('#5a5f6b'), [0.9, 0.8, 0.9], [5.4, roofY + 1.3, 45.6], { rotation: [0, -0.2, 0], collide: true, traits: { walkable: true }, id: 'door-crate-2' });
+    b.cylinder('door-reel', m.container('#7d6b4f'), 0.7, 0.5, [-5.4, roofY + 0.35, 44.8], { rotation: [0, 0, Math.PI / 2], segments: 12, collide: true, traits: { walkable: true } });
+    b.box('door-bollard', m.safetyYellow, [0.2, 0.9, 0.2], [-4.2, roofY + 0.45, 47.8], { collide: true, id: 'door-bollard-w' });
+    b.box('door-bollard', m.safetyYellow, [0.2, 0.9, 0.2], [4.2, roofY + 0.45, 47.8], { collide: true, id: 'door-bollard-e' });
     this.checkpoint('spawn', [0, roofY, 50.5], 2.5, 0, 'Leave dispatch, run the roof and jump the gap to the transfer annex.');
   }
 

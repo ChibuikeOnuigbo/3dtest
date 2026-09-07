@@ -315,7 +315,10 @@ export class WorldBuilder {
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = background; ctx.fillRect(0, 0, 1024, 256);
       ctx.strokeStyle = accent; ctx.lineWidth = 10; ctx.strokeRect(12, 12, 1000, 232);
-      ctx.fillStyle = '#f4ecd8'; ctx.font = '700 118px ui-monospace, Menlo, Consolas, monospace';
+      ctx.fillStyle = '#f4ecd8';
+      // Auto-fit: shrink the font until the text sits inside the plate with a margin.
+      let fontSize = 118;
+      do { ctx.font = `700 ${fontSize}px "DejaVu Sans Mono", ui-monospace, Menlo, Consolas, monospace`; fontSize -= 4; } while (ctx.measureText(text).width > 920 && fontSize > 40);
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 512, 134);
       const texture = new THREE.CanvasTexture(canvas);
       texture.colorSpace = THREE.SRGBColorSpace; texture.anisotropy = 8;
