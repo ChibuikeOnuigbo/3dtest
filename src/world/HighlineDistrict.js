@@ -158,8 +158,16 @@ export class HighlineDistrict {
     b.box('shed-wall', m.corrugatedPale, [2.8, shed.h, 0.2], [shed.x + 2.3, roofY + shed.h / 2, frontZ], { collide: true, traits: { walkable: false }, id: 'shed-front-e' });
     b.box('shed-header', m.steelPale, [1.9, 0.5, 0.24], [shed.x, roofY + shed.h - 0.25, frontZ], { collide: true, traits: { walkable: false }, id: 'shed-header' });
     b.box('shed-ceiling', m.steelPale, [shed.w - 0.3, 0.04, shed.d - 0.3], [shed.x, roofY + shed.h - 0.02, shed.z], { cast: false });
-    b.box('shed-door-light-housing', m.steelDark, [0.7, 0.12, 0.2], [shed.x, roofY + shed.h - 0.56, frontZ - 0.22], { cast: false });
-    b.lamp([shed.x, roofY + shed.h - 0.62, frontZ - 0.25], { intensity: 10, distance: 9, size: 0.5 });
+    b.box('shed-door-light-housing', m.steelDark, [0.5, 0.1, 0.22], [shed.x, roofY + shed.h - 0.55, frontZ - 0.23], { cast: false });
+    b.lamp([shed.x, roofY + shed.h - 0.62, frontZ - 0.23], { intensity: 10, distance: 9, size: 0.22 });
+    // Run lane from the door to the rack gate: paint, a drain grate and a knee-high steam line to hop.
+    for (const sx of [-1, 1]) b.box('lane-paint', m.routePaint, [0.12, 0.02, 15], [sx * 1.1, roofY + 0.012, 40.5], { cast: false });
+    b.box('lane-drain', m.grating, [1.2, 0.03, 0.6], [0, roofY + 0.015, 44.2], { cast: false });
+    // Step-over height (0.44 < maxStepHeight 0.46): a kinetic bump on the run-up, never a blocker at spawn.
+    b.cylinder('lane-pipe', m.galvanised, 0.15, 9, [0, roofY + 0.29, 38.5], { rotation: [0, 0, Math.PI / 2], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' }, id: 'lane-pipe' });
+    for (const sx of [-3.6, 0, 3.6]) b.box('lane-pipe-saddle', m.steelDark, [0.36, 0.16, 0.4], [sx, roofY + 0.08, 38.5], { cast: false });
+    b.box('lane-pipe-stripe', m.safetyYellow, [0.05, 0.32, 0.05], [-1.4, roofY + 0.29, 38.5], { cast: false });
+    b.box('lane-pipe-stripe', m.safetyYellow, [0.05, 0.32, 0.05], [1.4, roofY + 0.29, 38.5], { cast: false });
     b.box('shed-window', m.windowLit, [1.4, 1.0, 0.06], [shed.x - 2.3, roofY + 1.75, frontZ - 0.08], { cast: false });
     b.box('shed-window', m.windowDim, [1.4, 1.0, 0.06], [shed.x + 2.3, roofY + 1.75, frontZ - 0.08], { cast: false });
     b.box('shed-roof', m.steelDark, [shed.w + 0.6, 0.18, shed.d + 0.6], [shed.x, roofY + shed.h + 0.09, shed.z], { cast: true });
