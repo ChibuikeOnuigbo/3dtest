@@ -1,8 +1,10 @@
 import * as THREE from 'three';
-import { Sky } from 'three/addons/objects/Sky.js';
 import './styles.css';
 import { MovementController } from './systems/MovementController.js';
+import { AudioDirector } from './systems/AudioDirector.js';
 import { HighlineDistrict } from './world/HighlineDistrict.js';
+import { subStream, DEFAULT_SEED } from './world/seed.js';
+import { GROUND_Y } from './world/constants.js';
 
 const canvas = document.querySelector('#game-canvas');
 const titleScreen = document.querySelector('#title-screen');
@@ -26,114 +28,129 @@ const bindings = Object.freeze({
   JUMP: 'Space', DASH: 'ShiftLeft', CROUCH: 'ControlLeft', RESTART: 'KeyR', PAUSE: 'Escape',
 });
 const keyNames = Object.freeze({ KeyW: 'W', KeyA: 'A', KeyS: 'S', KeyD: 'D', Space: 'SPACE', ShiftLeft: 'SHIFT', ControlLeft: 'CTRL', KeyR: 'R', Escape: 'ESC' });
+const params = new URLSearchParams(window.location.search);
+const seed = params.get('seed') || DEFAULT_SEED;
 const pressed = new Set();
 let running = false;
 let elapsed = 0;
 let bestTime = Number(localStorage.getItem('rivet-run-highline-best') || 0);
-let checkpoint = new THREE.Vector3(0, 0, 43);
-let objective = 'Reach the Kinetic Permit terminal on the switch-house roof.';
 let toastTimer = 0;
-let audioContext = null;
 let pulseVisuals = [];
-// Capture uses this observable render heartbeat to ensure it waits for live WebGL,
-// rather than recording an initialized-but-unpainted document.
 let renderFrameCount = 0;
+let stagingMode = false; // set only by the capture probe; never by gameplay
 
+// ------------------------------------------------------------------ renderer
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-// PCFSoftShadowMap is remapped (and deprecated) by the pinned Three.js version.
-// Use the supported PCF mode explicitly so real browser QA is free of that warning.
 renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.18;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
+// ------------------------------------------------------------------ atmosphere (seed-varied within an authored range)
+const atmosphere = subStream(seed, 'atmosphere');
+const timeOfDay = ['late-afternoon', 'golden-hour', 'overcast-warm'][Math.floor(atmosphere() * 3)];
+const atmospherePreset = {
+  'late-afternoon': { fog: '#d2b08f', fogDensity: 0.0032, sun: '#ffd2a1', sunIntensity: 3.1, hemiSky: '#e8d2b8', hemiGround: '#3a3f42', exposure: 0.96, sunDir: [-0.55, 0.32, -0.77] },
+  'golden-hour': { fog: '#e0a878', fogDensity: 0.0038, sun: '#ffb970', sunIntensity: 3.4, hemiSky: '#f0c9a4', hemiGround: '#36393c', exposure: 0.92, sunDir: [-0.7, 0.2, -0.68] },
+  'overcast-warm': { fog: '#c9bfb4', fogDensity: 0.0042, sun: '#ffe6c8', sunIntensity: 2.2, hemiSky: '#d8d0c6', hemiGround: '#3a3c3d', exposure: 1.02, sunDir: [-0.4, 0.5, -0.77] },
+}[timeOfDay];
+renderer.toneMappingExposure = atmospherePreset.exposure;
+
 const scene = new THREE.Scene();
-// Physically shaded sky plus a cool harbour haze. The full lower skyline is actual
-// geometry; the sky is atmospheric background rather than an exposed cyan void.
-scene.background = new THREE.Color('#71808a');
-scene.fog = new THREE.FogExp2('#71808a', 0.0062);
-const sky = new Sky();
-sky.scale.setScalar(200000);
-sky.material.uniforms.turbidity.value = 5.7;
-sky.material.uniforms.rayleigh.value = 1.15;
-sky.material.uniforms.mieCoefficient.value = 0.007;
-sky.material.uniforms.mieDirectionalG.value = 0.77;
-sky.material.uniforms.sunPosition.value.set(-0.42, 0.18, -0.88).normalize().multiplyScalar(400000);
-scene.add(sky);
-const camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 0.05, 220);
-camera.position.set(0, 1.62, 0);
-const sun = new THREE.DirectionalLight('#ffd59a', 3.05);
-sun.position.set(-36, 49, 32); sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -48; sun.shadow.camera.right = 48; sun.shadow.camera.top = 48; sun.shadow.camera.bottom = -48;
-scene.add(sun);
-scene.add(new THREE.HemisphereLight('#e4ceb3', '#263940', 1.9));
-const course = new HighlineDistrict(scene);
+scene.background = new THREE.Color(atmospherePreset.fog);
+scene.fog = new THREE.FogExp2(atmospherePreset.fog, atmospherePreset.fogDensity);
+
+const loadingManager = new THREE.LoadingManager();
+const pmrem = new THREE.PMREMGenerator(renderer);
+pmrem.compileEquirectangularShader();
+new THREE.TextureLoader(loadingManager).load('/sky/harbour_afternoon_equirect.jpg', (texture) => {
+  texture.mapping = THREE.EquirectangularReflectionMapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  scene.background = texture;
+  scene.backgroundIntensity = 1.0;
+  scene.environment = pmrem.fromEquirectangular(texture).texture;
+  scene.environmentIntensity = 0.85;
+  probeState.skySource = 'equirect:/sky/harbour_afternoon_equirect.jpg';
+}, undefined, () => {
+  // Fallback keeps a graded sky instead of a flat void when the image is missing.
+  const gradient = document.createElement('canvas'); gradient.width = 4; gradient.height = 256;
+  const ctx = gradient.getContext('2d'); const g = ctx.createLinearGradient(0, 0, 0, 256);
+  g.addColorStop(0, '#6f8ea8'); g.addColorStop(0.55, atmospherePreset.fog); g.addColorStop(1, '#8a7a68');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 4, 256);
+  const texture = new THREE.CanvasTexture(gradient); texture.mapping = THREE.EquirectangularReflectionMapping; texture.colorSpace = THREE.SRGBColorSpace;
+  scene.background = texture; scene.environment = pmrem.fromEquirectangular(texture).texture;
+  probeState.skySource = 'fallback:gradient';
+});
+
+const camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 0.05, 900);
+const sun = new THREE.DirectionalLight(atmospherePreset.sun, atmospherePreset.sunIntensity);
+sun.position.set(...atmospherePreset.sunDir).multiplyScalar(120);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -40; sun.shadow.camera.right = 40; sun.shadow.camera.top = 40; sun.shadow.camera.bottom = -40;
+sun.shadow.camera.near = 20; sun.shadow.camera.far = 320; sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.03;
+scene.add(sun); scene.add(sun.target);
+scene.add(new THREE.HemisphereLight(atmospherePreset.hemiSky, atmospherePreset.hemiGround, 1.1));
+
+// ------------------------------------------------------------------ world + player
+const availablePolyhaven = new Set(window.__RIVET_POLYHAVEN_SETS || []);
+const course = new HighlineDistrict(scene, { seed, availablePolyhaven });
 const player = new MovementController(camera, () => course.solids);
-player.reset(checkpoint);
+const audio = new AudioDirector();
+let checkpoint = { position: course.spawn.position.clone(), yaw: course.spawn.yaw };
+let objective = course.checkpoints[0].objective;
+player.reset(checkpoint.position, checkpoint.yaw);
 scene.add(player.root);
 
 const dashLight = new THREE.PointLight('#e9b36b', 0, 7, 2);
 dashLight.position.set(0, 0.3, -0.4);
 player.cameraRig.add(dashLight);
 const pulseTool = new THREE.Group();
-// A restrained wrist unit leaves the lower-right composition open for route/landing read.
 const glove = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.06, 0.14), new THREE.MeshStandardMaterial({ color: '#51646a', roughness: 0.42, metalness: 0.68 }));
 const emitter = new THREE.Mesh(new THREE.BoxGeometry(0.052, 0.052, 0.052), new THREE.MeshStandardMaterial({ color: '#e6bd77', emissive: '#9b5627', emissiveIntensity: 1.25, roughness: 0.25 }));
 emitter.position.z = -0.12;
 pulseTool.add(glove, emitter); pulseTool.position.set(0.34, -0.62, -1.04); pulseTool.rotation.set(-0.1, -0.22, 0);
-// Keep the equipment out of ordinary traversal composition; it becomes visible only
-// as short firing feedback, avoiding a permanently disembodied block in player views.
 pulseTool.visible = false;
 camera.add(pulseTool);
 const raycaster = new THREE.Raycaster(); raycaster.far = 50;
 const clock = new THREE.Clock();
+const probeState = { skySource: 'loading' };
 
+// ------------------------------------------------------------------ helpers
 function formatTime(time) {
   const minutes = Math.floor(time / 60).toString().padStart(2, '0');
   const seconds = Math.floor(time % 60).toString().padStart(2, '0');
   const millis = Math.floor((time % 1) * 1000).toString().padStart(3, '0');
   return `${minutes}:${seconds}.${millis}`;
 }
-
 function labelFor(action) { return keyNames[bindings[action]] || bindings[action]; }
 function renderControls() {
   controlHint.innerHTML = [
-    ['MOVE_FORWARD', 'MOVE'], ['JUMP', 'JUMP'], ['DASH', 'DASH'], ['CROUCH', 'SLIDE / SLAM'], ['RESTART', 'RESTART'],
+    ['MOVE_FORWARD', 'MOVE'], ['JUMP', 'JUMP / MANTLE'], ['DASH', 'DASH'], ['CROUCH', 'SLIDE / SLAM'], ['RESTART', 'RESTART'],
   ].map(([action, text]) => `<span class="keycap">${labelFor(action)}</span><span>${text}</span>`).join('<span>·</span>');
 }
 function showToast(text) { toastNode.textContent = text; toastTimer = 2.45; toastNode.classList.add('show'); }
 function setOverlay(element, visible) { element.classList.toggle('hidden', !visible); element.setAttribute('aria-hidden', String(!visible)); }
-function tone(frequency = 440, duration = 0.08, type = 'sine', gain = 0.045) {
-  if (!audioContext) return;
-  const oscillator = audioContext.createOscillator(); const volume = audioContext.createGain();
-  oscillator.type = type; oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-  volume.gain.setValueAtTime(gain, audioContext.currentTime); volume.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-  oscillator.connect(volume).connect(audioContext.destination); oscillator.start(); oscillator.stop(audioContext.currentTime + duration);
-}
 
-function beginAudio() { if (!audioContext) audioContext = new AudioContext(); audioContext.resume?.(); }
 function resetRun() {
-  elapsed = 0; checkpoint.set(0, 0, 43); objective = 'Reach the Kinetic Permit terminal on the switch-house roof.';
-  course.reset(); player.doubleJumpUnlocked = false; player.reset(checkpoint); pulseVisuals.forEach(({ line }) => scene.remove(line)); pulseVisuals = [];
+  elapsed = 0;
+  checkpoint = { position: course.spawn.position.clone(), yaw: course.spawn.yaw };
+  objective = course.checkpoints[0].objective;
+  course.reset(); player.doubleJumpUnlocked = false; player.reset(checkpoint.position, checkpoint.yaw);
+  pulseVisuals.forEach(({ line }) => scene.remove(line)); pulseVisuals = [];
   setOverlay(endingScreen, false); setOverlay(pauseScreen, false); showToast('Fresh line. Keep your speed.');
 }
 function restartCheckpoint() {
-  player.reset(checkpoint); showToast('Checkpoint reset — run it cleaner.'); tone(280, 0.1, 'square');
+  player.reset(checkpoint.position, checkpoint.yaw); showToast('Checkpoint reset — run it cleaner.'); audio.handle({ type: 'ui' });
   if (!running) { running = true; setOverlay(pauseScreen, false); requestLock(); }
 }
 function begin() {
-  beginAudio(); resetRun(); running = true; setOverlay(titleScreen, false);
-  // Controls remain on the start briefing; removing the persistent keyboard ribbon
-  // restores the lower player view for landings and environment composition.
+  audio.begin(); resetRun(); running = true; setOverlay(titleScreen, false);
   controlHint.classList.add('hidden');
   requestLock();
 }
-// Pointer lock must be requested in the click activation path. Deferring it with a
-// timer can lose the browser's user-gesture permission and silently freeze genuine
-// keyboard movement/capture, even though the title overlay has disappeared.
 function requestLock() { canvas.requestPointerLock?.(); }
 function firePulse() {
   if (!running || document.pointerLockElement !== canvas) return;
@@ -145,26 +162,27 @@ function firePulse() {
   scene.add(line); pulseVisuals.push({ line, life: 0.11 });
   pulseTool.visible = true; pulseTool.rotation.x = -0.3;
   window.setTimeout(() => { pulseTool.rotation.x = -0.1; pulseTool.visible = false; }, 110);
-  if (hit && course.hitTarget(hit.object.userData.targetId)) { tone(720, 0.11, 'square', 0.07); showToast(`Relay switched — ${course.activeTargetCount()} remaining.`); if (course.activeTargetCount() === 0) { objective = 'Relays live. Cross the control bridge to Sunline Exit.'; showToast('YARD LIVE — take the control bridge.'); tone(980, 0.25, 'sine', 0.08); } } else tone(330, 0.035, 'triangle', 0.025);
+  if (hit && course.hitTarget(hit.object.userData.targetId)) {
+    audio.handle({ type: 'relay' }); showToast(`Relay switched — ${course.activeTargetCount()} remaining.`);
+    if (course.activeTargetCount() === 0) { objective = 'Relays live. Take the CONTROL BRIDGE south, drop the shaft and cross the Sunline gantry.'; showToast('YARD LIVE — take the control bridge.'); audio.handle({ type: 'checkpoint' }); }
+  } else audio.handle({ type: 'relay_miss' });
 }
 function keyIs(action, code) { return bindings[action] === code; }
 window.addEventListener('keydown', (event) => {
   if (event.repeat) return;
   pressed.add(event.code);
   if (keyIs('JUMP', event.code)) player.queueJump();
-  if (keyIs('DASH', event.code)) { player.queueDash(); tone(560, 0.06, 'sawtooth', 0.035); }
+  if (keyIs('DASH', event.code)) player.queueDash();
   if (keyIs('RESTART', event.code)) restartCheckpoint();
   if (keyIs('PAUSE', event.code) && running) setOverlay(pauseScreen, true);
 });
 window.addEventListener('keyup', (event) => pressed.delete(event.code));
 canvas.addEventListener('mousemove', (event) => { if (running && document.pointerLockElement === canvas) player.look(event.movementX, event.movementY); });
 canvas.addEventListener('mousedown', () => {
-  // A second canvas click is a real user gesture fallback in browsers that reject a
-  // title-card-initiated pointer-lock request. It never moves the player or camera.
   if (running && document.pointerLockElement !== canvas) { requestLock(); return; }
   firePulse();
 });
-document.addEventListener('pointerlockchange', () => { if (running && document.pointerLockElement !== canvas && !course.finished) setOverlay(pauseScreen, true); });
+document.addEventListener('pointerlockchange', () => { if (running && !stagingMode && document.pointerLockElement !== canvas && !course.finished) setOverlay(pauseScreen, true); });
 startButton.addEventListener('click', begin);
 resumeButton.addEventListener('click', () => { setOverlay(pauseScreen, false); requestLock(); });
 restartButton.addEventListener('click', restartCheckpoint);
@@ -184,47 +202,86 @@ function updatePulseLines(delta) {
     scene.remove(pulse.line); pulse.line.geometry.dispose(); pulse.line.material.dispose(); return false;
   });
 }
+const machineryPoints = [new THREE.Vector3(0, -3, -76), new THREE.Vector3(-3, 9, -36), new THREE.Vector3(-1.35, 0, -2)];
 function updateGame(delta) {
   const movement = {
     x: (pressed.has(bindings.MOVE_RIGHT) ? 1 : 0) - (pressed.has(bindings.MOVE_LEFT) ? 1 : 0),
     z: (pressed.has(bindings.MOVE_FORWARD) ? 1 : 0) - (pressed.has(bindings.MOVE_BACK) ? 1 : 0),
-    sprint: pressed.has(bindings.DASH),
+    sprint: true,
   };
   player.setCrouch(pressed.has(bindings.CROUCH));
   player.update(delta, movement);
-  if (player.root.position.y < -8) restartCheckpoint();
+  for (const event of player.drain()) audio.handle(event);
+  if (player.root.position.y < GROUND_Y + 1.2) { showToast('Yard level — back to the last checkpoint.'); restartCheckpoint(); }
   for (const event of course.collectEvents(player.root.position)) {
-    if (event.type === 'powerup') { player.unlockDoubleJump(); objective = 'Permit active. Double-jump to the transfer beacon.'; showToast('DOUBLE JUMP PERMIT — press SPACE once more in air.'); tone(820, 0.28, 'sine', 0.08); }
-    if (event.type === 'checkpoint') { checkpoint.copy(event.position); objective = 'Choose the West Shaft or East Span, switch three relays, then cross to Sunline Exit.'; showToast('TRANSFER BEACON SET — WEST SHAFT or EAST SPAN.'); tone(560, 0.16, 'triangle', 0.07); }
-    if (event.type === 'finish') { running = false; const currentBest = !bestTime || elapsed < bestTime; if (currentBest) { bestTime = elapsed; localStorage.setItem('rivet-run-highline-best', String(bestTime)); } finishTimeNode.textContent = `${currentBest ? 'NEW BEST — ' : ''}Time: ${formatTime(elapsed)}${bestTime ? ` · Best: ${formatTime(bestTime)}` : ''}`; showToast('SUNLINE EXIT CLEARED.'); tone(1040, 0.35, 'sine', 0.09); window.setTimeout(() => setOverlay(endingScreen, true), 850); document.exitPointerLock?.(); }
+    if (event.type === 'powerup') { player.unlockDoubleJump(); objective = 'Permit active: press SPACE again in the air. Enter the CONVEYOR GALLERY.'; showToast('KINETIC PERMIT — double jump unlocked.'); audio.handle({ type: 'permit' }); }
+    if (event.type === 'checkpoint') { checkpoint = { position: event.position.clone(), yaw: event.yaw }; objective = event.objective; showToast(`CHECKPOINT — ${event.id.toUpperCase().replace('-', ' ')}`); audio.handle({ type: 'checkpoint' }); }
+    if (event.type === 'finish') {
+      running = false; const currentBest = !bestTime || elapsed < bestTime;
+      if (currentBest) { bestTime = elapsed; localStorage.setItem('rivet-run-highline-best', String(bestTime)); }
+      finishTimeNode.textContent = `${currentBest ? 'NEW BEST — ' : ''}Time: ${formatTime(elapsed)}${bestTime ? ` · Best: ${formatTime(bestTime)}` : ''}`;
+      showToast('SUNLINE EXIT CLEARED.'); audio.handle({ type: 'finish' });
+      window.setTimeout(() => setOverlay(endingScreen, true), 850); document.exitPointerLock?.();
+    }
   }
   const dashVisual = player.dashTime > 0 ? 1 : 0;
   dashLight.intensity = THREE.MathUtils.damp(dashLight.intensity, dashVisual * 2.3, 15, delta);
-  camera.fov = THREE.MathUtils.damp(camera.fov, 72 + Math.min(player.lastSpeed, 15) * 0.65 + dashVisual * 5, 10, delta); camera.updateProjectionMatrix();
+  camera.fov = THREE.MathUtils.damp(camera.fov, 74 + Math.min(player.lastSpeed, 15) * 0.6 + dashVisual * 5, 10, delta); camera.updateProjectionMatrix();
+  const p = player.root.position;
+  const machineryDistance = Math.min(...machineryPoints.map((m) => m.distanceTo(p)));
+  const interior = (p.z < -60 && p.z > -92 && Math.abs(p.x) < 18) || (p.z < 10 && p.z > -14 && Math.abs(p.x) < 2.4) || (p.z < -46 && p.z > -60 && Math.abs(p.x) < 2.2);
+  audio.updateBeds(delta, { altitude: p.y, machineryDistance, interior, speed: player.lastSpeed });
+}
+function followSun() {
+  // Keep the shadow frustum centred on the player so near-route shadows stay sharp everywhere.
+  const p = player.root.position;
+  sun.target.position.set(p.x, p.y, p.z);
+  sun.position.set(p.x + atmospherePreset.sunDir[0] * 120, p.y + atmospherePreset.sunDir[1] * 120, p.z + atmospherePreset.sunDir[2] * 120);
 }
 function animate() {
   requestAnimationFrame(animate);
   renderFrameCount += 1;
   const delta = Math.min(clock.getDelta(), 0.05);
-  if (running && document.pointerLockElement === canvas) { elapsed += delta; updateGame(delta); }
-  course.update(elapsed); updatePulseLines(delta); updateHud();
+  if (running && (document.pointerLockElement === canvas || stagingMode)) { elapsed += delta; updateGame(delta); }
+  course.update(elapsed, delta); updatePulseLines(delta); updateHud(); followSun();
   if (toastTimer > 0) { toastTimer -= delta; if (toastTimer <= 0) toastNode.classList.remove('show'); }
   renderer.render(scene, camera);
 }
-window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75)); renderer.setSize(window.innerWidth, window.innerHeight); });
-window.__rivetRunProbe = Object.freeze({ snapshot: () => Object.freeze({
-  player: { ...player.snapshot(), traversalRegion: course.traversalRegionForSolid(player.supportSolidId) },
-  cameraPosition: camera.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(3))),
-  cameraDirection: player.facingDirection(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(4))),
-  elapsed: Number(elapsed.toFixed(3)),
-  running,
-  pointerLocked: document.pointerLockElement === canvas,
-  renderFrameCount,
-  relaysRemaining: course.activeTargetCount(),
-  checkpoint: checkpoint.toArray(),
-  objective,
-  bindings,
-  worldSeed: course.seed,
-  sceneAudit: course.sceneAudit(),
-}) });
+window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); renderer.setSize(window.innerWidth, window.innerHeight); });
+
+// ------------------------------------------------------------------ QA probe
+// `snapshot` is read-only telemetry. `teleport/setView/captureCanvas` exist for the capture
+// pipeline only; any frame produced after using them is labelled STAGED in the trace and
+// can never count as gameplay-input evidence.
+window.__rivetRunProbe = Object.freeze({
+  snapshot: () => Object.freeze({
+    player: { ...player.snapshot(), traversalRegion: course.traversalRegionForSolid(player.supportSolidId) },
+    cameraPosition: camera.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(3))),
+    cameraDirection: player.facingDirection(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(4))),
+    elapsed: Number(elapsed.toFixed(3)),
+    running,
+    pointerLocked: document.pointerLockElement === canvas,
+    stagingMode,
+    renderFrameCount,
+    relaysRemaining: course.activeTargetCount(),
+    checkpoint: { position: checkpoint.position.toArray(), yaw: checkpoint.yaw },
+    objective,
+    bindings,
+    worldSeed: course.seed,
+    timeOfDay,
+    skySource: probeState.skySource,
+    textureSources: course.materials.sources,
+    rendererInfo: { calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures },
+  }),
+  checkpoints: () => course.checkpoints.map((c) => ({ id: c.id, position: c.position.toArray(), yaw: c.yaw, reached: c.reached })),
+  sceneAudit: () => course.sceneAudit(),
+  /** STAGING ONLY — marks the session as staged. */
+  teleport: (position, yaw = 0, pitch = -0.12) => {
+    stagingMode = true; running = true; setOverlay(titleScreen, false); setOverlay(pauseScreen, false);
+    player.reset(new THREE.Vector3(position[0], position[1], position[2]), yaw); player.pitch = pitch; player.applyOrientation();
+    return { staged: true };
+  },
+  setView: (yaw, pitch) => { stagingMode = true; player.yaw = yaw; player.pitch = pitch; player.applyOrientation(); return { staged: true }; },
+  captureCanvas: (type = 'image/jpeg', quality = 0.85) => { renderer.render(scene, camera); return canvas.toDataURL(type, quality); },
+});
 renderControls(); updateHud(); animate();
