@@ -486,11 +486,19 @@ export class HighlineDistrict {
     b.box('corridor-roof', m.steelDark, [4.9, 0.14, len + 0.4], [0, y + 2.67, cz], { collide: true, traits: { walkable: false }, id: 'corridor-roof' });
     b.truss('corridor-truss', [-2.5, y - 1.2, cz], len, { axis: 'z', height: 1.6, material: m.oxide });
     b.truss('corridor-truss', [2.5, y - 1.2, cz], len, { axis: 'z', height: 1.6, material: m.oxide });
-    for (const dz of [-49.5, -53, -56.5]) {
+    for (const [k, dz] of [-49.5, -53, -56.5].entries()) {
       b.box('corridor-duct', m.galvanised, [4.4, 0.8, 1.0], [0, y + 1.56, dz], { collide: true, traits: { walkable: false, nonTraversable: true, slideTunnel: true }, id: `corridor-duct-${dz}` });
-      b.box('duct-warning', m.safetyYellow, [1.8, 0.12, 0.03], [0, y + 1.14, dz + 0.52], { cast: false });
+      // Flange rings, hanger rods, a hazard stripe on the leading face and a stencil so each duct reads as a duct, not a slab.
+      for (const fx of [-1.6, 0, 1.6]) b.box('duct-flange', m.steelDark, [0.12, 0.9, 1.1], [fx, y + 1.56, dz], { cast: false });
+      for (const hx of [-1.2, 1.2]) b.box('duct-hanger', m.steelDark, [0.06, 0.7, 0.06], [hx, y + 2.3, dz], { cast: false });
+      b.box('duct-warning', m.safetyYellow, [3.6, 0.12, 0.03], [0, y + 1.2, dz + 0.52], { cast: false });
+      for (let i = -3; i <= 3; i += 2) b.box('duct-warning-dark', m.rubber, [0.22, 0.12, 0.035], [i * 0.45, y + 1.2, dz + 0.52], { cast: false });
       b.box('duct-strap', m.steelDark, [4.5, 0.1, 0.12], [0, y + 1.16, dz - 0.5], { cast: false });
+      b.sign(k === 0 ? 'LOW DUCT · SLIDE' : `DUCT ${k + 1}`, [0, y + 1.66, dz + 0.53], '+z', { width: 1.6, accent: '#c65a2a', background: 'rgba(0,0,0,0)' });
     }
+    b.lamp([0, y + 2.55, zStart - 0.8], { intensity: 6, distance: 8, size: 0.3 });
+    b.box('corridor-floor-paint', m.routePaint, [0.16, 0.02, len - 1], [-1.2, y + 0.012, cz], { cast: false });
+    b.box('corridor-floor-paint', m.routePaint, [0.16, 0.02, len - 1], [1.2, y + 0.012, cz], { cast: false });
     for (let z = zStart - 1.5; z > zEnd; z -= 3.5) {
       for (const sx of [-1, 1]) b.box('corridor-window', m.windowDim, [0.08, 0.7, 1.8], [sx * 2.16, y + 1.9, z], { cast: false });
       b.lamp([0, y + 2.55, z], { intensity: 3, distance: 6, light: z < -50 && z > -58, size: 0.3 });
@@ -655,12 +663,27 @@ export class HighlineDistrict {
     b.railing('cab-rail-w', [-3.5, y, -125], 7, 'z');
     b.railing('cab-rail-e', [3.5, y, -125], 7, 'z');
     b.railing('cab-rail-s', [-3.5, y, -125], 7, 'x');
-    b.box('crane-cab', m.steelPale, [2.8, 2.6, 2.4], [-2.1, y + 1.3, -122.5], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'crane-cab' });
-    b.box('crane-cab-glass', m.glass, [2.6, 1.2, 0.08], [-2.1, y + 1.6, -121.25], { cast: false });
-    b.box('crane-cab-glass', m.glass, [0.08, 1.2, 2.2], [-3.55, y + 1.6, -122.5], { cast: false });
-    const beacon = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.5), m.lampWarm.clone());
-    beacon.position.set(1.6, y + 3.4, -123); this.scene.add(beacon);
-    b.box('beacon-mast', m.steelDark, [0.16, 3.2, 0.16], [1.6, y + 1.6, -123]);
+    // Operator cab: plinth, safety-yellow body with dark window band, roof with eaves, interior console + seat
+    // visible through the glazing, and the finish beacon mounted on the roof (not on a floating mast).
+    const cabX = -2.1, cabZ = -122.5;
+    b.box('crane-cab-plinth', m.steelDark, [3.0, 0.3, 2.6], [cabX, y + 0.15, cabZ], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'crane-cab-plinth' });
+    b.box('crane-cab', m.safetyYellow, [2.8, 1.0, 2.4], [cabX, y + 0.8, cabZ], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'crane-cab' });
+    b.box('crane-cab-frame', m.steelDark, [2.8, 1.4, 2.4], [cabX, y + 2.0, cabZ], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'crane-cab-upper' });
+    b.box('crane-cab-interior', m.container('#2a2f33'), [2.5, 1.3, 2.1], [cabX, y + 2.0, cabZ], { cast: false });
+    b.box('crane-cab-console', m.steelPale, [1.6, 0.35, 0.5], [cabX, y + 1.5, cabZ + 0.7], { cast: false });
+    b.box('crane-cab-screen', m.screen, [0.5, 0.3, 0.04], [cabX - 0.4, y + 1.85, cabZ + 0.6], { cast: false });
+    b.box('crane-cab-seat', m.container('#5a3d33'), [0.6, 1.0, 0.6], [cabX, y + 1.8, cabZ - 0.3], { cast: false });
+    for (const [gx, gz, gw, gd] of [[0, 1.16, 2.6, 0.06], [-1.36, 0, 0.06, 2.2], [1.36, 0, 0.06, 2.2]]) b.box('crane-cab-glass', m.glass, [gw, 1.2, gd], [cabX + gx, y + 2.05, cabZ + gz], { cast: false });
+    for (const gx of [-1.4, 1.4]) b.box('crane-cab-mullion', m.steelDark, [0.1, 1.4, 0.1], [cabX + gx, y + 2.0, cabZ + 1.2], { cast: false });
+    b.box('crane-cab-roof', m.steelDark, [3.4, 0.16, 3.0], [cabX, y + 2.78, cabZ], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'crane-cab-roof' });
+    b.box('crane-cab-hvac', m.galvanised, [0.9, 0.5, 0.7], [cabX - 0.8, y + 3.1, cabZ - 0.6], { cast: false });
+    b.box('crane-cab-stripe', m.rubber, [2.82, 0.14, 2.42], [cabX, y + 1.32, cabZ], { cast: false });
+    b.ladder('crane-cab-ladder', [cabX + 1.55, y + 0.3, cabZ - 0.6], 2.4, 'x', { climbable: true, exit: [-1, 0, 0] });
+    const beacon = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), m.lampWarm.clone());
+    beacon.position.set(cabX + 0.9, y + 3.2, cabZ + 0.6); this.scene.add(beacon);
+    b.box('beacon-post', m.steelDark, [0.1, 0.5, 0.1], [cabX + 0.9, y + 2.95, cabZ + 0.6], { cast: false });
+    b.box('finish-pad', m.routePaint, [2.4, 0.03, 2.4], [1.6, y + 0.015, -122.2], { cast: false });
+    b.box('finish-pad-inner', m.checker, [1.6, 0.035, 1.6], [1.6, y + 0.018, -122.2], { cast: false });
     this.finish = { position: new THREE.Vector3(1.6, y, -122.2), radius: 2.4, mesh: beacon };
     this.animated.push({ kind: 'finish', material: beacon.material });
     b.sign('SUNLINE EXIT', [0, y + 3.3, -119.5], '+z', { width: 3 });

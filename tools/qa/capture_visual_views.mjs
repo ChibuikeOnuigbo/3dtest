@@ -148,7 +148,7 @@ const POSES = {
   '10-boiler-court': { position: [9, 8.7, -31.5], yaw: Math.PI / 2, pitch: -0.08 },
   '11-boiler-vista': { position: [-3, 8.7, -30], yaw: Math.PI / 2 + 0.6, pitch: 0.02 },
   '12-rack-platform': { position: [-2, 12.4, -38.5], yaw: Math.PI, pitch: -0.05 },
-  '13-control-corridor': { position: [0, 8.7, -47.5], yaw: 0, pitch: -0.08 },
+  '13-control-corridor': { position: [0, 8.7, -46.6], yaw: 0, pitch: -0.14 },
   '14-drop-room': { position: [-1.1, 8.7, -60.8], yaw: 0, pitch: -0.5 },
   '15-turbine-hall': { position: [3.4, -3.3, -64], yaw: -0.55, pitch: -0.2 },
   '16-crane-trolley': { position: [7.7, -3.3, -66], yaw: 0, pitch: -0.12 },
