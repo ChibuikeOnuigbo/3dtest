@@ -23,6 +23,9 @@ const SET_SOURCES = {
   grating: { generated: 'steel_grating', polyhaven: null, tile: 1 },
   facade: { generated: 'office_facade', polyhaven: null, tile: 8 },
   rust: { generated: 'corrugated_steel', polyhaven: 'rusty_metal_sheet', tile: 2 },
+  // Roller-shutter curtain. Poly Haven's scan is a photographed shutter (horizontal slats); the generated
+  // corrugated fallback has VERTICAL ribs, so RollerDoor swaps the curtain UVs when `sources.shutter` is generated.
+  shutter: { generated: 'corrugated_steel', polyhaven: 'painted_metal_shutter', tile: 2 },
 };
 
 function makeLoader(manager) {
@@ -150,6 +153,7 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     corrugated: textured('corrugated', { color: '#9aa4a2', roughness: 0.6, metalness: 0.35, normalScale: 1 }),
     corrugatedRust: textured('rust', { color: '#8a6a4f', roughness: 0.7, metalness: 0.3, normalScale: 1 }),
     corrugatedPale: textured('corrugated', { color: '#c8c3b4', roughness: 0.6, metalness: 0.3, normalScale: 1 }),
+    shutter: textured('shutter', { color: '#7f8a86', roughness: 0.55, metalness: 0.45, normalScale: 1, envMapIntensity: 0.9 }),
     facade: textured('facade', { color: '#cfcac0', roughness: 0.55, metalness: 0.15, normalScale: 0.4, envMapIntensity: 0.9 }),
     facadeWarm: textured('facade', { color: '#d5b79a', roughness: 0.55, metalness: 0.15, normalScale: 0.4, envMapIntensity: 0.9 }),
     facadeCool: textured('facade', { color: '#9fb0ba', roughness: 0.5, metalness: 0.2, normalScale: 0.4, envMapIntensity: 1 }),

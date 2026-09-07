@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test:e2e": "playwright test",
-    "test:logic": "node --test tests/movement.test.mjs tests/level-map.test.mjs tests/world-route.test.mjs"
+    "test:logic": "node --test tests/movement.test.mjs tests/level-map.test.mjs tests/world-route.test.mjs tests/doors-props.test.mjs"
   },
   "dependencies": {
     "three": "0.185.1"

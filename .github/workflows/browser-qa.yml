@@ -27,6 +27,7 @@ on:
       - 'tools/**'
       - 'public/textures/**'
       - 'public/sky/**'
+      - 'public/models/**'
 
 permissions:
   contents: write
@@ -59,6 +60,11 @@ jobs:
           node tools/assets/fetch_polyhaven_sets.mjs --res 1k --out public/textures/polyhaven \
             --hdri industrial_sunset_puresky --hdri kloppenheim_06_puresky
           cat public/textures/polyhaven/manifest.json
+      - name: Fetch CC0 glTF models (1K textures) for the real-prop library + roller doors
+        continue-on-error: true
+        run: |
+          node tools/assets/fetch_polyhaven_models.mjs --res 1k --out public/models/polyhaven --max-asset-mb 8 --max-total-mb 60
+          node -e "const m=require('./public/models/polyhaven/manifest.json');console.log('approved:',Object.keys(m.models).join(', '));console.log('rejected:',JSON.stringify(m.rejected));console.log('failed:',JSON.stringify(m.failed));console.log('total MB',(m.total_bytes/1048576).toFixed(1))"
       - name: Inspect fetched sets (dimensions, texel density, seams) for the manifest review
         continue-on-error: true
         run: |
@@ -88,6 +94,7 @@ jobs:
           path: |
             public/textures/polyhaven/
             public/sky/polyhaven/
+            public/models/polyhaven/
           if-no-files-found: warn
           retention-days: 14
 
@@ -155,6 +162,11 @@ jobs:
             echo "Poly Haven sets available:"; python3 -c "import json;print(json.load(open('public/textures/polyhaven/manifest.json'))['sets'])"
           else
             echo 'No Poly Haven manifest — generated sets will render.'
+          fi
+          if [ -f public/models/polyhaven/manifest.json ]; then
+            echo "Real prop models available:"; python3 -c "import json;m=json.load(open('public/models/polyhaven/manifest.json'));print(sorted(m['models']));print('rejected',m['rejected']);print('failed',m['failed'])"
+          else
+            echo 'No model manifest — prop spots stay EMPTY and are recorded as missing in the capture record.'
           fi
       - name: Logic tests (route, movement, level map)
         run: npm run test:logic

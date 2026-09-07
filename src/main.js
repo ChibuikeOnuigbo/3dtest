@@ -252,7 +252,7 @@ function animate() {
   renderFrameCount += 1;
   const delta = Math.min(clock.getDelta(), 0.05);
   if (running && (document.pointerLockElement === canvas || stagingMode)) { elapsed += delta; updateGame(delta); }
-  course.update(elapsed, delta); updatePulseLines(delta); updateHud(); followSun();
+  course.update(elapsed, delta, player.root.position); updatePulseLines(delta); updateHud(); followSun();
   if (toastTimer > 0) { toastTimer -= delta; if (toastTimer <= 0) toastNode.classList.remove('show'); }
   renderer.render(scene, camera);
 }
@@ -280,6 +280,8 @@ window.__rivetRunProbe = Object.freeze({
     timeOfDay,
     skySource: probeState.skySource,
     textureSources: course.materials.sources,
+    realProps: course.props.status,
+    doors: course.doors.map((d) => ({ id: d.id, state: d.state, open: Number(d.open.toFixed(2)) })),
     rendererInfo: { calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures },
   }),
   checkpoints: () => course.checkpoints.map((c) => ({ id: c.id, position: c.position.toArray(), yaw: c.yaw, reached: c.reached })),

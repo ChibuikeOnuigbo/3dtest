@@ -33,7 +33,7 @@ function run(world, player, seconds, control, { dt = 1 / 120, onFrame } = {}) {
     if (input.dash) player.queueDash();
     player.setCrouch(Boolean(input.crouch));
     world._elapsed = startElapsed + t;
-    world.update(world._elapsed, dt);
+    world.update(world._elapsed, dt, player.root.position);
     player.update(dt, { x: input.x || 0, z: input.z || 0, sprint: input.sprint !== false });
     minY = Math.min(minY, player.root.position.y);
     if (onFrame) onFrame(t, player);
@@ -123,7 +123,10 @@ test('kinetic permit unlocks double jump and the conveyor carries the player up 
 test('gallery walkway: slide under both ducts and arrive on the split deck', () => {
   const world = makeWorld();
   const player = makePlayer(world, [0.9, -1.5, 9.5], 0);
+  let arrived = false;
   run(world, player, 8, (t, p) => {
+    if (p.supportSolidId === 'split-deck') arrived = true;
+    if (arrived) return { z: 0 };
     const z = p.root.position.z;
     const nearDuct = (z < 4.5 && z > 0.6) || (z < -3.5 && z > -7.6);
     return { z: 1, crouch: nearDuct };

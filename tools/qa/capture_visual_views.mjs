@@ -132,6 +132,7 @@ async function captureNow(frameId, region, intent, expectedSurfaces = []) {
     support_surface: state.player.supportSolidId, expected_surfaces: expectedSurfaces,
     runtime_running: state.running, pointer_locked: state.pointerLocked, rendered_frames: state.renderFrameCount, game_elapsed: state.elapsed,
     seed: state.worldSeed, time_of_day: state.timeOfDay, sky_source: state.skySource, texture_sources: state.textureSources, renderer: state.rendererInfo,
+    real_props: state.realProps || null, doors: state.doors || null,
     critic_status: 'CAPTURED_UNINSPECTED', critic_findings: [], scores: null, approved: false,
   });
   console.log(`[capture] ${frameId} ${frameRecords.at(-1).navigation_status} on ${state.player.supportSolidId} at ${state.player.position.map((v) => v.toFixed(1)).join(',')}`);
@@ -161,6 +162,7 @@ const POSES = {
   '05-transfer-kiosk': { position: [0, -1.5, 21.5], yaw: 0, pitch: -0.1 },
   '06-gallery-interior': { position: [0.9, -1.2, 6.5], yaw: 0, pitch: -0.08 },
   '07-split-deck': { position: [0, 2.5, -16.5], yaw: 0, pitch: -0.1 },
+  '07d-bay-door': { position: [-0.4, 2.5, -20.2], yaw: 0, pitch: 0.02 },
   '08-east-span-gap': { position: [4.2, 2.5, -19.5], yaw: -Math.PI / 2, pitch: -0.12 },
   '09-container-stack': { position: [16.2, 2.5, -19.5], yaw: 0.35, pitch: 0.18 },
   '10-boiler-court': { position: [9, 8.7, -31.5], yaw: Math.PI / 2, pitch: -0.08 },
@@ -171,6 +173,7 @@ const POSES = {
   '15-turbine-hall': { position: [3.4, -3.3, -64], yaw: -0.55, pitch: -0.2 },
   '16-crane-trolley': { position: [7.7, -3.3, -66], yaw: 0, pitch: -0.12 },
   '17-hall-gallery-door': { position: [4, -0.3, -89.5], yaw: Math.PI / 2 - 0.4, pitch: -0.02 },
+  '17d-hall-door-front': { position: [0, -0.3, -84.5], yaw: 0, pitch: 0.06 },
   '18-sunline-gantry': { position: [0, -0.3, -96], yaw: 0, pitch: -0.06 },
   '19-finish-cab': { position: [0, -0.3, -116], yaw: 0, pitch: -0.05 },
   '20-finish-look-back': { position: [0, -0.3, -121], yaw: Math.PI, pitch: 0.05 },

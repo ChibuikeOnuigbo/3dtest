@@ -124,12 +124,13 @@ export class SeedLayer {
         const x = range(r, roof.x0, roof.x1); const z = range(r, roof.z0, roof.z1);
         if (roof.y === 0 && Math.abs(x) < 6) continue;
         if (roof.y === 8.6 && !(z > -28.4 && z < -25 && x > -10 && x < 1.5)) continue;
-        const kind = pick(r, ['barrel', 'pallet', 'crate', 'cable-reel']);
+        // Real Poly Haven models (see PropLibrary). The seed decides kind, variant and yaw BEFORE placement,
+        // so the random stream is identical whether or not the model files are present.
+        const kind = pick(r, ['Barrel_01', 'Barrel_02', 'barrel_03', 'wooden_crate_02', 'old_tyre', 'metal_trash_can', 'cardboard_box_01']);
         const yaw = range(r, 0, Math.PI);
-        if (kind === 'barrel') b.cylinder('seed-barrel', m.container(pick(r, ['#6d5c3a', '#3f5a6d', '#8a3b2f'])), 0.32, 0.9, [x, roof.y + 0.45, z], { segments: 10, collide: true, traits: { walkable: true } });
-        if (kind === 'pallet') b.box('seed-pallet', m.container('#8b7756'), [1.2, 0.14, 1.0], [x, roof.y + 0.07, z], { rotation: [0, yaw, 0], cast: false });
-        if (kind === 'crate') b.box('seed-crate', m.container(pick(r, ['#6b6f5a', '#5a5f6b', '#6f5c46'])), [1.0, 0.9, 1.0], [x, roof.y + 0.45, z], { rotation: [0, yaw, 0], collide: true, traits: { walkable: true } });
-        if (kind === 'cable-reel') b.cylinder('seed-cable-reel', m.container('#7d6b4f'), 0.7, 0.5, [x, roof.y + 0.35, z], { rotation: [0, 0, Math.PI / 2], segments: 12, cast: false });
+        const stacked = kind === 'wooden_crate_02' && chance(r, 0.5);
+        this.world.props.place(kind, [x, roof.y, z], yaw, { collide: true, colliderId: `seed-prop-${roofProps}`, family: `seed-prop:${kind}` });
+        if (stacked) this.world.props.place('wooden_crate_02', [x, roof.y + 0.53, z], yaw + 1.2, { collide: true, colliderId: `seed-prop-${roofProps}-top`, family: 'seed-prop:wooden_crate_02' });
         roofProps += 1;
       }
     }
@@ -209,9 +210,9 @@ export class SeedLayer {
   routeVariants() {
     const r = this.stream('routeVariants'); const b = this.world.builder; const m = this.world.materials;
     const variants = [];
-    if (chance(r, 0.5)) { b.box('variant-crate', m.container('#6b6f5a'), [1.2, 1.0, 1.2], [-6.8, 2.9, -15.2], { collide: true, traits: { walkable: true }, id: 'variant-split-crate' }); variants.push('split-deck-hop-crate'); }
+    if (chance(r, 0.5)) { this.world.props.place('concrete_road_barrier_02', [-6.8, 2.4, -15.2], 0, { collide: true, colliderId: 'variant-split-barrier' }); variants.push('split-deck-hop-barrier'); }
     if (chance(r, 0.5)) { b.cylinder('variant-shortcut-pipe', m.oxide, 0.35, 8, [5.2, 8.6 + 0.35, -39.5], { rotation: [Math.PI / 2, 0, 0], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' } }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -36.0], { cast: false }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -43.0], { cast: false }); variants.push('boiler-court-pipe-balance'); }
-    if (chance(r, 0.5)) { for (let i = 0; i < 3; i += 1) b.box('variant-pallet-stack', m.container('#8b7756'), [1.2, 0.6, 1.0], [-6 - i * 1.6, -14 + 0.3, -70 + i * 0.5], { rotation: [0, range(r, -0.2, 0.2), 0], collide: true, traits: { walkable: true } }); variants.push('turbine-floor-pallets'); }
+    if (chance(r, 0.5)) { for (let i = 0; i < 3; i += 1) { const yaw = range(r, -0.2, 0.2); this.world.props.place('wooden_crate_02', [-6 - i * 1.6, -14, -70 + i * 0.5], yaw, { collide: true, colliderId: `variant-hall-crate-${i}` }); } variants.push('turbine-floor-crates'); }
     if (chance(r, 0.5)) { b.box('variant-billboard', m.windowLit, [6, 2.4, 0.3], [-6, 3.2, 27.9], { cast: false }); variants.push('transfer-gap-billboard'); }
     this.note('routeVariants', { variants });
   }
