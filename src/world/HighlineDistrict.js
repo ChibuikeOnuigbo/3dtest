@@ -318,12 +318,26 @@ export class HighlineDistrict {
     b.railing('split-rail-n2', [2.4, y, -14], 4.1, 'x');
     b.railing('split-rail-e', [6.75, y, -17], 3.0, 'z');
     b.railing('split-rail-s', [-6.5, y, -22.4], 12.5, 'x');
-    b.cabinet('split-signal', [-0.4, y, -21.2], Math.PI, { width: 1.6, height: 2.3, depth: 0.8 });
-    b.sign('◄ WEST SHAFT', [-3.2, y + 2.05, -21.55], '+z', { width: 2.4 });
-    b.sign('EAST SPAN ►', [2.4, y + 2.05, -21.55], '+z', { width: 2.4 });
+    // Boiler-house north face at deck level: brick pilasters, a plinth band and a big
+    // arched-look loading door between the two route signs (nothing here is an empty wall).
+    b.box('boiler-plinth-band', m.concreteDark, [26, 0.6, 0.2], [-3, y + 0.3, -23.9], { cast: false });
+    for (const x of [-9.5, -5.2, 4.4, 8.6]) b.box('boiler-pilaster', m.brickDark, [0.7, 6.2, 0.35], [x, y + 3.1, -23.85], { cast: false });
+    b.box('split-loading-door', m.corrugated, [3.0, 3.6, 0.12], [-0.4, y + 1.8, -23.9], { cast: false });
+    b.box('split-loading-door-rail', m.steelDark, [4.2, 0.14, 0.2], [-0.4, y + 3.75, -23.8], { cast: false });
+    for (const sx of [-1.35, 0, 1.35]) b.box('split-loading-door-rib', m.steelDark, [0.06, 3.5, 0.04], [-0.4 + sx, y + 1.8, -23.82], { cast: false });
+    b.box('split-loading-door-lamp-arm', m.steelDark, [0.08, 0.08, 0.7], [-0.4, y + 4.3, -23.55], { cast: false });
+    b.lamp([-0.4, y + 4.2, -23.2], { intensity: 9, distance: 12, size: 0.3 });
+    // Route-choice signal cabinet moved off the centre line so it no longer blocks the door read.
+    b.cabinet('split-signal', [-6.1, y, -21.4], Math.PI, { width: 1.3, height: 2.1, depth: 0.7, material: m.steel });
+    b.box('split-bench', m.container('#6f5c46'), [1.8, 0.45, 0.5], [3.4, y + 0.22, -21.6], { collide: true, traits: { walkable: true }, id: 'split-bench' });
+    b.cylinder('split-drum', m.container('#4a5a66'), 0.32, 0.9, [5.2, y + 0.45, -21.4], { segments: 12, collide: true, traits: { walkable: true } });
+    b.cylinder('split-drum', m.container('#6a4a3c'), 0.32, 0.9, [5.8, y + 0.45, -20.8], { segments: 12, collide: true, traits: { walkable: true } });
+    b.box('split-floor-paint-w', m.routePaint, [5, 0.02, 0.2], [-4.5, y + 0.012, -19.5], { cast: false });
+    b.box('split-floor-paint-e', m.routePaint, [5, 0.02, 0.2], [3.8, y + 0.012, -19.5], { cast: false });
+    b.sign('◄ WEST SHAFT', [-3.6, y + 2.45, -23.75], '+z', { width: 2.4 });
+    b.sign('EAST SPAN ►', [2.8, y + 2.45, -23.75], '+z', { width: 2.4 });
     this.chevron([-5, y, -19.5], Math.PI / 2);
     this.chevron([4.5, y, -19.5], -Math.PI / 2);
-    b.lamp([-0.4, y + 2.6, -21.2], { intensity: 5, distance: 9, size: 0.3 });
     this.checkpoint('split', [0, y, -17.5], 3.2, 0, 'Choose a line: WEST SHAFT wall kicks or EAST SPAN dash and container hop.');
   }
 
@@ -412,7 +426,8 @@ export class HighlineDistrict {
     b.box('boiler-mass', m.brick, [x1 - x0, y - GROUND_Y - 0.3, z1 - z0], [cx, (y + GROUND_Y) / 2 - 0.15, cz], { cast: false });
     b.box('boiler-cornice', m.concreteDark, [x1 - x0 + 0.6, 0.5, z1 - z0 + 0.6], [cx, y - 0.25, cz], { cast: false });
     b.box('boiler-roof', m.concrete, [x1 - x0, 0.3, z1 - z0], [cx, y - 0.15, cz], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'boiler-roof' });
-    for (let x = x0 + 2.5; x < x1 - 1; x += 4.2) b.box('boiler-window', m.windowLit, [2.2, 6, 0.1], [x, y - 6, z1 + 0.06], { cast: false });
+    for (let x = x0 + 2.5; x < x1 - 1; x += 4.2) { if (Math.abs(x + 0.4) < 2.4) continue; b.box('boiler-window', m.windowLit, [2.2, 3.4, 0.1], [x, y - 3.1, z1 + 0.06], { cast: false }); b.box('boiler-window-sill', m.concreteDark, [2.5, 0.16, 0.22], [x, y - 4.85, z1 + 0.08], { cast: false }); }
+    for (let x = x0 + 2.5; x < x1 - 1; x += 4.2) b.box('boiler-window-low', m.windowDim, [2.2, 4.0, 0.1], [x, GROUND_Y + 9, z1 + 0.06], { cast: false });
     for (let z = z0 + 3; z < z1 - 2; z += 4.4) b.box('boiler-window', m.windowDim, [0.1, 5, 2.2], [x0 - 0.06, y - 12, z], { cast: false });
     b.box('penthouse-cap', m.steelDark, [5.2, 0.3, 5.2], [-10, 12.65, -22], { cast: true });
     b.box('parapet', m.concreteDark, [0.3, 0.8, 22], [x0 - 0.15, y + 0.4, cz], { collide: true, id: 'boiler-parapet-w' });
