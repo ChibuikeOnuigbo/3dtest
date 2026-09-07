@@ -261,8 +261,18 @@ export class WorldBuilder {
   }
 
   /** Vertical stack (chimney) with maintenance bands. */
-  stack(id, position, radius, height, { material = this.m.brickDark, bands = 3 } = {}) {
+  stack(id, position, radius, height, { material = this.m.brickDark, bands = 3, plinth = true, breeching = null, breechingY = 2.4 } = {}) {
     const [x, y, z] = position;
+    if (plinth) {
+      // Square masonry plinth + steel base ring so the stack does not stand naked on a roof slab.
+      this.box(`${id}-plinth`, this.m.concreteDark, [radius * 2.8, 0.9, radius * 2.8], [x, y + 0.45, z], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: `${id}-plinth` });
+      this.cylinder(`${id}-base-ring`, this.m.steelDark, radius + 0.14, 0.4, [x, y + 1.1, z], { segments: 24, cast: false });
+    }
+    if (breeching) {
+      // Horizontal flue duct entering the stack from `breeching` = [dx, dz] direction, length |d|.
+      const len = Math.hypot(breeching[0], breeching[1]); const yaw = Math.atan2(breeching[0], breeching[1]);
+      this.box(`${id}-breeching`, this.m.galvanised, [radius * 1.2, radius * 1.2, len], [x + breeching[0] / 2, y + breechingY, z + breeching[1] / 2], { rotation: [0, yaw, 0], cast: false });
+    }
     this.cylinder(`${id}-stack`, material, radius, height, [x, y + height / 2, z], { segments: 24, collide: true, traits: { walkable: false, wallJumpable: false } });
     for (let i = 1; i <= bands; i += 1) {
       const by = y + (height * i) / (bands + 1);

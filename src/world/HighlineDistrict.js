@@ -228,6 +228,12 @@ export class HighlineDistrict {
       b.box('kiosk-sill', m.steelPale, [0.2, 1.0, 3.8], [sx * 2.0, y + 0.5, kz], { cast: false });
     }
     b.box('kiosk-roof', m.steelDark, [4.8, 0.16, 4.8], [0, y + 2.98, kz], { cast: true });
+    b.box('kiosk-ceiling', m.corrugatedPale, [4.4, 0.04, 4.4], [0, y + 2.88, kz], { cast: false });
+    b.box('kiosk-cable-tray', m.galvanised, [0.3, 0.08, 4.2], [-1.2, y + 2.8, kz], { cast: false });
+    b.box('kiosk-kerb', m.concreteDark, [4.9, 0.14, 4.9], [0, y + 0.07, kz], { cast: false });
+    b.box('kiosk-notice-board', m.container('#3d4a3a'), [0.05, 0.9, 1.4], [-1.93, y + 1.65, kz + 0.4], { cast: false });
+    b.box('kiosk-notice-paper', m.container('#d8d2c2'), [0.02, 0.5, 0.36], [-1.9, y + 1.7, kz + 0.1], { cast: false });
+    b.box('kiosk-notice-paper', m.container('#c9b98f'), [0.02, 0.36, 0.28], [-1.9, y + 1.62, kz + 0.62], { cast: false });
     b.box('kiosk-fascia', m.routePaint, [4.8, 0.12, 0.05], [0, y + 2.85, kz + 2.42], { cast: false });
     b.lamp([0, y + 2.85, kz], { intensity: 7, distance: 8, size: 0.4 });
     this.permit = { position: new THREE.Vector3(1.1, y, kz), radius: 1.3 };
@@ -417,7 +423,13 @@ export class HighlineDistrict {
     b.box('parapet', m.concreteDark, [3.6, 0.8, 0.3], [-14.2, y + 0.4, z1 - 0.15], { collide: true, id: 'boiler-parapet-n0' });
     b.box('parapet', m.concreteDark, [17.6, 0.8, 0.3], [1.2, y + 0.4, z1 - 0.15], { collide: true, id: 'boiler-parapet-n1' });
     b.box('landing-paint', m.routePaint, [0.35, 0.02, 4], [x1 - 0.6, y + 0.012, -31.5], { cast: false });
-    for (const [i, z] of [[0, -29], [1, -35.5], [2, -42]]) b.stack(`boiler-stack-${i}`, [-13.2, y, z], 1.25, 13 + i * 1.5, { bands: 3 });
+    // Flue breeching: an overhead header duct (clear height 2.2 m — walk under it) feeding the three stacks.
+    for (const [i, z] of [[0, -29], [1, -35.5], [2, -42]]) b.stack(`boiler-stack-${i}`, [-13.2, y, z], 1.25 - i * 0.1, 13 + i * 2.2, { bands: 3 + i, breeching: [4.6, 0], breechingY: 3.0 });
+    b.box('breeching-header', m.galvanised, [1.6, 1.6, 15.6], [-8.6, y + 3.0, -35.5], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'breeching-header' });
+    for (const z of [-30.5, -35.5, -40.5]) b.box('breeching-strap', m.steelDark, [1.75, 1.75, 0.16], [-8.6, y + 3.0, z], { cast: false });
+    for (const z of [-32, -39]) for (const sx of [-0.6, 0.6]) b.box('breeching-leg', m.steelDark, [0.16, 2.2, 0.16], [-8.6 + sx, y + 1.1, z], { collide: true, id: `breeching-leg-${sx}-${z}` });
+    b.box('roof-drain', m.steelDark, [0.6, 0.02, 0.6], [2, y + 0.012, -33], { cast: false });
+    b.box('roof-cable-tray', m.galvanised, [0.4, 0.08, 18], [9.2, y + 0.06, -35], { cast: false });
     b.catwalk('stack-platform', [-15.4, y + 4.2, -37.5], 4.4, { width: 1.5, axis: 'x', rails: 'both', surface: 'grating' });
     b.ladder('stack-platform-ladder', [-10.85, y, -37.5], 4.2, 'x', { exit: [-1, 0, 0] });
     b.railing('stack-platform-end', [-15.4, y + 4.2, -38.25], 1.5, 'z', { height: 1.05 });
@@ -428,6 +440,8 @@ export class HighlineDistrict {
       b.box('fan-drum-cross', m.steelDark, [0.14, 0.08, 3.2], [x, y + 2.3, -28.5], { cast: false });
     }
     b.tank('header-tank', [-6, y, -27.5], 1.9, 3.2);
+    b.tank('day-tank', [-1.6, y, -26.6], 1.1, 2.0, { material: m.corrugatedRust });
+    b.cylinder('tank-link-pipe', m.galvanised, 0.14, 3.2, [-3.8, y + 3.2, -27.2], { rotation: [0, 0, Math.PI / 2], segments: 10, cast: false });
     b.pipeRack('court-rack', [x0 + 1, y, -38.5], 24, { axis: 'x', height: 3.6, pipes: 4, frameSpacing: 8 });
     b.catwalk('rack-platform', [-3, y + 3.7, -38.5], 4, { width: 1.8, axis: 'x', rails: 'left', surface: 'grating', brackets: false });
     b.ladder('rack-ladder', [-1, y, -37.0], 3.7, 'z', { exit: [0, 0, -1] });
@@ -542,8 +556,14 @@ export class HighlineDistrict {
       b.cylinder(`turbine-band-${i}`, m.oxide, 2.75, 0.5, [x, floorY + 4.6, cz - 3], { rotation: [Math.PI / 2, 0, 0], segments: 24, cast: false });
       b.cylinder(`turbine-band-${i}`, m.oxide, 2.75, 0.5, [x, floorY + 4.6, cz + 3], { rotation: [Math.PI / 2, 0, 0], segments: 24, cast: false });
       b.box('generator', m.container('#5a6b74'), [4.4, 4.2, 5], [x, floorY + 4.1, cz + 9.5], { collide: true, traits: { walkable: true, surface: 'steel' }, id: `generator-${i}` });
-      b.cylinder(`steam-pipe-${i}`, m.galvanised, 0.45, 9, [x + (i ? 3.5 : -3.5), floorY + 6.5, cz - 5], { segments: 12, cast: false });
-      b.cylinder(`steam-pipe-elbow-${i}`, m.galvanised, 0.45, 6, [x + (i ? 3.5 : -3.5), floorY + 11, cz - 2], { rotation: [Math.PI / 2, 0, 0], segments: 12, cast: false });
+      const px = x + (i ? 3.5 : -3.5);
+      b.cylinder(`steam-pipe-${i}`, m.galvanised, 0.45, 9, [px, floorY + 6.5, cz - 5], { segments: 12, cast: false });
+      b.cylinder(`steam-pipe-elbow-${i}`, m.galvanised, 0.45, 6, [px, floorY + 11, cz - 2], { rotation: [Math.PI / 2, 0, 0], segments: 12, cast: false });
+      b.cylinder(`steam-pipe-riser-${i}`, m.galvanised, 0.45, 3.8, [px, floorY + 11 + 1.9, cz + 1], { segments: 12, cast: false });
+      b.cylinder(`steam-pipe-inlet-${i}`, m.galvanised, 0.45, 3.5, [px + (i ? -1.75 : 1.75), floorY + 6.5, cz - 5], { rotation: [0, 0, Math.PI / 2], segments: 12, cast: false });
+      b.cylinder(`steam-flange-${i}`, m.steelDark, 0.6, 0.2, [px, floorY + 11, cz - 5], { rotation: [Math.PI / 2, 0, 0], segments: 12, cast: false });
+      for (const [dx, dz, c] of [[-2.2, -7.5, '#4a5a66'], [2.4, -6.8, '#6a4a3c'], [-2.6, 7.2, '#55604a']]) b.cylinder(`hall-drum-${i}`, m.container(c), 0.32, 0.9, [x + dx, floorY + 0.45, cz + dz], { segments: 12, collide: true, traits: { walkable: true } });
+      b.box(`hall-pallet-${i}`, m.container('#8b7756'), [1.2, 0.14, 1.0], [x + (i ? -2.6 : 2.6), floorY + 0.07, cz + 5.5], { cast: false });
     }
     b.cabinet('pulpit', [0, floorY, cz + 6], Math.PI, { width: 3, height: 1.6, depth: 1.2, material: m.steelPale });
     for (const [x, z] of [[-15, -66], [15, -66], [-15, -86], [15, -86], [0, -88]]) b.box('hall-crate', m.container(x < 0 ? '#6f5c46' : '#4d5b63'), [1.6, 1.4, 1.6], [x, floorY + 0.7, z], { collide: true, traits: { walkable: true }, id: `hall-crate-${x}-${z}`, rotation: [0, (x + z) * 0.03, 0] });
@@ -559,6 +579,13 @@ export class HighlineDistrict {
     b.box('hall-drain', m.steelDark, [0.8, 0.02, 8], [0, floorY + 0.012, cz], { cast: false });
     for (const x of [-3.4, 3.4]) b.cabinet(`hall-mcc-${x}`, [x, floorY, -62.4], 0, { width: 1.4, height: 2.2, depth: 0.6, material: m.steel, lit: true });
     for (const x of [4.9, 10.5]) b.box('crane-rail', m.oxide, [0.3, 0.5, 26], [x, catY + 4.2, -75], { cast: false });
+    // Second (idle) overhead crane bridge parked at the south end of the hall, under the roof trusses.
+    b.box('hall-crane-bridge', m.safetyYellow, [30, 1.2, 1.4], [0, roofY - 3.2, -80], { cast: false });
+    b.box('hall-crane-bridge-rail', m.steelDark, [30, 0.2, 0.2], [0, roofY - 2.5, -80.5], { cast: false });
+    b.box('hall-crane-hoist', m.steelDark, [1.6, 1.4, 1.6], [-5, roofY - 4.4, -80], { cast: false });
+    b.box('hall-crane-hook-cable', m.steelDark, [0.06, 6, 0.06], [-5, roofY - 8.1, -80], { cast: false });
+    for (const sx of [-1, 1]) b.box('hall-crane-runway', m.oxide, [0.5, 0.7, z1 - z0 - 2], [sx * 17.2, roofY - 3.2, cz], { cast: false });
+    b.lamp([0, roofY - 0.3, -79], { color: '#bcd6ff', intensity: 40, distance: 30, size: 0.1, material: m.lampCool });
     for (const x of [4.9, 10.5]) for (const z of [-63, -75, -87]) b.box('crane-rail-hanger', m.oxide, [0.3, 3.2, 0.3], [x, catY + 6.0, z], { cast: false });
     const trolley = this.addMovingPlatform('crane-trolley', { from: [7.7, catY - 0.12, -64], to: [7.7, catY - 0.12, -84], size: [3.2, 0.24, 3.2], period: 12, material: m.checker, region: 'turbine-hall', dwell: 3.0 });
     for (const sx of [-1.4, 1.4]) for (const sz of [-1.4, 1.4]) { const post = new THREE.Mesh(new THREE.BoxGeometry(0.12, 3.6, 0.12), m.steelDark); post.position.set(sx, 1.9, sz); trolley.mesh.add(post); }
