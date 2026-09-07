@@ -46,16 +46,26 @@ export class WorldBuilder {
     const t = tile || material.userData?.tile || 2;
     const geometry = worldUvBox(size[0], size[1], size[2], t);
     const matrix = composeMatrix(position, rotation);
-    if (material.map) {
+    if (material.map || material.userData?.tile) {
       // Offset UVs by the world position so adjacent pieces continue the same texture.
+      // Window/mullion panels are the exception: they need a single un-offset 0..1 pane grid.
       const offsetUv = geometry.attributes.uv;
       const normal = geometry.attributes.normal;
-      for (let i = 0; i < offsetUv.count; i += 1) {
-        const nx = Math.abs(normal.getX(i));
-        const ny = Math.abs(normal.getY(i));
-        if (nx > 0.5) offsetUv.setXY(i, offsetUv.getX(i) + position[2] / t, offsetUv.getY(i) + position[1] / t);
-        else if (ny > 0.5) offsetUv.setXY(i, offsetUv.getX(i) + position[0] / t, offsetUv.getY(i) + position[2] / t);
-        else offsetUv.setXY(i, offsetUv.getX(i) + position[0] / t, offsetUv.getY(i) + position[1] / t);
+      if (material.userData?.panel) {
+        for (let i = 0; i < offsetUv.count; i += 1) {
+          const nx = Math.abs(normal.getX(i)); const ny = Math.abs(normal.getY(i));
+          const w = nx > 0.5 ? size[2] : size[0]; const h = ny > 0.5 ? size[2] : size[1];
+          const u = nx > 0.5 ? offsetUv.getX(i) * t / w : offsetUv.getX(i) * t / w; const v = offsetUv.getY(i) * t / h;
+          offsetUv.setXY(i, u + 0.5, v + 0.5);
+        }
+      } else {
+        for (let i = 0; i < offsetUv.count; i += 1) {
+          const nx = Math.abs(normal.getX(i));
+          const ny = Math.abs(normal.getY(i));
+          if (nx > 0.5) offsetUv.setXY(i, offsetUv.getX(i) + position[2] / t, offsetUv.getY(i) + position[1] / t);
+          else if (ny > 0.5) offsetUv.setXY(i, offsetUv.getX(i) + position[0] / t, offsetUv.getY(i) + position[2] / t);
+          else offsetUv.setXY(i, offsetUv.getX(i) + position[0] / t, offsetUv.getY(i) + position[1] / t);
+        }
       }
     }
     this.batcher.add(geometry, material, matrix, { castShadow: cast, receiveShadow: receive });

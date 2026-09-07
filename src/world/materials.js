@@ -138,6 +138,7 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     const map = new THREE.CanvasTexture(canvas); map.colorSpace = THREE.SRGBColorSpace; map.anisotropy = 4;
     const material = new THREE.MeshStandardMaterial({ map, color: '#ffffff', roughness: 0.35, metalness: 0.3, emissive: '#ffffff', emissiveMap: map, emissiveIntensity, envMapIntensity: 0.9 });
     material.name = name;
+    material.userData.panel = true; material.userData.tile = 1; // builders.box maps the pane grid once across the face
     return material;
   }
   const library = {
