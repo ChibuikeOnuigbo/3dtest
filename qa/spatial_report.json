@@ -1,0 +1,51 @@
+{
+  "schema": "vector-run-spatial-report/v1",
+  "scope": "Navigation graph, route semantics and 3D coordinate declarations only. Runtime collision, wall normal detection, support contact, rendered intersections and playthrough remain UNVERIFIED.",
+  "findings": [
+    {
+      "id": "edge:dispatch-bay->permit-terminal",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:permit-terminal->transfer-beacon",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:transfer-beacon->west-shaft",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:transfer-beacon->east-span",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:west-shaft->boiler-court",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:east-span->boiler-court",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:boiler-court->maintenance-passage",
+      "result": "PASS"
+    },
+    {
+      "id": "edge:maintenance-passage->sunline-exit",
+      "result": "PASS"
+    },
+    {
+      "id": "critical-path-reachable",
+      "result": "PASS"
+    },
+    {
+      "id": "required-traversal-surface-vocabulary",
+      "result": "PASS"
+    },
+    {
+      "id": "all-navigation-nodes-have-3d-coordinates",
+      "result": "PASS"
+    }
+  ],
+  "overall": "PASS_WITH_BROWSER_VALIDATION_REQUIRED"
+}

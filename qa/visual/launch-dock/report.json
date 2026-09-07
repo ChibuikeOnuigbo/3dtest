@@ -1,0 +1,5 @@
+{
+  "schema": "retired-skyline-relay-visual-report/v1",
+  "status": "RETIRED_NO_SCORE",
+  "note": "This record belongs to the retired Skyline Relay presentation. Use Highline District coverage in docs/qa_report.md and qa/room_scores.json; no visual pass is transferred."
+}

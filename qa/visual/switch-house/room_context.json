@@ -1,0 +1,24 @@
+{
+  "schema": "rivet-run-visual-context/v2",
+  "area_id": "switch-house",
+  "room_name": "Switch House",
+  "status": "CAPTURE_REQUIRED",
+  "expected_focal_point": "Mounted Kinetic Permit and transfer beacon under a covered canopy; both route doors visible.",
+  "materials": "warm concrete / steel / amber",
+  "required_views": [
+    "player-height arrival",
+    "forward route read",
+    "side support/context",
+    "movement or transition state"
+  ],
+  "critic_checks": [
+    "no prototype/placeholder forms",
+    "no ordinary floating objects",
+    "material variety at player distance",
+    "supported architecture",
+    "route/destination clarity",
+    "exterior depth",
+    "light/haze hierarchy",
+    "HUD restraint"
+  ]
+}

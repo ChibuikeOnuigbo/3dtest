@@ -1,0 +1,24 @@
+{
+  "schema": "rivet-run-visual-context/v2",
+  "area_id": "control-bridge",
+  "room_name": "Control Bridge",
+  "status": "CAPTURE_REQUIRED",
+  "expected_focal_point": "Intentional low maintenance canopy with ribs, a viable recovery deck and visible exit.",
+  "materials": "steel / trim / route paint",
+  "required_views": [
+    "player-height arrival",
+    "forward route read",
+    "side support/context",
+    "movement or transition state"
+  ],
+  "critic_checks": [
+    "no prototype/placeholder forms",
+    "no ordinary floating objects",
+    "material variety at player distance",
+    "supported architecture",
+    "route/destination clarity",
+    "exterior depth",
+    "light/haze hierarchy",
+    "HUD restraint"
+  ]
+}

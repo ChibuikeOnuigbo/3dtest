@@ -1,0 +1,10 @@
+{
+  "schema": "external-candidate-security-record/v2",
+  "status": "BLOCKED_COMPROMISED_CREDENTIAL_REMOVED",
+  "security": {
+    "decision": "A credential supplied in conversation is treated as compromised and has been removed from local research records.",
+    "policy": "Do not print, persist, commit, use or reproduce that value. Require rotation and an approved secret-store replacement before authenticated work."
+  },
+  "candidates": [],
+  "asset_imports": []
+}

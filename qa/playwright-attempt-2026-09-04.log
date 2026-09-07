@@ -1,0 +1,60 @@
+
+> pale-beacon@0.1.0 test:e2e
+> playwright test
+
+
+Running 2 tests using 1 worker
+
+  ✘  1 tests/game.spec.js:18:1 › C01 boot, pointer lock, and read-only state probe (3ms)
+  ✘  2 tests/game.spec.js:37:1 › C05 intended critical path completes through real keyboard/mouse input (2ms)
+
+
+  1) tests/game.spec.js:18:1 › C01 boot, pointer lock, and read-only state probe ───────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /home/user/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/game-C01-boot-pointer-lock-and-read-only-state-probe/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-C01-boot-pointer-lock-and-read-only-state-probe/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-C01-boot-pointer-lock-and-read-only-state-probe/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests/game.spec.js:37:1 › C05 intended critical path completes through real keyboard/mouse input
+
+    Error: browserType.launch: Executable doesn't exist at /home/user/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/game-C05-intended-critical-cd463-h-real-keyboard-mouse-input/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-C05-intended-critical-cd463-h-real-keyboard-mouse-input/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-C05-intended-critical-cd463-h-real-keyboard-mouse-input/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    tests/game.spec.js:18:1 › C01 boot, pointer lock, and read-only state probe ────────────────────
+    tests/game.spec.js:37:1 › C05 intended critical path completes through real keyboard/mouse input
+
+exit=1

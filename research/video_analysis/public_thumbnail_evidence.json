@@ -1,0 +1,105 @@
+{
+  "schema": "public-youtube-evidence/v1",
+  "policy": "No video stream download. Direct thumbnail CDN requests use default certificate verification. Watch-page parsing is opt-in and uses BeautifulSoup only to extract public OG metadata.",
+  "records": [
+    {
+      "id": "GoVNCfBSxPA",
+      "watch_url": "https://www.youtube.com/watch?v=GoVNCfBSxPA",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/GoVNCfBSxPA/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "hFf9FB8F0dc",
+      "watch_url": "https://www.youtube.com/watch?v=hFf9FB8F0dc",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/hFf9FB8F0dc/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "jBDJ5VUi0gs",
+      "watch_url": "https://www.youtube.com/watch?v=jBDJ5VUi0gs",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/jBDJ5VUi0gs/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "CGYuUc9pPtQ",
+      "watch_url": "https://www.youtube.com/watch?v=CGYuUc9pPtQ",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/CGYuUc9pPtQ/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "C3upVqVOgrM",
+      "watch_url": "https://www.youtube.com/watch?v=C3upVqVOgrM",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/C3upVqVOgrM/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "mHu6vcsDVL0",
+      "watch_url": "https://www.youtube.com/watch?v=mHu6vcsDVL0",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/mHu6vcsDVL0/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "R8gzbOtyodM",
+      "watch_url": "https://www.youtube.com/watch?v=R8gzbOtyodM",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/R8gzbOtyodM/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "jPU-mvM_OSQ",
+      "watch_url": "https://www.youtube.com/watch?v=jPU-mvM_OSQ",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/jPU-mvM_OSQ/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "goJaqtAnJFQ",
+      "watch_url": "https://www.youtube.com/watch?v=goJaqtAnJFQ",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/goJaqtAnJFQ/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "bz4MuYw8FBA",
+      "watch_url": "https://www.youtube.com/watch?v=bz4MuYw8FBA",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/bz4MuYw8FBA/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    },
+    {
+      "id": "to032deYr-Q",
+      "watch_url": "https://youtu.be/to032deYr-Q",
+      "canonical_thumbnail_url": "https://i.ytimg.com/vi/to032deYr-Q/hqdefault.jpg",
+      "thumbnail_attempt_date": "2026-09-04",
+      "thumbnail_status": "blocked",
+      "full_video_retained": false,
+      "thumbnail_error": "URLError: <urlopen error TLS/SSL connection has been closed (EOF) (_ssl.c:992)>"
+    }
+  ]
+}

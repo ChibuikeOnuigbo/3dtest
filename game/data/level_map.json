@@ -1,0 +1,171 @@
+{
+  "schema": "rivet-run-level/v2",
+  "title": "Rivet Run: Highline District",
+  "status": "AUTHORING_IN_PROGRESS",
+  "seed": {
+    "master": "rivet-run-highline-01",
+    "invariant": "authored traversal geometry stays fixed; skyline antenna/window variation is deterministic per seed"
+  },
+  "theme": "late-afternoon harbour highline: connected roof structures, rail bridge and active utility architecture. No cyan void, floating islands, mascot character, fantasy portal rings, neon-pink clutter, or exposed falls.",
+  "spawn": {
+    "id": "dispatch-bay",
+    "position": [
+      0,
+      0,
+      43
+    ]
+  },
+  "nodes": [
+    {
+      "id": "dispatch-bay",
+      "type": "spawn",
+      "position": [
+        0,
+        0,
+        43
+      ],
+      "landmark": "framed dispatch bay on a supported yard roof"
+    },
+    {
+      "id": "permit-terminal",
+      "type": "powerup",
+      "position": [
+        0,
+        1.75,
+        20.5
+      ],
+      "ability": "doubleJump",
+      "landmark": "mounted Kinetic Permit terminal"
+    },
+    {
+      "id": "transfer-beacon",
+      "type": "checkpoint",
+      "position": [
+        0,
+        1.75,
+        14.3
+      ],
+      "landmark": "mounted transfer signal mast"
+    },
+    {
+      "id": "west-shaft",
+      "type": "traversal",
+      "position": [
+        -9.2,
+        2.25,
+        6.1
+      ],
+      "mechanic": "wall-jump",
+      "landmark": "supported maintenance shaft"
+    },
+    {
+      "id": "east-span",
+      "type": "traversal",
+      "position": [
+        9.2,
+        2.25,
+        6.1
+      ],
+      "mechanic": "dash",
+      "landmark": "supported rail viaduct"
+    },
+    {
+      "id": "boiler-court",
+      "type": "arena",
+      "position": [
+        0,
+        4.65,
+        -13.5
+      ],
+      "landmark": "boiler roof relay yard",
+      "targets": 3
+    },
+    {
+      "id": "maintenance-passage",
+      "type": "traversal",
+      "position": [
+        0,
+        5.45,
+        -27.8
+      ],
+      "mechanic": "slide/crouch",
+      "landmark": "framed low maintenance passage"
+    },
+    {
+      "id": "sunline-exit",
+      "type": "finish",
+      "position": [
+        0,
+        7.25,
+        -50.1
+      ],
+      "landmark": "mounted Sunline Exit relay on a trussed bridge"
+    }
+  ],
+  "edges": [
+    {
+      "from": "dispatch-bay",
+      "to": "permit-terminal",
+      "type": "roof-rise",
+      "mechanic": "ground-jump"
+    },
+    {
+      "from": "permit-terminal",
+      "to": "transfer-beacon",
+      "type": "canopy-crossing",
+      "mechanic": "double-jump"
+    },
+    {
+      "from": "transfer-beacon",
+      "to": "west-shaft",
+      "type": "vertical-shaft",
+      "mechanic": "wall-jump"
+    },
+    {
+      "from": "transfer-beacon",
+      "to": "east-span",
+      "type": "supported-viaduct",
+      "mechanic": "dash"
+    },
+    {
+      "from": "west-shaft",
+      "to": "boiler-court",
+      "type": "cap-roof",
+      "mechanic": "mixed"
+    },
+    {
+      "from": "east-span",
+      "to": "boiler-court",
+      "type": "catwalk",
+      "mechanic": "mixed"
+    },
+    {
+      "from": "boiler-court",
+      "to": "maintenance-passage",
+      "type": "framed-bridge",
+      "mechanic": "slide/crouch"
+    },
+    {
+      "from": "maintenance-passage",
+      "to": "sunline-exit",
+      "type": "trussed-bridge",
+      "mechanic": "jump/dash"
+    }
+  ],
+  "surfaces": [
+    "WALKABLE",
+    "WALL_JUMPABLE",
+    "SLIDE_TUNNEL",
+    "DASH_ROUTE",
+    "NON_TRAVERSABLE"
+  ],
+  "critical_path": [
+    "dispatch-bay",
+    "permit-terminal",
+    "transfer-beacon",
+    "boiler-court",
+    "maintenance-passage",
+    "sunline-exit"
+  ],
+  "authored_segment_contract": "game/data/highline_segments.json"
+}

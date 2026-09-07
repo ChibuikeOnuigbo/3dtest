@@ -1,0 +1,69 @@
+Installing dependencies...
+Switching to root user to install dependencies...
+Ign:1 http://deb.debian.org/debian bookworm InRelease
+Ign:2 http://deb.debian.org/debian bookworm-updates InRelease
+Ign:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Ign:1 http://deb.debian.org/debian bookworm InRelease
+Ign:2 http://deb.debian.org/debian bookworm-updates InRelease
+Ign:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Ign:1 http://deb.debian.org/debian bookworm InRelease
+Ign:2 http://deb.debian.org/debian bookworm-updates InRelease
+Ign:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Err:1 http://deb.debian.org/debian bookworm InRelease
+  Connection failed [IP: 151.101.2.132 80]
+Err:2 http://deb.debian.org/debian bookworm-updates InRelease
+  Connection failed [IP: 151.101.194.132 80]
+Err:3 http://deb.debian.org/debian-security bookworm-security InRelease
+  Connection failed [IP: 151.101.2.132 80]
+Reading package lists...
+W: Failed to fetch http://deb.debian.org/debian/dists/bookworm/InRelease  Connection failed [IP: 151.101.2.132 80]
+W: Failed to fetch http://deb.debian.org/debian/dists/bookworm-updates/InRelease  Connection failed [IP: 151.101.194.132 80]
+W: Failed to fetch http://deb.debian.org/debian-security/dists/bookworm-security/InRelease  Connection failed [IP: 151.101.2.132 80]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Package fonts-liberation is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+Package fonts-freefont-ttf is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Unable to locate package libasound2
+E: Unable to locate package libatk-bridge2.0-0
+E: Couldn't find any package by glob 'libatk-bridge2.0-0'
+E: Couldn't find any package by regex 'libatk-bridge2.0-0'
+E: Unable to locate package libatk1.0-0
+E: Couldn't find any package by glob 'libatk1.0-0'
+E: Couldn't find any package by regex 'libatk1.0-0'
+E: Unable to locate package libatspi2.0-0
+E: Couldn't find any package by glob 'libatspi2.0-0'
+E: Couldn't find any package by regex 'libatspi2.0-0'
+E: Unable to locate package libcairo2
+E: Unable to locate package libcups2
+E: Unable to locate package libdbus-1-3
+E: Unable to locate package libdrm2
+E: Unable to locate package libgbm1
+E: Unable to locate package libnspr4
+E: Unable to locate package libnss3
+E: Unable to locate package libpango-1.0-0
+E: Couldn't find any package by glob 'libpango-1.0-0'
+E: Couldn't find any package by regex 'libpango-1.0-0'
+E: Unable to locate package libxcomposite1
+E: Unable to locate package libxdamage1
+E: Unable to locate package libxfixes3
+E: Unable to locate package libxkbcommon0
+E: Unable to locate package libxrandr2
+E: Unable to locate package xvfb
+E: Unable to locate package fonts-noto-color-emoji
+E: Unable to locate package fonts-unifont
+E: Unable to locate package xfonts-scalable
+E: Package 'fonts-liberation' has no installation candidate
+E: Unable to locate package fonts-ipafont-gothic
+E: Unable to locate package fonts-wqy-zenhei
+E: Unable to locate package fonts-tlwg-loma-otf
+E: Package 'fonts-freefont-ttf' has no installation candidate
+Failed to install browsers
+Error: Installation process exited with code: 100

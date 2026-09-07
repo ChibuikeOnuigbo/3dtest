@@ -1,0 +1,6 @@
+WHAT: Nine reference repositories cloned shallowly in isolated ignored research labs.
+WHY: Compare architecture, source licensing and asset structure without merging code/media.
+RESULT: Structural reports/maps/license matrix and an 815-record asset forensic manifest generated.
+ERROR: No runtime/browser validation was performed for reference games.
+FIX: Treat README/source claims as unverified runtime evidence.
+NEXT: Complete selective source studies and use independent patterns only.

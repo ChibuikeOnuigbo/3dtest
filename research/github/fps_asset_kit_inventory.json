@@ -1,0 +1,4317 @@
+{
+  "repository": "/home/user/3dtest/research/github_repos/fps-asset-kit",
+  "file_count": 442,
+  "total_bytes": 908476679,
+  "extension_counts": {
+    ".blend": 26,
+    ".csv": 1,
+    ".fbx": 20,
+    ".flac": 24,
+    ".glb": 20,
+    ".ini": 1,
+    ".jpg": 139,
+    ".md": 1,
+    ".mtl": 20,
+    ".mtlx": 24,
+    ".obj": 20,
+    ".ogg": 12,
+    ".png": 24,
+    ".py": 2,
+    ".tres": 24,
+    ".usdc": 24,
+    ".wav": 58,
+    "[none]": 2
+  },
+  "directory_summary": {
+    ".gitattributes": {
+      "files": 1,
+      "bytes": 707
+    },
+    ".gitignore": {
+      "files": 1,
+      "bytes": 61
+    },
+    "README.md": {
+      "files": 1,
+      "bytes": 9492
+    },
+    "download_hdris.py": {
+      "files": 1,
+      "bytes": 3920
+    },
+    "download_textures.py": {
+      "files": 1,
+      "bytes": 6034
+    },
+    "sfx": {
+      "files": 96,
+      "bytes": 345400488
+    },
+    "textures": {
+      "files": 259,
+      "bytes": 553710828
+    },
+    "weapons": {
+      "files": 82,
+      "bytes": 9345149
+    }
+  },
+  "models": [
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109428,
+      "category": "model",
+      "sha256": "97333617de848b2a6bf51490d96764b94eb70c972c32fd4ae58e6ff0a8b6bb20"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109428,
+      "category": "model",
+      "sha256": "dda2dda4d6e06b23d2721a95427e4e70738da7a37c864a2943531a5c725af261"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109636,
+      "category": "model",
+      "sha256": "dde605594e93e0901bf0f7357bda374d3de6d2656c14f572849e09353fa18215"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1110884,
+      "category": "model",
+      "sha256": "49d2767c2448d7d3f45a194a856d1721a6bc1deda9ae07efd6d656e689389b3f"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109428,
+      "category": "model",
+      "sha256": "262fe0af75f14cb008a5be14f85b1ff3683b70a58c6c049f578059b0de0a4075"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1110884,
+      "category": "model",
+      "sha256": "541e05743bc34a2fae3f8167c824e6ae661b84588b68deb0569909862d157fa0"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1099204,
+      "category": "model",
+      "sha256": "968d5ca0c8f6c6a5d658b6106f8cba88e04d195459e6546a3fae219e57d1a678"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109220,
+      "category": "model",
+      "sha256": "eabeedda172cbc5d7e7d2109831ba574db08228ed74617a36462061a7e005926"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1119396,
+      "category": "model",
+      "sha256": "9b5a89894636d1d771fe7bcf51bc6bf2326f2d5b6635e1eb509862f411d18977"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109220,
+      "category": "model",
+      "sha256": "3fc61d48bb4f99d6d7ed55d2e429655f0a9ec3acbd8b6b0b947a198b8873fa88"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109428,
+      "category": "model",
+      "sha256": "37959b02006544cdee2e1e3f877f30d5310b74010db0d26d9f17fb97e33f8916"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1110468,
+      "category": "model",
+      "sha256": "3ec2469caec1c81554f953be8b8d3cb8824e5099a9616d698996ddba393f530b"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109588,
+      "category": "model",
+      "sha256": "05801478dc7019a27b1a3900585054afd68200bb0f0fe5ddbf2819faf3a795d1"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109172,
+      "category": "model",
+      "sha256": "67c2bd126d374d93f8eab678f202e2f0bf8f14827a29a846f2db4c8be6bdb1d7"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1111876,
+      "category": "model",
+      "sha256": "2049eb2d07fd53ab67df660879bb9a284b740b58d4e29ec0e0f26aef04dc5b71"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1099204,
+      "category": "model",
+      "sha256": "bb3f4cc71201b12ac66f05ed818c6bf7bea669283f5f5411b39bb15edbd45390"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1099204,
+      "category": "model",
+      "sha256": "1d7265e0ffa7a6ecaa3c36794b532cdfdcfeae9f631feefd91a1691e184cbaec"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109636,
+      "category": "model",
+      "sha256": "3c7c72a99d636ae324be8038767a020e95e5df3c0e22c320bb8485699701d9e8"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1109012,
+      "category": "model",
+      "sha256": "ab5e222b570de203977a11384c6777dc81dd1fa8dc6df576aad99bbd307af85f"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1111924,
+      "category": "model",
+      "sha256": "dee0677d9c7a4152e9b72717cf4a97dbc9fc8364b54c9356466463b3c3ca9d00"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1111092,
+      "category": "model",
+      "sha256": "e67d1017a51d5201f57f85c40d78b6f52ae7ed548e55febceef78f2a99f2d55c"
+    },
+    {
+      "path": "textures/Wood092/Wood092_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1099620,
+      "category": "model",
+      "sha256": "f852521d42acc6b1fffd975895fe98d1e27a681c33d518b90350d084e696b51d"
+    },
+    {
+      "path": "textures/Wood094/Wood094_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1098996,
+      "category": "model",
+      "sha256": "69efafe6555fc36a6de40980941a0b5c7b0ca4cf6d9413c24fb61e4e998790a9"
+    },
+    {
+      "path": "textures/Wood095/Wood095_2K-JPG.blend",
+      "extension": ".blend",
+      "bytes": 1101076,
+      "category": "model",
+      "sha256": "23e4b546d91f9d50856deb424e50067d2b4d4f9bb5ca147a6e7efbaf7c9de66a"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Pistol_Compact_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 59580,
+      "category": "model",
+      "sha256": "283bcb27f66205e4ef6a6eca5af43fc565717d9c6d1165741adcef155a1a208d"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Pistol_Full_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 56332,
+      "category": "model",
+      "sha256": "f2486a038421c8d265ad2b22fcfab19f45acb7b7a269521560b8c9644c4a5c29"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Rifle_Assault_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 92204,
+      "category": "model",
+      "sha256": "a43e179d3d25f22780a791c4bfdb514d9fc97af84657f5a354191953bcaff40e"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Rifle_Battle_East.RIg.fbx",
+      "extension": ".fbx",
+      "bytes": 91644,
+      "category": "model",
+      "sha256": "988007c627fce5706a963d4a6c3b3017340915cc28af03ca86a3bdf57fcb273a"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/SMG_Compact_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 70348,
+      "category": "model",
+      "sha256": "efe0a01d2aac851142b58308d1caa8f055901ecf18d87ac3a940d8fd63cd0125"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/SMG_Full_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 76508,
+      "category": "model",
+      "sha256": "1b1d3f9d638b7cf5ab71818ca5395bd625f308e1fd283422ebb154631a580f5c"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Shotgun_Auto_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 74380,
+      "category": "model",
+      "sha256": "9c20b77f628a0672f21a64be87111f8f28061deb8b2fa55868c19e861e87f1f6"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Shotgun_Pump_East.RIg.fbx",
+      "extension": ".fbx",
+      "bytes": 60604,
+      "category": "model",
+      "sha256": "4c76ce284dcefca48fe3b6f310a4d0986e4ef63b3f78a03cf1cace3e817adba8"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Sniper_Material_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 79740,
+      "category": "model",
+      "sha256": "ef5c680fedf0ecd7ffbf161cac30deecaf58b3a85bf4490fa5016da1a30882ae"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/FBX/Sniper_Rifle_East.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 86636,
+      "category": "model",
+      "sha256": "b0aed2bc7f8e521f2329117cf41316ad3b142f0fb98ceb11b759a5efd04ee80f"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/Flat_Guns_East.blend",
+      "extension": ".blend",
+      "bytes": 669924,
+      "category": "model",
+      "sha256": "ebb30551431b5f0506996e4bffede1734f84cfac8ecaabd319ac1a6e1bf20698"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Pistol_Compact_East.glb",
+      "extension": ".glb",
+      "bytes": 120180,
+      "category": "model",
+      "sha256": "951f555a75f04b2e7690a6117f918c502b983b81504ded617c7358c3c6553135",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 120180,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 12,
+        "meshes": 1,
+        "materials": 8,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1263,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.014899839647114277,
+              -0.08699972927570343,
+              -0.10217718034982681
+            ],
+            "max": [
+              0.014900240115821362,
+              0.035325709730386734,
+              0.055835872888565063
+            ],
+            "count": 636
+          },
+          {
+            "min": [
+              -0.010996755212545395,
+              -0.08984933793544769,
+              0.01080138236284256
+            ],
+            "max": [
+              0.010984526947140694,
+              -0.08339734375476837,
+              0.04302232712507248
+            ],
+            "count": 48
+          },
+          {
+            "min": [
+              -0.010373232886195183,
+              -0.08398258686065674,
+              -0.10770870000123978
+            ],
+            "max": [
+              0.010826768353581429,
+              0.030915845185518265,
+              0.042303942143917084
+            ],
+            "count": 330
+          },
+          {
+            "min": [
+              -0.011769091710448265,
+              -0.08208437263965607,
+              -0.10217718034982681
+            ],
+            "max": [
+              0.011756863445043564,
+              0.03231704607605934,
+              0.058302782475948334
+            ],
+            "count": 908
+          },
+          {
+            "min": [
+              -0.0092629911378026,
+              0.022735722362995148,
+              -0.031755492091178894
+            ],
+            "max": [
+              0.0092507628723979,
+              0.03055442124605179,
+              0.0006795655936002731
+            ],
+            "count": 23
+          },
+          {
+            "min": [
+              -0.005386796779930592,
+              0.03336089476943016,
+              -0.09235291182994843
+            ],
+            "max": [
+              0.005374567583203316,
+              0.03470652177929878,
+              0.039519473910331726
+            ],
+            "count": 108
+          },
+          {
+            "min": [
+              -0.004640634171664715,
+              0.01219889521598816,
+              0.005295205861330032
+            ],
+            "max": [
+              0.004628404974937439,
+              0.021467939019203186,
+              0.014312831684947014
+            ],
+            "count": 144
+          },
+          {
+            "min": [
+              -0.013014787808060646,
+              -0.078883096575737,
+              0.003650723025202751
+            ],
+            "max": [
+              0.013002559542655945,
+              0.0006738696247339249,
+              0.05220918357372284
+            ],
+            "count": 110
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Pistol_Full_East.glb",
+      "extension": ".glb",
+      "bytes": 115180,
+      "category": "model",
+      "sha256": "c126348ea1f3a5263ddd174d753d13cf78b9f86fdcd596e0bce396250928d6d1",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 115180,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 11,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1216,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.014650898054242134,
+              -0.10031770914793015,
+              -0.12168140709400177
+            ],
+            "max": [
+              0.014646472409367561,
+              0.03797656670212746,
+              0.07926586270332336
+            ],
+            "count": 476
+          },
+          {
+            "min": [
+              -0.01132229808717966,
+              -0.11040923744440079,
+              0.007029348518699408
+            ],
+            "max": [
+              0.010378432460129261,
+              -0.002146057551726699,
+              0.06700551509857178
+            ],
+            "count": 56
+          },
+          {
+            "min": [
+              -0.011414098553359509,
+              -0.10033049434423447,
+              -0.12739013135433197
+            ],
+            "max": [
+              0.0108243552967906,
+              0.030993323773145676,
+              0.07523880898952484
+            ],
+            "count": 712
+          },
+          {
+            "min": [
+              -0.01087766420096159,
+              0.005948505364358425,
+              -0.12168140709400177
+            ],
+            "max": [
+              0.010873238556087017,
+              0.03247499465942383,
+              0.07493001222610474
+            ],
+            "count": 734
+          },
+          {
+            "min": [
+              -0.007776243146508932,
+              0.028568563982844353,
+              -0.04232555627822876
+            ],
+            "max": [
+              0.007771817501634359,
+              0.03158837929368019,
+              0.0024343107361346483
+            ],
+            "count": 16
+          },
+          {
+            "min": [
+              -0.004238210618495941,
+              0.03583719953894615,
+              -0.10267698764801025
+            ],
+            "max": [
+              0.004233784973621368,
+              0.03718281909823418,
+              0.06824910640716553
+            ],
+            "count": 90
+          },
+          {
+            "min": [
+              -0.004636732395738363,
+              0.013090632855892181,
+              0.007125244941562414
+            ],
+            "max": [
+              0.0046323067508637905,
+              0.02235967293381691,
+              0.016142869368195534
+            ],
+            "count": 144
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Rifle_Assault_East.glb",
+      "extension": ".glb",
+      "bytes": 302620,
+      "category": "model",
+      "sha256": "8b3d3f90afbff9a699c3e2a14574ff0c5a687f1faf6dc4b51ba4a5629ea07783",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 302620,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 3271,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.0336204469203949,
+              -0.062246061861515045,
+              -0.2793634533882141
+            ],
+            "max": [
+              0.03410639613866806,
+              0.0726223737001419,
+              0.3309077322483063
+            ],
+            "count": 952
+          },
+          {
+            "min": [
+              -0.026159798726439476,
+              -0.195787250995636,
+              -0.22953450679779053
+            ],
+            "max": [
+              0.02664574421942234,
+              0.06479156017303467,
+              0.3829195201396942
+            ],
+            "count": 729
+          },
+          {
+            "min": [
+              -0.02962646074593067,
+              -0.1790773868560791,
+              -0.3405788242816925
+            ],
+            "max": [
+              0.030112402513623238,
+              0.0726223737001419,
+              0.3694566786289215
+            ],
+            "count": 1794
+          },
+          {
+            "min": [
+              -0.016555937007069588,
+              -0.05254068225622177,
+              -0.2793634533882141
+            ],
+            "max": [
+              0.017041882500052452,
+              0.04785884916782379,
+              0.16255676746368408
+            ],
+            "count": 1518
+          },
+          {
+            "min": [
+              -0.013139992021024227,
+              0.00784065667539835,
+              -0.12613704800605774
+            ],
+            "max": [
+              0.013625937514007092,
+              0.03721629083156586,
+              0.03128626570105553
+            ],
+            "count": 80
+          },
+          {
+            "min": [
+              -0.01755593717098236,
+              -0.009916424751281738,
+              0.04526874050498009
+            ],
+            "max": [
+              0.018041884526610374,
+              0.01708328351378441,
+              0.055058788508176804
+            ],
+            "count": 584
+          },
+          {
+            "min": [
+              -0.006494714878499508,
+              -0.012266152538359165,
+              -0.030406106263399124
+            ],
+            "max": [
+              0.007105284370481968,
+              0.003133842023089528,
+              -0.005720246117562056
+            ],
+            "count": 528
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Rifle_Battle_East.glb",
+      "extension": ".glb",
+      "bytes": 294364,
+      "category": "model",
+      "sha256": "3c8dbfe8b06b9ac8d8695d9ff319bebad45f4db57603a5160e97898942da38b1",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 294364,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 3143,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.038934748619794846,
+              -0.07717465609312057,
+              -0.31522563099861145
+            ],
+            "max": [
+              0.04018289968371391,
+              0.07130857557058334,
+              0.363263338804245
+            ],
+            "count": 932
+          },
+          {
+            "min": [
+              -0.03185192495584488,
+              -0.18435631692409515,
+              -0.24378585815429688
+            ],
+            "max": [
+              0.03310007601976395,
+              0.07844923436641693,
+              0.3734692335128784
+            ],
+            "count": 1104
+          },
+          {
+            "min": [
+              -0.027698038145899773,
+              -0.17568758130073547,
+              -0.3588436543941498
+            ],
+            "max": [
+              0.029145976528525352,
+              0.06554196029901505,
+              0.1524951010942459
+            ],
+            "count": 2254
+          },
+          {
+            "min": [
+              -0.017537644132971764,
+              -0.10153138637542725,
+              -0.31522563099861145
+            ],
+            "max": [
+              0.018785791471600533,
+              0.05593819543719292,
+              0.39635762572288513
+            ],
+            "count": 547
+          },
+          {
+            "min": [
+              -0.012777137570083141,
+              0.012954543344676495,
+              -0.05250496417284012
+            ],
+            "max": [
+              0.0147712966427207,
+              0.04442925006151199,
+              0.07190019637346268
+            ],
+            "count": 64
+          },
+          {
+            "min": [
+              -0.01745573803782463,
+              -0.012234269641339779,
+              0.07766338437795639
+            ],
+            "max": [
+              0.018422985449433327,
+              0.014765438623726368,
+              0.08706339448690414
+            ],
+            "count": 584
+          },
+          {
+            "min": [
+              -0.007950068451464176,
+              -0.0074668764136731625,
+              -0.017568593844771385
+            ],
+            "max": [
+              0.00904992688447237,
+              0.011576120741665363,
+              0.004163429141044617
+            ],
+            "count": 528
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/SMG_Compact_East.glb",
+      "extension": ".glb",
+      "bytes": 158532,
+      "category": "model",
+      "sha256": "7d00093c914f41f6a5d1e18f0ba7810376c37377e2304f6233378d7b768bf0f9",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 158532,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1685,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.01867382787168026,
+              -0.11536003649234772,
+              -0.17728307843208313
+            ],
+            "max": [
+              0.02465418353676796,
+              0.036817800253629684,
+              0.13341647386550903
+            ],
+            "count": 480
+          },
+          {
+            "min": [
+              -0.02607579715549946,
+              -0.1858193427324295,
+              -0.1690317988395691
+            ],
+            "max": [
+              0.025282543152570724,
+              0.06228042021393776,
+              0.14070016145706177
+            ],
+            "count": 622
+          },
+          {
+            "min": [
+              -0.025895321741700172,
+              -0.1617007553577423,
+              -0.19112256169319153
+            ],
+            "max": [
+              0.025102125480771065,
+              0.049999773502349854,
+              0.3253529667854309
+            ],
+            "count": 960
+          },
+          {
+            "min": [
+              -0.013071595691144466,
+              -0.04312673956155777,
+              -0.17728307843208313
+            ],
+            "max": [
+              0.012278414331376553,
+              0.04039600491523743,
+              0.14477066695690155
+            ],
+            "count": 319
+          },
+          {
+            "min": [
+              -0.009253155440092087,
+              0.012091374024748802,
+              -0.03562670946121216
+            ],
+            "max": [
+              0.010162181220948696,
+              0.036171432584524155,
+              0.02642858400940895
+            ],
+            "count": 28
+          },
+          {
+            "min": [
+              -0.014137020334601402,
+              -0.004992098547518253,
+              0.02175772562623024
+            ],
+            "max": [
+              0.013343838974833488,
+              0.010310320183634758,
+              0.02745167538523674
+            ],
+            "count": 572
+          },
+          {
+            "min": [
+              -0.005031110253185034,
+              0.008840689435601234,
+              -0.005572851747274399
+            ],
+            "max": [
+              0.00423792889341712,
+              0.018109729513525963,
+              0.0034447722136974335
+            ],
+            "count": 144
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/SMG_Full_East.glb",
+      "extension": ".glb",
+      "bytes": 201216,
+      "category": "model",
+      "sha256": "cadaae2b77d7a388e29c0ac3f3d22f3e0905350cfabe5ee6fc7edba5bb97a3f5",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 201216,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 2146,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.01989012211561203,
+              -0.05819833278656006,
+              -0.18550199270248413
+            ],
+            "max": [
+              0.01885315403342247,
+              0.059603236615657806,
+              0.12989014387130737
+            ],
+            "count": 352
+          },
+          {
+            "min": [
+              -0.02719814144074917,
+              -0.19209979474544525,
+              -0.18550199270248413
+            ],
+            "max": [
+              0.02719654142856598,
+              0.07376545667648315,
+              0.15345297753810883
+            ],
+            "count": 676
+          },
+          {
+            "min": [
+              -0.027111615985631943,
+              -0.1732853353023529,
+              -0.2227475792169571
+            ],
+            "max": [
+              0.02607470378279686,
+              0.058759428560733795,
+              0.3206784725189209
+            ],
+            "count": 1701
+          },
+          {
+            "min": [
+              -0.015056705102324486,
+              -0.04951764643192291,
+              -0.05023618042469025
+            ],
+            "max": [
+              0.031434644013643265,
+              0.049155667424201965,
+              0.13595250248908997
+            ],
+            "count": 383
+          },
+          {
+            "min": [
+              -0.01131489872932434,
+              0.007395970169454813,
+              -0.19029738008975983
+            ],
+            "max": [
+              0.013195243664085865,
+              0.03926392272114754,
+              0.04407551884651184
+            ],
+            "count": 188
+          },
+          {
+            "min": [
+              -0.01686931401491165,
+              -0.00816446915268898,
+              0.011872316710650921
+            ],
+            "max": [
+              0.015351712703704834,
+              0.018835237249732018,
+              0.021918775513768196
+            ],
+            "count": 588
+          },
+          {
+            "min": [
+              -0.00463531631976366,
+              -0.006210864055901766,
+              -0.020304959267377853
+            ],
+            "max": [
+              0.004633722826838493,
+              0.003058175090700388,
+              -0.011287332512438297
+            ],
+            "count": 144
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Shotgun_Auto_East.glb",
+      "extension": ".glb",
+      "bytes": 181616,
+      "category": "model",
+      "sha256": "f831a0907cca12cbf1b37f14d3c7e3402a27e101a218ddc4daaee99e575a135d",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 181616,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1930,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.020199976861476898,
+              -0.06800597906112671,
+              -0.3231659531593323
+            ],
+            "max": [
+              0.01963556930422783,
+              0.08887839317321777,
+              0.3906511962413788
+            ],
+            "count": 725
+          },
+          {
+            "min": [
+              -0.02950405329465866,
+              -0.1923515796661377,
+              -0.2799973487854004
+            ],
+            "max": [
+              0.0285091083496809,
+              0.09787123650312424,
+              0.3866387903690338
+            ],
+            "count": 1116
+          },
+          {
+            "min": [
+              -0.029711822047829628,
+              -0.19193315505981445,
+              -0.27127593755722046
+            ],
+            "max": [
+              0.029147379100322723,
+              0.08783650398254395,
+              0.14576008915901184
+            ],
+            "count": 739
+          },
+          {
+            "min": [
+              -0.017211278900504112,
+              -0.04050588607788086,
+              -0.3231659531593323
+            ],
+            "max": [
+              0.01664685644209385,
+              0.07823273539543152,
+              0.182861328125
+            ],
+            "count": 390
+          },
+          {
+            "min": [
+              -0.015140845440328121,
+              -0.0004305379115976393,
+              -0.05235738307237625
+            ],
+            "max": [
+              0.03924354165792465,
+              0.05333424359560013,
+              0.042307138442993164
+            ],
+            "count": 291
+          },
+          {
+            "min": [
+              -0.018362632021307945,
+              0.00815601460635662,
+              0.05939006432890892
+            ],
+            "max": [
+              0.017798196524381638,
+              0.03460855782032013,
+              0.06483864039182663
+            ],
+            "count": 222
+          },
+          {
+            "min": [
+              -0.010797472670674324,
+              0.0004944637767039239,
+              -0.03859040513634682
+            ],
+            "max": [
+              0.009802527725696564,
+              0.021094469353556633,
+              0.011480338871479034
+            ],
+            "count": 134
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Shotgun_Pump_East.glb",
+      "extension": ".glb",
+      "bytes": 145012,
+      "category": "model",
+      "sha256": "806e4b7ec4fdebe96814cf98a69f2e05507b632c3c1f59a59e81a28ab389ac1a",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 145012,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 11,
+        "meshes": 1,
+        "materials": 6,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1508,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.017828593030571938,
+              -0.09763474017381668,
+              -0.4592306315898895
+            ],
+            "max": [
+              0.0172425489872694,
+              0.06688462197780609,
+              0.4234499931335449
+            ],
+            "count": 559
+          },
+          {
+            "min": [
+              -0.019903209060430527,
+              -0.09763474017381668,
+              -0.2969510853290558
+            ],
+            "max": [
+              0.019317153841257095,
+              0.0733073502779007,
+              0.4095410108566284
+            ],
+            "count": 400
+          },
+          {
+            "min": [
+              -0.017337707802653313,
+              -0.003179920371621847,
+              -0.45677128434181213
+            ],
+            "max": [
+              0.01675165444612503,
+              0.07335106283426285,
+              0.10366471856832504
+            ],
+            "count": 210
+          },
+          {
+            "min": [
+              -0.01705574057996273,
+              -0.10078659653663635,
+              -0.4592306315898895
+            ],
+            "max": [
+              0.016469700261950493,
+              0.059915170073509216,
+              0.37453749775886536
+            ],
+            "count": 1271
+          },
+          {
+            "min": [
+              -0.01874050684273243,
+              0.0013750032521784306,
+              -0.04008246585726738
+            ],
+            "max": [
+              0.01582201197743416,
+              0.05335432291030884,
+              0.05465437099337578
+            ],
+            "count": 317
+          },
+          {
+            "min": [
+              -0.010471343994140625,
+              0.0025902199558913708,
+              -0.09015320241451263
+            ],
+            "max": [
+              0.010128656402230263,
+              0.023190224543213844,
+              -0.04008246585726738
+            ],
+            "count": 132
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Sniper_Material_East.glb",
+      "extension": ".glb",
+      "bytes": 231548,
+      "category": "model",
+      "sha256": "e8a66634d135e26dab4cdf72d4a7ceb7accd2ed6ed47b80722dcc45c5228659b",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 231548,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 14,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 2452,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.03230368718504906,
+              -0.06439702212810516,
+              -0.5173724889755249
+            ],
+            "max": [
+              0.06386076658964157,
+              0.026813723146915436,
+              0.3375944495201111
+            ],
+            "count": 394
+          },
+          {
+            "min": [
+              -0.03732673078775406,
+              -0.11718415468931198,
+              -0.6125063896179199
+            ],
+            "max": [
+              0.03745642304420471,
+              0.07543246448040009,
+              0.3756435215473175
+            ],
+            "count": 844
+          },
+          {
+            "min": [
+              -0.033008646219968796,
+              -0.1019270047545433,
+              -0.5410880446434021
+            ],
+            "max": [
+              0.03362134471535683,
+              0.05189589783549309,
+              0.2045278251171112
+            ],
+            "count": 1926
+          },
+          {
+            "min": [
+              -0.026250382885336876,
+              -0.07372167706489563,
+              -0.27819913625717163
+            ],
+            "max": [
+              0.02873106114566326,
+              0.04229205846786499,
+              0.3594578206539154
+            ],
+            "count": 739
+          },
+          {
+            "min": [
+              -0.01709088869392872,
+              -0.002479270799085498,
+              0.034373220056295395
+            ],
+            "max": [
+              0.023733975365757942,
+              0.036089904606342316,
+              0.2062937617301941
+            ],
+            "count": 33
+          },
+          {
+            "min": [
+              -0.02725038304924965,
+              0.0015270286239683628,
+              -0.06594658643007278
+            ],
+            "max": [
+              0.02738015353679657,
+              0.01843702606856823,
+              -0.06154658645391464
+            ],
+            "count": 222
+          },
+          {
+            "min": [
+              -0.015207286924123764,
+              -0.02975245751440525,
+              0.054742079228162766
+            ],
+            "max": [
+              0.015282717533409595,
+              0.00467055244371295,
+              0.10830975323915482
+            ],
+            "count": 528
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/GLB/Sniper_Rifle_East.glb",
+      "extension": ".glb",
+      "bytes": 270556,
+      "category": "model",
+      "sha256": "12034ff2772357c5405fc7c03265fa0b97eea8df85e45642f693f20c3f2f3169",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 270556,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 2943,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.019844673573970795,
+              -0.05696413666009903,
+              -0.3721918761730194
+            ],
+            "max": [
+              0.019713139161467552,
+              0.024776777252554893,
+              0.3734194338321686
+            ],
+            "count": 464
+          },
+          {
+            "min": [
+              -0.03132409229874611,
+              -0.12646342813968658,
+              -0.3199763596057892
+            ],
+            "max": [
+              0.03758958354592323,
+              0.07174528390169144,
+              0.43888917565345764
+            ],
+            "count": 978
+          },
+          {
+            "min": [
+              -0.021720319986343384,
+              -0.11290621012449265,
+              -0.4251503646373749
+            ],
+            "max": [
+              0.02158878743648529,
+              0.05145854502916336,
+              0.42643412947654724
+            ],
+            "count": 2739
+          },
+          {
+            "min": [
+              -0.018132714554667473,
+              -0.05335251986980438,
+              -0.3721918761730194
+            ],
+            "max": [
+              0.01800118200480938,
+              0.041854776442050934,
+              0.21767215430736542
+            ],
+            "count": 542
+          },
+          {
+            "min": [
+              -0.013942223973572254,
+              0.005114155821502209,
+              -0.021881520748138428
+            ],
+            "max": [
+              0.015326593071222305,
+              0.032560721039772034,
+              0.07560323923826218
+            ],
+            "count": 25
+          },
+          {
+            "min": [
+              -0.013961308635771275,
+              -0.015528989024460316,
+              0.11486122012138367
+            ],
+            "max": [
+              0.013829772360622883,
+              0.001381012611091137,
+              0.1192612275481224
+            ],
+            "count": 224
+          },
+          {
+            "min": [
+              -0.009404080919921398,
+              -0.014878698624670506,
+              -0.009773495607078075
+            ],
+            "max": [
+              0.010099912993609905,
+              0.007231696508824825,
+              0.02216823771595955
+            ],
+            "count": 528
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Pistol_Compact_East.obj",
+      "extension": ".obj",
+      "bytes": 31922,
+      "category": "model",
+      "sha256": "83f7ce940bcf881d9e0c2c2617132f8fa33601621018c087cc7a0d30f66fbc1c"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Pistol_Full_East.obj",
+      "extension": ".obj",
+      "bytes": 30728,
+      "category": "model",
+      "sha256": "4a2b1b2904329f96c1c2330c128dae0423a7187064e6f1ea9f1cba3675e83ede"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Rifle_Assault_East.obj",
+      "extension": ".obj",
+      "bytes": 86873,
+      "category": "model",
+      "sha256": "a06e90734eb883640a099031dc44195330175d66bd1a03a5bf546b00e3cfacdd"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Rifle_Battle_East.obj",
+      "extension": ".obj",
+      "bytes": 84306,
+      "category": "model",
+      "sha256": "a69fbaf5d8e5c3007bbda43f4087a989df5ecc58cd7a5a79302a278370b76b3a"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/SMG_Compact_East.obj",
+      "extension": ".obj",
+      "bytes": 44893,
+      "category": "model",
+      "sha256": "6bfa66c7be51f0dd68e578f6752fa21d4d18a5c34ea004b02450b759f2f2330c"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/SMG_Full_East.obj",
+      "extension": ".obj",
+      "bytes": 57592,
+      "category": "model",
+      "sha256": "31541f32e04d8aed4d0136c1ccf972fb86c2bfdca0605b35971998751cab1c68"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Shotgun_Auto_East.obj",
+      "extension": ".obj",
+      "bytes": 50365,
+      "category": "model",
+      "sha256": "1071fe124c81cdad230a24ad5eb3376d4e451c6838f79a50146646d2f6569903"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Shotgun_Pump_East.obj",
+      "extension": ".obj",
+      "bytes": 38272,
+      "category": "model",
+      "sha256": "37b60a4460f978f671cea1bd76c949ec2a89638f1e6f76fc002f239b41dcef86"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Sniper_Material_East.obj",
+      "extension": ".obj",
+      "bytes": 62958,
+      "category": "model",
+      "sha256": "f81ad77931d3f9c21115f0af6beb398c97d48c5d1e07d9c24bd78fbcf00c7126"
+    },
+    {
+      "path": "weapons/flat_guns_east/Flat Guns East/OBJ/Sniper_Rifle_East.obj",
+      "extension": ".obj",
+      "bytes": 75110,
+      "category": "model",
+      "sha256": "a21e0b64225375ec20cce2146e7022b4234b64ed7c4fa0d6ce7c8c9bed0e6909"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Pistol_Compact_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 64636,
+      "category": "model",
+      "sha256": "1711ae9ee2989eb5d7e72fdc504aeed30fbab6196ff0be1de2ba4377e67fefe3"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Pistol_Full_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 67820,
+      "category": "model",
+      "sha256": "0c81d7ddbb8561e5efe2d52fcc4cd9027c12f1e7134e61ce759c00baf1691d26"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Rifle_Assault_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 139868,
+      "category": "model",
+      "sha256": "2726099c5b54ab11a205819c85407a9559c78a5a434bede1482f5d773b6dc8a8"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Rifle_Battle_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 113820,
+      "category": "model",
+      "sha256": "95c6a25c4627fde59787c76a9d9004119f992ad2f48f2986b336ac72eb3b6ac8"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/SMG_Compact_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 90860,
+      "category": "model",
+      "sha256": "7ba4bac922f10eac716057da668533ddb86055094cb00a505f32409015c41acc"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/SMG_Full_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 91916,
+      "category": "model",
+      "sha256": "412ab194269779f840a4a583cfd35c9b9bcbe763ead1c927bdb03b893f92cb2e"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Shotgun_Auto_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 73948,
+      "category": "model",
+      "sha256": "47441e701214235f79fa232e21e94f2de9af975c16a5619c3ecc66b640a8a0c8"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Shotgun_Pump_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 52860,
+      "category": "model",
+      "sha256": "954f032d8ae2bed15d67182eb9ca3b491487677dfebcfc004b56e7a28d1e3d5f"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Sniper_Material_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 114908,
+      "category": "model",
+      "sha256": "328920edd2ce2e09348b98c67d1aa18baaf7a487b75e7f8b9761fa5802e4e728"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/FBX/Sniper_Rifle_West.Rig.fbx",
+      "extension": ".fbx",
+      "bytes": 106716,
+      "category": "model",
+      "sha256": "3a8aaaf19c4ad28c8aee799788e36510a78d5e3e24b05a9b3d62c3202ef891dd"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/Flat_Guns_West.blend",
+      "extension": ".blend",
+      "bytes": 742861,
+      "category": "model",
+      "sha256": "5f1d320b27085871e14b5c98446b2c88e616d29926d0e7eb8a9c0c50596d70f3"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Pistol_Compact_West.glb",
+      "extension": ".glb",
+      "bytes": 141332,
+      "category": "model",
+      "sha256": "b33da46a164e4d176493d5de4c4f75b2b8e3d80b9134c24d93ff90694ab52eaf",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 141332,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 12,
+        "meshes": 1,
+        "materials": 6,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1244,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.012344717979431152,
+              -0.09255583584308624,
+              -0.11080951988697052
+            ],
+            "max": [
+              0.012344717979431152,
+              0.04196138679981232,
+              0.0644560381770134
+            ],
+            "count": 628
+          },
+          {
+            "min": [
+              -0.013413719832897186,
+              -0.08488921821117401,
+              -0.05048853158950806
+            ],
+            "max": [
+              0.01341371238231659,
+              0.03496691584587097,
+              0.06333442032337189
+            ],
+            "count": 146
+          },
+          {
+            "min": [
+              -0.01341371238231659,
+              -0.08405327796936035,
+              -0.11699046194553375
+            ],
+            "max": [
+              0.01341371238231659,
+              0.03631354868412018,
+              0.0751536414027214
+            ],
+            "count": 1046
+          },
+          {
+            "min": [
+              -0.0017615704564377666,
+              0.018817907199263573,
+              0.034316133707761765
+            ],
+            "max": [
+              0.0017615669639781117,
+              0.02234104461967945,
+              0.03487652540206909
+            ],
+            "count": 40
+          },
+          {
+            "min": [
+              -0.004514995962381363,
+              0.016064481809735298,
+              0.005186519585549831
+            ],
+            "max": [
+              0.004514995962381363,
+              0.025094473734498024,
+              0.018312111496925354
+            ],
+            "count": 144
+          },
+          {
+            "min": [
+              -0.004980001598596573,
+              0.015599476173520088,
+              -0.09380637854337692
+            ],
+            "max": [
+              0.004980001598596573,
+              0.041816696524620056,
+              0.05475084111094475
+            ],
+            "count": 384
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Pistol_Full_West.glb",
+      "extension": ".glb",
+      "bytes": 158212,
+      "category": "model",
+      "sha256": "d8a284503309a7fcb215326034db5b0b2151a9b6920c39d018f975ff4b6fd84b",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 158212,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 12,
+        "meshes": 1,
+        "materials": 6,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1434,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.015284537337720394,
+              -0.11143996566534042,
+              -0.13139203190803528
+            ],
+            "max": [
+              0.015284002758562565,
+              0.039316873997449875,
+              0.06440755724906921
+            ],
+            "count": 680
+          },
+          {
+            "min": [
+              -0.013160794042050838,
+              -0.10032542049884796,
+              0.0019357348792254925
+            ],
+            "max": [
+              0.013160274364054203,
+              0.023902753368020058,
+              0.07078951597213745
+            ],
+            "count": 300
+          },
+          {
+            "min": [
+              -0.010600297711789608,
+              -0.09998369216918945,
+              -0.13757295906543732
+            ],
+            "max": [
+              0.010599763132631779,
+              0.03504336625337601,
+              0.07737663388252258
+            ],
+            "count": 930
+          },
+          {
+            "min": [
+              -0.005938678048551083,
+              -0.004551773425191641,
+              -0.13139203190803528
+            ],
+            "max": [
+              0.005938113667070866,
+              0.03164739906787872,
+              0.0806221216917038
+            ],
+            "count": 186
+          },
+          {
+            "min": [
+              -0.004515259526669979,
+              0.017626186832785606,
+              0.003758449340239167
+            ],
+            "max": [
+              0.004514739848673344,
+              0.02665618248283863,
+              0.016884038224816322
+            ],
+            "count": 144
+          },
+          {
+            "min": [
+              -0.004980265162885189,
+              0.017161181196570396,
+              -0.11918829381465912
+            ],
+            "max": [
+              0.004979745484888554,
+              0.039037253707647324,
+              0.043456025421619415
+            ],
+            "count": 448
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Rifle_Assault_West.glb",
+      "extension": ".glb",
+      "bytes": 457644,
+      "category": "model",
+      "sha256": "0d80dd2118c884172a856455968be14eadc97f041d27d52bfa75fedb708fa486",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 457644,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 21,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 4353,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.02009589597582817,
+              -0.1567712128162384,
+              -0.29347947239875793
+            ],
+            "max": [
+              0.02902243658900261,
+              0.07530331611633301,
+              0.35063132643699646
+            ],
+            "count": 2459
+          },
+          {
+            "min": [
+              -0.024258803576231003,
+              -0.17772790789604187,
+              -0.2618925869464874
+            ],
+            "max": [
+              0.024264026433229446,
+              0.04585857689380646,
+              0.3588011562824249
+            ],
+            "count": 1169
+          },
+          {
+            "min": [
+              -0.016901563853025436,
+              -0.07088317722082138,
+              -0.33856430649757385
+            ],
+            "max": [
+              0.02485615387558937,
+              0.035858575254678726,
+              0.14358557760715485
+            ],
+            "count": 2169
+          },
+          {
+            "min": [
+              -0.014077256433665752,
+              -0.007374627515673637,
+              -0.2917787730693817
+            ],
+            "max": [
+              0.014082481153309345,
+              0.032535817474126816,
+              0.2315375655889511
+            ],
+            "count": 395
+          },
+          {
+            "min": [
+              -0.01283628772944212,
+              -0.019111108034849167,
+              0.08872994780540466
+            ],
+            "max": [
+              0.012841512449085712,
+              -0.003331514308229089,
+              0.10504031181335449
+            ],
+            "count": 185
+          },
+          {
+            "min": [
+              -0.006980131380259991,
+              -0.008664330467581749,
+              -0.029726743698120117
+            ],
+            "max": [
+              0.006399919278919697,
+              0.0064436704851686954,
+              -0.012429074384272099
+            ],
+            "count": 528
+          },
+          {
+            "min": [
+              -0.00893015693873167,
+              -0.010614333674311638,
+              -0.017026737332344055
+            ],
+            "max": [
+              0.008349825628101826,
+              0.008393669500946999,
+              0.027673259377479553
+            ],
+            "count": 1140
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Rifle_Battle_West.glb",
+      "extension": ".glb",
+      "bytes": 335084,
+      "category": "model",
+      "sha256": "69d2db533e9eeee80a4bc27f32a9bcbde36e66b2ec4adf82db53334687a625e1",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 335084,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 19,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 3173,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.023712510243058205,
+              -0.15549930930137634,
+              -0.39930903911590576
+            ],
+            "max": [
+              0.02424800954759121,
+              0.10126511007547379,
+              0.39153116941452026
+            ],
+            "count": 1884
+          },
+          {
+            "min": [
+              -0.026709431782364845,
+              -0.15244132280349731,
+              -0.45245301723480225
+            ],
+            "max": [
+              0.02742946706712246,
+              0.05820023640990257,
+              0.37951478362083435
+            ],
+            "count": 1184
+          },
+          {
+            "min": [
+              -0.025058025494217873,
+              -0.07778295129537582,
+              -0.39930903911590576
+            ],
+            "max": [
+              0.019846444949507713,
+              0.05220639705657959,
+              0.18581295013427734
+            ],
+            "count": 743
+          },
+          {
+            "min": [
+              -0.009871715679764748,
+              -0.012737855315208435,
+              -0.3059650659561157
+            ],
+            "max": [
+              0.015162354335188866,
+              0.03838394582271576,
+              0.03656214475631714
+            ],
+            "count": 189
+          },
+          {
+            "min": [
+              -0.01491653360426426,
+              -0.028540940955281258,
+              0.09327228367328644
+            ],
+            "max": [
+              0.015452032908797264,
+              -0.004868026822805405,
+              0.11689923703670502
+            ],
+            "count": 202
+          },
+          {
+            "min": [
+              -0.00813412107527256,
+              -0.01457938551902771,
+              -0.04362145811319351
+            ],
+            "max": [
+              0.009323840960860252,
+              0.005040420219302177,
+              -0.017237955704331398
+            ],
+            "count": 528
+          },
+          {
+            "min": [
+              -0.010214084759354591,
+              -0.016659384593367577,
+              -0.023681459948420525
+            ],
+            "max": [
+              0.011403804644942284,
+              0.007120417430996895,
+              0.02749854512512684
+            ],
+            "count": 1106
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/SMG_Compact_West.glb",
+      "extension": ".glb",
+      "bytes": 237800,
+      "category": "model",
+      "sha256": "6846006dc47f751a7baa1079c8c679de861fa70eaaf0d28d505a8bda8327c23e",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 237800,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 16,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 2201,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.020944103598594666,
+              -0.16971029341220856,
+              -0.1565450131893158
+            ],
+            "max": [
+              0.021103635430336,
+              0.04200192540884018,
+              0.11371631920337677
+            ],
+            "count": 1041
+          },
+          {
+            "min": [
+              -0.020471319556236267,
+              -0.1478355973958969,
+              -0.14774128794670105
+            ],
+            "max": [
+              0.020630940794944763,
+              0.03396303579211235,
+              0.2617117166519165
+            ],
+            "count": 468
+          },
+          {
+            "min": [
+              -0.01451666746288538,
+              -0.09772323071956635,
+              -0.18138083815574646
+            ],
+            "max": [
+              0.014676227234303951,
+              0.02624533139169216,
+              0.10321054607629776
+            ],
+            "count": 1058
+          },
+          {
+            "min": [
+              -0.008129344321787357,
+              -0.029900329187512398,
+              -0.1565450131893158
+            ],
+            "max": [
+              0.011240794323384762,
+              0.02413311041891575,
+              0.2290762960910797
+            ],
+            "count": 310
+          },
+          {
+            "min": [
+              -0.012957052327692509,
+              -0.00686379661783576,
+              0.0020856866613030434
+            ],
+            "max": [
+              0.012943609617650509,
+              0.001734988996759057,
+              0.011974497698247433
+            ],
+            "count": 203
+          },
+          {
+            "min": [
+              -0.004435226786881685,
+              -0.010729769244790077,
+              0.005063069052994251
+            ],
+            "max": [
+              0.004594787489622831,
+              0.008718758821487427,
+              0.018188659101724625
+            ],
+            "count": 288
+          },
+          {
+            "min": [
+              -0.004900232423096895,
+              -0.011194774881005287,
+              -0.13901783525943756
+            ],
+            "max": [
+              0.005059793125838041,
+              0.04185723513364792,
+              0.08272925764322281
+            ],
+            "count": 720
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/SMG_Full_West.glb",
+      "extension": ".glb",
+      "bytes": 217848,
+      "category": "model",
+      "sha256": "844bcd58125cd874951fb9c79b759fbd39282ab56a25a8c0598c4f9f25dd1ad8",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 217848,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 18,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 2030,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.023171817883849144,
+              -0.1777581125497818,
+              -0.22179639339447021
+            ],
+            "max": [
+              0.02324988879263401,
+              0.06808391213417053,
+              0.13033021986484528
+            ],
+            "count": 1071
+          },
+          {
+            "min": [
+              -0.019700562581419945,
+              -0.1815708428621292,
+              -0.18534442782402039
+            ],
+            "max": [
+              0.019778693094849586,
+              0.04032330587506294,
+              0.33896857500076294
+            ],
+            "count": 870
+          },
+          {
+            "min": [
+              -0.013323461636900902,
+              -0.06055481731891632,
+              -0.21238772571086884
+            ],
+            "max": [
+              0.013401472941040993,
+              0.032605599611997604,
+              0.1330370008945465
+            ],
+            "count": 734
+          },
+          {
+            "min": [
+              -0.010367905721068382,
+              0.0035645640455186367,
+              -0.22179639339447021
+            ],
+            "max": [
+              0.010445917025208473,
+              0.029060620814561844,
+              0.04929276928305626
+            ],
+            "count": 370
+          },
+          {
+            "min": [
+              -0.010887300595641136,
+              -0.013513533398509026,
+              0.07233883440494537
+            ],
+            "max": [
+              0.010941946879029274,
+              0.0022660582326352596,
+              0.0886492133140564
+            ],
+            "count": 201
+          },
+          {
+            "min": [
+              -0.004475956782698631,
+              0.0008111369097605348,
+              -0.03479790315032005
+            ],
+            "max": [
+              0.004554027691483498,
+              0.009841132909059525,
+              -0.021672312170267105
+            ],
+            "count": 144
+          },
+          {
+            "min": [
+              -0.004940992221236229,
+              0.00034613124444149435,
+              -0.024257894605398178
+            ],
+            "max": [
+              0.00501900352537632,
+              0.010306132957339287,
+              -0.0051079061813652515
+            ],
+            "count": 324
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Shotgun_Auto_West.glb",
+      "extension": ".glb",
+      "bytes": 169364,
+      "category": "model",
+      "sha256": "74f3c88add8079acd744ae2851f215a4c2d05a7ac60c53e84f116131a7d8d67a",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 169364,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 15,
+        "meshes": 1,
+        "materials": 6,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1540,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.05360281467437744,
+              -0.1642242670059204,
+              -0.37101176381111145
+            ],
+            "max": [
+              0.052251577377319336,
+              0.1132410392165184,
+              0.21762092411518097
+            ],
+            "count": 878
+          },
+          {
+            "min": [
+              -0.09431600570678711,
+              -0.20500555634498596,
+              -0.27399396896362305
+            ],
+            "max": [
+              0.09300142526626587,
+              0.06800618767738342,
+              0.40977099537849426
+            ],
+            "count": 594
+          },
+          {
+            "min": [
+              -0.01807987503707409,
+              -0.19246144592761993,
+              -0.37101176381111145
+            ],
+            "max": [
+              0.016864897683262825,
+              0.1147744283080101,
+              0.17659892141819
+            ],
+            "count": 819
+          },
+          {
+            "min": [
+              -0.021355388686060905,
+              -0.012504523620009422,
+              0.05460532754659653
+            ],
+            "max": [
+              0.020005108788609505,
+              0.00851449929177761,
+              0.16722224652767181
+            ],
+            "count": 324
+          },
+          {
+            "min": [
+              -0.010957835242152214,
+              -0.00983915664255619,
+              -0.014634290710091591
+            ],
+            "max": [
+              0.00964224524796009,
+              0.010760845616459846,
+              0.03543645888566971
+            ],
+            "count": 120
+          },
+          {
+            "min": [
+              -0.011882780119776726,
+              -0.010764161124825478,
+              0.03543645888566971
+            ],
+            "max": [
+              0.010567190125584602,
+              0.011685842648148537,
+              0.055165715515613556
+            ],
+            "count": 146
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Shotgun_Pump_West.glb",
+      "extension": ".glb",
+      "bytes": 119560,
+      "category": "model",
+      "sha256": "f36f28ab6500f91e7c844302aaae843fdf150c1efde161c1dc15f0e39e16aa07",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 119560,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 8,
+        "meshes": 1,
+        "materials": 6,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 1071,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.018163226544857025,
+              -0.02326810546219349,
+              -0.27743756771087646
+            ],
+            "max": [
+              0.01841036230325699,
+              0.04055532440543175,
+              0.2128722369670868
+            ],
+            "count": 352
+          },
+          {
+            "min": [
+              -0.01737799495458603,
+              -0.04518003389239311,
+              -0.27743756771087646
+            ],
+            "max": [
+              0.017625130712985992,
+              0.053417008370161057,
+              0.20447193086147308
+            ],
+            "count": 686
+          },
+          {
+            "min": [
+              -0.009740794077515602,
+              -0.015066328458487988,
+              0.05033283308148384
+            ],
+            "max": [
+              0.009987985715270042,
+              -0.007966886274516582,
+              0.12007272988557816
+            ],
+            "count": 136
+          },
+          {
+            "min": [
+              -0.010054850950837135,
+              -0.023268098011612892,
+              -0.02562141790986061
+            ],
+            "max": [
+              0.010545169934630394,
+              0.011343293823301792,
+              0.1406823843717575
+            ],
+            "count": 166
+          },
+          {
+            "min": [
+              -0.022901616990566254,
+              -0.07315490394830704,
+              -0.24248845875263214
+            ],
+            "max": [
+              0.023148812353610992,
+              0.04323958232998848,
+              0.31919869780540466
+            ],
+            "count": 519
+          },
+          {
+            "min": [
+              -0.010979855433106422,
+              -0.010181712917983532,
+              0.02444932982325554
+            ],
+            "max": [
+              0.011470174416899681,
+              0.012268290854990482,
+              0.04417858645319939
+            ],
+            "count": 150
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Sniper_Material_West.glb",
+      "extension": ".glb",
+      "bytes": 373456,
+      "category": "model",
+      "sha256": "39566eb2d97b2250c9102b6d95862828f68b99bf47b427caf127af3daab89f9d",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 373456,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 16,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 3676,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.03728151321411133,
+              -0.14867907762527466,
+              -0.37059682607650757
+            ],
+            "max": [
+              0.06600189208984375,
+              0.10804801434278488,
+              0.5328735709190369
+            ],
+            "count": 1276
+          },
+          {
+            "min": [
+              -0.04375268891453743,
+              -0.1473611295223236,
+              -0.37867552042007446
+            ],
+            "max": [
+              0.042113080620765686,
+              0.05460011586546898,
+              0.4929268956184387
+            ],
+            "count": 618
+          },
+          {
+            "min": [
+              -0.0337526798248291,
+              -0.08704806119203568,
+              -0.6337178945541382
+            ],
+            "max": [
+              0.040769338607788086,
+              0.044600117951631546,
+              0.5005943179130554
+            ],
+            "count": 2144
+          },
+          {
+            "min": [
+              -0.02280735969543457,
+              -0.15644662082195282,
+              -0.5092800855636597
+            ],
+            "max": [
+              0.024389266967773438,
+              0.03286566957831383,
+              0.2026941180229187
+            ],
+            "count": 583
+          },
+          {
+            "min": [
+              -0.019817829132080078,
+              -0.03248559311032295,
+              0.24005252122879028
+            ],
+            "max": [
+              0.018178224563598633,
+              -0.01418355479836464,
+              0.25454017519950867
+            ],
+            "count": 214
+          },
+          {
+            "min": [
+              -0.015784025192260742,
+              -0.018915560096502304,
+              0.02800022065639496
+            ],
+            "max": [
+              0.013531925156712532,
+              0.014076031744480133,
+              0.08203336596488953
+            ],
+            "count": 528
+          },
+          {
+            "min": [
+              -0.019504070281982422,
+              -0.022635560482740402,
+              0.06712020933628082
+            ],
+            "max": [
+              0.017251968383789062,
+              0.017796043306589127,
+              0.16643022000789642
+            ],
+            "count": 1166
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/GLB/Sniper_Rifle_West.glb",
+      "extension": ".glb",
+      "bytes": 330160,
+      "category": "model",
+      "sha256": "c757564169f2d72e9fb4677be425f617d575fd76808ec32d9730d769548fb0d5",
+      "inspection": {
+        "glb_version": 2,
+        "declared_bytes": 330160,
+        "valid_length": true,
+        "scenes": 1,
+        "nodes": 16,
+        "meshes": 1,
+        "materials": 7,
+        "textures": 0,
+        "skins": 1,
+        "animations": 0,
+        "animation_names": [],
+        "indexed_triangles": 3208,
+        "external_uris": [],
+        "position_accessor_bounds": [
+          {
+            "min": [
+              -0.024443574249744415,
+              -0.09966609627008438,
+              -0.4925689399242401
+            ],
+            "max": [
+              0.0460849292576313,
+              0.10271009057760239,
+              0.4162697494029999
+            ],
+            "count": 1605
+          },
+          {
+            "min": [
+              -0.030517295002937317,
+              -0.13924825191497803,
+              -0.4020894765853882
+            ],
+            "max": [
+              0.030091838911175728,
+              0.04942020773887634,
+              0.37521371245384216
+            ],
+            "count": 552
+          },
+          {
+            "min": [
+              -0.02062220126390457,
+              -0.076996348798275,
+              -0.5445848703384399
+            ],
+            "max": [
+              0.02799873799085617,
+              0.03942020982503891,
+              0.2114330381155014
+            ],
+            "count": 1071
+          },
+          {
+            "min": [
+              -0.015819258987903595,
+              -0.0901222750544548,
+              -0.4925689399242401
+            ],
+            "max": [
+              0.016399912536144257,
+              0.02905775047838688,
+              0.39769962430000305
+            ],
+            "count": 629
+          },
+          {
+            "min": [
+              -0.016917414963245392,
+              -0.026962915435433388,
+              0.13159583508968353
+            ],
+            "max": [
+              0.01649218052625656,
+              -0.0086608761921525,
+              0.1461666375398636
+            ],
+            "count": 214
+          },
+          {
+            "min": [
+              -0.01049322821199894,
+              -0.01412914041429758,
+              -0.03422485664486885
+            ],
+            "max": [
+              0.010060599073767662,
+              0.009112250991165638,
+              -0.002566633280366659
+            ],
+            "count": 528
+          },
+          {
+            "min": [
+              -0.013653228059411049,
+              -0.01728915609419346,
+              -0.009924856945872307
+            ],
+            "max": [
+              0.013220598921179771,
+              0.012272250838577747,
+              0.05927513539791107
+            ],
+            "count": 1150
+          }
+        ]
+      }
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Pistol_Compact_West.obj",
+      "extension": ".obj",
+      "bytes": 57231,
+      "category": "model",
+      "sha256": "7c7bc327b3adda97581c6ff7ae37e9f8900bdb57ad87efbe2bb44c0e7e30ed8d"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Pistol_Full_West.obj",
+      "extension": ".obj",
+      "bytes": 64182,
+      "category": "model",
+      "sha256": "834a87bfb03daf27b67d943f494f3695afab498a4c14cbc192994a9a2e5c1e6f"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Rifle_Assault_West.obj",
+      "extension": ".obj",
+      "bytes": 205082,
+      "category": "model",
+      "sha256": "ec1d3e40d33b0eadf082cd8957dfc8b7e27f35f533e2037163d80dd05221a501"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Rifle_Battle_West.obj",
+      "extension": ".obj",
+      "bytes": 148407,
+      "category": "model",
+      "sha256": "a638c5824b4771549c81fa0bcdceab2cf4ff8296533436d31837961b299e0041"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/SMG_Compact_West.obj",
+      "extension": ".obj",
+      "bytes": 102720,
+      "category": "model",
+      "sha256": "2680f428a8ec1297f3afc9797e3cb9cd4929c481c593320017033b6a5a306539"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/SMG_Full_West.obj",
+      "extension": ".obj",
+      "bytes": 94926,
+      "category": "model",
+      "sha256": "bb803289fdba61089f63be0aebba89b9f0e13a7dfa2291c9ce316b2878855933"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Shotgun_Auto_West.obj",
+      "extension": ".obj",
+      "bytes": 73100,
+      "category": "model",
+      "sha256": "41fb95edb385c77aac478ac8ecb514e04639cb97aa1b91980c3f855d9f041c15"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Shotgun_Pump_West.obj",
+      "extension": ".obj",
+      "bytes": 48635,
+      "category": "model",
+      "sha256": "310895c0bf29a82f1077500780e11b76c16ad56cc7226354e96b764023393014"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Sniper_Material_West.obj",
+      "extension": ".obj",
+      "bytes": 170881,
+      "category": "model",
+      "sha256": "654a51442fa360334cc1c512f64a822063b981185393ebbef68dc0fc09cad437"
+    },
+    {
+      "path": "weapons/flat_guns_west/Flat Guns West/OBJ/Sniper_Rifle_West.obj",
+      "extension": ".obj",
+      "bytes": 150121,
+      "category": "model",
+      "sha256": "686e2ad90ca990780aafd59e044a70191b85169ef94ee223876ace32a6b4ac9c"
+    }
+  ],
+  "images": [
+    {
+      "path": "textures/Asphalt023S/Asphalt023S.png",
+      "extension": ".png",
+      "bytes": 477783,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2017450,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 6066301,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 2429084,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 9646343,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 9657603,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt023S/Asphalt023S_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 2620867,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C.png",
+      "extension": ".png",
+      "bytes": 322026,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2959227,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 4321032,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 2593385,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 9201971,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 9202291,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt025C/Asphalt025C_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 2511938,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031.png",
+      "extension": ".png",
+      "bytes": 413063,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 3094457,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3451112,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 2476760,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 8517074,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 8527476,
+      "category": "image"
+    },
+    {
+      "path": "textures/Asphalt031/Asphalt031_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3264169,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097.png",
+      "extension": ".png",
+      "bytes": 462888,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 1379175,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3273092,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 615952,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 3776803,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 3767093,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks097/Bricks097_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1535720,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102.png",
+      "extension": ".png",
+      "bytes": 484242,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 1101394,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 2977236,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 645608,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 3398759,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 3406552,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks102/Bricks102_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1514812,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104.png",
+      "extension": ".png",
+      "bytes": 362860,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 1022403,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 2398111,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 658483,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 3198740,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 3196494,
+      "category": "image"
+    },
+    {
+      "path": "textures/Bricks104/Bricks104_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1051946,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034.png",
+      "extension": ".png",
+      "bytes": 229324,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 1156573,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 572145,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 3329071,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 3325261,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete034/Concrete034_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 879275,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A.png",
+      "extension": ".png",
+      "bytes": 415852,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 3159294,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 6717902,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1708220,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 8361010,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 8358949,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete047A/Concrete047A_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3079558,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048.png",
+      "extension": ".png",
+      "bytes": 321425,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2962142,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 4839090,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1887023,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_Metalness.jpg",
+      "extension": ".jpg",
+      "bytes": 17517,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 7389082,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 7369067,
+      "category": "image"
+    },
+    {
+      "path": "textures/Concrete048/Concrete048_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3076529,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037.png",
+      "extension": ".png",
+      "bytes": 513329,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2102448,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 8674228,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1721182,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 10344770,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 10341826,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground037/Ground037_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3058522,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054.png",
+      "extension": ".png",
+      "bytes": 418224,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2291629,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 6859366,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1296415,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 9053784,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 9053937,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground054/Ground054_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 2896658,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103.png",
+      "extension": ".png",
+      "bytes": 461884,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 3619700,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 5997214,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1554675,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 8812831,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 8811594,
+      "category": "image"
+    },
+    {
+      "path": "textures/Ground103/Ground103_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3419150,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A.png",
+      "extension": ".png",
+      "bytes": 213095,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 1968543,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 17670,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG_Metalness.jpg",
+      "extension": ".jpg",
+      "bytes": 20213,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 1250891,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 1291902,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal049A/Metal049A_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1308267,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A.png",
+      "extension": ".png",
+      "bytes": 276862,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3371947,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1008602,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG_Metalness.jpg",
+      "extension": ".jpg",
+      "bytes": 247035,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 2992190,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 2987550,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal055A/Metal055A_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1991438,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063.png",
+      "extension": ".png",
+      "bytes": 314455,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 5193905,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 3255865,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG_Metalness.jpg",
+      "extension": ".jpg",
+      "bytes": 2587308,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 1380729,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 1382977,
+      "category": "image"
+    },
+    {
+      "path": "textures/Metal063/Metal063_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3121777,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001.png",
+      "extension": ".png",
+      "bytes": 329146,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3179623,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 2155787,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 9043699,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 9042548,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster001/Plaster001_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1282590,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002.png",
+      "extension": ".png",
+      "bytes": 329309,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3811719,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1911512,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 8540898,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 8542001,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster002/Plaster002_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1721344,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007.png",
+      "extension": ".png",
+      "bytes": 328767,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2652009,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 4573950,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1385453,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 7430414,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 7421342,
+      "category": "image"
+    },
+    {
+      "path": "textures/Plaster007/Plaster007_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 2941802,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058.png",
+      "extension": ".png",
+      "bytes": 369099,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2223980,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 4525426,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 824892,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 7501578,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 7540530,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock058/Rock058_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 3001155,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063.png",
+      "extension": ".png",
+      "bytes": 463099,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 1258887,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3436561,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 337684,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 3439442,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 3424734,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock063/Rock063_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1437039,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064.png",
+      "extension": ".png",
+      "bytes": 443673,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG_AmbientOcclusion.jpg",
+      "extension": ".jpg",
+      "bytes": 2248026,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 6635383,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 865896,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 7164516,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 7152261,
+      "category": "image"
+    },
+    {
+      "path": "textures/Rock064/Rock064_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 2809510,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood092/Wood092.png",
+      "extension": ".png",
+      "bytes": 246035,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood092/Wood092_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 3513545,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood092/Wood092_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1959972,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood092/Wood092_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 4864588,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood092/Wood092_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 4855462,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood092/Wood092_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1641674,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood094/Wood094.png",
+      "extension": ".png",
+      "bytes": 261996,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood094/Wood094_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 4002489,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood094/Wood094_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 2444753,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood094/Wood094_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 2954496,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood094/Wood094_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 2954350,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood094/Wood094_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1082030,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood095/Wood095.png",
+      "extension": ".png",
+      "bytes": 296585,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood095/Wood095_2K-JPG_Color.jpg",
+      "extension": ".jpg",
+      "bytes": 2229035,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood095/Wood095_2K-JPG_Displacement.jpg",
+      "extension": ".jpg",
+      "bytes": 1293201,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood095/Wood095_2K-JPG_NormalDX.jpg",
+      "extension": ".jpg",
+      "bytes": 3452967,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood095/Wood095_2K-JPG_NormalGL.jpg",
+      "extension": ".jpg",
+      "bytes": 3452834,
+      "category": "image"
+    },
+    {
+      "path": "textures/Wood095/Wood095_2K-JPG_Roughness.jpg",
+      "extension": ".jpg",
+      "bytes": 1098309,
+      "category": "image"
+    }
+  ],
+  "audio": [
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/1911/A_34P.wav",
+      "extension": ".wav",
+      "bytes": 5726642,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/1911/A_42P.wav",
+      "extension": ".wav",
+      "bytes": 5489450,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/1917/B_16P.wav",
+      "extension": ".wav",
+      "bytes": 5669872,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/1917/B_24P.wav",
+      "extension": ".wav",
+      "bytes": 6646024,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AK-47/C_27P.wav",
+      "extension": ".wav",
+      "bytes": 5729424,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AK-47/C_28P.wav",
+      "extension": ".wav",
+      "bytes": 7188780,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AK-47/C_29P.wav",
+      "extension": ".wav",
+      "bytes": 4993166,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AK-47/C_31P.wav",
+      "extension": ".wav",
+      "bytes": 5059512,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AK-47/C_34P.wav",
+      "extension": ".wav",
+      "bytes": 16936330,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AK-47/C_36P.wav",
+      "extension": ".wav",
+      "bytes": 7082390,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AR-15/D_24P.wav",
+      "extension": ".wav",
+      "bytes": 3739958,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/AR-15/D_32P.wav",
+      "extension": ".wav",
+      "bytes": 5889684,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Arisaka/E_18P.wav",
+      "extension": ".wav",
+      "bytes": 4846058,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Arisaka/E_25P.wav",
+      "extension": ".wav",
+      "bytes": 3862686,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Bersa/F_41P.wav",
+      "extension": ".wav",
+      "bytes": 4824608,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Bersa/F_47P.wav",
+      "extension": ".wav",
+      "bytes": 4357762,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/CD/H_16P.wav",
+      "extension": ".wav",
+      "bytes": 4358492,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/CD/H_21P.wav",
+      "extension": ".wav",
+      "bytes": 3473324,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Carl Gustav M45/G_20P.wav",
+      "extension": ".wav",
+      "bytes": 5109268,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Carl Gustav M45/G_22P.wav",
+      "extension": ".wav",
+      "bytes": 5150622,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Carl Gustav M45/G_24P.wav",
+      "extension": ".wav",
+      "bytes": 2688076,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Carl Gustav M45/G_31P.wav",
+      "extension": ".wav",
+      "bytes": 5294180,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Carl Gustav M45/G_33P.wav",
+      "extension": ".wav",
+      "bytes": 6773400,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Carl Gustav M45/G_35P.wav",
+      "extension": ".wav",
+      "bytes": 5233972,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Marlin 336/I_17P.wav",
+      "extension": ".wav",
+      "bytes": 6427510,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Marlin 336/I_22P.wav",
+      "extension": ".wav",
+      "bytes": 7031522,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Model 12/K_17P.wav",
+      "extension": ".wav",
+      "bytes": 5910056,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Model 12/K_22P.wav",
+      "extension": ".wav",
+      "bytes": 6141774,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Model 1894/L_17P.wav",
+      "extension": ".wav",
+      "bytes": 4560614,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Model 1894/L_23P.wav",
+      "extension": ".wav",
+      "bytes": 4051538,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Mosin Nagant/M_21P.wav",
+      "extension": ".wav",
+      "bytes": 9864044,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Mosin Nagant/M_26P.wav",
+      "extension": ".wav",
+      "bytes": 8863514,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Mossberg/N_26P.wav",
+      "extension": ".wav",
+      "bytes": 6606084,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Mossberg/N_30P.wav",
+      "extension": ".wav",
+      "bytes": 4940968,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Nova/O_17P.wav",
+      "extension": ".wav",
+      "bytes": 3799488,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Nova/O_21P.wav",
+      "extension": ".wav",
+      "bytes": 3931936,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/PPSh/P_16P.wav",
+      "extension": ".wav",
+      "bytes": 9428556,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/PPSh/P_18P.wav",
+      "extension": ".wav",
+      "bytes": 17208014,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/PPSh/P_22P.wav",
+      "extension": ".wav",
+      "bytes": 3125496,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/PPSh/P_30P.wav",
+      "extension": ".wav",
+      "bytes": 10529940,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/PPSh/P_32P.wav",
+      "extension": ".wav",
+      "bytes": 5214642,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/PPSh/P_34P.wav",
+      "extension": ".wav",
+      "bytes": 3337548,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Ruger Mark III/R_30P.wav",
+      "extension": ".wav",
+      "bytes": 4417884,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Ruger Mark III/R_35P.wav",
+      "extension": ".wav",
+      "bytes": 4402428,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Ruger Single Six/S_11P.wav",
+      "extension": ".wav",
+      "bytes": 4909674,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Ruger Single Six/S_14P.wav",
+      "extension": ".wav",
+      "bytes": 5413954,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/SKS/U_14P.wav",
+      "extension": ".wav",
+      "bytes": 12482484,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/SKS/U_19P.wav",
+      "extension": ".wav",
+      "bytes": 10185038,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Savage 10 .300 Blackout/T_17P.wav",
+      "extension": ".wav",
+      "bytes": 4399758,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Savage 10 .300 Blackout/T_27P.wav",
+      "extension": ".wav",
+      "bytes": 4153180,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Smith & Wesson 642/V_22P.wav",
+      "extension": ".wav",
+      "bytes": 5462498,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Smith & Wesson 642/V_27P.wav",
+      "extension": ".wav",
+      "bytes": 6034334,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Tikka/W_24P.wav",
+      "extension": ".wav",
+      "bytes": 5345648,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Tikka/W_29P.wav",
+      "extension": ".wav",
+      "bytes": 5593406,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Walther PPQ/X_31P.wav",
+      "extension": ".wav",
+      "bytes": 5461338,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/firearm_sfx/Prepared SFX Library/Walther PPQ/X_39P.wav",
+      "extension": ".wav",
+      "bytes": 9069762,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-SandL1.flac",
+      "extension": ".flac",
+      "bytes": 40317,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-SandL2.flac",
+      "extension": ".flac",
+      "bytes": 30870,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-SandL3.flac",
+      "extension": ".flac",
+      "bytes": 29250,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-SandR1.flac",
+      "extension": ".flac",
+      "bytes": 36934,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-SandR2.flac",
+      "extension": ".flac",
+      "bytes": 30328,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-SandR3.flac",
+      "extension": ".flac",
+      "bytes": 32496,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL1.flac",
+      "extension": ".flac",
+      "bytes": 37045,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL2.flac",
+      "extension": ".flac",
+      "bytes": 33441,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL3.flac",
+      "extension": ".flac",
+      "bytes": 34318,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneR1.flac",
+      "extension": ".flac",
+      "bytes": 36412,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneR2.flac",
+      "extension": ".flac",
+      "bytes": 34323,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneR3.flac",
+      "extension": ".flac",
+      "bytes": 35929,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandL1.ogg",
+      "extension": ".ogg",
+      "bytes": 10440,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandL2.ogg",
+      "extension": ".ogg",
+      "bytes": 8922,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandL3.ogg",
+      "extension": ".ogg",
+      "bytes": 8246,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandR1.ogg",
+      "extension": ".ogg",
+      "bytes": 9796,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandR2.ogg",
+      "extension": ".ogg",
+      "bytes": 8716,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandR3.ogg",
+      "extension": ".ogg",
+      "bytes": 8635,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-StoneL1.ogg",
+      "extension": ".ogg",
+      "bytes": 8889,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-StoneL2.ogg",
+      "extension": ".ogg",
+      "bytes": 8516,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-StoneL3.ogg",
+      "extension": ".ogg",
+      "bytes": 8207,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-StoneR1.ogg",
+      "extension": ".ogg",
+      "bytes": 8855,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-StoneR2.ogg",
+      "extension": ".ogg",
+      "bytes": 8346,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps/Fantozzi-footsteps/ogg/Fantozzi-StoneR3.ogg",
+      "extension": ".ogg",
+      "bytes": 8404,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-SandL1.flac",
+      "extension": ".flac",
+      "bytes": 40317,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-SandL2.flac",
+      "extension": ".flac",
+      "bytes": 30870,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-SandL3.flac",
+      "extension": ".flac",
+      "bytes": 29250,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-SandR1.flac",
+      "extension": ".flac",
+      "bytes": 36934,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-SandR2.flac",
+      "extension": ".flac",
+      "bytes": 30328,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-SandR3.flac",
+      "extension": ".flac",
+      "bytes": 32496,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-StoneL1.flac",
+      "extension": ".flac",
+      "bytes": 37045,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-StoneL2.flac",
+      "extension": ".flac",
+      "bytes": 33441,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-StoneL3.flac",
+      "extension": ".flac",
+      "bytes": 34318,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-StoneR1.flac",
+      "extension": ".flac",
+      "bytes": 36412,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-StoneR2.flac",
+      "extension": ".flac",
+      "bytes": 34323,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/footsteps_flac/Fantozzi-StoneR3.flac",
+      "extension": ".flac",
+      "bytes": 35929,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/gunshots/game_gunshot.wav",
+      "extension": ".wav",
+      "bytes": 17016,
+      "category": "audio"
+    },
+    {
+      "path": "sfx/gunshots/sniper_shot.wav",
+      "extension": ".wav",
+      "bytes": 17016,
+      "category": "audio"
+    }
+  ]
+}

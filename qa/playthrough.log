@@ -1,0 +1,10 @@
+WHAT: Start-to-ending browser playthrough.
+WHY: Required final evidence.
+RESULT: PLAYWRIGHT_BLOCKED.
+ERROR: The normal official `playwright install chromium` attempt and the --with-deps/--only-shell alternatives failed through secure CDN TLS ECONNRESET or unavailable apt packages. Installed Chrome, Chromium and Edge channel discovery found none. No browser executable/channel exists.
+FIX: No insecure workaround used.
+NEXT: When an official browser is securely available, run C01–C06 and preserve captures/console output here.
+
+FOLLOW-UP: Read-only local search covered workspace, /home parent, /tmp, /opt, /usr/local, /usr/bin, /usr/lib, /usr/share, /var/cache, /var/lib, root/user caches and npm cache. It found no browser executable, archive, local Playwright cache, or offline Node driver.
+SYSTEM PACKAGE FOLLOW-UP: Per player request, passwordless-sudo apt-get update and apt-get install chromium was tried once. Debian bookworm, updates and security endpoints all failed connection; apt could not locate chromium. No proxy/mirror or certificate bypass was used.
+DIRECT PACKAGE FOLLOW-UP: The exact requested `sudo apt-get install -y chromium-browser` command was run without another apt update. Apt reported `Unable to locate package chromium-browser`.

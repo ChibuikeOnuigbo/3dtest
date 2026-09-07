@@ -1,0 +1,6 @@
+WHAT: Animation capability research.
+WHY: Avoid claiming animation where a model has no skeleton/clips.
+RESULT: Current prototype uses only original simple mechanical transforms. GLB/gltf forensics captures animation counts where parseable.
+ERROR: No external animation has licence/provenance/runtime approval.
+FIX: Keep complex humanoid animation out of current scope; validate any future selected clip through import and browser playback.
+NEXT: Run inspect_animation.py on a legally downloaded candidate before integration.

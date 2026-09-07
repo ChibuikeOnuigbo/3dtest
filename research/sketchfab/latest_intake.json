@@ -1,0 +1,18 @@
+{
+  "schema": "rivet-run-sketchfab-intake/v1",
+  "run_id": "sketchfab-intake-2026-09-06T17-23-46-198Z",
+  "security": {
+    "token_source_present": false,
+    "token_value_logged": false,
+    "policy": "Credential is never emitted, persisted, committed, embedded in URLs, or used with a TLS/proxy/download bypass."
+  },
+  "input_urls_count": 0,
+  "candidates": [],
+  "failures": [
+    {
+      "code": "SKETCHFAB_API_TOKEN_OR_SKETCHFAB_TOKEN_NOT_PRESENT",
+      "message": "No approved environment/secret-store credential is available. No public-page crawl or authenticated API/download request was attempted."
+    }
+  ],
+  "result": "BLOCKED_NO_APPROVED_SECRET_ENV"
+}

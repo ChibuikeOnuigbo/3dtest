@@ -1,0 +1,177 @@
+name: Browser QA evidence
+
+on:
+  # A manual dispatch is available after this workflow reaches the default branch.
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: Optional deterministic presentation seed for the capture run
+        required: false
+        default: rivet-run-highline-01
+        type: string
+  # The current Arena branch also runs it for runtime/QA changes, so browser evidence
+  # does not depend on prematurely merging an unreviewed world rebuild to main.
+  push:
+    branches:
+      - arena/01a068f0-3dtest
+    paths:
+      - '.github/workflows/browser-qa.yml'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'playwright.config.js'
+      - 'src/**'
+      - 'tests/**'
+      - 'tools/qa/**'
+      - 'tools/assets/**'
+      - 'qa/visual/review_contract.schema.json'
+      - 'qa/visual/critics/**'
+      - 'qa/visual/reviews/**'
+
+permissions:
+  # A small, immutable QA evidence set is committed to the same protected Arena branch
+  # after a successful capture. Browser binaries/traces remain short-lived artifacts.
+  contents: write
+
+jobs:
+  browser-smoke-and-capture:
+    name: Chromium smoke test and player-height capture
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+      RIVET_RUN_URL: http://127.0.0.1:5173/?seed=${{ inputs.seed }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Use pinned Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked JavaScript dependencies
+        run: npm ci
+
+      # Browser provisioning occurs explicitly in the runner before test/MCP-like work.
+      # It is never attempted interactively by the application or a tool handshake.
+      - name: Install Playwright Chromium and Linux dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Report resolved browser path
+        run: |
+          node --input-type=module -e "import { chromium } from '@playwright/test'; console.log('Chromium executable:', chromium.executablePath())"
+
+      # Optional authorised asset intake. The token exists only in GitHub Actions memory;
+      # the utility refuses all network acquisition if secret or candidate URLs are absent.
+      - name: Intake authorised Sketchfab candidates
+        env:
+          SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
+          SKETCHFAB_CANDIDATE_URLS: ${{ vars.SKETCHFAB_CANDIDATE_URLS }}
+        run: node tools/assets/sketchfab_intake.mjs
+
+      # Keep collecting real-player diagnostics if the smoke assertion fails, then fail
+      # the job at the end. This never turns a failed test green; it prevents a generic
+      # smoke failure from hiding the player-height browser evidence needed to diagnose it.
+      - name: Run browser smoke test
+        id: browser_smoke
+        continue-on-error: true
+        run: npm run test:e2e
+
+      - name: Start local game server for real capture
+        run: |
+          npm run dev -- --host 127.0.0.1 --port 5173 > "$RUNNER_TEMP/rivet-run-vite.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/rivet-run-vite.pid"
+          for attempt in $(seq 1 40); do
+            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 0.25
+          done
+          echo 'Vite did not become ready.' >&2
+          cat "$RUNNER_TEMP/rivet-run-vite.log" >&2 || true
+          exit 1
+
+      - name: Capture real first-person browser evidence — default seed
+        id: capture_default
+        continue-on-error: true
+        env:
+          VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/default
+          VISUAL_CAPTURE_LABEL: default
+        run: |
+          export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
+          node tools/qa/capture_visual_views.mjs
+
+      - name: Capture real first-person browser evidence — alternate seed
+        id: capture_alternate
+        continue-on-error: true
+        env:
+          RIVET_RUN_URL: http://127.0.0.1:5173/?seed=qa-harbour-alt-01
+          VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/alternate
+          VISUAL_CAPTURE_LABEL: alternate
+          VISUAL_CAPTURE_SCOPE: lookaround
+        run: |
+          export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
+          node tools/qa/capture_visual_views.mjs
+
+      - name: Validate default capture versus review states
+        if: always()
+        env:
+          VISUAL_CAPTURE_MANIFEST: qa/visual/evidence/${{ github.run_id }}/default/capture_record.json
+        run: node tools/qa/validate_visual_reviews.mjs > qa/visual/review_validation.json
+
+      - name: Commit generated player-height evidence
+        if: always()
+        run: |
+          git config user.name 'rivet-run-browser-qa[bot]'
+          git config user.email 'rivet-run-browser-qa[bot]@users.noreply.github.com'
+          git add qa/visual/evidence
+          if git diff --cached --quiet; then
+            echo 'No player-height evidence generated; retaining diagnostics in the CI artifact.'
+            exit 0
+          fi
+          git commit -m "qa: add captured player-height frames for run $GITHUB_RUN_ID"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Fail after collecting diagnostics for smoke/capture failure
+        if: steps.browser_smoke.outcome == 'failure' || steps.capture_default.outcome == 'failure' || steps.capture_alternate.outcome == 'failure'
+        run: |
+          echo 'Smoke test or at least one real player capture failed; any committed partial evidence remains diagnostic only.' >&2
+          exit 1
+
+      - name: Stop local game server
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/rivet-run-vite.pid" ]; then
+            kill "$(cat "$RUNNER_TEMP/rivet-run-vite.pid")" || true
+          fi
+
+      - name: Upload browser evidence and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rivet-run-browser-qa-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            qa/visual/**/*.png
+            qa/visual/**/*.zip
+            qa/visual/capture_manifest.json
+            qa/visual/review_validation.json
+            qa/visual/playthrough_context.json
+            research/sketchfab/latest_intake.json
+            playwright-report/
+            test-results/
+            ${{ runner.temp }}/rivet-run-vite.log
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo '## Rivet Run browser QA'
+            echo
+            echo '- Chromium was provisioned explicitly before execution.'
+            echo '- Smoke test and player-height capture results are available in the uploaded artifact.'
+            echo '- Capture presence is evidence only; visual approval still requires hostile semantic inspection and the documented score threshold.'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,4 @@
+yt-dlp==2026.8.19
+beautifulsoup4==4.15.0
+# Required only by contact_sheet.py when verified local frames exist.
+Pillow==12.1.1

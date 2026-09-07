@@ -1,0 +1,4 @@
+WHAT: Metadata/caption-only YouTube reference attempt for the player-supplied parkour video.
+WHY: Establish permitted design evidence; no full video download or insecure network option.
+2026-09-05T07:21:32+00:00
+/bin/bash: line 7: yt-dlp: command not found

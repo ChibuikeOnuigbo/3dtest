@@ -1,0 +1,10 @@
+{
+  "schema": "rivet-run-semantic-visual-report/v2",
+  "area_id": "switch-house",
+  "status": "BLOCKED_NO_BROWSER_EXECUTABLE",
+  "score": null,
+  "critical_issues": null,
+  "findings": [],
+  "evidence": [],
+  "next_action": "Run real player-height browser capture then conduct hostile semantic review."
+}

@@ -1,0 +1,216 @@
+{
+  "repository": "research/github_repos/enari-engine",
+  "literal_asset_references": [
+    {
+      "source": "index.html",
+      "asset_path": "./public/valveLoading.webp"
+    },
+    {
+      "source": "index.html",
+      "asset_path": "./public/valveLoading.mp3"
+    }
+  ],
+  "pattern_matches": {
+    "gltf_loader": [
+      {
+        "source": "src/View/Mesh/GlobalLoadingManager.ts",
+        "count": 8
+      }
+    ],
+    "obj_loader": [],
+    "animation_mixer": [
+      {
+        "source": "src/View/Mesh/AnimatedLoadableMesh.ts",
+        "count": 4
+      },
+      {
+        "source": "src/View/Mesh/ThirdPersonMesh.ts",
+        "count": 3
+      }
+    ],
+    "pointer_lock": [
+      {
+        "source": "src/Input/InputManager.ts",
+        "count": 19
+      }
+    ],
+    "collision": [
+      {
+        "source": "package-lock.json",
+        "count": 8
+      },
+      {
+        "source": "package.json",
+        "count": 2
+      },
+      {
+        "source": "src/Game.ts",
+        "count": 4
+      },
+      {
+        "source": "src/main.ts",
+        "count": 3
+      },
+      {
+        "source": "src/Core/Actor.ts",
+        "count": 10
+      },
+      {
+        "source": "src/Core/Pawn.ts",
+        "count": 5
+      },
+      {
+        "source": "src/Core/Player.ts",
+        "count": 67
+      },
+      {
+        "source": "src/Core/Quaternion.ts",
+        "count": 9
+      },
+      {
+        "source": "src/Core/Vector.ts",
+        "count": 11
+      },
+      {
+        "source": "src/Interface/IBody.ts",
+        "count": 5
+      },
+      {
+        "source": "src/Physics/Ammo.ts",
+        "count": 18
+      },
+      {
+        "source": "src/Physics/Physics.ts",
+        "count": 16
+      },
+      {
+        "source": "src/Physics/Collider/Collider.ts",
+        "count": 1
+      },
+      {
+        "source": "src/Physics/Collider/CubeCollider.ts",
+        "count": 33
+      },
+      {
+        "source": "src/Physics/Collider/GroundCollider.ts",
+        "count": 24
+      },
+      {
+        "source": "src/Physics/Collider/SphereCollider.ts",
+        "count": 25
+      },
+      {
+        "source": "src/Physics/Collider/TrimeshCollider.ts",
+        "count": 41
+      },
+      {
+        "source": "src/View/Mesh/MapMesh.ts",
+        "count": 10
+      },
+      {
+        "source": "src/View/LightExtra/CSM.js",
+        "count": 7
+      },
+      {
+        "source": "src/View/Renderer/CubeRenderer.ts",
+        "count": 4
+      },
+      {
+        "source": "src/View/Renderer/GroundRenderer.ts",
+        "count": 4
+      },
+      {
+        "source": "src/View/Renderer/SphereRenderer.ts",
+        "count": 7
+      },
+      {
+        "source": "src/View/Renderer/TrimeshRenderer.ts",
+        "count": 7
+      },
+      {
+        "source": "src/View/Renderer/PlayerRenderer/PlayerRenderer.ts",
+        "count": 3
+      }
+    ],
+    "audio": [
+      {
+        "source": "src/View/Audio/AudioManager.ts",
+        "count": 5
+      },
+      {
+        "source": "src/View/Mesh/AnimatedLoadableMesh.ts",
+        "count": 2
+      },
+      {
+        "source": "src/View/Mesh/ThirdPersonMesh.ts",
+        "count": 1
+      }
+    ],
+    "render_loop": [
+      {
+        "source": "src/Game.ts",
+        "count": 1
+      }
+    ],
+    "network": [
+      {
+        "source": "src/View/Mesh/GlobalLoadingManager.ts",
+        "count": 1
+      }
+    ],
+    "shadow": [
+      {
+        "source": "src/View/Mesh/FPSMesh.ts",
+        "count": 2
+      },
+      {
+        "source": "src/View/Mesh/LoadableMesh.ts",
+        "count": 2
+      },
+      {
+        "source": "src/View/Mesh/ThirdPersonMesh.ts",
+        "count": 3
+      },
+      {
+        "source": "src/View/LightExtra/CSM.js",
+        "count": 31
+      },
+      {
+        "source": "src/View/Renderer/CubeRenderer.ts",
+        "count": 2
+      },
+      {
+        "source": "src/View/Renderer/GroundRenderer.ts",
+        "count": 2
+      },
+      {
+        "source": "src/View/Renderer/Renderer.ts",
+        "count": 1
+      },
+      {
+        "source": "src/View/Renderer/SceneLighting.ts",
+        "count": 4
+      },
+      {
+        "source": "src/View/Renderer/SkyLight.ts",
+        "count": 1
+      },
+      {
+        "source": "src/View/Renderer/SphereRenderer.ts",
+        "count": 2
+      },
+      {
+        "source": "src/View/Renderer/ViewmodelRenderer.ts",
+        "count": 1
+      },
+      {
+        "source": "src/View/Renderer/PlayerRenderer/FPSRenderer.ts",
+        "count": 1
+      },
+      {
+        "source": "src/View/Renderer/PlayerRenderer/PlayerRenderer.ts",
+        "count": 1
+      }
+    ]
+  }
+}

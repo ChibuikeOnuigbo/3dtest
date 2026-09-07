@@ -1,0 +1,195 @@
+{
+  "schema": "rivet-run-semantic-visual-review/v2",
+  "review_round": 1,
+  "reviewed_capture": "qa/visual/evidence/33962715816/capture_record.json",
+  "review_basis": "All nine GitHub Actions Chromium PNGs were visually inspected at player height. This review rejects scene semantics; it is not derived from build success, telemetry, file presence or image metrics.",
+  "captured_commit": "09f3c939ae9b8064c07a69eca0673fe62a935e6b",
+  "status": "INSPECTED_NEEDS_MAJOR_REBUILD",
+  "approved": false,
+  "whole_run_approved": false,
+  "overall_score": null,
+  "frame_reviews": [
+    {
+      "frame_id": "01-dispatch-spawn",
+      "requested_region": "dispatch-bay",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"composition": 2.0, "world_depth": 2.0, "construction": 2.5, "route_read": 2.0},
+      "approved": false,
+      "finding": "The player is correctly standing on Yard Roof, but roughly two-thirds of the image is clear blue/white sky. Huge muddy-brown side facades, a black lower sill and amber slab-like threshold shapes still create a prototype corridor, not an industrial exterior vista."
+    },
+    {
+      "frame_id": "02-dispatch-look-east",
+      "requested_region": "dispatch-bay",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"composition": 1.5, "world_depth": 1.5, "construction": 2.0, "route_read": 1.5},
+      "approved": false,
+      "finding": "A single giant stained facade fills the right side while sky remains dominant. Tiny teal rectangles and lamps do not make it a believable occupied building or reveal a lower harbour/city layer."
+    },
+    {
+      "frame_id": "03-dispatch-look-west",
+      "requested_region": "dispatch-bay",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": {"composition": 2.0, "world_depth": 2.0, "construction": 2.0, "route_read": 2.0},
+      "approved": false,
+      "finding": "The west look repeats the terminal frame with a sparse brown building and oversized amber steps. The distant ridge is only a thin pale strip, not a legible destination world."
+    },
+    {
+      "frame_id": "04-switch-house-arrival",
+      "requested_region": "switch-house",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": null,
+      "approved": false,
+      "finding": "The capture truthfully records a navigation miss: player position remains near Dispatch Bay. Visually it is another high-sky view over generic ramps, not a Switch House arrival."
+    },
+    {
+      "frame_id": "05-transfer-beacon",
+      "requested_region": "switch-house",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": null,
+      "approved": false,
+      "finding": "A second early-route frame is incorrectly named as a beacon context by intent only. It contains no verified transfer arrival and no clear player-facing route choice."
+    },
+    {
+      "frame_id": "06-east-span-runup",
+      "requested_region": "east-span",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": null,
+      "approved": false,
+      "finding": "This is still Dispatch Bay geometry. The image does not show an East Span runway, supported viaduct, speed cue, branch choice or landing."
+    },
+    {
+      "frame_id": "07-east-span-transfer",
+      "requested_region": "east-span",
+      "recorded_region": "unsupported-or-airborne",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "support_surface": null,
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": null,
+      "approved": false,
+      "finding": "The player is airborne below authored support at the recorded position and the sequence subsequently restarts. It is not valid transfer evidence; the image still has the same empty-sky/giant-facade presentation."
+    },
+    {
+      "frame_id": "08-boiler-court-arrival",
+      "requested_region": "boiler-court",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": null,
+      "approved": false,
+      "finding": "The visible Checkpoint reset toast and support contact on Yard Roof prove this is a recovery after a failed transfer, not Boiler Court arrival."
+    },
+    {
+      "frame_id": "09-boiler-court-look",
+      "requested_region": "boiler-court",
+      "recorded_region": "dispatch-bay",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "support_surface": "yard-roof",
+      "critic_status": "INSPECTED_NEEDS_FIXES",
+      "scores": null,
+      "approved": false,
+      "finding": "This final claimed Boiler Court look is visibly Dispatch Bay again. It cannot be used for later-region approval or whole-run coverage."
+    }
+  ],
+  "role_reviews": [
+    {
+      "role": "AAA/INDIE ART DIRECTOR",
+      "status": "FAILED",
+      "finding": "The updated physical sky replaces beige with blue, but the image is still overwhelmingly sky-first and has no dramatic silhouette hierarchy. Mud-brown facades, black bands and orange slabs are not a controlled highline art direction.",
+      "required_action": "Compose a first 20-second hero image around an open roof threshold, a framed terminal, high-value adjacent structures and a dense but readable low harbour horizon; make amber a sparing signal colour."
+    },
+    {
+      "role": "LEVEL DESIGNER",
+      "status": "FAILED",
+      "finding": "Only Dispatch Bay has grounded-contact evidence. The scripted run does not reach Switch House, East Span or Boiler Court, so choices, transitions and region pacing are unreviewable.",
+      "required_action": "Correct input-heading calibration, make the first circulation connection plainly traversable, and stop each capture only on an authored support surface in the intended region."
+    },
+    {
+      "role": "ENVIRONMENT ARTIST",
+      "status": "FAILED",
+      "finding": "The world is still an obstacle course flanked by broad, undifferentiated textured boxes. The thin grey ridge and small teal windows do not supply facade depth, industrial logic, a lower world, or a believable harbour context.",
+      "required_action": "Replace unarticulated wall faces with bays, recesses, service floors, roof equipment and structural edges. Add central low-rise/distant building masses and rail/harbour silhouettes that are visible through the route frame."
+    },
+    {
+      "role": "TECHNICAL ARTIST",
+      "status": "FAILED",
+      "finding": "The `Sky` helper produces a physically graded background, but browser automation entered the run looking steeply upward: capture directions have Y approximately +0.458. Console also records two 404 requests and expected screenshot ReadPixels stalls.",
+      "required_action": "Use feedback-controlled real mouse alignment before capture, resolve the 404 source, retain ReadPixels warning only as capture overhead, and retest actual camera directions in CI."
+    },
+    {
+      "role": "PARKOUR DESIGNER",
+      "status": "FAILED",
+      "finding": "The player sees orange planar thresholds and a terminal, not take-off/landing geometry or a compelling speed transfer. The active capture route falls below support before reaching the East Span.",
+      "required_action": "Use shallow supported stairs and visible landings; separate safety paint from traverse surface mass; make the East dash landing physically and visually clear before presenting it as a set piece."
+    },
+    {
+      "role": "FIRST-PERSON MOVEMENT DESIGNER",
+      "status": "FAILED",
+      "finding": "A residual automation mouse movement forces the initial view approximately 27 degrees upward, defeating the intended slight down-facing default. Travel input then moves diagonally off the primary line.",
+      "required_action": "Calibrate route heading and pitch from the real probe direction with bounded pointer-lock mouse movement; never set player/camera coordinates. Record the resulting direction in every capture."
+    },
+    {
+      "role": "PLAYER/FUN TESTER",
+      "status": "FAILED",
+      "finding": "The terminal is visible but the composition neither promises a route nor sells a place worth exploring. The recovery toast confirms the route attempt failed rather than making failure legible or satisfying.",
+      "required_action": "Make the first route step, destination, skyline and recovery line readable without the HUD; add one memorable distant industrial landmark."
+    },
+    {
+      "role": "PERFORMANCE REVIEWER",
+      "status": "NEEDS_FOLLOW_UP",
+      "finding": "The two screenshot-driven GPU ReadPixels stalls are not gameplay FPS evidence. The current world nevertheless spends large screen area on plain high-poly? unarticulated walls rather than a few value-rich silhouette assemblies.",
+      "required_action": "Profile after facade reconstruction; consolidate repeated facade detail where possible and do not use capture stalls as an FPS verdict."
+    },
+    {
+      "role": "HOSTILE QUALITY CRITIC",
+      "status": "FAILED",
+      "finding": "This is still a failed visual build. Blue sky replaces beige, yet it remains mostly sky, brown boxes, black occluding strips, teal window slots and orange obstacle slabs. Six claimed later-region frames are demonstrably false route evidence.",
+      "required_action": "Reject the batch. Repair first-person orientation and route navigation, rebuild the dispatch composition around credible built layers, then recapture all views for a fresh review."
+    }
+  ],
+  "critical_defects": [
+    {
+      "id": "VC-006",
+      "title": "Sky-dominant camera composition remains a critical visual defect",
+      "affected_frames": ["01-dispatch-spawn", "02-dispatch-look-east", "03-dispatch-look-west", "04-switch-house-arrival", "05-transfer-beacon", "06-east-span-runup", "07-east-span-transfer", "08-boiler-court-arrival", "09-boiler-court-look"],
+      "fix": "Align capture pitch downward from actual pointer-lock direction and rebuild central/low vista layers; do not consider a gradient sky sufficient environment work."
+    },
+    {
+      "id": "VC-007",
+      "title": "Dispatch is built from giant repeated box/facade masses",
+      "affected_frames": ["01-dispatch-spawn", "02-dispatch-look-east", "03-dispatch-look-west"],
+      "fix": "Replace oversized flat wall read with constructed facade bays, roof detail, voids/recesses, legible structural support and an open threshold."
+    },
+    {
+      "id": "VC-008",
+      "title": "Amber threshold geometry still reads as oversized obstacle slabs",
+      "affected_frames": ["01-dispatch-spawn", "03-dispatch-look-west", "04-switch-house-arrival", "08-boiler-court-arrival"],
+      "fix": "Use thin nosings/stripe marks only; open actual parapet gaps and let dark roof/stair material define circulation."
+    },
+    {
+      "id": "VC-009",
+      "title": "Real-input capture falls off course after Dispatch",
+      "affected_frames": ["04-switch-house-arrival", "05-transfer-beacon", "06-east-span-runup", "07-east-span-transfer", "08-boiler-court-arrival", "09-boiler-court-look"],
+      "fix": "Use real-mouse feedback orientation and grounded authored-support verification. Preserve navigation misses rather than relabelling them."
+    }
+  ],
+  "approval_rule": "The 33962715816 batch is CAPTURED and INSPECTED but not APPROVED. Diagnostic scores are supplied only for the three genuinely arrived Dispatch frames. No score is fabricated for navigation-miss frames, and this review does not authorize a completion claim."
+}

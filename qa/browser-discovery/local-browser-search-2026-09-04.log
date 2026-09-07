@@ -1,0 +1,32 @@
+WHAT: Offline/local browser binary and archive discovery.
+WHY: Attempt browser QA using an existing local binary only; no installer or network request is run.
+DATE: 2026-09-04T13:13:19+00:00
+SEARCHED_DIRECTORIES:
+/home/user/3dtest
+/home/user
+/tmp
+/opt
+/usr/local/bin
+/usr/bin
+/usr/lib
+/var/cache/apt/archives
+/root/.cache
+/home/user/.cache
+\nSTANDARD_PATH_CHECKS:
+ABSENT /usr/bin/google-chrome
+ABSENT /usr/bin/google-chrome-stable
+ABSENT /usr/bin/chromium
+ABSENT /usr/bin/chromium-browser
+ABSENT /usr/bin/microsoft-edge
+ABSENT /usr/bin/microsoft-edge-stable
+ABSENT /opt/google/chrome/chrome
+ABSENT /opt/microsoft/msedge/msedge
+\nCANDIDATE_EXECUTABLES:
+\nBROWSER_ARCHIVES_OR_PACKAGES:
+\nPLAYWRIGHT_AND_PUPPETEER_NODE_MODULES:
+\nPACKAGE_METADATA:
+playwright: absent
+playwright-core: absent
+puppeteer: absent
+puppeteer-core: absent
+\nPLAYWRIGHT_CACHE_CANDIDATES:
