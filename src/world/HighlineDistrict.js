@@ -498,7 +498,7 @@ export class HighlineDistrict {
     for (const [y2, x] of [[4.6, -1.1], [0.6, 1.1]]) b.box('drop-landing-edge', m.safetyYellow, [0.08, 0.06, 3.6], [x + (x < 0 ? 0.9 : -0.9), y2 + 0.03, rz], { cast: false });
     for (const y2 of [6.6, 3.0, -1.0]) { b.lamp([-1.9, y2, rz + 1.6], { material: m.lampWarm, intensity: 4, distance: 6, light: y2 === 3.0, size: 0.25 }); b.lamp([1.9, y2, rz - 1.6], { material: m.lampRed, color: '#ff3b2f', intensity: 3, distance: 6, light: false, size: 0.25 }); }
     b.ladder('drop-ladder', [0, shaftBottom, -62.35], depth, 'z', { exit: [0, 0, 1] });
-    b.cylinder('drop-pipe', m.oxide, 0.16, depth, [1.7, shaftBottom + depth / 2, -65.7], { segments: 10, cast: false });
+    b.cylinder('drop-pipe', m.oxide, 0.16, depth, [-2.6, shaftBottom + depth / 2, -66.2], { segments: 10, cast: false });
     this.checkpoint('drop', [0, roomY, -60.7], 2.2, Math.PI, 'Drop landing to landing down the shaft into the turbine hall (or use the ladder).');
   }
 
@@ -543,6 +543,13 @@ export class HighlineDistrict {
     b.box('catwalk-landing', m.grating, [4.4, 0.08, 4.0], [0, catY - 0.04, -64], { collide: true, traits: { walkable: true, surface: 'grating' }, id: 'drop-bottom', cast: false });
     b.catwalk('hall-catwalk-n', [2.0, catY, -64], 4.2, { width: 2.4, axis: 'x', rails: 'both', surface: 'grating' });
     b.lamp([0, catY + 2.6, -64], { intensity: 6, distance: 9, size: 0.4 });
+    // High-bay lamps: the hall is roofed, so the sun never reaches the floor. Three wide lamps carry the interior.
+    for (const z of [-66, -76, -86]) { b.box('highbay-housing', m.steelDark, [1.2, 0.3, 1.2], [0, roofY - 2.9, z], { cast: false }); b.lamp([0, roofY - 3.1, z], { intensity: 90, distance: 42, size: 0.9, color: '#ffc98a' }); }
+    b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.02, 30], [-4.6, floorY + 0.012, cz], { cast: false });
+    b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.02, 30], [4.6, floorY + 0.012, cz], { cast: false });
+    b.box('hall-floor-paint', m.routePaint, [8.9, 0.02, 0.25], [0, floorY + 0.012, -70], { cast: false });
+    b.box('hall-drain', m.steelDark, [0.8, 0.02, 8], [0, floorY + 0.012, cz], { cast: false });
+    for (const x of [-3.4, 3.4]) b.cabinet(`hall-mcc-${x}`, [x, floorY, -62.4], 0, { width: 1.4, height: 2.2, depth: 0.6, material: m.steel, lit: true });
     for (const x of [4.9, 10.5]) b.box('crane-rail', m.oxide, [0.3, 0.5, 26], [x, catY + 4.2, -75], { cast: false });
     for (const x of [4.9, 10.5]) for (const z of [-63, -75, -87]) b.box('crane-rail-hanger', m.oxide, [0.3, 3.2, 0.3], [x, catY + 6.0, z], { cast: false });
     const trolley = this.addMovingPlatform('crane-trolley', { from: [7.7, catY - 0.12, -64], to: [7.7, catY - 0.12, -84], size: [3.2, 0.24, 3.2], period: 12, material: m.checker, region: 'turbine-hall', dwell: 3.0 });

@@ -150,7 +150,7 @@ const POSES = {
   '12-rack-platform': { position: [-2, 12.4, -38.5], yaw: Math.PI, pitch: -0.05 },
   '13-control-corridor': { position: [0, 8.7, -47.5], yaw: 0, pitch: -0.08 },
   '14-drop-room': { position: [-1.1, 8.7, -60.8], yaw: 0, pitch: -0.5 },
-  '15-turbine-hall': { position: [0, -3.3, -64], yaw: -Math.PI / 2 + 0.5, pitch: -0.05 },
+  '15-turbine-hall': { position: [3.4, -3.3, -64], yaw: -0.55, pitch: -0.2 },
   '16-crane-trolley': { position: [7.7, -3.3, -66], yaw: 0, pitch: -0.12 },
   '17-hall-gallery-door': { position: [4, -0.3, -89.5], yaw: Math.PI / 2 - 0.4, pitch: -0.02 },
   '18-sunline-gantry': { position: [0, -0.3, -96], yaw: 0, pitch: -0.06 },

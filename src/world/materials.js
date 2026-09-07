@@ -43,9 +43,55 @@ function makeLoader(manager) {
  * @param {Set<string>} [options.availablePolyhaven] ids present under public/textures/polyhaven
  * @param {boolean} [options.headless] skip texture loading entirely (Node tests)
  */
+/**
+ * Large-scale (17 m) value-noise "grime" mask used to break the visible tiling of the
+ * 1–3 m PBR sets. Sampled in world space inside the standard shader, so a 40 m roof gets
+ * slow albedo/roughness drift instead of a perfectly periodic pattern. Built in memory —
+ * no texture file, and no extra draw calls (one extra texture fetch per fragment).
+ */
+function makeMacroNoiseTexture(size = 256, seed = 7) {
+  let state = seed >>> 0;
+  const rand = () => { state = (state * 1664525 + 1013904223) >>> 0; return state / 4294967296; };
+  const lattice = 16; const grid = new Float32Array(lattice * lattice);
+  for (let i = 0; i < grid.length; i++) grid[i] = rand();
+  const sample = (u, v) => {
+    const x = u * lattice, y = v * lattice; const x0 = Math.floor(x) % lattice, y0 = Math.floor(y) % lattice; const x1 = (x0 + 1) % lattice, y1 = (y0 + 1) % lattice;
+    const fx = x - Math.floor(x), fy = y - Math.floor(y); const sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+    const a = grid[y0 * lattice + x0], b = grid[y0 * lattice + x1], c = grid[y1 * lattice + x0], d = grid[y1 * lattice + x1];
+    return (a + (b - a) * sx) * (1 - sy) + (c + (d - c) * sx) * sy;
+  };
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const u = x / size, v = y / size;
+    const n = 0.55 * sample(u, v) + 0.3 * sample((u * 2.13) % 1, (v * 2.13) % 1) + 0.15 * sample((u * 4.7) % 1, (v * 4.7) % 1);
+    const i = (y * size + x) * 4; const g = Math.round(Math.max(0, Math.min(1, n)) * 255);
+    data[i] = g; data[i + 1] = g; data[i + 2] = g; data[i + 3] = 255;
+  }
+  const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping; texture.minFilter = THREE.LinearMipmapLinearFilter; texture.magFilter = THREE.LinearFilter; texture.generateMipmaps = true; texture.needsUpdate = true;
+  return texture;
+}
+
+function addMacroVariation(material, texture, { scale = 17, albedo = 0.3, roughness = 0.18 } = {}) {
+  material.onBeforeCompile = (shader) => {
+    shader.uniforms.macroMap = { value: texture };
+    shader.uniforms.macroParams = { value: new THREE.Vector3(1 / scale, albedo, roughness) };
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vMacroWorld;')
+      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvMacroWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vMacroWorld;\nuniform sampler2D macroMap;\nuniform vec3 macroParams;')
+      .replace('#include <map_fragment>', '#include <map_fragment>\nfloat macroN = texture2D(macroMap, vMacroWorld.xz * macroParams.x + vMacroWorld.y * macroParams.x * vec2(0.71, 0.29)).r - 0.5;\ndiffuseColor.rgb *= 1.0 + macroN * 2.0 * macroParams.y;')
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = clamp(roughnessFactor + macroN * macroParams.z, 0.04, 1.0);');
+  };
+  material.customProgramCacheKey = () => 'macro-variation-v1';
+  return material;
+}
+
 export function createMaterialLibrary({ manager, availablePolyhaven = new Set(), headless = false } = {}) {
   const load = headless ? null : makeLoader(manager);
   const sources = {};
+  const macroNoise = headless ? null : makeMacroNoiseTexture();
 
   function textured(family, { color = '#ffffff', roughness = 1, metalness = 0, normalScale = 0.6, envMapIntensity = 0.7 } = {}) {
     const spec = SET_SOURCES[family];
@@ -60,16 +106,40 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     material.normalMap = load(`${base}/normal.jpg`, { tile: spec.tile });
     material.normalScale = new THREE.Vector2(normalScale, normalScale);
     material.roughnessMap = load(`${base}/roughness.jpg`, { tile: spec.tile });
+    addMacroVariation(material, macroNoise, { albedo: family === 'grating' || family === 'checker' ? 0.14 : 0.3, roughness: 0.18 });
     return material;
   }
 
-  function flat(name, options) {
+  function flat(name, options, { macro = false } = {}) {
     const material = new THREE.MeshStandardMaterial(options);
     material.name = name;
+    if (macro && macroNoise) addMacroVariation(material, macroNoise, { albedo: 0.16, roughness: 0.22 });
     return material;
   }
 
   const containerCache = new Map();
+
+  /** Industrial steel-framed window: painted mullions over a lit (or dark) pane grid; drawn once, shared. */
+  function windowMaterial(name, { lit, paneColor, emissive, emissiveIntensity, cols = 3, rows = 4 }) {
+    if (typeof document === 'undefined') return flat(name, { color: paneColor, emissive, emissiveIntensity, roughness: 0.4 });
+    const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 384;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = paneColor; ctx.fillRect(0, 0, 256, 384);
+    // per-pane variation: some panes dimmer/brighter or broken so rows of windows do not repeat perfectly
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const v = ((r * 7 + c * 13) % 5) / 5;
+      ctx.fillStyle = lit ? `rgba(${v > 0.6 ? 60 : 255},${v > 0.6 ? 40 : 220},${v > 0.6 ? 30 : 150},${lit ? 0.28 * v : 0})` : `rgba(140,170,190,${0.25 * v})`;
+      ctx.fillRect(c * 256 / cols, r * 384 / rows, 256 / cols, 384 / rows);
+    }
+    ctx.fillStyle = '#23282b';
+    for (let c = 0; c <= cols; c++) ctx.fillRect(Math.round(c * 256 / cols) - 5, 0, 10, 384);
+    for (let r = 0; r <= rows; r++) ctx.fillRect(0, Math.round(r * 384 / rows) - 5, 256, 10);
+    ctx.fillRect(0, 0, 256, 14); ctx.fillRect(0, 370, 256, 14); ctx.fillRect(0, 0, 14, 384); ctx.fillRect(242, 0, 14, 384);
+    const map = new THREE.CanvasTexture(canvas); map.colorSpace = THREE.SRGBColorSpace; map.anisotropy = 4;
+    const material = new THREE.MeshStandardMaterial({ map, color: '#ffffff', roughness: 0.35, metalness: 0.3, emissive: '#ffffff', emissiveMap: map, emissiveIntensity, envMapIntensity: 0.9 });
+    material.name = name;
+    return material;
+  }
   const library = {
     // PRIMARY
     concrete: textured('concrete', { color: '#b9b2a6', roughness: 0.94 }),
@@ -85,20 +155,20 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     // SECONDARY
     checker: textured('checker', { color: '#8d9194', roughness: 0.5, metalness: 0.7, normalScale: 0.8, envMapIntensity: 0.8 }),
     grating: textured('grating', { color: '#6d6f70', roughness: 0.62, metalness: 0.7, normalScale: 0.5 }),
-    steel: flat('painted_steel_teal', { color: '#4f6a70', roughness: 0.52, metalness: 0.62, envMapIntensity: 0.9 }),
-    steelDark: flat('painted_steel_charcoal', { color: '#2f363a', roughness: 0.55, metalness: 0.7, envMapIntensity: 0.8 }),
-    steelPale: flat('painted_steel_pale', { color: '#a9afae', roughness: 0.5, metalness: 0.6, envMapIntensity: 0.9 }),
-    oxide: flat('oxide_red_steel', { color: '#7a3f2c', roughness: 0.6, metalness: 0.5, envMapIntensity: 0.7 }),
-    galvanised: flat('galvanised_steel', { color: '#8c9497', roughness: 0.42, metalness: 0.85, envMapIntensity: 1 }),
+    steel: flat('painted_steel_teal', { color: '#4f6a70', roughness: 0.52, metalness: 0.62, envMapIntensity: 0.9 }, { macro: true }),
+    steelDark: flat('painted_steel_charcoal', { color: '#2f363a', roughness: 0.55, metalness: 0.7, envMapIntensity: 0.8 }, { macro: true }),
+    steelPale: flat('painted_steel_pale', { color: '#8e9593', roughness: 0.62, metalness: 0.45, envMapIntensity: 0.7 }, { macro: true }),
+    oxide: flat('oxide_red_steel', { color: '#7a3f2c', roughness: 0.6, metalness: 0.5, envMapIntensity: 0.7 }, { macro: true }),
+    galvanised: flat('galvanised_steel', { color: '#8c9497', roughness: 0.42, metalness: 0.85, envMapIntensity: 1 }, { macro: true }),
     rubber: flat('black_rubber', { color: '#1d1f20', roughness: 0.95, metalness: 0 }),
-    glass: flat('glazing', { color: '#6d8b98', roughness: 0.12, metalness: 0.92, envMapIntensity: 1.4 }),
+    glass: flat('glazing', { color: '#9fc3cf', roughness: 0.08, metalness: 0.2, envMapIntensity: 1.2, transparent: true, opacity: 0.28, depthWrite: false, side: THREE.DoubleSide }),
     glassDark: flat('glazing_dark', { color: '#2b3b44', roughness: 0.18, metalness: 0.9, envMapIntensity: 1.2 }),
     container: (hex) => {
-      if (!containerCache.has(hex)) containerCache.set(hex, flat(`container_${hex}`, { color: hex, roughness: 0.62, metalness: 0.45, envMapIntensity: 0.8 }));
+      if (!containerCache.has(hex)) containerCache.set(hex, flat(`container_${hex}`, { color: hex, roughness: 0.62, metalness: 0.45, envMapIntensity: 0.8 }, { macro: true }));
       return containerCache.get(hex);
     },
     water: flat('harbour_water', { color: '#20404a', roughness: 0.14, metalness: 0.05, envMapIntensity: 1.6 }),
-    asphalt: flat('asphalt', { color: '#3f4042', roughness: 0.98, metalness: 0 }),
+    asphalt: flat('asphalt', { color: '#3f4042', roughness: 0.98, metalness: 0 }, { macro: true }),
     // ACCENT
     routePaint: flat('route_paint_oxide_orange', { color: '#c65a2a', roughness: 0.6, metalness: 0.2 }),
     safetyYellow: flat('safety_yellow', { color: '#c9a03a', roughness: 0.6, metalness: 0.2 }),
@@ -108,8 +178,8 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     relay: flat('relay_panel_live', { color: '#d9a35a', emissive: '#c8641d', emissiveIntensity: 1.4, roughness: 0.35, metalness: 0.4 }),
     relayDone: flat('relay_panel_done', { color: '#7fb1a2', emissive: '#1f7f66', emissiveIntensity: 0.9, roughness: 0.35, metalness: 0.4 }),
     screen: flat('terminal_screen', { color: '#a9d7cf', emissive: '#3fb8a3', emissiveIntensity: 1.2, roughness: 0.25 }),
-    windowLit: flat('window_lit_warm', { color: '#f0c78a', emissive: '#d9924a', emissiveIntensity: 0.9, roughness: 0.4 }),
-    windowDim: flat('window_unlit', { color: '#31434c', roughness: 0.2, metalness: 0.85, envMapIntensity: 1.1 }),
+    windowLit: windowMaterial('window_lit_warm', { lit: true, paneColor: '#e9b877', emissive: '#d9924a', emissiveIntensity: 0.75 }),
+    windowDim: windowMaterial('window_unlit', { lit: false, paneColor: '#3a4d57', emissive: '#000000', emissiveIntensity: 0 }),
   };
   library.sources = sources;
   return library;
