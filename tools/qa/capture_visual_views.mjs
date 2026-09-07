@@ -98,7 +98,11 @@ async function stage(position, yaw, pitch = -0.14) {
 
 async function capture(frameId, region, intent, expectedSurfaces = []) {
   if (frameRecords.length >= maxFrames) { phaseResults.push({ frame: frameId, skipped: 'VISUAL_MAX_FRAMES reached' }); return; }
-  if (frameFilter.length && !frameFilter.includes(frameId)) return;
+  if (frameFilter.length && !frameFilter.includes(frameId)) { if (pendingStop) throw new StopAfterPhase(pendingStop); return; }
+  await captureNow(frameId, region, intent, expectedSurfaces);
+  if (pendingStop) throw new StopAfterPhase(pendingStop);
+}
+async function captureNow(frameId, region, intent, expectedSurfaces = []) {
   const state = await snapshot();
   if (!state) throw new Error(`CAPTURE_PROBE_UNAVAILABLE for ${frameId}`);
   const traversal = state.player.traversalRegion || {};
@@ -137,9 +141,10 @@ async function phase(name, fn, fallback) {
   phaseResults.push({ phase: name, ok, error, wall_ms: Date.now() - started, game_seconds: after && before ? +(after.elapsed - before.elapsed).toFixed(2) : null, end_support: after?.player?.supportSolidId || null, end_position: after?.player?.position || null, staged_after: !ok && stagedFallback && Boolean(fallback) });
   console.log(`[phase] ${name}: ${ok ? 'OK' : 'MISS'}${error ? ` (${error})` : ''} → ${after?.player?.supportSolidId || 'airborne'} @ ${(after?.player?.position || []).map((v) => v.toFixed(1)).join(',')}`);
   if (!ok && fallback && stagedFallback) await stage(fallback.position, fallback.yaw, fallback.pitch);
-  if (stopAfterPhase === name) throw new StopAfterPhase(`VISUAL_STOP_AFTER_PHASE=${name}`);
+  if (stopAfterPhase === name) pendingStop = `VISUAL_STOP_AFTER_PHASE=${name}`; // raised after the next capture
   return ok;
 }
+let pendingStop = null;
 
 // Poses for staged captures (feet position, yaw, pitch). Yaw 0 looks toward -Z (route direction).
 const POSES = {
