@@ -1,0 +1,631 @@
+{
+  "schema": "rivet-run-player-height-capture/v3",
+  "run_id": "34162559951-default",
+  "mode": "gameplay",
+  "staged_fallback_enabled": true,
+  "base_url": "http://127.0.0.1:5173/?seed=rivet-run-highline-01",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "capture_method": "canvas",
+  "capture_mode_statement": "GAMEPLAY: real click → pointer lock → keyboard/mouse input. Frames after a failed phase (if any) are labelled STAGED.",
+  "status": "CAPTURE_ABORTED_PARTIAL",
+  "seed": "rivet-run-highline-01?seed=rivet-run-highline-01",
+  "frames": [],
+  "phases": [],
+  "final_probe": {
+    "player": {
+      "state": "GROUND",
+      "grounded": true,
+      "position": [
+        0,
+        0.06,
+        50.5
+      ],
+      "velocity": [
+        0,
+        0,
+        0
+      ],
+      "supportSolidId": "shed-floor",
+      "surface": "steel",
+      "onLadder": false,
+      "mantling": false,
+      "doubleJumpUnlocked": false,
+      "wallJumpCount": 0,
+      "dashCooldown": 0,
+      "crouching": false,
+      "slam": false,
+      "traversalRegion": {
+        "id": "dispatch",
+        "support_surface_id": "shed-floor",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      }
+    },
+    "cameraPosition": [
+      0,
+      1.668,
+      50.306
+    ],
+    "cameraDirection": [
+      0,
+      -0.1197,
+      -0.9928
+    ],
+    "elapsed": 0.1,
+    "running": true,
+    "pointerLocked": true,
+    "stagingMode": false,
+    "renderFrameCount": 19,
+    "relaysRemaining": 3,
+    "checkpoint": {
+      "position": [
+        0,
+        0.1,
+        50.5
+      ],
+      "yaw": 0
+    },
+    "objective": "Leave dispatch, run the roof and jump the gap to the transfer annex.",
+    "bindings": {
+      "MOVE_FORWARD": "KeyW",
+      "MOVE_BACK": "KeyS",
+      "MOVE_LEFT": "KeyA",
+      "MOVE_RIGHT": "KeyD",
+      "JUMP": "Space",
+      "DASH": "ShiftLeft",
+      "CROUCH": "ControlLeft",
+      "RESTART": "KeyR",
+      "PAUSE": "Escape"
+    },
+    "worldSeed": "rivet-run-highline-01?seed=rivet-run-highline-01",
+    "timeOfDay": "overcast-warm",
+    "skySource": "equirect:/sky/harbour_afternoon_equirect.jpg",
+    "textureSources": {
+      "concrete": "polyhaven:concrete_floor_worn_001",
+      "brick": "polyhaven:brick_wall_09",
+      "corrugated": "polyhaven:corrugated_iron_02",
+      "rust": "polyhaven:rusty_metal_sheet",
+      "shutter": "generated:corrugated_steel",
+      "facade": "generated:office_facade",
+      "checker": "polyhaven:metal_plate",
+      "grating": "generated:steel_grating"
+    },
+    "realProps": {
+      "source": "manifest",
+      "models_available": 27,
+      "placed": 62,
+      "missing": 0,
+      "load_failures": 0
+    },
+    "doors": [
+      {
+        "id": "bay-door",
+        "state": "closed",
+        "open": 0
+      },
+      {
+        "id": "hall-door",
+        "state": "closed",
+        "open": 0
+      }
+    ],
+    "rendererInfo": {
+      "calls": 456,
+      "triangles": 1135627,
+      "geometries": 177,
+      "textures": 163
+    }
+  },
+  "scene_audit": {
+    "schema": "rivet-run-scene-audit/v3",
+    "diagnostic_only": true,
+    "registered_objects": 4066,
+    "colliders": 463,
+    "point_lights": 24,
+    "texture_sources": {
+      "concrete": "polyhaven:concrete_floor_worn_001",
+      "brick": "polyhaven:brick_wall_09",
+      "corrugated": "polyhaven:corrugated_iron_02",
+      "rust": "polyhaven:rusty_metal_sheet",
+      "shutter": "generated:corrugated_steel",
+      "facade": "generated:office_facade",
+      "checker": "polyhaven:metal_plate",
+      "grating": "generated:steel_grating"
+    },
+    "repeated_families": [
+      {
+        "family": "west-mill-window",
+        "count": 168,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-corner",
+        "count": 168,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-doorbar",
+        "count": 168,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-stack-30-ladder-rung",
+        "count": 153,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "sleeper",
+        "count": 140,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "west-power-annex-window",
+        "count": 136,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lit-window",
+        "count": 132,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-stack-36-ladder-rung",
+        "count": 126,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lamp-lens",
+        "count": 105,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lamp",
+        "count": 105,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-house-window",
+        "count": 96,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-rail",
+        "count": 84,
+        "distinct_rotations": 34,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "west-power-annex-stack-ladder-rung",
+        "count": 79,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "seed-scrub",
+        "count": 74,
+        "distinct_rotations": 73,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "crane-boom-diagonal",
+        "count": 51,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "boiler-stack-2-ladder-rung",
+        "count": 51,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lane-paint",
+        "count": 50,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "boiler-stack-1-ladder-rung",
+        "count": 43,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-plate",
+        "count": 42,
+        "distinct_rotations": 34,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "drop-ladder-rung",
+        "count": 39,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "boiler-stack-0-ladder-rung",
+        "count": 36,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-recovery-ladder-rung",
+        "count": 35,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "bridge-cable",
+        "count": 32,
+        "distinct_rotations": 8,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "crane-boom-vertical",
+        "count": 27,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "sign",
+        "count": 27,
+        "distinct_rotations": 4,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "bollard",
+        "count": 21,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "skyline-lit-band",
+        "count": 20,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "clerestory-window",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "parapet",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "hall-window",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "skyline-plant",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "prop:wooden_crate_02",
+        "count": 17,
+        "distinct_rotations": 16,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-catwalk-rail-post",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-stairs-tread",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-stairs-riser",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "conveyor-roller",
+        "count": 15,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "stack-platform-ladder-rung",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "corridor-truss-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--67-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--73-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      }
+    ],
+    "regular_spacing_candidates": [
+      {
+        "family": "bollard",
+        "axis": "x",
+        "deltas": [
+          12
+        ],
+        "count": 21
+      },
+      {
+        "family": "sleeper",
+        "axis": "z",
+        "deltas": [
+          1.4
+        ],
+        "count": 140
+      },
+      {
+        "family": "yard-light-pole",
+        "axis": "z",
+        "deltas": [
+          22
+        ],
+        "count": 8
+      },
+      {
+        "family": "refinery-stack",
+        "axis": "x",
+        "deltas": [
+          26
+        ],
+        "count": 6
+      },
+      {
+        "family": "ship-boxes",
+        "axis": "x",
+        "deltas": [
+          11.3
+        ],
+        "count": 9
+      },
+      {
+        "family": "ship-boxes",
+        "axis": "z",
+        "deltas": [
+          4.1
+        ],
+        "count": 9
+      },
+      {
+        "family": "shaft-wall",
+        "axis": "x",
+        "deltas": [
+          0.6,
+          1.6
+        ],
+        "count": 9
+      },
+      {
+        "family": "shaft-wall",
+        "axis": "z",
+        "deltas": [
+          0.7,
+          1.5
+        ],
+        "count": 9
+      },
+      {
+        "family": "drop-shaft-wall",
+        "axis": "z",
+        "deltas": [
+          0.3,
+          2
+        ],
+        "count": 6
+      },
+      {
+        "family": "container-#2f5d50",
+        "axis": "z",
+        "deltas": [
+          124,
+          3.2
+        ],
+        "count": 6
+      }
+    ],
+    "seed_layer": {
+      "seed": "rivet-run-highline-01?seed=rivet-run-highline-01",
+      "systems": {
+        "skyline": {
+          "crowns": 13,
+          "masts": 2,
+          "litBands": 20
+        },
+        "districtLights": {
+          "lit": 132
+        },
+        "rooftopProps": {
+          "machinery": 28,
+          "roofProps": 3
+        },
+        "containers": {
+          "containers": 37
+        },
+        "vegetation": {
+          "clumps": 37
+        },
+        "signs": {
+          "signs": 4
+        },
+        "harbour": {
+          "vessels": 1
+        },
+        "routeVariants": {
+          "variants": [
+            "split-deck-hop-barrier",
+            "turbine-floor-crates"
+          ]
+        },
+        "lamps": {
+          "tint": "#ffb257"
+        }
+      }
+    },
+    "real_props": {
+      "source": "manifest",
+      "models_available": 27,
+      "placed": 62,
+      "missing": [],
+      "load_failures": [],
+      "by_model": {
+        "metal_tool_chest": 3,
+        "cardboard_box_01": 7,
+        "WetFloorSign_01": 2,
+        "wooden_crate_02": 17,
+        "Barrel_01": 7,
+        "old_tyre": 1,
+        "concrete_road_barrier_02": 4,
+        "metal_trash_can": 1,
+        "exterior_aircon_unit": 1,
+        "security_camera_01": 1,
+        "utility_box_02": 1,
+        "industrial_pastic_container": 1,
+        "Barrel_02": 5,
+        "security_light": 1,
+        "barrel_03": 4,
+        "utility_box_01": 2,
+        "portable_generator": 1,
+        "propane_tank": 1,
+        "caged_hanging_light": 2
+      }
+    },
+    "doors": [
+      {
+        "id": "bay-door",
+        "state": "closed",
+        "open": 0,
+        "width": 3.2,
+        "height": 3.6,
+        "facing": "+z"
+      },
+      {
+        "id": "hall-door",
+        "state": "closed",
+        "open": 0,
+        "width": 7.2,
+        "height": 5,
+        "facing": "+z"
+      }
+    ],
+    "required_human_review": "Judge repetition/dead zones/placement from player-height frames. Counts cannot approve anything."
+  },
+  "input_trace": [],
+  "console_events": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x304400173200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x304400173200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x304400173200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x304400173200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    }
+  ],
+  "capture_failure": {
+    "name": "TimeoutError",
+    "message": "page.waitForFunction: Timeout 30000ms exceeded."
+  },
+  "approval": {
+    "approved": false,
+    "score": null,
+    "reason": "A vision-capable critic must inspect the actual image files. This tool never approves."
+  }
+}
