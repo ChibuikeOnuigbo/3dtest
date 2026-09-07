@@ -78,7 +78,12 @@ export class WorldBuilder {
     const geometry = worldUvCylinder(radius, height, material.userData?.tile || 2, segments);
     this.batcher.add(geometry, material, composeMatrix(position, rotation), { castShadow: cast, receiveShadow: true });
     this.register(family, position, rotation[1], { radius, height, material: material.name });
-    if (collide) return this.addCollider(id || family, position, [radius * 2, height, radius * 2], 0, traits);
+    if (collide) {
+      // Axis-aligned AABB for the cylinder in its rotated orientation (horizontal pipes lie along X or Z).
+      const aroundZ = Math.abs(Math.sin(rotation[2])) > 0.7; const aroundX = Math.abs(Math.sin(rotation[0])) > 0.7;
+      const size = aroundZ ? [height, radius * 2, radius * 2] : aroundX ? [radius * 2, radius * 2, height] : [radius * 2, height, radius * 2];
+      return this.addCollider(id || family, position, size, 0, traits);
+    }
     return null;
   }
 
