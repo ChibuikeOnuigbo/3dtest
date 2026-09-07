@@ -126,13 +126,18 @@ async function capture(frameId, region, intent, expectedSurfaces = []) {
 }
 
 /** Run a gameplay phase; on failure optionally stage to the fallback pose. */
+class StopAfterPhase extends Error {}
+const stopAfterPhase = process.env.VISUAL_STOP_AFTER_PHASE || null; // bounded local runs: end the session after this phase
 async function phase(name, fn, fallback) {
   const started = Date.now();
   let ok = false; let error = null;
+  const before = await snapshot();
   try { ok = Boolean(await fn()); } catch (e) { error = e.message; }
-  phaseResults.push({ phase: name, ok, error, wall_ms: Date.now() - started, staged_after: !ok && stagedFallback && Boolean(fallback) });
-  console.log(`[phase] ${name}: ${ok ? 'OK' : 'MISS'}${error ? ` (${error})` : ''}`);
+  const after = await snapshot();
+  phaseResults.push({ phase: name, ok, error, wall_ms: Date.now() - started, game_seconds: after && before ? +(after.elapsed - before.elapsed).toFixed(2) : null, end_support: after?.player?.supportSolidId || null, end_position: after?.player?.position || null, staged_after: !ok && stagedFallback && Boolean(fallback) });
+  console.log(`[phase] ${name}: ${ok ? 'OK' : 'MISS'}${error ? ` (${error})` : ''} → ${after?.player?.supportSolidId || 'airborne'} @ ${(after?.player?.position || []).map((v) => v.toFixed(1)).join(',')}`);
   if (!ok && fallback && stagedFallback) await stage(fallback.position, fallback.yaw, fallback.pitch);
+  if (stopAfterPhase === name) throw new StopAfterPhase(`VISUAL_STOP_AFTER_PHASE=${name}`);
   return ok;
 }
 
@@ -337,8 +342,12 @@ try {
     await writeCaptureRecord(staged ? 'CAPTURED_UNINSPECTED_WITH_STAGED_FALLBACKS' : 'CAPTURED_UNINSPECTED');
   }
 } catch (error) {
-  await writeCaptureRecord('CAPTURE_ABORTED_PARTIAL', { name: error.name, message: error.message });
-  throw error;
+  if (error instanceof StopAfterPhase) {
+    await writeCaptureRecord(staged ? 'CAPTURED_UNINSPECTED_WITH_STAGED_FALLBACKS_PARTIAL' : 'CAPTURED_UNINSPECTED_PARTIAL', { name: 'StopAfterPhase', message: error.message });
+  } else {
+    await writeCaptureRecord('CAPTURE_ABORTED_PARTIAL', { name: error.name, message: error.message });
+    throw error;
+  }
 } finally {
   if (process.env.VISUAL_TRACE !== '0') await context.tracing.stop({ path: path.join(evidenceDir, 'rivet-run-trace.zip') }).catch(() => null);
   await browser.close();
