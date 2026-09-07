@@ -31,7 +31,7 @@ const mode = process.env.VISUAL_CAPTURE_MODE || 'gameplay';
 const stagedFallback = process.env.VISUAL_STAGED_FALLBACK === '1';
 const maxFrames = Number(process.env.VISUAL_MAX_FRAMES || (mode === 'staged' ? 3 : 40));
 const frameFilter = (process.env.VISUAL_FRAMES || '').split(',').filter(Boolean);
-const method = process.env.VISUAL_CAPTURE_METHOD || (mode === 'staged' ? 'canvas' : 'page');
+const method = process.env.VISUAL_CAPTURE_METHOD || 'canvas'; // page screenshots stall under software GL; the canvas readback is the actual framebuffer
 const viewport = { width: Number(process.env.VISUAL_VIEWPORT_W || 1280), height: Number(process.env.VISUAL_VIEWPORT_H || 720) };
 const evidenceDir = path.resolve(root, process.env.VISUAL_EVIDENCE_DIR || path.join('qa', 'visual', 'captures', captureRunId));
 const seedParam = process.env.RIVET_RUN_SEED ? `?seed=${encodeURIComponent(process.env.RIVET_RUN_SEED)}` : '';
@@ -195,7 +195,11 @@ try {
     }
     await writeCaptureRecord('CAPTURED_UNINSPECTED_STAGED');
   } else {
-    await page.click('#start-button');
+    // The start card can sit below the fold at small viewports; scroll it into view, then click via DOM
+    // as a fallback so a layout quirk never masquerades as a gameplay failure.
+    await page.locator('#start-button').scrollIntoViewIfNeeded().catch(() => null);
+    await page.click('#start-button', { timeout: 15000 }).catch(async () => page.evaluate(() => document.querySelector('#start-button')?.click()));
+    await sleep(300);
     await page.mouse.click(viewport.width / 2, viewport.height / 2);
     await page.waitForFunction(() => { const s = window.__rivetRunProbe.snapshot(); return s.running && s.pointerLocked && s.renderFrameCount > 8; }, null, { timeout: 30000 });
     inputTrace.push({ action: 'start_run_pointer_lock_confirmed', at: Date.now() });
