@@ -293,6 +293,8 @@ window.__rivetRunProbe = Object.freeze({
     return { staged: true };
   },
   setView: (yaw, pitch) => { stagingMode = true; player.yaw = yaw; player.pitch = pitch; player.applyOrientation(); return { staged: true }; },
+  /** STAGING ONLY — holds a roller door at a given lift (0 closed … 1 open) so mechanism frames can be reviewed. */
+  setDoor: (id, open) => { stagingMode = true; const door = course.doors.find((d) => d.id === id); if (!door) return { staged: true, error: `no door ${id}` }; door.trigger = null; door.target = open; door.open = open; door.applyPose(); return { staged: true, id, open }; },
   captureCanvas: (type = 'image/jpeg', quality = 0.85) => {
     // preserveDrawingBuffer is off, so re-render synchronously then read back. Shadows are
     // already up to date from the last presented frame; skip the shadow pass for the readback.

@@ -56,23 +56,28 @@ export class RollerDoor {
       b.box(`${id}-guide-foot`, m.concreteDark, S(trackWidth + 0.16, 0.12, trackDepth + 0.2), P(w, 0.06, trackDepth / 2), { cast: false });
     }
     // --- barrel housing above the header (hood), drum inside, end plates that carry the axle
-    const hoodH = 0.62; const hoodD = 0.58; const hoodY = height + 0.06 + hoodH / 2;
-    b.box(`${id}-hood`, m.galvanised, S(width + 0.6, hoodH, hoodD), P(0, hoodY, hoodD / 2 - 0.02), { cast: true });
+    const big = width > 5; // wide bay doors get a motor-sized hoist so the mechanism reads from 10 m away
+    const hoodH = big ? 0.9 : 0.62; const hoodD = big ? 0.8 : 0.58; const hoodY = height + 0.06 + hoodH / 2;
+    b.box(`${id}-hood`, m.steelPale, S(width + 0.6, hoodH, hoodD), P(0, hoodY, hoodD / 2 - 0.02), { cast: true });
     b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, hoodD + 0.04), P(0, hoodY - hoodH / 2, hoodD / 2 - 0.02), { cast: false });
     b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, hoodD + 0.04), P(0, hoodY + hoodH / 2, hoodD / 2 - 0.02), { cast: false });
     for (const side of [-1, 1]) b.box(`${id}-end-plate`, m.steelDark, S(0.06, hoodH + 0.2, hoodD + 0.1), P(side * (width / 2 + 0.34), hoodY, hoodD / 2 - 0.02), { cast: false });
     // hood front stays open at the bottom so the curtain can be seen entering the barrel: a slot bar instead of a closed face
     b.box(`${id}-hood-slot-bar`, m.steelDark, S(width + 0.2, 0.05, 0.05), P(0, height + 0.08, hoodD - 0.06), { cast: false });
     // --- chain hoist on the drive side (+w): gearbox, sprocket, chain guard, hand chain loop to knee height
-    const driveW = width / 2 + 0.34 + 0.18;
-    b.box(`${id}-gearbox`, m.oxide, S(0.28, 0.36, 0.3), P(driveW, hoodY, hoodD / 2 - 0.02), { cast: false });
+    const k = big ? 1.6 : 1; // hoist scale
+    const driveW = width / 2 + 0.34 + 0.18 * k;
     const alongWall = this.alongX ? [0, 0, Math.PI / 2] : [Math.PI / 2, 0, 0]; // cylinder axis along the wall
     const alongNormal = this.alongX ? [Math.PI / 2, 0, 0] : [0, 0, Math.PI / 2]; // cylinder axis along the wall normal
-    b.cylinder(`${id}-sprocket`, m.steelDark, 0.17, 0.05, P(driveW + 0.17, hoodY, hoodD / 2 - 0.02), { rotation: alongWall, segments: 14, cast: false });
-    b.box(`${id}-chain-guard`, m.safetyYellow, S(0.06, 0.6, 0.42), P(driveW + 0.22, hoodY - 0.05, hoodD / 2 - 0.02), { cast: false });
-    for (const n of [-0.12, 0.12]) b.cylinder(`${id}-hand-chain`, m.steelDark, 0.012, hoodY - 0.7, P(driveW + 0.17, (hoodY - 0.7) / 2 + 0.6, hoodD / 2 - 0.02 + n), { segments: 5, cast: false });
-    b.cylinder(`${id}-hand-chain-loop`, m.steelDark, 0.012, 0.24, P(driveW + 0.17, 0.6, hoodD / 2 - 0.02), { rotation: alongNormal, segments: 5, cast: false });
-    b.box(`${id}-chain-bracket`, m.steelDark, S(0.3, 0.05, 0.05), P(driveW + 0.05, hoodY + hoodH / 2 + 0.1, hoodD / 2), { cast: false });
+    // gearbox (oxide red) + motor can (pale) on the axle end, sprocket, yellow chain guard, hand chain to knee height
+    b.box(`${id}-gearbox`, m.oxide, S(0.28 * k, 0.36 * k, 0.3 * k), P(driveW, hoodY, hoodD / 2 - 0.02), { cast: false });
+    b.cylinder(`${id}-motor`, m.steelPale, 0.14 * k, 0.4 * k, P(driveW, hoodY, hoodD / 2 - 0.02 - 0.22 * k), { rotation: alongNormal, segments: 12, cast: false });
+    b.cylinder(`${id}-sprocket`, m.steelDark, 0.17 * k, 0.05, P(driveW + 0.17 * k, hoodY, hoodD / 2 - 0.02), { rotation: alongWall, segments: 14, cast: false });
+    b.box(`${id}-chain-guard`, m.safetyYellow, S(0.07, 0.6 * k, 0.42 * k), P(driveW + 0.22 * k, hoodY - 0.05 * k, hoodD / 2 - 0.02), { cast: false });
+    for (const n of [-0.12 * k, 0.12 * k]) b.cylinder(`${id}-hand-chain`, m.steelPale, 0.02, hoodY - 0.7, P(driveW + 0.17 * k, (hoodY - 0.7) / 2 + 0.6, hoodD / 2 - 0.02 + n), { segments: 6, cast: false });
+    b.cylinder(`${id}-hand-chain-loop`, m.steelPale, 0.02, 0.24 * k, P(driveW + 0.17 * k, 0.6, hoodD / 2 - 0.02), { rotation: alongNormal, segments: 6, cast: false });
+    b.box(`${id}-chain-bracket`, m.steelDark, S(0.3 * k, 0.05, 0.05), P(driveW + 0.05 * k, hoodY + hoodH / 2 + 0.1, hoodD / 2), { cast: false });
+    b.box(`${id}-conduit`, m.galvanised, S(0.06, height * 0.9, 0.06), P(driveW + 0.05 * k, height * 0.45 + 0.1, 0.1), { cast: false });
     // --- counterweight channel on the opposite jamb (weight is dynamic; channel is static)
     this.weightW = -(width / 2 + 0.34 + 0.16);
     b.box(`${id}-weight-channel`, m.steelDark, S(0.22, height + 0.4, 0.06), P(this.weightW, (height + 0.4) / 2, 0.28), { cast: false });
@@ -115,12 +120,12 @@ export class RollerDoor {
     this.wrap = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, width - 0.02, 20, 1, true), curtainMat);
     this.wrap.rotation.z = Math.PI / 2; this.wrap.position.copy(this.drum.position);
     this.wrapBaseRadius = 0.13; this.wrapMaxRadius = Math.min(0.26, hoodH / 2 - 0.05);
-    this.weight = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.5, 0.2), m.oxide);
+    this.weight = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.5, 0.2), m.safetyYellow);
     this.weight.position.set(this.wSign * this.weightW, height - 0.3, 0.14);
     this.weightCable = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1, 5), m.steelDark);
     this.weightCable.position.set(this.wSign * this.weightW, height, 0.14);
     this.sprocketSpin = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.03, 0.03), m.safetyYellow);
-    this.sprocketSpin.rotation.y = Math.PI / 2; this.sprocketSpin.position.set(this.wSign * (driveW + 0.2), hoodY, hoodD / 2 - 0.02);
+    this.sprocketSpin.rotation.y = Math.PI / 2; this.sprocketSpin.position.set(this.wSign * (driveW + 0.2 * k), hoodY, hoodD / 2 - 0.02);
     this.group.add(this.curtain, this.bottomRail, this.handle, this.drum, this.wrap, this.weight, this.weightCable, this.sprocketSpin);
     if (!world.headless) world.scene.add(this.group);
     // collider: the curtain blocks the opening while down (a real door you cannot walk through)

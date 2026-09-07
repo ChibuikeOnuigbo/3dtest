@@ -362,7 +362,7 @@ export class HighlineDistrict {
     this.props.place('wooden_crate_02', [bay.x + 0.9, y, bay.z - 3.8], -0.25, { collide: true, colliderId: 'bay-crate' });
     this.props.place('cardboard_box_01', [bay.x + 0.9, y + 0.53, bay.z - 3.8], 0.6, {});
     this.props.place('WetFloorSign_01', [bay.x + 0.3, y, bay.z - 1.4], 2.6, {});
-    this.doors.push(new RollerDoor(this, { id: 'bay-door', centre: [bay.x, y, bay.z + 0.3], width: bay.w, height: bay.h, facing: '+z', wallThickness: 0.5, open: 0, trigger: 5.5, speed: 0.75, region: 'split-deck', lampLight: false }));
+    this.doors.push(new RollerDoor(this, { id: 'bay-door', centre: [bay.x, y, bay.z + 0.3], width: bay.w, height: bay.h, facing: '+z', wallThickness: 0.5, open: 0, trigger: 5.5, speed: 0.75, region: 'split-deck' }));
     // Route-choice signal cabinet moved off the centre line so it no longer blocks the door read.
     b.cabinet('split-signal', [-6.1, y, -21.4], Math.PI, { width: 1.3, height: 2.1, depth: 0.7, material: m.steel });
     // Real props (Poly Haven CC0) instead of coloured cylinders: drums by the east rail, a barrier at the deck edge.
@@ -372,8 +372,8 @@ export class HighlineDistrict {
     this.props.place('utility_box_01', [-7.4, y, -23.5], 0, { collide: true, colliderId: 'split-utility-box' });
     b.box('split-floor-paint-w', m.routePaint, [5, 0.02, 0.2], [-4.5, y + 0.012, -19.5], { cast: false });
     b.box('split-floor-paint-e', m.routePaint, [5, 0.02, 0.2], [3.8, y + 0.012, -19.5], { cast: false });
-    b.sign('◄ WEST SHAFT', [-3.6, y + 2.45, -23.75], '+z', { width: 2.4 });
-    b.sign('EAST SPAN ►', [2.8, y + 2.45, -23.75], '+z', { width: 2.4 });
+    b.sign('◄ WEST SHAFT', [-4.4, y + 2.45, -23.6], '+z', { width: 2.2 });
+    b.sign('EAST SPAN ►', [3.6, y + 2.45, -23.6], '+z', { width: 2.2 });
     this.chevron([-5, y, -19.5], Math.PI / 2);
     this.chevron([4.5, y, -19.5], -Math.PI / 2);
     this.checkpoint('split', [0, y, -17.5], 3.2, 0, 'Choose a line: WEST SHAFT wall kicks or EAST SPAN dash and container hop.');
@@ -684,7 +684,7 @@ export class HighlineDistrict {
     b.box('hall-ladder-bracket', m.steelDark, [0.4, 0.3, 1.2], [13.7, catY - 0.3, -84], { cast: false });
     b.ladder('hall-recovery-ladder', [13.8, floorY, -84], 10.6, 'x', { exit: [-1, 0, 0] });
     b.box('door-threshold', m.checker, [7.2, 0.16, 2.4], [0, -0.48, -91], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'door-threshold' });
-    b.sign('SUNLINE GANTRY ►', [0, 3.6, z0 + 0.25], '+z', { width: 3 });
+    b.sign('SUNLINE GANTRY ►', [0, 5.95, z0 + 0.3], '+z', { width: 3 });
     b.sign('CRANE 2 · STAND CLEAR', [7.7, catY + 2.2, -62.2], '-z', { width: 2.6, accent: '#c9a03a' });
     b.lamp([11.5, catY + 2.4, -84], { intensity: 5, distance: 9, size: 0.35, light: false });
     this.checkpoint('hall', [0, catY, -64], 2.4, Math.PI / 2, 'Board the crane trolley, ride it south over the turbines, climb the stairs and leave through the loading door.');
@@ -709,7 +709,7 @@ export class HighlineDistrict {
     b.ladder('gantry-ladder', [0.55, y - 3.2, -109.25], 3.2, 'z', { exit: [0, 0, -1] });
     b.stairs('gantry-lower-stairs', [-0.5, y - 3.2, -99.2], { rise: 2.8, run: 0.28, count: 10, width: 1.0, axis: 'z', direction: 1, rails: false });
     b.sign('MISSING PANEL · DOUBLE JUMP', [0, y + 1.9, -100.6], '+z', { width: 2.6, accent: '#c65a2a' });
-    for (let z = -94; z > -117; z -= 4) b.lamp([-1.4, y + 2.4, z], { intensity: 4, distance: 7, light: z === -110, size: 0.28 });
+    for (let z = -94; z > -117; z -= 4) b.lamp([-1.4, y + 2.4, z], { intensity: 4, distance: 7, light: false, size: 0.28 }); // exterior gantry is sunlit; the point-light budget goes to the doors
     for (let z = -94; z > -117; z -= 4) b.box('lamp-post', m.steelDark, [0.06, 2.4, 0.06], [-1.4, y + 1.2, z], { cast: false });
     b.box('cab-landing', m.checker, [7, 0.2, 7], [0, y - 0.1, -121.5], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'cab-landing' });
     b.railing('cab-rail-w', [-3.5, y, -125], 7, 'z');
