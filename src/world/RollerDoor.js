@@ -58,12 +58,14 @@ export class RollerDoor {
     // --- barrel housing above the header (hood), drum inside, end plates that carry the axle
     const big = width > 5; // wide bay doors get a motor-sized hoist so the mechanism reads from 10 m away
     const hoodH = big ? 0.9 : 0.62; const hoodD = big ? 0.8 : 0.58; const hoodY = height + 0.06 + hoodH / 2;
-    b.box(`${id}-hood`, m.steelPale, S(width + 0.6, hoodH, hoodD), P(0, hoodY, hoodD / 2 - 0.02), { cast: true });
-    b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, hoodD + 0.04), P(0, hoodY - hoodH / 2, hoodD / 2 - 0.02), { cast: false });
+    // Hood = top plate + back plate + a front plate covering only the upper part: the lower front is OPEN, so the
+    // barrel and the curtain winding onto it are visible from the threshold (you can see where the door goes).
+    b.box(`${id}-hood-top`, m.steelPale, S(width + 0.6, 0.05, hoodD), P(0, hoodY + hoodH / 2 - 0.025, hoodD / 2 - 0.02), { cast: true });
+    b.box(`${id}-hood-back`, m.steelPale, S(width + 0.6, hoodH, 0.05), P(0, hoodY, 0.005), { cast: false });
+    b.box(`${id}-hood-front`, m.steelPale, S(width + 0.6, hoodH * 0.5, 0.05), P(0, hoodY + hoodH * 0.25, hoodD - 0.045), { cast: true });
+    b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, 0.08), P(0, hoodY, hoodD - 0.04), { cast: false });
     b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, hoodD + 0.04), P(0, hoodY + hoodH / 2, hoodD / 2 - 0.02), { cast: false });
     for (const side of [-1, 1]) b.box(`${id}-end-plate`, m.steelDark, S(0.06, hoodH + 0.2, hoodD + 0.1), P(side * (width / 2 + 0.34), hoodY, hoodD / 2 - 0.02), { cast: false });
-    // hood front stays open at the bottom so the curtain can be seen entering the barrel: a slot bar instead of a closed face
-    b.box(`${id}-hood-slot-bar`, m.steelDark, S(width + 0.2, 0.05, 0.05), P(0, height + 0.08, hoodD - 0.06), { cast: false });
     // --- chain hoist on the drive side (+w): gearbox, sprocket, chain guard, hand chain loop to knee height
     const k = big ? 1.6 : 1; // hoist scale
     const driveW = width / 2 + 0.34 + 0.18 * k;
@@ -119,7 +121,7 @@ export class RollerDoor {
     this.drum.rotation.z = Math.PI / 2; this.drum.position.set(0, hoodY, hoodD / 2 - 0.02);
     this.wrap = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, width - 0.02, 20, 1, true), curtainMat);
     this.wrap.rotation.z = Math.PI / 2; this.wrap.position.copy(this.drum.position);
-    this.wrapBaseRadius = 0.13; this.wrapMaxRadius = Math.min(0.26, hoodH / 2 - 0.05);
+    this.wrapBaseRadius = 0.13; this.wrapMaxRadius = Math.min(big ? 0.36 : 0.26, hoodH / 2 - 0.06);
     this.weight = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.5, 0.2), m.safetyYellow);
     this.weight.position.set(this.wSign * this.weightW, height - 0.3, 0.14);
     this.weightCable = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1, 5), m.steelDark);

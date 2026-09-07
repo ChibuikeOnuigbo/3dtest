@@ -684,7 +684,7 @@ export class HighlineDistrict {
     b.box('hall-ladder-bracket', m.steelDark, [0.4, 0.3, 1.2], [13.7, catY - 0.3, -84], { cast: false });
     b.ladder('hall-recovery-ladder', [13.8, floorY, -84], 10.6, 'x', { exit: [-1, 0, 0] });
     b.box('door-threshold', m.checker, [7.2, 0.16, 2.4], [0, -0.48, -91], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'door-threshold' });
-    b.sign('SUNLINE GANTRY ►', [0, 5.95, z0 + 0.3], '+z', { width: 3 });
+    b.sign('SUNLINE GANTRY ►', [0, 5.5, z0 + 0.52], '+z', { width: 3 }); // on the hood front plate, under the lamp
     b.sign('CRANE 2 · STAND CLEAR', [7.7, catY + 2.2, -62.2], '-z', { width: 2.6, accent: '#c9a03a' });
     b.lamp([11.5, catY + 2.4, -84], { intensity: 5, distance: 9, size: 0.35, light: false });
     this.checkpoint('hall', [0, catY, -64], 2.4, Math.PI / 2, 'Board the crane trolley, ride it south over the turbines, climb the stairs and leave through the loading door.');
