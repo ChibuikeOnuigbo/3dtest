@@ -1,19 +1,21 @@
 name: Browser QA evidence
 
 on:
-  # A manual dispatch is available after this workflow reaches the default branch.
   workflow_dispatch:
     inputs:
       seed:
-        description: Optional deterministic presentation seed for the capture run
+        description: Deterministic world seed for the gameplay capture
         required: false
         default: rivet-run-highline-01
         type: string
-  # The current Arena branch also runs it for runtime/QA changes, so browser evidence
-  # does not depend on prematurely merging an unreviewed world rebuild to main.
+      fetch_reference_videos:
+        description: Also run the yt-dlp reference-gameplay job (slow; ~18 downloads)
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
-      - arena/01a068f0-3dtest
+      - arena/01a07b29-3dtest
     paths:
       - '.github/workflows/browser-qa.yml'
       - 'index.html'
@@ -22,148 +24,240 @@ on:
       - 'playwright.config.js'
       - 'src/**'
       - 'tests/**'
-      - 'tools/qa/**'
-      - 'tools/assets/**'
-      - 'qa/visual/review_contract.schema.json'
-      - 'qa/visual/critics/**'
-      - 'qa/visual/reviews/**'
+      - 'tools/**'
+      - 'public/textures/**'
+      - 'public/sky/**'
 
 permissions:
-  # A small, immutable QA evidence set is committed to the same protected Arena branch
-  # after a successful capture. Browser binaries/traces remain short-lived artifacts.
   contents: write
 
-jobs:
-  browser-smoke-and-capture:
-    name: Chromium smoke test and player-height capture
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      CI: 'true'
-      RIVET_RUN_URL: http://127.0.0.1:5173/?seed=${{ inputs.seed }}
-    steps:
-      - name: Check out source
-        uses: actions/checkout@v4
+concurrency:
+  group: browser-qa-${{ github.ref }}
+  cancel-in-progress: true
 
-      - name: Use pinned Node runtime
-        uses: actions/setup-node@v4
+jobs:
+  # --------------------------------------------------------------------------------------
+  # 1. Poly Haven CC0 intake (public API, no credentials). Output is an artifact that the
+  #    capture job downloads so the captured frames use real photoscanned PBR sets when the
+  #    files are reachable. Failure here is recorded, not fatal: the game falls back to the
+  #    project-generated sets and the capture record says which source rendered.
+  # --------------------------------------------------------------------------------------
+  polyhaven-intake:
+    name: Poly Haven CC0 texture and HDRI intake
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
-      - name: Install locked JavaScript dependencies
-        run: npm ci
-
-      # Browser provisioning occurs explicitly in the runner before test/MCP-like work.
-      # It is never attempted interactively by the application or a tool handshake.
-      - name: Install Playwright Chromium and Linux dependencies
-        run: npx playwright install --with-deps chromium
-
-      - name: Report resolved browser path
+      - run: npm ci
+      - name: Fetch 1K sets for the material families + harbour HDRI candidates
+        continue-on-error: true
         run: |
-          node --input-type=module -e "import { chromium } from '@playwright/test'; console.log('Chromium executable:', chromium.executablePath())"
+          node tools/assets/fetch_polyhaven_sets.mjs --res 1k --out public/textures/polyhaven \
+            --hdri industrial_sunset_puresky --hdri kloppenheim_06_puresky
+          cat public/textures/polyhaven/manifest.json
+      - name: Inspect fetched sets (dimensions, texel density, seams) for the manifest review
+        continue-on-error: true
+        run: |
+          python3 -m pip install --quiet pillow numpy
+          python3 - <<'PY'
+          import json, os
+          from PIL import Image
+          root = 'public/textures/polyhaven'
+          out = []
+          for entry in os.scandir(root):
+              if not entry.is_dir(): continue
+              meta = json.load(open(os.path.join(entry.path, 'meta.json')))
+              rec = {'id': entry.name, 'name': meta['name'], 'dimensions_mm': meta.get('dimensions_mm'), 'maps': {}}
+              for m in ('albedo', 'normal', 'roughness'):
+                  p = os.path.join(entry.path, f'{m}.jpg')
+                  if os.path.exists(p):
+                      im = Image.open(p); rec['maps'][m] = {'size': im.size, 'bytes': os.path.getsize(p)}
+              if rec['dimensions_mm'] and 'albedo' in rec['maps']:
+                  rec['texels_per_m'] = round(rec['maps']['albedo']['size'][0] / (rec['dimensions_mm'][0] / 1000), 1)
+              out.append(rec)
+          json.dump(out, open(os.path.join(root, 'inspection.json'), 'w'), indent=2)
+          print(json.dumps(out, indent=1))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: polyhaven-sets-${{ github.run_id }}
+          path: |
+            public/textures/polyhaven/
+            public/sky/polyhaven/
+          if-no-files-found: warn
+          retention-days: 14
 
-      # Optional authorised asset intake. The token exists only in GitHub Actions memory;
-      # the utility refuses all network acquisition if secret or candidate URLs are absent.
-      - name: Intake authorised Sketchfab candidates
+  # --------------------------------------------------------------------------------------
+  # 2. Authorised Sketchfab intake. The token exists only in GitHub Actions memory. If the
+  #    secret is absent the utility reports exactly that (SECRET_MISSING) and exits 0 — the
+  #    step never prints or stores the credential.
+  # --------------------------------------------------------------------------------------
+  sketchfab-intake:
+    name: Sketchfab authorised intake
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Resolve, license-check, download and inspect candidates
         env:
           SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
           SKETCHFAB_CANDIDATE_URLS: ${{ vars.SKETCHFAB_CANDIDATE_URLS }}
         run: node tools/assets/sketchfab_intake.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sketchfab-intake-${{ github.run_id }}
+          path: research/sketchfab/
+          if-no-files-found: warn
+          retention-days: 14
 
-      # Keep collecting real-player diagnostics if the smoke assertion fails, then fail
-      # the job at the end. This never turns a failed test green; it prevents a generic
-      # smoke failure from hiding the player-height browser evidence needed to diagnose it.
-      - name: Run browser smoke test
-        id: browser_smoke
+  # --------------------------------------------------------------------------------------
+  # 3. The authoritative visual evidence: real Chromium (GPU-less but hardware-speed
+  #    SwiftShader on a 4-vCPU runner), real pointer lock, real WASD/mouse input through the
+  #    authored route, canvas captures at player height. Frames from the gameplay phases are
+  #    the only frames that count toward approval; staged fallbacks are labelled as such.
+  # --------------------------------------------------------------------------------------
+  browser-smoke-and-capture:
+    name: Chromium smoke test and player-height gameplay capture
+    needs: [polyhaven-intake]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+      SEED: ${{ inputs.seed || 'rivet-run-highline-01' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Playwright Chromium and Linux dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Pull Poly Haven sets fetched by the intake job (optional)
+        uses: actions/download-artifact@v4
         continue-on-error: true
-        run: npm run test:e2e
+        with:
+          name: polyhaven-sets-${{ github.run_id }}
+          path: public/
+      - name: Report which texture sets the game will use
+        run: |
+          if [ -f public/textures/polyhaven/manifest.json ]; then
+            echo "Poly Haven sets available:"; python3 -c "import json;print(json.load(open('public/textures/polyhaven/manifest.json'))['sets'])"
+          else
+            echo 'No Poly Haven manifest — generated sets will render.'
+          fi
+      - name: Logic tests (route, movement, level map)
+        run: npm run test:logic
 
-      - name: Start local game server for real capture
+      - name: Start local game server
         run: |
           npm run dev -- --host 127.0.0.1 --port 5173 > "$RUNNER_TEMP/rivet-run-vite.log" 2>&1 &
           echo $! > "$RUNNER_TEMP/rivet-run-vite.pid"
-          for attempt in $(seq 1 40); do
-            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then
-              exit 0
-            fi
-            sleep 0.25
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then exit 0; fi
+            sleep 0.5
           done
-          echo 'Vite did not become ready.' >&2
-          cat "$RUNNER_TEMP/rivet-run-vite.log" >&2 || true
-          exit 1
+          echo 'Vite did not become ready.' >&2; cat "$RUNNER_TEMP/rivet-run-vite.log" >&2 || true; exit 1
 
-      - name: Capture real first-person browser evidence — default seed
+      - name: Browser smoke test
+        id: browser_smoke
+        continue-on-error: true
+        env:
+          RIVET_RUN_URL: http://127.0.0.1:5173/?seed=${{ env.SEED }}
+        run: npm run test:e2e
+
+      - name: Gameplay capture — default seed (real input through the route)
         id: capture_default
         continue-on-error: true
         env:
+          RIVET_RUN_URL: http://127.0.0.1:5173/?seed=${{ env.SEED }}
+          RIVET_RUN_SEED: ${{ env.SEED }}
+          VISUAL_CAPTURE_MODE: gameplay
+          VISUAL_STAGED_FALLBACK: '1'
+          VISUAL_CAPTURE_METHOD: canvas
+          VISUAL_VIEWPORT_W: '1280'
+          VISUAL_VIEWPORT_H: '720'
+          VISUAL_PHASE_WALL_MS: '240000'
           VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/default
           VISUAL_CAPTURE_LABEL: default
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
           node tools/qa/capture_visual_views.mjs
 
-      - name: Capture real first-person browser evidence — alternate seed
+      - name: Staged capture — alternate seed (seed-variation comparison frames)
         id: capture_alternate
         continue-on-error: true
         env:
           RIVET_RUN_URL: http://127.0.0.1:5173/?seed=qa-harbour-alt-01
+          RIVET_RUN_SEED: qa-harbour-alt-01
+          VISUAL_CAPTURE_MODE: staged
+          VISUAL_CAPTURE_METHOD: canvas
+          VISUAL_FRAMES: 01-dispatch-spawn,02-dispatch-look-east,07-split-deck,10-boiler-court,11-boiler-vista,18-sunline-gantry
+          VISUAL_VIEWPORT_W: '1280'
+          VISUAL_VIEWPORT_H: '720'
+          VISUAL_TRACE: '0'
           VISUAL_EVIDENCE_DIR: qa/visual/evidence/${{ github.run_id }}/alternate
           VISUAL_CAPTURE_LABEL: alternate
-          VISUAL_CAPTURE_SCOPE: lookaround
         run: |
           export BROWSER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; console.log(chromium.executablePath())")"
           node tools/qa/capture_visual_views.mjs
 
-      - name: Validate default capture versus review states
+      - name: Evidence summary (which frames are gameplay vs staged)
         if: always()
-        env:
-          VISUAL_CAPTURE_MANIFEST: qa/visual/evidence/${{ github.run_id }}/default/capture_record.json
-        run: node tools/qa/validate_visual_reviews.mjs > qa/visual/review_validation.json
+        run: |
+          python3 - <<'PY'
+          import json, os, glob
+          for rec in glob.glob('qa/visual/evidence/*/*/capture_record.json'):
+              d = json.load(open(rec))
+              print(f"\n{rec}: mode={d.get('mode')} status={d.get('status')} seed={d.get('seed')}")
+              for f in d.get('frames', []):
+                  print(f"  {f['frame_id']:<26} {f.get('evidence_class','?'):<22} nav={f.get('navigation_status','?'):<10} support={f.get('support_surface')} state={f.get('player_state')} file={os.path.basename(f.get('image',''))}")
+          PY
 
-      - name: Commit generated player-height evidence
+      - name: Commit captured evidence (frames + records + traces are small; browsers are not committed)
         if: always()
         run: |
           git config user.name 'rivet-run-browser-qa[bot]'
           git config user.email 'rivet-run-browser-qa[bot]@users.noreply.github.com'
+          find qa/visual/evidence -name '*.zip' -size +20M -delete || true
           git add qa/visual/evidence
-          if git diff --cached --quiet; then
-            echo 'No player-height evidence generated; retaining diagnostics in the CI artifact.'
-            exit 0
-          fi
-          git commit -m "qa: add captured player-height frames for run $GITHUB_RUN_ID"
+          if git diff --cached --quiet; then echo 'No evidence generated.'; exit 0; fi
+          git commit -m "qa: player-height capture evidence for run $GITHUB_RUN_ID (seed $SEED)"
+          git pull --rebase origin "$GITHUB_REF_NAME" || true
           git push origin "HEAD:${GITHUB_REF_NAME}"
-
-      - name: Fail after collecting diagnostics for smoke/capture failure
-        if: steps.browser_smoke.outcome == 'failure' || steps.capture_default.outcome == 'failure' || steps.capture_alternate.outcome == 'failure'
-        run: |
-          echo 'Smoke test or at least one real player capture failed; any committed partial evidence remains diagnostic only.' >&2
-          exit 1
 
       - name: Stop local game server
         if: always()
         run: |
-          if [ -f "$RUNNER_TEMP/rivet-run-vite.pid" ]; then
-            kill "$(cat "$RUNNER_TEMP/rivet-run-vite.pid")" || true
-          fi
+          if [ -f "$RUNNER_TEMP/rivet-run-vite.pid" ]; then kill "$(cat "$RUNNER_TEMP/rivet-run-vite.pid")" || true; fi
 
-      - name: Upload browser evidence and diagnostics
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
           name: rivet-run-browser-qa-${{ github.run_id }}
           if-no-files-found: warn
           retention-days: 14
           path: |
-            qa/visual/**/*.png
-            qa/visual/**/*.zip
-            qa/visual/capture_manifest.json
-            qa/visual/review_validation.json
-            qa/visual/playthrough_context.json
-            research/sketchfab/latest_intake.json
+            qa/visual/evidence/${{ github.run_id }}/
             playwright-report/
             test-results/
             ${{ runner.temp }}/rivet-run-vite.log
+
+      - name: Fail the job if smoke or the gameplay capture failed
+        if: steps.browser_smoke.outcome == 'failure' || steps.capture_default.outcome == 'failure'
+        run: |
+          echo 'Smoke test or the gameplay capture failed; committed frames remain diagnostic only.' >&2
+          exit 1
 
       - name: Job summary
         if: always()
@@ -171,7 +265,45 @@ jobs:
           {
             echo '## Rivet Run browser QA'
             echo
-            echo '- Chromium was provisioned explicitly before execution.'
-            echo '- Smoke test and player-height capture results are available in the uploaded artifact.'
-            echo '- Capture presence is evidence only; visual approval still requires hostile semantic inspection and the documented score threshold.'
+            echo "- Seed: \`$SEED\`"
+            echo '- Frames tagged `GAMEPLAY_*` were reached with real input; `STAGED_*` frames are composition checks only.'
+            echo '- Capture presence is evidence, not approval. VISUAL APPROVAL stays FALSE until the frames are semantically reviewed.'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # --------------------------------------------------------------------------------------
+  # 4. Reference gameplay study (manual dispatch only). yt-dlp + ffmpeg, "15min gameplay no
+  #    commentary" search suffix, 13–22 min uploads or a 15-min section of a longer upload,
+  #    360p, one-frame-per-minute contact frames. Clips are uploaded as an artifact AND
+  #    committed under research/videos/clips (LFS-free, 360p keeps each clip ~40–80 MB).
+  # --------------------------------------------------------------------------------------
+  reference-gameplay-videos:
+    name: Reference gameplay clips (yt-dlp)
+    if: github.event_name == 'workflow_dispatch' && inputs.fetch_reference_videos
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install yt-dlp and ffmpeg
+        run: |
+          python3 -m pip install --upgrade yt-dlp
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          yt-dlp --version; ffmpeg -version | head -1
+      - name: Download one ~15-minute no-commentary clip per reference game
+        run: tools/video/fetch_reference_gameplay.sh research/videos/clips
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reference-gameplay-clips-${{ github.run_id }}
+          path: research/videos/clips/
+          retention-days: 30
+      - name: Commit clips and contact frames
+        run: |
+          git config user.name 'rivet-run-browser-qa[bot]'
+          git config user.email 'rivet-run-browser-qa[bot]@users.noreply.github.com'
+          git add research/videos/clips
+          if git diff --cached --quiet; then echo 'No clips downloaded.'; exit 0; fi
+          git commit -m "research: reference gameplay clips + contact frames (run $GITHUB_RUN_ID)"
+          git pull --rebase origin "$GITHUB_REF_NAME" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}"

@@ -96,7 +96,15 @@ scene.add(sun); scene.add(sun.target);
 scene.add(new THREE.HemisphereLight(atmospherePreset.hemiSky, atmospherePreset.hemiGround, 1.1));
 
 // ------------------------------------------------------------------ world + player
+// Poly Haven CC0 sets are opt-in: CI's fetch_polyhaven_sets.mjs writes public/textures/polyhaven/manifest.json.
+// The manifest is read synchronously so material creation stays deterministic (no late texture swaps).
 const availablePolyhaven = new Set(window.__RIVET_POLYHAVEN_SETS || []);
+try {
+  const request = new XMLHttpRequest();
+  request.open('GET', '/textures/polyhaven/manifest.json', false);
+  request.send(null);
+  if (request.status === 200) for (const id of JSON.parse(request.responseText).sets || []) availablePolyhaven.add(id);
+} catch { /* no manifest → generated sets */ }
 const course = new HighlineDistrict(scene, { seed, availablePolyhaven });
 const player = new MovementController(camera, () => course.solids);
 const audio = new AudioDirector();
