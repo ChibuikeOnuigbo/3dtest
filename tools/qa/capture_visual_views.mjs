@@ -174,8 +174,8 @@ const POSES = {
   '15-turbine-hall': { position: [3.4, -3.3, -64], yaw: -0.55, pitch: -0.2 },
   '16-crane-trolley': { position: [7.7, -3.3, -66], yaw: 0, pitch: -0.12 },
   '17-hall-gallery-door': { position: [4, -0.3, -89.5], yaw: Math.PI / 2 - 0.4, pitch: -0.02 },
-  '17d-hall-door-front': { position: [0, -0.3, -84.5], yaw: 0, pitch: 0.06 },
-  '17e-hall-door-lifting': { position: [-3.4, -0.3, -87.5], yaw: -0.62, pitch: 0.18, door: ['hall-door', 0.6] }, // from the gallery, looking up at the lifted curtain, hood and motor
+  '17d-hall-door-front': { position: [7.5, -0.3, -90.3], yaw: Math.PI / 2 - 0.05, pitch: 0.1 }, // on the south gallery deck (z -92..-88.6), looking west along it at the closed curtain
+  '17e-hall-door-lifting': { position: [-3.2, -0.3, -89.4], yaw: -0.95, pitch: 0.2, door: ['hall-door', 0.6] }, // standing on the gallery deck by the west jamb, looking up-east at the lifted curtain, hood, drum and motor
   '18-sunline-gantry': { position: [0, -0.3, -96], yaw: 0, pitch: -0.06 },
   '19-finish-cab': { position: [0, -0.3, -116], yaw: 0, pitch: -0.05 },
   '20-finish-look-back': { position: [0, -0.3, -121], yaw: Math.PI, pitch: 0.05 },

@@ -141,7 +141,7 @@ function renderControls() {
   ].map(([action, text]) => `<span class="keycap">${labelFor(action)}</span><span>${text}</span>`).join('<span>·</span>');
 }
 function showToast(text) { toastNode.textContent = text; toastTimer = 2.45; toastNode.classList.add('show'); }
-function setOverlay(element, visible) { element.classList.toggle('hidden', !visible); element.setAttribute('aria-hidden', String(!visible)); }
+function setOverlay(element, visible) { element.classList.toggle('hidden', !visible); element.setAttribute('aria-hidden', String(!visible)); if (element === pauseScreen) audio.snapshot(visible ? 'pause' : 'default'); }
 
 function resetRun() {
   elapsed = 0;
@@ -239,7 +239,17 @@ function updateGame(delta) {
   const p = player.root.position;
   const machineryDistance = Math.min(...machineryPoints.map((m) => m.distanceTo(p)));
   const interior = (p.z < -60 && p.z > -92 && Math.abs(p.x) < 18) || (p.z < 10 && p.z > -14 && Math.abs(p.x) < 2.4) || (p.z < -46 && p.z > -60 && Math.abs(p.x) < 2.2);
-  audio.updateBeds(delta, { altitude: p.y, machineryDistance, interior, speed: player.lastSpeed });
+  const snap = player.snapshot();
+  const horizontal = Math.hypot(player.velocity.x, player.velocity.z);
+  audio.updateBeds(delta, { altitude: p.y, machineryDistance, interior, speed: player.lastSpeed, verticalSpeed: player.velocity.y, sprinting: horizontal > 5.5 && snap.grounded, climbing: snap.onLadder || snap.mantling, airborne: !snap.grounded && !snap.onLadder });
+  // Door events → audio (motor start/stop), FMOD-style one-shots keyed on the state transition.
+  for (const door of course.doors) {
+    if (door.state !== door.lastAudioState) {
+      if (door.state === 'opening') audio.handle({ type: 'door_open' });
+      if (door.state === 'closing') audio.handle({ type: 'door_close' });
+      door.lastAudioState = door.state;
+    }
+  }
 }
 function followSun() {
   // Keep the shadow frustum centred on the player so near-route shadows stay sharp everywhere.
@@ -266,6 +276,7 @@ window.__rivetRunProbe = Object.freeze({
   snapshot: () => Object.freeze({
     player: { ...player.snapshot(), traversalRegion: course.traversalRegionForSolid(player.supportSolidId) },
     cameraPosition: camera.getWorldPosition(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(3))),
+    audio: audio.status(),
     cameraDirection: player.facingDirection(new THREE.Vector3()).toArray().map((value) => Number(value.toFixed(4))),
     elapsed: Number(elapsed.toFixed(3)),
     running,
@@ -286,6 +297,9 @@ window.__rivetRunProbe = Object.freeze({
   }),
   checkpoints: () => course.checkpoints.map((c) => ({ id: c.id, position: c.position.toArray(), yaw: c.yaw, reached: c.reached })),
   sceneAudit: () => course.sceneAudit(),
+  /** Audio QA: fire any gameplay event into the AudioDirector and read the mixer state. */
+  audioEvent: (type, extra = {}) => { audio.handle({ type, ...extra }); return audio.status(); },
+  audioStatus: () => audio.status(),
   /** STAGING ONLY — marks the session as staged. */
   teleport: (position, yaw = 0, pitch = -0.12) => {
     stagingMode = true; running = true; setOverlay(titleScreen, false); setOverlay(pauseScreen, false);
@@ -294,7 +308,12 @@ window.__rivetRunProbe = Object.freeze({
   },
   setView: (yaw, pitch) => { stagingMode = true; player.yaw = yaw; player.pitch = pitch; player.applyOrientation(); return { staged: true }; },
   /** STAGING ONLY — holds a roller door at a given lift (0 closed … 1 open) so mechanism frames can be reviewed. */
-  setDoor: (id, open) => { stagingMode = true; const door = course.doors.find((d) => d.id === id); if (!door) return { staged: true, error: `no door ${id}` }; door.trigger = null; door.target = open; door.open = open; door.applyPose(); return { staged: true, id, open }; },
+  setDoor: (id, open) => { stagingMode = true; const door = course.doors.find((d) => d.id === id); if (!door) return { staged: true, error: `no door ${id}` }; door.trigger = null; door.target = open; door.open = open; door.applyPose(); return { staged: true, id, open, ...door.debugInfo() }; },
+  doorInfo: (id) => { const door = course.doors.find((d) => d.id === id); return door ? door.debugInfo() : { error: `no door ${id}` }; },
+  /** DIAGNOSTIC ONLY — re-create the curtain position attribute so the GPU buffer is rebuilt from scratch. */
+  doorReupload: (id) => { const door = course.doors.find((d) => d.id === id); if (!door) return { error: `no door ${id}` }; const g = door.curtainGeom; const old = g.attributes.position; g.setAttribute('position', new THREE.BufferAttribute(old.array.slice(), 3)); door.curtainGeomPositionReplaced = true; return { id, count: g.attributes.position.count }; },
+  /** DIAGNOSTIC ONLY — hide/show one dynamic part of a door (curtain, bottomRail, wrap, drum, weight) to attribute what a frame shows. */
+  doorPart: (id, part, visible) => { stagingMode = true; const door = course.doors.find((d) => d.id === id); if (!door || !door[part] || !door[part].isObject3D) return { error: `no part ${id}.${part}` }; door[part].visible = !!visible; return { id, part, visible: !!visible }; },
   captureCanvas: (type = 'image/jpeg', quality = 0.85) => {
     // preserveDrawingBuffer is off, so re-render synchronously then read back. Shadows are
     // already up to date from the last presented frame; skip the shadow pass for the readback.

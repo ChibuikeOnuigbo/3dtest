@@ -167,3 +167,20 @@ test('gltf_inspect reports per-root bounds with variant translations stripped an
   const rotated = { scene: 0, scenes: [{ nodes: [0] }], nodes: [{ name: 'root', children: [1] }, { mesh: 0, rotation: [0, Math.SQRT1_2, 0, Math.SQRT1_2], translation: [5, 0, 0] }], meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }], accessors: [{ count: 3, min: [0, 0, 0], max: [4, 1, 2] }] };
   assert.deepEqual(inspectGltf(rotated).nodes[0].size_m, [2, 1, 4]);
 });
+
+// ---------------------------------------------------------------------------------------------
+// Placement contract: no floating and no interpenetrating real props, on any seed. The checker uses
+// the inspected model dimensions (tools/assets/polyhaven_dimensions.json) or the CI-fetched manifest.
+// ---------------------------------------------------------------------------------------------
+import { checkPlacement, loadManifest } from '../tools/qa/prop_placement_check.mjs';
+
+test('every placed real prop rests on a support and intersects nothing (8 seeds)', () => {
+  const { manifest } = loadManifest();
+  for (const seed of ['rivet-run-highline-01', 'qa-harbour-alt-01', 'seed-a', 'seed-b', 'seed-c', 'night-shift-7', 'harbour-9', 'qa-x']) {
+    const world = new HighlineDistrict(new THREE.Scene(), { headless: true, seed, propManifest: manifest });
+    const result = checkPlacement(world);
+    assert.ok(result.checked >= 50, `${seed}: props placed (${result.checked})`);
+    assert.equal(result.missing, 0, `${seed}: every roster model resolved`);
+    assert.deepEqual(result.violations, [], `${seed}: floating/overlap violations`);
+  }
+});

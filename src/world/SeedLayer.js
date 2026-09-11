@@ -129,6 +129,9 @@ export class SeedLayer {
         const kind = pick(r, ['Barrel_01', 'Barrel_02', 'barrel_03', 'wooden_crate_02', 'old_tyre', 'metal_trash_can', 'cardboard_box_01']);
         const yaw = range(r, 0, Math.PI);
         const stacked = kind === 'wooden_crate_02' && chance(r, 0.5);
+        // Never spawn inside/over something already built (skylights, HVAC, tanks, other props): the spot must be clear
+        // for the model's footprint (largest roster footprint 1.2 m) and the roof must be the support (it is: y = roof.y).
+        if (this.spotBlocked(x, roof.y, z, 0.7)) continue;
         this.world.props.place(kind, [x, roof.y, z], yaw, { collide: true, colliderId: `seed-prop-${roofProps}`, family: `seed-prop:${kind}` });
         if (stacked) this.world.props.place('wooden_crate_02', [x, roof.y + 0.53, z], yaw + 1.2, { collide: true, colliderId: `seed-prop-${roofProps}-top`, family: 'seed-prop:wooden_crate_02' });
         roofProps += 1;
@@ -207,12 +210,21 @@ export class SeedLayer {
    * shortcut pipe in the boiler court, spare pallets in the turbine hall. Always outside lanes
    * or fully optional (never required, never blocking).
    */
+  /** True when any collider other than the roof slab itself occupies the [x±r, y..y+1.2, z±r] volume. */
+  spotBlocked(x, y, z, r) {
+    for (const s of this.world.solids) {
+      if (s.max.y <= y + 0.02 && s.max.y >= y - 0.35) continue; // the roof slab (support) — allowed
+      if (s.min.x < x + r && s.max.x > x - r && s.min.z < z + r && s.max.z > z - r && s.min.y < y + 1.2 && s.max.y > y + 0.02) return true;
+    }
+    return false;
+  }
+
   routeVariants() {
     const r = this.stream('routeVariants'); const b = this.world.builder; const m = this.world.materials;
     const variants = [];
     if (chance(r, 0.5)) { this.world.props.place('concrete_road_barrier_02', [-6.8, 2.4, -15.2], 0, { collide: true, colliderId: 'variant-split-barrier' }); variants.push('split-deck-hop-barrier'); }
     if (chance(r, 0.5)) { b.cylinder('variant-shortcut-pipe', m.oxide, 0.35, 8, [5.2, 8.6 + 0.35, -39.5], { rotation: [Math.PI / 2, 0, 0], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' } }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -36.0], { cast: false }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -43.0], { cast: false }); variants.push('boiler-court-pipe-balance'); }
-    if (chance(r, 0.5)) { for (let i = 0; i < 3; i += 1) { const yaw = range(r, -0.2, 0.2); this.world.props.place('wooden_crate_02', [-6 - i * 1.6, -14, -70 + i * 0.5], yaw, { collide: true, colliderId: `variant-hall-crate-${i}` }); } variants.push('turbine-floor-crates'); }
+    if (chance(r, 0.5)) { for (let i = 0; i < 3; i += 1) { const yaw = range(r, -0.2, 0.2); this.world.props.place('wooden_crate_02', [-4.4 + (i % 2) * 0.1, -14, -65.5 + i * 0.75], yaw, { collide: true, colliderId: `variant-hall-crate-${i}` }); } variants.push('turbine-floor-crates'); }
     if (chance(r, 0.5)) { b.box('variant-billboard', m.windowLit, [6, 2.4, 0.3], [-6, 3.2, 27.9], { cast: false }); variants.push('transfer-gap-billboard'); }
     this.note('routeVariants', { variants });
   }

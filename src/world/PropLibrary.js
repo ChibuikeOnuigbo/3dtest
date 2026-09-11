@@ -21,14 +21,24 @@ import * as THREE from 'three';
  * every variant drops at the requested position.
  */
 export class PropLibrary {
-  constructor(scene, builder, { headless = false, manifest, basePath = '/models/polyhaven', manager } = {}) {
+  constructor(scene, builder, { headless = false, manifest, basePath = '/models/polyhaven', extraManifests = ['/models/sketchfab/manifest.json', '/models/hunt/manifest.json'], manager } = {}) {
     this.scene = scene;
     this.builder = builder;
     this.headless = headless;
     this.basePath = basePath;
     this.manager = manager;
     this.manifest = manifest === undefined ? (headless ? null : PropLibrary.readManifest(`${basePath}/manifest.json`)) : manifest;
-    this.models = this.manifest?.models || {};
+    this.models = { ...(this.manifest?.models || {}) };
+    // Additional per-source manifests (Sketchfab authorised intake) merge into the same id space; each model
+    // carries its own base_path so the loader resolves the right directory. Ids never collide (prefix `sf_`).
+    if (manifest === undefined && !headless) {
+      for (const url of extraManifests) {
+        const extra = PropLibrary.readManifest(url);
+        if (!extra?.models) continue;
+        for (const [id, model] of Object.entries(extra.models)) this.models[id] = { ...model, base_path: model.base_path || extra.base_path || url.replace(/\/manifest\.json$/, '') };
+        this.manifest = this.manifest || extra;
+      }
+    }
     this.cache = new Map();
     this.placed = [];
     this.missing = [];
@@ -115,7 +125,7 @@ export class PropLibrary {
   load(id) {
     if (!this.cache.has(id)) {
       const model = this.models[id];
-      const url = `${this.basePath}/${id}/${model.gltf}`;
+      const url = `${model.base_path || this.basePath}/${id}/${model.gltf}`;
       const promise = this.loaderInstance()
         .then((loader) => new Promise((resolve, reject) => loader.load(url, resolve, undefined, reject)))
         .then((gltf) => {

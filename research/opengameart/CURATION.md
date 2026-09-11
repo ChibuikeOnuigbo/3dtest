@@ -34,3 +34,31 @@ bounded network failure, not a licence rejection.
 No audio is considered curated simply because it has a search result or an
 approved licence. It needs source file integrity, waveform/listening, loudness,
 loop/variation, mobile/browser decode, in-game mix and attribution validation.
+
+## 2026-09-07 — curated bank + runtime (FMOD-style)
+
+The bank is fetched by `tools/assets/fetch_opengameart_audio.mjs` in the CI intake job (the sandbox
+cannot open TLS to opengameart.org; CI can) and shipped as `public/audio/oga/` in the same artifact
+as the Poly Haven models. Every item below was read on its OGA page (author, CC0 badge, file list):
+
+| Cue id | OGA item | Author | Files taken | Runtime role |
+|---|---|---|---|---|
+| footsteps_hard | Fantozzi's Footsteps (Grass/Sand & Stone) | Fantozzi via qubodup | 6 stone steps | concrete/brick footsteps, round-robin, exertion-weighted |
+| footsteps_metal | Metal footsteps on concrete | Thimras | 8 of 25 (48k/24b) | steel + grating (high-passed) footsteps, ladder rungs |
+| platformer_movement | Platformer Sounds… (yd) | yd | door_open, landing, steps_* | door motor start, heavy land |
+| jump_land_light | Jump Landing Sound | MentalSanityOff via qubodup | jumpland.wav | soft landing |
+| jump_land_heavy | Jump Landing | Macro (credit Dan Knoflicek) | Jump 1.wav | hard/roll/slam landing body |
+| vocal_effort | 15 vocal male strain/hurt/pain/jump | qubodup | 15 | quiet exertion layer under jump/kick/mantle, pain on slam |
+| breathing_tired | Breathing Tired | mikeask | 1 loop | breath loop driven by the exertion RTPC (sustained sprint) |
+| heartbeat | Heartbeat sounds | bart | slow + fast loops | pulse: slow at medium exertion, fast at max / long falls |
+| wind_gusts | Wind | IgnasD | 3 | exterior wind bed (altitude RTPC) |
+| wind_rush_loop | wind whoosh loop | OGA (page) | 1 loop | airspeed wind rush (sprint/dash/fall RTPC → gain + low-pass) |
+| swishes | Swishes Sound Pack | artisticdude | 13 | jump/dash/air/slide/wall-kick whooshes (light vs heavy sets) |
+| machine_loops | 100 CC0 SFX #2 | rubberduck | ≤16 machine/loop/door/switch/metal | machinery beds, door clunk, relay switch |
+| boiler_loop | Steam boiler sound loop | bart | generator_loop.wav | boiler court bed (distance RTPC) |
+
+Runtime (`src/systems/AudioDirector.js`): buses (sfx / foley / voice / ambience), events with layered
+round-robin variations (no immediate repeats), pitch + gain jitter, cooldown/polyphony caps, RTPCs
+(exertion, airspeed, altitude, machinery distance, interior) and mixer snapshots (`pause`). When the
+bank is absent the same events route to the synth fallback, so nothing is silent and the mix logic is
+identical. Status of the bank in a running build: `window.__rivetRunProbe.snapshot().audio`.

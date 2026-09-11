@@ -138,6 +138,13 @@ export class RollerDoor {
     this.applyPose();
   }
 
+  /** Diagnostic snapshot for the capture probe: where the curtain geometry actually is. */
+  debugInfo() {
+    const pos = this.curtainGeom.attributes.position; let minY = Infinity, maxY = -Infinity;
+    for (let i = 0; i < pos.count; i += 1) { minY = Math.min(minY, pos.getY(i)); maxY = Math.max(maxY, pos.getY(i)); }
+    return { id: this.id, open: Number(this.open.toFixed(3)), target: this.target, state: this.state, trigger: this.trigger, curtainLocalY: [Number(minY.toFixed(3)), Number(maxY.toFixed(3))], positionVersion: pos.version, sameGeometry: this.curtain.geometry === this.curtainGeom, railY: Number(this.bottomRail.position.y.toFixed(3)), colliderMinY: Number(this.solid.min.y.toFixed(2)), visible: this.curtain.visible && this.group.visible };
+  }
+
   /** Threshold point (bottom-centre of the opening) for trigger distance. */
   get threshold() { return this.centre; }
 

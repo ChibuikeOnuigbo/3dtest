@@ -13,6 +13,11 @@ on:
         required: false
         default: false
         type: boolean
+      asset_hunt_hours:
+        description: Run the timed asset hunt (Sketchfab query rotation → Poly Haven → OpenGameArt) for this many hours (0 = skip)
+        required: false
+        default: '0'
+        type: string
   push:
     branches:
       - arena/01a07b29-3dtest
@@ -28,6 +33,7 @@ on:
       - 'public/textures/**'
       - 'public/sky/**'
       - 'public/models/**'
+      - 'public/audio/**'
 
 permissions:
   contents: write
@@ -65,6 +71,11 @@ jobs:
         run: |
           node tools/assets/fetch_polyhaven_models.mjs --res 1k --out public/models/polyhaven --max-asset-mb 8 --max-total-mb 60
           node -e "const m=require('./public/models/polyhaven/manifest.json');console.log('approved:',Object.keys(m.models).join(', '));console.log('rejected:',JSON.stringify(m.rejected));console.log('failed:',JSON.stringify(m.failed));console.log('total MB',(m.total_bytes/1048576).toFixed(1))"
+      - name: Fetch curated CC0 OpenGameArt audio (footsteps, breath, pulse, wind, swishes, machinery) → 48 kHz OGG bank
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg p7zip-full unzip > /dev/null
+          node tools/assets/fetch_opengameart_audio.mjs --out public/audio/oga
       - name: Inspect fetched sets (dimensions, texel density, seams) for the manifest review
         continue-on-error: true
         run: |
@@ -95,6 +106,7 @@ jobs:
             public/textures/polyhaven/
             public/sky/polyhaven/
             public/models/polyhaven/
+            public/audio/oga/
           if-no-files-found: warn
           retention-days: 14
 
@@ -120,10 +132,24 @@ jobs:
           SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
           SKETCHFAB_CANDIDATE_URLS: ${{ vars.SKETCHFAB_CANDIDATE_URLS }}
         run: node tools/assets/sketchfab_intake.mjs
+      - name: Query-matrix search → licence triage → authorised GLB download → inspection (industrial props/kits/scenes)
+        continue-on-error: true
+        env:
+          SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
+          SKETCHFAB_PROXY_URL: ${{ secrets.SKETCHFAB_PROXY_URL }}
+        run: |
+          node tools/assets/sketchfab_search_intake.mjs --out public/models/sketchfab --max-downloads 14 --max-faces 150000 --max-asset-mb 25 --max-total-mb 220
+          if [ -n "$SKETCHFAB_API_TOKEN" ]; then echo "Sketchfab credential: present (value never printed)"; else echo "Sketchfab credential: ABSENT - add the SKETCHFAB_API_TOKEN repository secret; search + licence triage still ran"; fi
       - uses: actions/upload-artifact@v4
         with:
           name: sketchfab-intake-${{ github.run_id }}
           path: research/sketchfab/
+          if-no-files-found: warn
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sketchfab-models-${{ github.run_id }}
+          path: public/models/sketchfab/
           if-no-files-found: warn
           retention-days: 14
 
@@ -163,6 +189,11 @@ jobs:
           else
             echo 'No Poly Haven manifest — generated sets will render.'
           fi
+          if [ -f public/audio/oga/manifest.json ]; then
+            echo "OGA audio bank:"; python3 -c "import json;m=json.load(open('public/audio/oga/manifest.json'));print({k:(v['status'],len(v['files'])) for k,v in m['cues'].items()});print('failed',m['failed']);print('MB',round(m['total_bytes']/1048576,2))"
+          else
+            echo 'No OGA audio bank — the synth fallback layer plays (event routing identical).'
+          fi
           if [ -f public/models/polyhaven/manifest.json ]; then
             echo "Real prop models available:"; python3 -c "import json;m=json.load(open('public/models/polyhaven/manifest.json'));print(sorted(m['models']));print('rejected',m['rejected']);print('failed',m['failed'])"
           else
@@ -170,6 +201,8 @@ jobs:
           fi
       - name: Logic tests (route, movement, level map)
         run: npm run test:logic
+      - name: Prop placement contract against the FETCHED models (no floating / overlapping real props)
+        run: node tools/qa/prop_placement_check.mjs --seed "$SEED"
 
       - name: Start local game server
         run: |
@@ -281,6 +314,39 @@ jobs:
             echo '- Frames tagged `GAMEPLAY_*` were reached with real input; `STAGED_*` frames are composition checks only.'
             echo '- Capture presence is evidence, not approval. VISUAL APPROVAL stays FALSE until the frames are semantically reviewed.'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # --------------------------------------------------------------------------------------
+  # Timed asset hunt (dispatch-only). A Python 2-hour timer drives the loop: Sketchfab search
+  # with query mutation → authorised download (token or Cloudflare worker) → Poly Haven → OGA
+  # 3D; every asset inspected and approved/rejected with reasons. Output = a PropLibrary
+  # manifest committed as an artifact + ledger under research/asset_hunt/.
+  # --------------------------------------------------------------------------------------
+  asset-hunt:
+    name: Timed asset hunt (Sketchfab → Poly Haven → OpenGameArt)
+    if: github.event_name == 'workflow_dispatch' && inputs.asset_hunt_hours != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Hunt (credential from secrets; never printed)
+        env:
+          SKETCHFAB_API_TOKEN: ${{ secrets.SKETCHFAB_API_TOKEN }}
+          SKETCHFAB_PROXY_URL: ${{ secrets.SKETCHFAB_PROXY_URL }}
+        run: python3 tools/assets/asset_hunt.py --hours "${{ inputs.asset_hunt_hours }}" --out public/models/hunt --target 40 --max-total-mb 400
+        continue-on-error: true
+      - name: Ledger summary
+        run: python3 -c "import json;l=json.load(open('research/asset_hunt/latest.json'));print(l['result'],'approved',len(l['approved']),'rejected',len(l['rejected']),'failed',len(l['failed']));print(l.get('sketchfab_download_status'));[print('  +',a['id'],a['licence'],a['triangles'],'tris',a['size_m']) for a in l['approved']]"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: asset-hunt-models-${{ github.run_id }}
+          path: |
+            public/models/hunt/
+            research/asset_hunt/
+          if-no-files-found: warn
+          retention-days: 14
 
   # --------------------------------------------------------------------------------------
   # 4. Reference gameplay study (manual dispatch only). yt-dlp + ffmpeg, "15min gameplay no

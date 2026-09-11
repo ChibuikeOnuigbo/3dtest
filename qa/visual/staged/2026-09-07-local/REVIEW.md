@@ -114,3 +114,42 @@ Records: `capture_record_staged-0{2,3,4}.json` (schema `rivet-run-player-height-
 - Gameplay-mode capture in CI with a trace (the only evidence that counts toward approval).
 - Boiler court plinths/breeching, kiosk ceiling/kerb, hall crane bridge + skylight fill,
   water surface detail.
+
+## Pass 12 (22:59 UTC) — `17d-hall-door-front.jpg` (STAGED, local SwiftShader, 960×540) — INSPECTED
+Pose: south gallery deck of the turbine hall `[7.5,-0.4,-90.3]`, yaw π/2−0.05, pitch 0.1, player GROUND on `hall-gallery-s`.
+- **A visible:** grated gallery walkway running west along the brick south wall; the hall roller door on the
+  right — corrugated steel curtain in a REAL opening (dark reveal behind the jamb, guide track and side
+  channel visible, yellow kick-plate band, hood/lintel above); left: rail, the hall's red truss and gantry
+  girder, a hanging cage light, the lit mullioned windows of the north wall, two grey drums in the
+  foreground corner.
+- **B bad:** the curtain is uniformly lit and reads flat — the slat relief is only a texture; there is no
+  drum/chain/motor visible from this angle (it is above the hood — see 17e) so from the front the door
+  reads as a static shutter. Ceiling is a black void above the truss (skylight fill absent from this angle).
+- **C placeholder:** the two drums bottom-left are the procedural cylinders (Poly Haven barrel models
+  only appear with the CI manifest) — flagged, to be replaced by real models in the CI capture.
+- **D repetitive:** window mullion pattern identical across the north wall; brick tile visibly repeats
+  on the right wall at ~1.5 m period.
+- **E unconvincing:** the truss bottom-chord ends float against the black ceiling; no gusset plates.
+- **F missing:** door signage ("HALL 4 · KEEP CLEAR"), a push-button box by the jamb, warning strobe,
+  floor hazard chevrons in front of the curtain; a ceiling plane / skylight glow behind the truss.
+- **Layering:** foreground rail+drums → playable walkway → door/wall → hall interior (truss, windows)
+  → NO distant world (correct for an interior, but the ceiling void needs to be closed).
+- **Critic scores (staged, local; not approval):** art direction 6.0, environment art 6.0, level design
+  7.0 (door reads as the exit), technical 6.5, hostile 5.5 ("black ceiling, flat door, procedural drums").
+- **Defects logged:** D-17d-1 black ceiling void from the gallery; D-17d-2 door front dressing missing
+  (signage, control box, chevrons); D-17d-3 curtain lighting flat (needs a lamp raking across the slats).
+VISUAL APPROVAL remains FALSE.
+
+### Pass 13 (23:04 UTC) — `17d-hall-door-front.jpg` re-captured after the D-17d fixes — INSPECTED
+- D-17d-1 **fixed**: the ceiling now reads as a pale corrugated soffit with the dark skylight band between
+  steel kerbs (no black void; truss chords now sit against a surface).
+- D-17d-2 **fixed**: hazard chevrons on the deck in front of the curtain, control box with red/green
+  push-buttons on the east jamb, jamb lamps either side; the header sign is above the frame at this pitch
+  (will show in 17e / from the gantry side).
+- D-17d-3 **partly fixed**: the west jamb lamp rakes light across the slats — the slat relief now reads
+  near the lamp; the curtain centre is still dark (one real light per door because of the 24-point-light
+  budget — the hood lamp was converted to emissive-only to pay for it).
+- Remaining: procedural drums bottom-left (CI manifest → real models); brick tiling period on the right
+  wall; the curtain material would benefit from a real Poly Haven `painted_metal_shutter` set in CI.
+- Critic re-scores (staged, local; not approval): art 6.5 (+0.5), environment 6.5 (+0.5), level 7.0,
+  technical 6.5, hostile 6.0 (+0.5). VISUAL APPROVAL remains FALSE.
