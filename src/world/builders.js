@@ -131,8 +131,11 @@ export class WorldBuilder {
       const centre = axis === 'z' ? [x0, y - 0.05, z0 + t] : [x0 + t, y - 0.05, z0];
       const size = axis === 'z' ? [width, 0.1, run + 0.02] : [run + 0.02, 0.1, width];
       this.box(`${id}-tread`, material, size, centre, { collide: true, traits: { walkable: true, stair: true, surface: 'steel' }, id: `${id}-${i}` });
-      const riserCentre = axis === 'z' ? [x0, y - stepRise / 2 - 0.05, z0 + (i - 1) * run * direction + direction * 0.02] : [x0 + (i - 1) * run * direction + direction * 0.02, y - stepRise / 2 - 0.05, z0];
-      const riserSize = axis === 'z' ? [width, stepRise, 0.04] : [0.04, stepRise, width];
+      // Riser sits 3 cm behind the tread nosing and 1 cm below the tread underside so no riser face is coplanar
+      // with a tread face (coplanar faces with different materials z-fight: shimmering stairs on every flight).
+      const riserBack = (i - 1) * run * direction + direction * 0.05;
+      const riserCentre = axis === 'z' ? [x0, y - 0.1 - (stepRise - 0.01) / 2, z0 + riserBack] : [x0 + riserBack, y - 0.1 - (stepRise - 0.01) / 2, z0];
+      const riserSize = axis === 'z' ? [width - 0.04, stepRise - 0.01, 0.04] : [0.04, stepRise - 0.01, width - 0.04];
       this.box(`${id}-riser`, stringer, riserSize, riserCentre, { cast: false });
     }
     const length = run * count;
@@ -184,8 +187,10 @@ export class WorldBuilder {
     this.box(`${id}-deck`, material, size, centre, { collide: true, traits: { walkable: true, surface }, id, cast: false });
     for (const side of [-1, 1]) {
       const off = side * width / 2;
-      const p = axis === 'x' ? [x + length / 2, y - 0.1, z + off] : [x + off, y - 0.1, z + length / 2];
-      this.box(`${id}-channel`, this.m.steelDark, axis === 'x' ? [length, 0.16, 0.08] : [0.08, 0.16, length], p, { cast: false });
+      // Edge channel: top 1 cm under the deck top, 2 cm outboard of the deck edge, 1 cm shorter at each end — a real
+      // C-channel wraps the deck edge; sharing a face plane with the grating would z-fight.
+      const p = axis === 'x' ? [x + length / 2, y - 0.13, z + off + side * 0.02] : [x + off + side * 0.02, y - 0.13, z + length / 2];
+      this.box(`${id}-channel`, this.m.steelDark, axis === 'x' ? [length - 0.02, 0.16, 0.06] : [0.06, 0.16, length - 0.02], p, { cast: false });
       const wantsRail = rails === 'both' || (rails === 'left' && side === -1) || (rails === 'right' && side === 1);
       if (wantsRail) this.railing(`${id}-rail`, axis === 'x' ? [x, y, z + off] : [x + off, y, z], length, axis, { height: railHeight });
     }
@@ -254,7 +259,9 @@ export class WorldBuilder {
     const hz = quarter ? length / 2 : 1.22;
     for (const sx of [-1, 1]) for (const sz of [-1, 1]) this.box('container-corner', this.m.steelDark, [0.2, 2.62, 0.2], [x + sx * hx, y + 1.31, z + sz * hz], { cast: false });
     // Top/bottom side rails and a painted ID plate: cheap details that stop a 12 m box reading as a slab.
-    for (const sy of [0.12, 2.47]) this.box('container-rail', this.m.steelDark, quarter ? [2.5, 0.12, length + 0.02] : [length + 0.02, 0.12, 2.5], [x, y + sy, z], { rotation: [0, rotationY, 0], cast: false });
+    // Top/bottom side rails stand 3 cm proud of the shell and stop 6 cm short of the corner castings, so no rail face
+    // lies in a shell face plane (flush rails z-fought on every container in the yard).
+    for (const sy of [0.2, 2.39]) this.box('container-rail', this.m.steelDark, quarter ? [2.5, 0.1, length - 0.12] : [length - 0.12, 0.1, 2.5], [x, y + sy, z], { rotation: [0, rotationY, 0], cast: false });
     const plate = quarter ? [1.2, 0.35, 0.02] : [0.02, 0.35, 1.2];
     const plateOff = quarter ? [0.4, 2.0, -hz - 0.02] : [-hx - 0.02, 2.0, 0.4];
     this.box('container-plate', this.m.container('#d8d2c2'), plate, [x + plateOff[0], y + plateOff[1], z + plateOff[2]], { rotation: [0, rotationY, 0], cast: false });

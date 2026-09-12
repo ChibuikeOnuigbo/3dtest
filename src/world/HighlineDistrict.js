@@ -62,13 +62,13 @@ export class HighlineDistrict {
   }
 
   mark(position, axis = 'z', length = 2.4) {
-    this.builder.box('route-paint', this.materials.routePaint, axis === 'z' ? [0.32, 0.02, length] : [length, 0.02, 0.32], [position[0], position[1] + 0.012, position[2]], { cast: false });
+    this.builder.box('route-paint', this.materials.routePaint, axis === 'z' ? [0.32, 0.03, length] : [length, 0.03, 0.32], [position[0], position[1] + 0.015, position[2]], { cast: false });
   }
 
   chevron(position, yaw = 0) {
     for (const side of [-1, 1]) {
       const rot = yaw + side * 0.7;
-      const p = [position[0] + Math.cos(yaw) * side * 0.32, position[1] + 0.012, position[2] + Math.sin(yaw) * side * 0.32];
+      const p = [position[0] + Math.cos(yaw) * side * 0.32, position[1] + 0.015, position[2] + Math.sin(yaw) * side * 0.32];
       this.builder.box('route-chevron', this.materials.routePaint, [0.16, 0.02, 0.9], p, { rotation: [0, rot, 0], cast: false });
     }
   }
@@ -135,9 +135,11 @@ export class HighlineDistrict {
     const b = this.builder; const m = this.materials;
     const roofY = 0;
     b.box('warehouse-plinth', m.brick, [28.4, 6.2, 28.4], [0, GROUND_Y + 3.1, 42], { cast: false });
-    b.box('warehouse-cladding', m.corrugated, [28, 15.8, 28], [0, GROUND_Y + 6.2 + 7.9, 42], { cast: false });
-    b.box('warehouse-cornice', m.concreteDark, [28.6, 0.5, 28.6], [0, roofY - 0.25, 42], { cast: false });
-    b.box('dispatch-roof', m.concrete, [28, 0.3, 28], [0, roofY - 0.15, 42], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'dispatch-roof' });
+    // Mass stops 0.35 m under the roof; the cornice is a band whose top is 0.05 m BELOW the slab top and the slab is
+    // 0.1 m wider than the mass: no two faces share a plane (coplanar mass/roof/cornice tops z-fought over 784 m²).
+    b.box('warehouse-cladding', m.corrugated, [28, 15.45, 28], [0, GROUND_Y + 6.2 + 7.725, 42], { cast: false });
+    b.box('warehouse-cornice', m.concreteDark, [28.6, 0.5, 28.6], [0, roofY - 0.3, 42], { cast: false });
+    b.box('dispatch-roof', m.concrete, [28.1, 0.3, 28.1], [0, roofY - 0.15, 42], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'dispatch-roof' });
     for (const [x, z, rot, len] of [[0, 56.2, 0, 26], [-14.2, 42, Math.PI / 2, 26], [14.2, 42, Math.PI / 2, 26]]) {
       for (let t = -len / 2 + 2; t < len / 2 - 1; t += 4.2) {
         const p = rot === 0 ? [x + t, roofY - 3.2, z] : [x, roofY - 3.2, z + t];
@@ -167,7 +169,7 @@ export class HighlineDistrict {
     b.box('shed-door-light-housing', m.steelDark, [0.5, 0.1, 0.22], [shed.x, roofY + shed.h - 0.55, frontZ - 0.23], { cast: false });
     b.lamp([shed.x, roofY + shed.h - 0.62, frontZ - 0.23], { intensity: 10, distance: 9, size: 0.22 });
     // Run lane from the door to the rack gate: paint, a drain grate and a knee-high steam line to hop.
-    for (const sx of [-1, 1]) b.box('lane-paint', m.routePaint, [0.12, 0.02, 15], [sx * 1.1, roofY + 0.012, 40.5], { cast: false });
+    for (const sx of [-1, 1]) b.box('lane-paint', m.routePaint, [0.12, 0.03, 15], [sx * 1.1, roofY + 0.015, 40.5], { cast: false });
     b.box('lane-drain', m.grating, [1.2, 0.03, 0.6], [0, roofY + 0.015, 44.2], { cast: false });
     // Step-over height (0.44 < maxStepHeight 0.46): a kinetic bump on the run-up, never a blocker at spawn.
     b.cylinder('lane-pipe', m.galvanised, 0.15, 9, [0, roofY + 0.29, 38.5], { rotation: [0, 0, Math.PI / 2], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' }, id: 'lane-pipe' });
@@ -203,7 +205,7 @@ export class HighlineDistrict {
     b.cylinder('mast', m.galvanised, 0.12, 9, [12, roofY + 4.5, 53], { segments: 8 });
     b.lamp([12, roofY + 9.1, 53], { material: m.lampRed, color: '#ff3b2f', intensity: 4, distance: 8, light: false, size: 0.26 });
     b.box('cable-tray', m.galvanised, [0.4, 0.08, 20], [12.6, roofY + 0.08, 41], { cast: false });
-    b.box('roof-drain', m.steelDark, [0.6, 0.02, 0.6], [-11, roofY + 0.012, 35], { cast: false });
+    b.box('roof-drain', m.steelDark, [0.6, 0.03, 0.6], [-11, roofY + 0.015, 35], { cast: false });
     // Real props (Poly Haven CC0 glTF) either side of the shed door — no coloured boxes/cylinders.
     this.props.place('wooden_crate_02', [5.4, roofY, 46.6], 0.3, { collide: true, colliderId: 'door-crate' });
     this.props.place('wooden_crate_02', [5.35, roofY + this.props.heightOf('wooden_crate_02'), 46.65], 0.1, { collide: true, colliderId: 'door-crate-2' });
@@ -226,9 +228,9 @@ export class HighlineDistrict {
   buildTransfer() {
     const b = this.builder; const m = this.materials;
     const y = -1.6;
-    b.box('annex-mass', m.brick, [18.4, 20.4, 13.55], [0, GROUND_Y + 10.2, 16.825], { cast: false });
-    b.box('annex-cornice', m.concreteDark, [19, 0.4, 14.15], [0, y - 0.2, 16.825], { cast: false });
-    b.box('transfer-roof', m.concrete, [18.4, 0.3, 13.55], [0, y - 0.15, 16.825], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'transfer-roof' });
+    b.box('annex-mass', m.brick, [18.4, 20.05, 13.55], [0, GROUND_Y + 10.025, 16.825], { cast: false });
+    b.box('annex-cornice', m.concreteDark, [19, 0.4, 14.15], [0, y - 0.25, 16.825], { cast: false });
+    b.box('transfer-roof', m.concrete, [18.5, 0.3, 13.65], [0, y - 0.15, 16.825], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'transfer-roof' });
     b.addCollider('annex-face-n', [0, (GROUND_Y + y - 0.3) / 2, 23.5], [18.4, y - 0.3 - GROUND_Y, 0.2], 0, { walkable: false, wallJumpable: false });
     b.addCollider('dispatch-face-s', [0, (GROUND_Y - 0.4) / 2, 28.1], [28, -0.4 - GROUND_Y, 0.2], 0, { walkable: false, wallJumpable: false });
     b.box('parapet', m.concreteDark, [0.3, 0.8, 13.55], [-9.05, y + 0.4, 16.825], { collide: true, id: 'annex-parapet-w' });
@@ -236,7 +238,7 @@ export class HighlineDistrict {
     b.box('parapet', m.concreteDark, [4.8, 0.8, 0.3], [-5.0, y + 0.4, 23.45], { collide: true, id: 'annex-parapet-n-1' });
     b.box('parapet', m.concreteDark, [6.6, 0.8, 0.3], [5.9, y + 0.4, 23.45], { collide: true, id: 'annex-parapet-n1' });
     for (const side of [-1, 1]) b.box('parapet', m.concreteDark, [6.6, 0.8, 0.3], [side * 5.9, y + 0.4, 10.2], { collide: true, id: `annex-parapet-s${side}` });
-    b.box('landing-paint', m.routePaint, [3.2, 0.02, 0.35], [0, y + 0.012, 22.7], { cast: false });
+    b.box('landing-paint', m.routePaint, [3.2, 0.03, 0.35], [0, y + 0.015, 22.7], { cast: false });
     this.chevron([0, y, 21], Math.PI);
     const kz = 16.5;
     b.box('kiosk-floor', m.checker, [4.2, 0.12, 4.2], [0, y + 0.06, kz], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'kiosk-floor', cast: false });
@@ -251,8 +253,8 @@ export class HighlineDistrict {
     b.box('kiosk-cable-tray', m.galvanised, [0.3, 0.08, 4.2], [-1.2, y + 2.8, kz], { cast: false });
     b.box('kiosk-kerb', m.concreteDark, [4.9, 0.14, 4.9], [0, y + 0.07, kz], { cast: false });
     b.box('kiosk-notice-board', m.container('#3d4a3a'), [0.05, 0.9, 1.4], [-1.93, y + 1.65, kz + 0.4], { cast: false });
-    b.box('kiosk-notice-paper', m.container('#d8d2c2'), [0.02, 0.5, 0.36], [-1.9, y + 1.7, kz + 0.1], { cast: false });
-    b.box('kiosk-notice-paper', m.container('#c9b98f'), [0.02, 0.36, 0.28], [-1.9, y + 1.62, kz + 0.62], { cast: false });
+    b.box('kiosk-notice-paper', m.container('#d8d2c2'), [0.01, 0.5, 0.36], [-1.895, y + 1.7, kz + 0.1], { cast: false });
+    b.box('kiosk-notice-paper', m.container('#c9b98f'), [0.01, 0.36, 0.28], [-1.895, y + 1.62, kz + 0.62], { cast: false });
     b.box('kiosk-fascia', m.routePaint, [4.8, 0.12, 0.05], [0, y + 2.85, kz + 2.42], { cast: false });
     b.lamp([0, y + 2.85, kz], { intensity: 7, distance: 8, size: 0.4 });
     this.permit = { position: new THREE.Vector3(1.1, y, kz), radius: 1.3 };
@@ -363,7 +365,7 @@ export class HighlineDistrict {
     b.box('bay-back', m.brickDark, [bay.w + 1.0, 5.0, 0.3], [bay.x, y + 2.5, bay.z - bay.depth], { collide: true, traits: { walkable: false }, id: 'bay-back' });
     b.box('bay-ceiling', m.concreteDark, [bay.w + 1.0, 0.3, bay.depth], [bay.x, y + 4.85, bay.z - bay.depth / 2], { cast: false });
     b.box('bay-conduit', m.galvanised, [0.1, 0.1, bay.depth - 0.4], [bay.x - 1.5, y + 4.6, bay.z - bay.depth / 2], { cast: false });
-    b.box('bay-stripe', m.safetyYellow, [bay.w, 0.02, 0.18], [bay.x, y + 0.012, bay.z - 0.5], { cast: false });
+    b.box('bay-stripe', m.safetyYellow, [bay.w, 0.03, 0.18], [bay.x, y + 0.015, bay.z - 0.5], { cast: false });
     b.lamp([bay.x, y + bay.h + 0.9, bay.z - 2.4], { intensity: 10, distance: 9, size: 0.5 });
     this.props.place('Barrel_01', [bay.x - 1.0, y, bay.z - 3.6], 0.4, { collide: true, colliderId: 'bay-drum-a' });
     this.props.place('barrel_03', [bay.x - 0.3, y, bay.z - 4.4], 2.1, { collide: true, colliderId: 'bay-drum-b' });
@@ -378,8 +380,8 @@ export class HighlineDistrict {
     this.props.place('Barrel_02', [5.85, y, -20.75], 1.9, { collide: true, colliderId: 'split-drum-b' });
     this.props.place('concrete_road_barrier_02', [3.4, y, -21.7], 0.05, { collide: true, colliderId: 'split-barrier' });
     this.props.place('utility_box_01', [-6.9, y, -22.0], 0, { collide: true, colliderId: 'split-utility-box' });
-    b.box('split-floor-paint-w', m.routePaint, [5, 0.02, 0.2], [-4.5, y + 0.012, -19.5], { cast: false });
-    b.box('split-floor-paint-e', m.routePaint, [5, 0.02, 0.2], [3.8, y + 0.012, -19.5], { cast: false });
+    b.box('split-floor-paint-w', m.routePaint, [5, 0.03, 0.2], [-4.5, y + 0.015, -19.5], { cast: false });
+    b.box('split-floor-paint-e', m.routePaint, [5, 0.03, 0.2], [3.8, y + 0.015, -19.5], { cast: false });
     b.sign('◄ WEST SHAFT', [-4.4, y + 2.45, -23.6], '+z', { width: 2.2 });
     b.sign('EAST SPAN ►', [3.6, y + 2.45, -23.6], '+z', { width: 2.2 });
     this.chevron([-5, y, -19.5], Math.PI / 2);
@@ -406,9 +408,9 @@ export class HighlineDistrict {
     b.box('shaft-wall', m.brick, [0.4, 2.6, 1.0], [xe + 0.2, floorY + 1.3, zn - 0.5], { collide: true, traits: { walkable: false }, id: 'shaft-east-jamb-n' });
     b.box('shaft-wall', m.brick, [0.4, 2.6, 1.0], [xe + 0.2, floorY + 1.3, zs + 0.5], { collide: true, traits: { walkable: false }, id: 'shaft-east-jamb-s' });
     b.box('shaft-door-frame', m.steelDark, [0.5, 0.25, 2.2], [xe + 0.2, floorY + 2.72, czc], { cast: false });
-    b.box('shaft-base', m.brick, [4.8, floorY - GROUND_Y, 4.8], [cx, (floorY + GROUND_Y) / 2, czc], { cast: false });
-    b.box('shaft-floor', m.grating, [4, 0.12, 4], [cx, floorY - 0.06, czc], { collide: true, traits: { walkable: true, surface: 'grating' }, id: 'shaft-floor', cast: false });
-    b.box('shaft-drain', m.steelDark, [0.8, 0.02, 0.8], [cx, floorY + 0.005, czc], { cast: false });
+    b.box('shaft-base', m.brick, [4.8, floorY - 0.14 - GROUND_Y, 4.8], [cx, (floorY - 0.14 + GROUND_Y) / 2, czc], { cast: false });
+    b.box('shaft-floor', m.grating, [4.8, 0.12, 4.8], [cx, floorY - 0.06, czc], { collide: true, traits: { walkable: true, surface: 'grating' }, id: 'shaft-floor', cast: false });
+    b.box('shaft-drain', m.steelDark, [0.8, 0.03, 0.8], [cx, floorY + 0.015, czc], { cast: false });
     ledges.forEach((top, i) => {
       b.box('shaft-ledge', m.grating, [4, 0.1, ledgeDepth], [cx, top - 0.05, zs + ledgeDepth / 2], { collide: true, traits: { walkable: true, surface: 'grating' }, id: `shaft-ledge-${i + 1}`, cast: false });
       b.box('shaft-ledge-nosing', m.safetyYellow, [4, 0.06, 0.08], [cx, top + 0.02, zs + ledgeDepth], { cast: false });
@@ -447,8 +449,8 @@ export class HighlineDistrict {
     b.box('torn-frame', m.oxide, [0.18, 2.2, 0.18], [7.1, y + 1.1, -17.2], { cast: false });
     b.box('torn-frame', m.oxide, [2.2, 0.18, 0.18], [12.5, y + 1.9, -17.2], { rotation: [0, 0, -0.5], cast: false });
     b.sign('DASH ►', [6.9, y + 1.6, -20.6], '+z', { width: 1.4, accent: '#c65a2a' });
-    b.box('east-annex-mass', m.corrugatedRust, [10.4, 24.4, 18.4], [17, GROUND_Y + 12.2, -33], { cast: false });
-    b.box('east-annex-roof', m.concreteDark, [10.4, 0.3, 18.4], [17, y - 0.15, -33], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'east-annex-roof' });
+    b.box('east-annex-mass', m.corrugatedRust, [10.4, 24.05, 18.4], [17, GROUND_Y + 12.025, -33], { cast: false });
+    b.box('east-annex-roof', m.concreteDark, [10.5, 0.3, 18.5], [17, y - 0.15, -33], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'east-annex-roof' });
     b.railing('annex-rail-e', [22.2, y, -42.2], 18.4, 'z');
     b.railing('annex-rail-s', [11.8, y, -42.2], 10.4, 'x');
     b.container('stack-a', [14, y, -27], Math.PI / 2, '#8a3b2f', { length: 6.06, collide: true });
@@ -476,8 +478,8 @@ export class HighlineDistrict {
     b.box('boiler-mass', m.brick, [-3.2 - x0, massTop - 2.2, z1 - bayZ0], [(x0 - 3.2) / 2, (massTop + 2.2) / 2, (bayZ0 + z1) / 2], { cast: false });
     b.box('boiler-mass', m.brick, [x1 - 2.4, massTop - 2.2, z1 - bayZ0], [(2.4 + x1) / 2, (massTop + 2.2) / 2, (bayZ0 + z1) / 2], { cast: false });
     b.box('boiler-mass', m.brick, [5.6, massTop - 7.4, z1 - bayZ0], [-0.4, (massTop + 7.4) / 2, (bayZ0 + z1) / 2], { cast: false });
-    b.box('boiler-cornice', m.concreteDark, [x1 - x0 + 0.6, 0.5, z1 - z0 + 0.6], [cx, y - 0.25, cz], { cast: false });
-    b.box('boiler-roof', m.concrete, [x1 - x0, 0.3, z1 - z0], [cx, y - 0.15, cz], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'boiler-roof' });
+    b.box('boiler-cornice', m.concreteDark, [x1 - x0 + 0.6, 0.5, z1 - z0 + 0.6], [cx, y - 0.3, cz], { cast: false });
+    b.box('boiler-roof', m.concrete, [x1 - x0 + 0.1, 0.3, z1 - z0 + 0.1], [cx, y - 0.15, cz], { collide: true, traits: { walkable: true, surface: 'concrete' }, id: 'boiler-roof' });
     for (let x = x0 + 2.5; x < x1 - 1; x += 4.2) { if (Math.abs(x + 0.4) < 2.4) continue; b.box('boiler-window', m.windowLit, [2.2, 3.4, 0.1], [x, y - 3.1, z1 + 0.06], { cast: false }); b.box('boiler-window-sill', m.concreteDark, [2.5, 0.16, 0.22], [x, y - 4.85, z1 + 0.08], { cast: false }); }
     for (let x = x0 + 2.5; x < x1 - 1; x += 4.2) b.box('boiler-window-low', m.windowDim, [2.2, 4.0, 0.1], [x, GROUND_Y + 9, z1 + 0.06], { cast: false });
     for (let z = z0 + 3; z < z1 - 2; z += 4.4) b.box('boiler-window', m.windowDim, [0.1, 5, 2.2], [x0 - 0.06, y - 12, z], { cast: false });
@@ -489,13 +491,13 @@ export class HighlineDistrict {
     b.box('parapet', m.concreteDark, [7.8, 0.8, 0.3], [6.1, y + 0.4, z0 + 0.15], { collide: true, id: 'boiler-parapet-s2' });
     b.box('parapet', m.concreteDark, [3.6, 0.8, 0.3], [-14.2, y + 0.4, z1 - 0.15], { collide: true, id: 'boiler-parapet-n0' });
     b.box('parapet', m.concreteDark, [17.6, 0.8, 0.3], [1.2, y + 0.4, z1 - 0.15], { collide: true, id: 'boiler-parapet-n1' });
-    b.box('landing-paint', m.routePaint, [0.35, 0.02, 4], [x1 - 0.6, y + 0.012, -31.5], { cast: false });
+    b.box('landing-paint', m.routePaint, [0.35, 0.03, 4], [x1 - 0.6, y + 0.015, -31.5], { cast: false });
     // Flue breeching: an overhead header duct (clear height 2.2 m — walk under it) feeding the three stacks.
     for (const [i, z] of [[0, -29], [1, -35.5], [2, -42]]) b.stack(`boiler-stack-${i}`, [-13.2, y, z], 1.25 - i * 0.1, 13 + i * 2.2, { bands: 3 + i, breeching: [4.6, 0], breechingY: 3.0 });
     b.box('breeching-header', m.galvanised, [1.6, 1.6, 15.6], [-8.6, y + 3.0, -35.5], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'breeching-header' });
     for (const z of [-30.5, -35.5, -40.5]) b.box('breeching-strap', m.steelDark, [1.75, 1.75, 0.16], [-8.6, y + 3.0, z], { cast: false });
     for (const z of [-32, -39]) for (const sx of [-0.6, 0.6]) b.box('breeching-leg', m.steelDark, [0.16, 2.2, 0.16], [-8.6 + sx, y + 1.1, z], { collide: true, id: `breeching-leg-${sx}-${z}` });
-    b.box('roof-drain', m.steelDark, [0.6, 0.02, 0.6], [2, y + 0.012, -33], { cast: false });
+    b.box('roof-drain', m.steelDark, [0.6, 0.03, 0.6], [2, y + 0.015, -33], { cast: false });
     b.box('roof-cable-tray', m.galvanised, [0.4, 0.08, 18], [9.2, y + 0.06, -35], { cast: false });
     b.catwalk('stack-platform', [-15.4, y + 4.2, -37.5], 4.4, { width: 1.5, axis: 'x', rails: 'both', surface: 'grating' });
     b.ladder('stack-platform-ladder', [-10.85, y, -37.5], 4.2, 'x', { exit: [-1, 0, 0] });
@@ -546,13 +548,13 @@ export class HighlineDistrict {
       for (const fx of [-1.6, 0, 1.6]) b.box('duct-flange', m.steelDark, [0.12, 0.9, 1.1], [fx, y + 1.56, dz], { cast: false });
       for (const hx of [-1.2, 1.2]) b.box('duct-hanger', m.steelDark, [0.06, 0.7, 0.06], [hx, y + 2.3, dz], { cast: false });
       b.box('duct-warning', m.safetyYellow, [3.6, 0.12, 0.03], [0, y + 1.2, dz + 0.52], { cast: false });
-      for (let i = -3; i <= 3; i += 2) b.box('duct-warning-dark', m.rubber, [0.22, 0.12, 0.035], [i * 0.45, y + 1.2, dz + 0.52], { cast: false });
+      for (let i = -3; i <= 3; i += 2) b.box('duct-warning-dark', m.rubber, [0.22, 0.1, 0.02], [i * 0.45, y + 1.2, dz + 0.545], { cast: false });
       b.box('duct-strap', m.steelDark, [4.5, 0.1, 0.12], [0, y + 1.16, dz - 0.5], { cast: false });
       b.sign(k === 0 ? 'LOW DUCT · SLIDE' : `DUCT ${k + 1}`, [0, y + 1.66, dz + 0.53], '+z', { width: 1.6, accent: '#c65a2a', background: 'rgba(0,0,0,0)' });
     }
     b.lamp([0, y + 2.55, zStart - 0.8], { intensity: 6, distance: 8, size: 0.3 });
-    b.box('corridor-floor-paint', m.routePaint, [0.16, 0.02, len - 1], [-1.2, y + 0.012, cz], { cast: false });
-    b.box('corridor-floor-paint', m.routePaint, [0.16, 0.02, len - 1], [1.2, y + 0.012, cz], { cast: false });
+    b.box('corridor-floor-paint', m.routePaint, [0.16, 0.03, len - 1], [-1.2, y + 0.015, cz], { cast: false });
+    b.box('corridor-floor-paint', m.routePaint, [0.16, 0.03, len - 1], [1.2, y + 0.015, cz], { cast: false });
     for (let z = zStart - 1.5; z > zEnd; z -= 3.5) {
       for (const sx of [-1, 1]) b.box('corridor-window', m.windowDim, [0.08, 0.7, 1.8], [sx * 2.16, y + 1.9, z], { cast: false });
       b.lamp([0, y + 2.55, z], { intensity: 3, distance: 6, light: z < -50 && z > -58, size: 0.3 });
@@ -572,7 +574,7 @@ export class HighlineDistrict {
     b.box('drop-frame', m.safetyYellow, [0.1, 0.08, 4.2], [-2.05, roomY + 0.02, rz], { cast: false });
     b.box('drop-frame', m.safetyYellow, [0.1, 0.08, 4.2], [2.05, roomY + 0.02, rz], { cast: false });
     this.chevron([-1.1, roomY, -61.2], 0);
-    b.box('drop-arrow', m.routePaint, [0.3, 0.02, 1.2], [-1.1, roomY + 0.012, -60.4], { cast: false });
+    b.box('drop-arrow', m.routePaint, [0.3, 0.03, 1.2], [-1.1, roomY + 0.015, -60.4], { cast: false });
     b.railing('drop-rail-w', [-2, roomY, -66], 4, 'z', { height: 1.0 });
     b.railing('drop-rail-e', [2, roomY, -66], 4, 'z', { height: 1.0 });
     b.railing('drop-rail-s', [-2, roomY, -66], 4, 'x', { height: 1.0 });
@@ -678,10 +680,10 @@ export class HighlineDistrict {
     b.lamp([0, catY + 2.6, -64], { intensity: 6, distance: 9, size: 0.4 });
     // High-bay lamps: the hall is roofed, so the sun never reaches the floor. Three wide lamps carry the interior.
     for (const z of [-66, -76, -86]) { b.box('highbay-housing', m.steelDark, [1.2, 0.3, 1.2], [0, roofY - 2.9, z], { cast: false }); b.lamp([0, roofY - 3.1, z], { intensity: 90, distance: 42, size: 0.9, color: '#ffc98a' }); }
-    b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.02, 30], [-4.6, floorY + 0.012, cz], { cast: false });
-    b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.02, 30], [4.6, floorY + 0.012, cz], { cast: false });
-    b.box('hall-floor-paint', m.routePaint, [8.9, 0.02, 0.25], [0, floorY + 0.012, -70], { cast: false });
-    b.box('hall-drain', m.steelDark, [0.8, 0.02, 8], [0, floorY + 0.012, cz], { cast: false });
+    b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.03, 30], [-4.6, floorY + 0.015, cz], { cast: false });
+    b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.03, 30], [4.6, floorY + 0.015, cz], { cast: false });
+    b.box('hall-floor-paint', m.routePaint, [8.9, 0.03, 0.25], [0, floorY + 0.015, -70], { cast: false });
+    b.box('hall-drain', m.steelDark, [0.8, 0.03, 8], [0, floorY + 0.015, cz], { cast: false });
     for (const x of [-3.4, 3.4]) b.cabinet(`hall-mcc-${x}`, [x, floorY, -62.4], 0, { width: 1.4, height: 2.2, depth: 0.6, material: m.steel, lit: true });
     for (const x of [4.9, 10.5]) b.box('crane-rail', m.oxide, [0.3, 0.5, 26], [x, catY + 4.2, -75], { cast: false });
     // Second (idle) overhead crane bridge parked at the south end of the hall, under the roof trusses.
@@ -712,7 +714,7 @@ export class HighlineDistrict {
     b.railing('hall-gallery-s-rail', [-4, catY + 3.0, -88.6], 15.2, 'x');
     b.box('hall-ladder-bracket', m.steelDark, [0.4, 0.3, 1.2], [13.7, catY - 0.3, -84], { cast: false });
     b.ladder('hall-recovery-ladder', [13.8, floorY, -84], 10.6, 'x', { exit: [-1, 0, 0] });
-    b.box('door-threshold', m.checker, [7.2, 0.16, 2.4], [0, -0.48, -91], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'door-threshold' });
+    b.box('door-threshold', m.checker, [7.2, 0.18, 2.4], [0, -0.48, -91], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'door-threshold' }); // 1 cm proud of the gallery deck: a real threshold plate, never coplanar
     b.sign('SUNLINE GANTRY ►', [0, 5.5, z0 + 0.52], '+z', { width: 3 }); // on the hood front plate, under the lamp
     b.sign('CRANE 2 · STAND CLEAR', [7.7, catY + 2.2, -62.2], '-z', { width: 2.6, accent: '#c9a03a' });
     b.lamp([11.5, catY + 2.4, -84], { intensity: 5, distance: 9, size: 0.35, light: false });
@@ -725,8 +727,8 @@ export class HighlineDistrict {
     const y = -0.4; const z0 = -92, z1 = -118;
     b.catwalk('gantry-a', [0, y, -101], 9, { width: 3, axis: 'z', rails: 'both', surface: 'grating', brackets: false });
     b.catwalk('gantry-b', [0, y, -118], 9, { width: 3, axis: 'z', rails: 'both', surface: 'grating', brackets: false });
-    b.box('gantry-gap-hazard', m.safetyYellow, [3, 0.06, 0.2], [0, y + 0.02, -100.9], { cast: false });
-    b.box('gantry-gap-hazard', m.safetyYellow, [3, 0.06, 0.2], [0, y + 0.02, -109.1], { cast: false });
+    b.box('gantry-gap-hazard', m.safetyYellow, [2.9, 0.03, 0.2], [0, y + 0.015, -100.8], { cast: false });
+    b.box('gantry-gap-hazard', m.safetyYellow, [2.9, 0.03, 0.2], [0, y + 0.015, -109.2], { cast: false });
     b.lamp([1.4, y + 0.9, -101], { material: m.lampRed, color: '#ff3b2f', intensity: 4, distance: 6, light: true, size: 0.22 });
     b.truss('gantry-truss-w', [-1.9, y - 1.3, (z0 + z1) / 2], z0 - z1, { axis: 'z', height: 1.8, material: m.steel });
     b.truss('gantry-truss-e', [1.9, y - 1.3, (z0 + z1) / 2], z0 - z1, { axis: 'z', height: 1.8, material: m.steel });
@@ -758,13 +760,13 @@ export class HighlineDistrict {
     for (const gx of [-1.4, 1.4]) b.box('crane-cab-mullion', m.steelDark, [0.1, 1.4, 0.1], [cabX + gx, y + 2.0, cabZ + 1.2], { cast: false });
     b.box('crane-cab-roof', m.steelDark, [3.4, 0.16, 3.0], [cabX, y + 2.78, cabZ], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'crane-cab-roof' });
     b.box('crane-cab-hvac', m.galvanised, [0.9, 0.5, 0.7], [cabX - 0.8, y + 3.1, cabZ - 0.6], { cast: false });
-    b.box('crane-cab-stripe', m.rubber, [2.82, 0.14, 2.42], [cabX, y + 1.32, cabZ], { cast: false });
+    b.box('crane-cab-stripe', m.rubber, [2.86, 0.14, 2.46], [cabX, y + 1.32, cabZ], { cast: false });
     b.ladder('crane-cab-ladder', [cabX + 1.55, y + 0.3, cabZ - 0.6], 2.4, 'x', { climbable: true, exit: [-1, 0, 0] });
     const beacon = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), m.lampWarm.clone());
     beacon.position.set(cabX + 0.9, y + 3.2, cabZ + 0.6); this.scene.add(beacon);
     b.box('beacon-post', m.steelDark, [0.1, 0.5, 0.1], [cabX + 0.9, y + 2.95, cabZ + 0.6], { cast: false });
     b.box('finish-pad', m.routePaint, [2.4, 0.03, 2.4], [1.6, y + 0.015, -122.2], { cast: false });
-    b.box('finish-pad-inner', m.checker, [1.6, 0.035, 1.6], [1.6, y + 0.018, -122.2], { cast: false });
+    b.box('finish-pad-inner', m.checker, [1.6, 0.03, 1.6], [1.6, y + 0.045, -122.2], { cast: false }); // sits ON the painted pad (top 6 cm), not inside it
     this.finish = { position: new THREE.Vector3(1.6, y, -122.2), radius: 2.4, mesh: beacon };
     this.animated.push({ kind: 'finish', material: beacon.material });
     b.sign('SUNLINE EXIT', [0, y + 3.3, -119.5], '+z', { width: 3 });

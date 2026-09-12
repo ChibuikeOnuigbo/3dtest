@@ -61,7 +61,7 @@ export class SeedLayer {
       if (style === 'billboard') { b.box('skyline-billboard', pick(r, [m.windowLit, m.screen, m.lampCool]), [slot.w * 0.9, 6, 0.6], [slot.x, top + 7, slot.z - slot.d / 2], { cast: false }); }
       crowns += 1;
       const bands = Math.floor(range(r, 1, 4));
-      for (let i = 0; i < bands; i += 1) { const y = GROUND_Y + range(r, 8, slot.h - 6); b.box('skyline-lit-band', chance(r, 0.6) ? m.windowLit : m.lampCool, [slot.w + 0.2, 1.6, slot.d + 0.2], [slot.x, y, slot.z], { cast: false }); litBands += 1; }
+      for (let i = 0; i < bands; i += 1) { const y = GROUND_Y + range(r, 8, slot.h - 6); b.box('skyline-lit-band', chance(r, 0.6) ? m.windowLit : m.lampCool, [slot.w + 0.6, 1.6, slot.d + 0.6], [slot.x, y, slot.z], { cast: false }); litBands += 1; }
     }
     this.note('skyline', { crowns, masts, litBands });
   }

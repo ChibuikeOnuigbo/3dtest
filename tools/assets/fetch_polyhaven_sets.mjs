@@ -39,7 +39,7 @@ const HDRI_IDS = args.filter((a, i) => args[i - 1] === '--hdri');
 const API = 'https://api.polyhaven.com';
 
 // Mirror of SET_SOURCES polyhaven ids (kept explicit so this script has no three.js import).
-const TEXTURE_IDS = ['concrete_floor_worn_001', 'brick_wall_09', 'corrugated_iron_02', 'metal_plate', 'rusty_metal_sheet'];
+const TEXTURE_IDS = ['concrete_floor_worn_001', 'brick_wall_09', 'corrugated_iron_02', 'metal_plate', 'rusty_metal_sheet', 'painted_metal_shutter', 'asphalt_02', 'gravel_floor_02'];
 const EXTRA_IDS = (process.env.POLYHAVEN_EXTRA_SETS || '').split(',').map((s) => s.trim()).filter(Boolean);
 
 async function getJson(url) {

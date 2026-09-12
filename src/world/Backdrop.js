@@ -31,12 +31,15 @@ export function buildBackdrop(world) {
   b.box('quay-wall-w', m.concreteDark, [1.6, 3.2, 230], [-130.8, g - 1.6, -10], { cast: false });
   for (let x = -120; x <= 120; x += 12) b.box('bollard', m.steelDark, [0.5, 0.7, 0.5], [x, g + 0.35, -124.5], { cast: false });
 
-  b.box('road', m.concreteDark, [14, 0.06, 200], [-34, g + 0.03, -12], { cast: false });
-  b.box('road', m.concreteDark, [200, 0.06, 12], [10, g + 0.03, 68], { cast: false });
-  for (let z = 80; z > -110; z -= 8) b.box('lane-paint', m.safetyYellow, [0.2, 0.02, 3.5], [-34, g + 0.07, z], { cast: false });
-  for (let x = -80; x < 110; x += 8) b.box('lane-paint', m.safetyYellow, [3.5, 0.02, 0.2], [x, g + 0.07, 68], { cast: false });
-  for (const x of [28, 31]) b.box('rail', m.steelDark, [0.12, 0.16, 200], [x, g + 0.08, -12], { cast: false });
-  for (let z = 85; z > -110; z -= 1.4) b.box('sleeper', m.rubber, [3.6, 0.1, 0.26], [29.5, g + 0.05, z], { cast: false });
+  // Roads are 8 cm proud of the yard slab (kerb height) so their tops never sit in the slab's depth range; paint is a
+  // 3 cm decal on the road (polygonOffset material). The cross road stops short of the N–S road instead of overlapping it.
+  b.box('road', m.asphaltRoad, [14, 0.08, 200], [-34, g + 0.04, -12], { cast: false });
+  b.box('road', m.asphaltRoad, [163, 0.08, 12], [-25 + 163 / 2 - 0.5, g + 0.04, 68], { cast: false });
+  for (let z = 80; z > -110; z -= 8) b.box('lane-paint', m.safetyYellow, [0.2, 0.03, 3.5], [-34, g + 0.095, z], { cast: false });
+  for (let x = -22; x < 110; x += 8) b.box('lane-paint', m.safetyYellow, [3.5, 0.03, 0.2], [x, g + 0.095, 68], { cast: false });
+  for (const x of [28, 31]) b.box('rail', m.steelDark, [0.12, 0.16, 200], [x, g + 0.32, -12], { cast: false });
+  b.box('rail-ballast', m.ballast, [5.2, 0.16, 200], [29.5, g + 0.08, -12], { cast: false }); // rails sit on a ballast bed, not on bare asphalt
+  for (let z = 85; z > -110; z -= 1.4) b.box('sleeper', m.rubber, [3.2, 0.12, 0.26], [29.5, g + 0.2, z], { cast: false });
   for (let z = 60; z > -110; z -= 22) { b.cylinder('yard-light-pole', m.galvanised, 0.14, 12, [-27, g + 6, z], { segments: 8, cast: false }); b.lamp([-27, g + 12.2, z + 0.6], { material: m.lampCool, color: '#9fd0ff', intensity: 0, light: false, size: 0.5 }); }
 
   const truck = (x, z, rot, color) => {

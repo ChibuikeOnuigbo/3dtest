@@ -26,6 +26,10 @@ const SET_SOURCES = {
   // Roller-shutter curtain. Poly Haven's scan is a photographed shutter (horizontal slats); the generated
   // corrugated fallback has VERTICAL ribs, so RollerDoor swaps the curtain UVs when `sources.shutter` is generated.
   shutter: { generated: 'corrugated_steel', polyhaven: 'painted_metal_shutter', tile: 2 },
+  // Lower world: real scanned road + ballast so the yard stops reading as one flat grey plane (falls back to the
+  // generated concrete when the CI fetch has not run — the probe reports which one rendered).
+  asphaltRoad: { generated: 'concrete_roof', polyhaven: 'asphalt_02', tile: 3 },
+  ballast: { generated: 'concrete_roof', polyhaven: 'gravel_floor_02', tile: 2 },
 };
 
 function makeLoader(manager) {
@@ -184,9 +188,14 @@ export function createMaterialLibrary({ manager, availablePolyhaven = new Set(),
     },
     water: flat('harbour_water', { color: '#20404a', roughness: 0.14, metalness: 0.05, envMapIntensity: 1.6 }),
     asphalt: flat('asphalt', { color: '#3f4042', roughness: 0.98, metalness: 0 }, { macro: true }),
+    asphaltRoad: textured('asphaltRoad', { color: '#6a6a68', roughness: 0.95 }),
+    ballast: textured('ballast', { color: '#8a8478', roughness: 1 }),
     // ACCENT
-    routePaint: flat('route_paint_oxide_orange', { color: '#c65a2a', roughness: 0.6, metalness: 0.2 }),
-    safetyYellow: flat('safety_yellow', { color: '#c9a03a', roughness: 0.6, metalness: 0.2 }),
+    // Painted markings are DECALS: they lie on floors/walls a centimetre or two off the surface. polygonOffset biases their
+    // depth toward the camera so the paint always wins the depth test against the slab underneath — without it, paint at
+    // 1–2 cm above a floor shimmers from ~20 m away (24-bit depth buffer, near plane 0.1 m).
+    routePaint: flat('route_paint_oxide_orange', { color: '#c65a2a', roughness: 0.6, metalness: 0.2, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }),
+    safetyYellow: flat('safety_yellow', { color: '#c9a03a', roughness: 0.6, metalness: 0.2, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }),
     lampWarm: flat('amber_lamp', { color: '#ffd9a0', emissive: '#ffb257', emissiveIntensity: 2.6, roughness: 0.3 }),
     lampCool: flat('cool_lamp', { color: '#dbeeff', emissive: '#9fd0ff', emissiveIntensity: 2.0, roughness: 0.3 }),
     lampRed: flat('beacon_red', { color: '#ff8a7a', emissive: '#ff3b2f', emissiveIntensity: 2.2, roughness: 0.3 }),
