@@ -121,7 +121,7 @@ async function fetchModel(entry, budget) {
   }
   budget.used += bundleBytes;
   const gltf = JSON.parse(gltfBuffer.toString('utf8'));
-  const inspection = inspectGltf(gltf);
+  const inspection = inspectGltf(gltf, { id });
   // Referenced URIs must all be present in the bundle (a missing texture would 404 at runtime).
   const missing = [...new Set([...(gltf.buffers || []).map((b) => b.uri), ...inspection.images])].filter((uri) => uri && !gltfEntry.include?.[uri]);
   const tooHeavy = inspection.nodes.filter((n) => n.lod === null || n.lod === 0).some((n) => n.triangles > entry.maxTris) && !inspection.nodes.some((n) => n.lod !== null && n.lod > 0 && n.triangles <= entry.maxTris);
@@ -139,7 +139,7 @@ for (const entry of roster) {
   try {
     const meta = await fetchModel(entry, budget);
     if (meta.decision === 'APPROVE') {
-      manifest.models[entry.id] = { name: meta.name, gltf: meta.entry_gltf, role: entry.role, triangles: meta.inspection.triangles_total, dimensions_mm: meta.dimensions_mm, nodes: meta.inspection.nodes, variants: displayVariants(meta.inspection), materials: meta.inspection.materials, bundle_bytes: meta.bundle_bytes, authors: meta.authors, license: 'CC0-1.0', source: meta.source };
+      manifest.models[entry.id] = { name: meta.name, gltf: meta.entry_gltf, role: entry.role, triangles: meta.inspection.triangles_total, dimensions_mm: meta.dimensions_mm, nodes: meta.inspection.nodes, assemblies: meta.inspection.assemblies, variants: displayVariants(meta.inspection), materials: meta.inspection.materials, bundle_bytes: meta.bundle_bytes, authors: meta.authors, license: 'CC0-1.0', source: meta.source };
       console.log(`[polyhaven-models] APPROVE ${entry.id}: ${meta.reason}`);
     } else { manifest.rejected.push({ id: entry.id, reason: meta.reason }); console.warn(`[polyhaven-models] REJECT ${entry.id}: ${meta.reason}`); }
   } catch (error) { manifest.failed.push({ id: entry.id, error: error.message }); console.warn(`[polyhaven-models] FAILED ${entry.id}: ${error.message}`); }

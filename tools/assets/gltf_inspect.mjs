@@ -6,7 +6,11 @@
  *   - root nodes (Poly Haven ships variants such as `…_graffiti` / `…_rusted` side by side, offset in X)
  *   - per-root bounds in the root's OWN frame (translation stripped, rotation/scale applied)
  *   - triangle counts, material names, mesh names, LOD index parsed from names
+ *   - ASSEMBLIES: roots grouped into "one placeable object" (crate + lid, trash can + handles + lid,
+ *     car + wheels) with union bounds — see ./prop_assemblies.mjs. Treating every root as a variant
+ *     was wrong: the trash can's first root is a 9 cm handle and crates lost their lids.
  */
+import { assembleNodes } from './prop_assemblies.mjs';
 
 function rotateByQuaternion([x, y, z], [qx, qy, qz, qw] = [0, 0, 0, 1]) {
   // v' = v + 2w (q × v) + 2 q × (q × v)
@@ -46,7 +50,7 @@ function accumulateNode(gltf, index, transform, acc) {
   }
 }
 
-export function inspectGltf(gltf) {
+export function inspectGltf(gltf, { id = '' } = {}) {
   const scene = gltf.scenes?.[gltf.scene || 0] || { nodes: [] };
   const nodes = [];
   for (const rootIndex of scene.nodes || []) {
@@ -64,7 +68,7 @@ export function inspectGltf(gltf) {
   }
   return {
     generator: gltf.asset?.generator, extensions_used: gltf.extensionsUsed || [],
-    nodes, triangles_total: nodes.reduce((s, n) => s + n.triangles, 0),
+    nodes, assemblies: assembleNodes(nodes, id), triangles_total: nodes.reduce((s, n) => s + n.triangles, 0),
     materials: (gltf.materials || []).map((m) => ({
       name: m.name, doubleSided: Boolean(m.doubleSided), alphaMode: m.alphaMode || 'OPAQUE',
       hasNormal: Boolean(m.normalTexture), hasBaseColor: Boolean(m.pbrMetallicRoughness?.baseColorTexture), hasMetalRough: Boolean(m.pbrMetallicRoughness?.metallicRoughnessTexture),
@@ -74,9 +78,11 @@ export function inspectGltf(gltf) {
   };
 }
 
-/** Which root nodes are usable "display" variants (LOD0 or un-LODed) — the runtime picks among these. */
+/**
+ * Which placeable variants a file offers — the primary root of each assembly (LOD0 or un-LODed).
+ * Parts (lids, handles, wheels, glass) are never variants; they travel with their primary.
+ */
 export function displayVariants(inspection) {
-  const roots = inspection.nodes.filter((n) => n.bounds);
-  const lod0 = roots.filter((n) => n.lod === 0);
-  return (lod0.length ? lod0 : roots.filter((n) => n.lod === null)).map((n) => n.name);
+  const assemblies = inspection.assemblies || assembleNodes(inspection.nodes, inspection.id || '');
+  return assemblies.map((a) => a.primary);
 }

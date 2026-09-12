@@ -7,6 +7,7 @@ import { PropLibrary } from '../src/world/PropLibrary.js';
 import { WorldBuilder } from '../src/world/builders.js';
 import { createMaterialLibrary } from '../src/world/materials.js';
 import { inspectGltf, displayVariants } from '../tools/assets/gltf_inspect.mjs';
+import { assembleNodes, isPartName } from '../tools/assets/prop_assemblies.mjs';
 
 /**
  * Doors are real openings with a curtain that lifts; props are real downloaded models whose colliders
@@ -19,7 +20,22 @@ import { inspectGltf, displayVariants } from '../tools/assets/gltf_inspect.mjs';
 const MANIFEST = {
   models: {
     Barrel_01: { gltf: 'Barrel_01_1k.gltf', nodes: [{ name: 'Barrel_01', translation: [0, 0, 0], bounds: { min: [-0.2815, 0, -0.2815], max: [0.2815, 0.88, 0.2815] }, size_m: [0.563, 0.88, 0.563], triangles: 2682, lod: null }] },
-    wooden_crate_02: { gltf: 'wooden_crate_02_1k.gltf', nodes: [{ name: 'wooden_crate_02', translation: [0, 0, 0], bounds: { min: [-0.583, 0, -0.232], max: [0.583, 0.529, 0.232] }, size_m: [1.166, 0.529, 0.464], triangles: 5176, lod: null }] },
+    // wooden_crate_02 ships as TWO roots (crate + lid); the crate is 1.166 m long along Z, 0.529 m wide in X.
+    wooden_crate_02: { gltf: 'wooden_crate_02_1k.gltf', nodes: [
+      { name: 'wooden_crate_02_crate', translation: [0, 0, 0], bounds: { min: [-0.2646, -0.0098, -0.5833], max: [0.2646, 0.4355, 0.583] }, size_m: [0.529, 0.445, 1.166], triangles: 4492, lod: null },
+      { name: 'wooden_crate_02_lid', translation: [0.0002, 0.4205, -0.0002], bounds: { min: [-0.2393, -0.0336, -0.52], max: [0.2393, 0.0336, 0.52] }, size_m: [0.479, 0.067, 1.04], triangles: 684, lod: null },
+    ] },
+    // metal_trash_can: two variants parked at x = ±0.5, each a body + two handles + a lid leaning against it.
+    metal_trash_can: { gltf: 'metal_trash_can_1k.gltf', nodes: [
+      { name: 'metal_trash_can_handle_left', translation: [0.227, 0.6497, -0.0002], bounds: { min: [-0.0675, -0.071, -0.0928], max: [0.0086, 0.0079, 0.0928] }, size_m: [0.076, 0.079, 0.186], triangles: 416, lod: null },
+      { name: 'metal_trash_can_lid', translation: [0.1257, 0.2859, 0], bounds: { min: [-0.2782, -0.0368, -0.2781], max: [0.2781, 0.0781, 0.2782] }, size_m: [0.556, 0.115, 0.556], triangles: 1548, lod: null },
+      { name: 'metal_trash_can', translation: [0.5, 0, 0], bounds: { min: [-0.3067, 0.0001, -0.2762], max: [0.3067, 0.9062, 0.2762] }, size_m: [0.613, 0.906, 0.552], triangles: 4048, lod: null },
+      { name: 'metal_trash_can_handle_right', translation: [0.7946, 0.6497, -0.0002], bounds: { min: [-0.086, -0.0529, -0.0928], max: [0.0139, 0.0107, 0.0928] }, size_m: [0.1, 0.064, 0.186], triangles: 416, lod: null },
+      { name: 'metal_trash_can_rust', translation: [-0.5, 0, 0], bounds: { min: [-0.3048, 0.0001, -0.2743], max: [0.3066, 0.9062, 0.2743] }, size_m: [0.611, 0.906, 0.549], triangles: 4928, lod: null },
+      { name: 'metal_trash_can_rust_handle_left', translation: [-0.773, 0.6497, -0.0002], bounds: { min: [-0.0777, -0.0724, -0.0928], max: [0.0086, 0.0079, 0.0928] }, size_m: [0.086, 0.08, 0.186], triangles: 448, lod: null },
+      { name: 'metal_trash_can_rust_handle_right', translation: [-0.227, 0.6497, -0.0002], bounds: { min: [-0.0093, -0.0699, -0.0928], max: [0.0659, 0.0079, 0.0928] }, size_m: [0.075, 0.078, 0.186], triangles: 448, lod: null },
+      { name: 'metal_trash_can_rust_lid', translation: [-0.8743, 0.2859, 0], bounds: { min: [-0.2782, -0.0381, -0.2692], max: [0.2781, 0.0781, 0.2747] }, size_m: [0.556, 0.116, 0.544], triangles: 1708, lod: null },
+    ] },
     rollershutter_door: { gltf: 'rollershutter_door_1k.gltf', variants: ['rollershutter_door', 'rollershutter_door_graffiti'], nodes: [
       { name: 'rollershutter_door', translation: [0, 0, 0], bounds: { min: [-0.54, 0, -0.001], max: [0.54, 2.4, 0.299] }, size_m: [1.08, 2.4, 0.3], triangles: 552, lod: null },
       { name: 'rollershutter_door_graffiti', translation: [2, 0, 0], bounds: { min: [-0.54, 0, -0.001], max: [0.54, 2.4, 0.299] }, size_m: [1.08, 2.4, 0.3], triangles: 552, lod: null },
@@ -120,15 +136,47 @@ test('PropLibrary places real models from the manifest with colliders sized from
   assert.ok(Math.abs(drum.solid.min.y - 1) < 1e-6 && Math.abs(drum.solid.max.y - 1.88) < 1e-6, 'drum stands on its base at the requested y');
   assert.ok(drum.solid.walkable && drum.solid.prop === 'Barrel_01');
   const crate = props.place('wooden_crate_02', [0, 0, 0], Math.PI / 2, { collide: true, colliderId: 'crate' });
-  const w = crate.solid.max.x - crate.solid.min.x; const d = crate.solid.max.z - crate.solid.min.z;
-  assert.ok(Math.abs(w - 0.464) < 0.01 && Math.abs(d - 1.166) < 0.01, `90° yaw swaps the footprint (${w.toFixed(3)} × ${d.toFixed(3)})`);
+  assert.equal(crate.variant, 'wooden_crate_02_crate'); assert.deepEqual(crate.parts, ['wooden_crate_02_lid'], 'the lid travels with the crate');
+  const w = crate.solid.max.x - crate.solid.min.x; const d = crate.solid.max.z - crate.solid.min.z; const h = crate.solid.max.y - crate.solid.min.y;
+  assert.ok(Math.abs(w - 1.166) < 0.01 && Math.abs(d - 0.529) < 0.01, `90° yaw swaps the footprint: the 1.166 m long side now runs along X (${w.toFixed(3)} × ${d.toFixed(3)})`);
+  assert.ok(Math.abs(h - 0.464) < 0.01, `collider height covers crate + lid (${h.toFixed(3)})`);
+  assert.ok(Math.abs(crate.solid.min.y) < 1e-6, 'anchor base: the crate bottom (−0.0098 in the file) is lifted onto the floor');
+  const bin = props.place('metal_trash_can', [2, 0, 2], 0, { collide: true, colliderId: 'bin' });
+  assert.equal(bin.variant, 'metal_trash_can'); assert.equal(bin.parts.length, 3, 'body + 2 handles + leaning lid form one assembly');
+  const bw = bin.solid.max.x - bin.solid.min.x; const bh = bin.solid.max.y - bin.solid.min.y;
+  assert.ok(bw > 0.8 && bw < 1.0 && bh > 0.9, `bin collider is the whole can with the lid leaning on it (${bw.toFixed(2)} × ${bh.toFixed(2)}), not a 9 cm handle`);
+  const rust = props.place('metal_trash_can', [4, 0, 2], 0, { variant: 'metal_trash_can_rust' });
+  assert.deepEqual(props.variantsOf('metal_trash_can'), ['metal_trash_can', 'metal_trash_can_rust'], 'variants = assembly primaries only');
+  // Parking offset (x = −0.5 in the file) is stripped: the body stands on x = 4; the lid leaning on its −x side widens the box to ≈ 3.35..4.34.
+  assert.ok(Math.abs(rust.aabb.max[0] - 4.339) < 0.02 && Math.abs(rust.aabb.min[0] - 3.348) < 0.02, `the rust variant drops at the requested x with its lid (${rust.aabb.min[0].toFixed(3)}..${rust.aabb.max[0].toFixed(3)})`);
+  assert.ok(Math.abs(props.heightOf('wooden_crate_02') - 0.464) < 0.01, 'heightOf reports the assembly height for stacking');
   const graffiti = props.place('rollershutter_door', [10, 0, 10], 0, { variant: 'rollershutter_door_graffiti' });
   assert.equal(graffiti.variant, 'rollershutter_door_graffiti');
   assert.ok(Math.abs(graffiti.aabb.min[0] - 9.46) < 0.01, 'variant translation shipped in the file is stripped — the variant drops at the requested position');
   assert.equal(props.place('does_not_exist', [0, 0, 0]), null);
   assert.equal(props.missing.length, 1, 'absent model is recorded, never faked');
   assert.equal(scene.children.length, 0, 'headless: no meshes created');
-  assert.equal(builder.registry.filter((r) => r.family.startsWith('prop:')).length, 3, 'placements are registered for the scene audit');
+  assert.equal(builder.registry.filter((r) => r.family.startsWith('prop:')).length, 5, 'placements are registered for the scene audit');
+});
+
+test('spawn() builds the whole assembly in the scene: primary root + its parts keep their relative offsets, parking offset stripped', async () => {
+  const scene = new THREE.Scene();
+  const builder = new WorldBuilder(scene, createMaterialLibrary({ headless: true }));
+  const props = new PropLibrary(scene, builder, { headless: false, manifest: MANIFEST });
+  // Stand-in for the GLTFLoader result: root objects named + positioned exactly like metal_trash_can_1k.gltf.
+  const gltfScene = new THREE.Group();
+  for (const n of MANIFEST.models.metal_trash_can.nodes) { const o = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1)); o.name = n.name; o.position.set(...n.translation); gltfScene.add(o); }
+  props.cache.set('metal_trash_can', Promise.resolve({ scene: gltfScene }));
+  const rust = props.place('metal_trash_can', [10, 0, -4], 0.4, { variant: 'metal_trash_can_rust' });
+  await props.cache.get('metal_trash_can'); await new Promise((r) => setTimeout(r, 0));
+  assert.ok(rust.object, 'holder created');
+  assert.deepEqual(rust.object.position.toArray().map((v) => +v.toFixed(4)), [10, -0.0001, -4], 'holder at the requested position (base lifted by the 0.1 mm the body floats in the file)');
+  assert.equal(rust.object.children.length, 4, 'body + 2 handles + lid spawned');
+  const byName = Object.fromEntries(rust.object.children.map((c) => [c.name, c.position.toArray().map((v) => +v.toFixed(4))]));
+  assert.deepEqual(byName.metal_trash_can_rust, [0, 0, 0], 'primary root drops at the holder origin (its x = −0.5 parking offset stripped)');
+  assert.deepEqual(byName.metal_trash_can_rust_lid, [-0.3743, 0.2859, 0], 'lid keeps its offset relative to the body (−0.8743 − −0.5)');
+  assert.deepEqual(byName.metal_trash_can_rust_handle_left, [-0.273, 0.6497, -0.0002]);
+  assert.ok(Math.abs(rust.object.rotation.y - 0.4) < 1e-9, 'yaw applied to the holder, so every part turns with the body');
 });
 
 test('the world builds without any model manifest (CI before the intake job / offline dev) and records the misses', () => {
@@ -166,6 +214,31 @@ test('gltf_inspect reports per-root bounds with variant translations stripped an
   assert.deepEqual(displayVariants(r), ['plain', 'plain_graffiti']);
   const rotated = { scene: 0, scenes: [{ nodes: [0] }], nodes: [{ name: 'root', children: [1] }, { mesh: 0, rotation: [0, Math.SQRT1_2, 0, Math.SQRT1_2], translation: [5, 0, 0] }], meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }], accessors: [{ count: 3, min: [0, 0, 0], max: [4, 1, 2] }] };
   assert.deepEqual(inspectGltf(rotated).nodes[0].size_m, [2, 1, 4]);
+});
+
+test('root nodes are grouped into assemblies: parts (lid, handles, wheels, glass) join their primary, variants stay separate', () => {
+  const crate = assembleNodes(MANIFEST.models.wooden_crate_02.nodes, 'wooden_crate_02');
+  assert.equal(crate.length, 1);
+  assert.equal(crate[0].primary, 'wooden_crate_02_crate'); assert.deepEqual(crate[0].parts, ['wooden_crate_02_lid']);
+  assert.deepEqual(crate[0].size_m, [0.529, 0.464, 1.166], 'union bounds: crate + lid, long axis Z');
+  const bins = assembleNodes(MANIFEST.models.metal_trash_can.nodes, 'metal_trash_can');
+  assert.deepEqual(bins.map((a) => a.primary), ['metal_trash_can', 'metal_trash_can_rust']);
+  assert.deepEqual(bins[0].parts.sort(), ['metal_trash_can_handle_left', 'metal_trash_can_handle_right', 'metal_trash_can_lid']);
+  assert.deepEqual(bins[1].parts.sort(), ['metal_trash_can_rust_handle_left', 'metal_trash_can_rust_handle_right', 'metal_trash_can_rust_lid']);
+  assert.ok(bins[0].bounds.min[0] < -0.5 && bins[0].bounds.max[0] > 0.3, 'the leaning lid widens the clean can footprint on its own side');
+  // A file whose roots are ALL parts (nothing un-suffixed) still yields one assembly around the biggest root.
+  const wheelsOnly = assembleNodes([
+    { name: 'thing_wheel_01', translation: [1, 0, 0], bounds: { min: [-0.1, -0.3, -0.3], max: [0.1, 0.3, 0.3] }, triangles: 10, lod: null },
+    { name: 'thing_lid', translation: [0, 0, 0], bounds: { min: [-1, 0, -1], max: [1, 0.2, 1] }, triangles: 10, lod: null },
+  ], 'thing');
+  assert.equal(wheelsOnly.length, 1); assert.equal(wheelsOnly[0].primary, 'thing_lid'); assert.deepEqual(wheelsOnly[0].parts, ['thing_wheel_01']);
+  // LOD files: only LOD0 roots are placeable.
+  const lods = assembleNodes([
+    { name: 'barrier', translation: [0, 0, 0], bounds: { min: [-0.8, 0, -0.2], max: [0.8, 1.1, 0.2] }, triangles: 20000, lod: 0 },
+    { name: 'barrier_LOD01', translation: [2, 0, 0], bounds: { min: [-0.8, 0, -0.2], max: [0.8, 1.1, 0.2] }, triangles: 4000, lod: 1 },
+  ], 'barrier');
+  assert.deepEqual(lods.map((a) => a.primary), ['barrier']);
+  assert.ok(isPartName('security_light_glass', 'security_light') && isPartName('covered_car_wheel_03', 'covered_car') && !isPartName('exterior_aircon_unit_rusted', 'exterior_aircon_unit') && !isPartName('rollershutter_door', 'rollershutter_door'));
 });
 
 // ---------------------------------------------------------------------------------------------

@@ -23,6 +23,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import * as THREE from 'three';
+import { inspectGltf, displayVariants } from '../assets/gltf_inspect.mjs';
 import { HighlineDistrict } from '../../src/world/HighlineDistrict.js';
 
 const args = process.argv.slice(2);
@@ -36,16 +37,25 @@ export function loadManifest(explicit) {
   return { manifest: manifestFromDimensions(dims), source: 'tools/assets/polyhaven_dimensions.json (inspected dimensions fixture)' };
 }
 
-/** Build a manifest shaped like fetch_polyhaven_models.mjs output from the recorded dimensions. */
+/**
+ * Build a manifest shaped like fetch_polyhaven_models.mjs output from the recorded per-root bounds, by feeding
+ * a synthetic glTF (one node + one POSITION accessor per root) through the SAME inspector CI uses — so
+ * assemblies, variants and sizes are computed by one code path whether the binaries are present or not.
+ */
 export function manifestFromDimensions(dims) {
   const models = {};
   for (const [id, d] of Object.entries(dims.models)) {
-    const nodes = (d.variants || [{ name: id, offset: [0, 0, 0] }]).map((v) => {
-      const [w, h, depth] = v.size_m || d.size_m;
-      const base = v.base ?? d.base ?? 0; // y of the model base relative to its origin (0 = origin at base)
-      return { name: v.name, translation: v.offset || [0, 0, 0], bounds: { min: [-w / 2, base, -depth / 2], max: [w / 2, base + h, depth / 2] }, size_m: [w, h, depth], triangles: d.triangles || 0, lod: v.lod ?? null };
+    const roots = d.nodes || [];
+    const gltf = { asset: { generator: 'rivet-run dimensions fixture' }, scene: 0, scenes: [{ nodes: roots.map((_, i) => i) }], nodes: [], meshes: [], accessors: [], materials: [{ name: id }], images: [] };
+    roots.forEach((n, i) => {
+      gltf.accessors.push({ min: n.min, max: n.max, count: 1 }, { count: (n.triangles || 0) * 3 });
+      gltf.meshes.push({ name: n.mesh || `${n.name}_mesh`, primitives: [{ attributes: { POSITION: i * 2 }, indices: i * 2 + 1, material: 0 }] });
+      const node = { mesh: i, name: n.name, translation: n.translation || [0, 0, 0] };
+      if (n.rotation) node.rotation = n.rotation;
+      gltf.nodes.push(node);
     });
-    models[id] = { gltf: `${id}_1k.gltf`, role: d.role || '', triangles: d.triangles || 0, nodes, variants: nodes.filter((n) => n.lod === null || n.lod === 0).map((n) => n.name), license: 'CC0-1.0', source: 'polyhaven.com' };
+    const inspection = inspectGltf(gltf, { id });
+    models[id] = { gltf: `${id}_1k.gltf`, role: d.role || '', triangles: inspection.triangles_total, nodes: inspection.nodes, assemblies: inspection.assemblies, variants: displayVariants(inspection), license: 'CC0-1.0', source: 'polyhaven.com' };
   }
   return { schema: 'rivet-run-polyhaven-models/fixture', models, rejected: [], failed: [] };
 }

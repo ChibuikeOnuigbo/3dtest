@@ -184,7 +184,8 @@ export class HighlineDistrict {
     b.box('shed-monitor', m.screen, [0.5, 0.32, 0.04], [shed.x - 2.2, roofY + 1.05, shed.z + 2.0], { cast: false });
     this.props.place('metal_tool_chest', [shed.x + 2.5, roofY + 0.06, shed.z + 2.3], 0, { collide: true, colliderId: 'shed-tool-chest' });
     this.props.place('cardboard_box_01', [shed.x + 1.4, roofY + 0.06, shed.z + 2.4], 0.3, { collide: true, colliderId: 'shed-box' });
-    this.props.place('cardboard_box_01', [shed.x + 1.5, roofY + 0.58, shed.z + 2.35], -0.5, {});
+    // Stacks use the REAL height of the model underneath (manifest bounds), never a guessed constant.
+    this.props.place('cardboard_box_01', [shed.x + 1.45, roofY + 0.06 + this.props.heightOf('cardboard_box_01'), shed.z + 2.38], -0.5, {});
     this.props.place('WetFloorSign_01', [shed.x + 0.4, roofY + 0.06, shed.z - 1.6], 2.4, {});
     b.sign('DISPATCH 08', [shed.x, roofY + shed.h + 0.55, frontZ - 0.2], '-z', { width: 2.6 });
     b.lamp([shed.x, roofY + shed.h - 0.14, shed.z], { intensity: 12, distance: 10, size: 0.7 });
@@ -205,15 +206,19 @@ export class HighlineDistrict {
     b.box('roof-drain', m.steelDark, [0.6, 0.02, 0.6], [-11, roofY + 0.012, 35], { cast: false });
     // Real props (Poly Haven CC0 glTF) either side of the shed door — no coloured boxes/cylinders.
     this.props.place('wooden_crate_02', [5.4, roofY, 46.6], 0.3, { collide: true, colliderId: 'door-crate' });
-    this.props.place('wooden_crate_02', [5.3, roofY + 0.529, 46.7], -0.2, { collide: true, colliderId: 'door-crate-2' });
+    this.props.place('wooden_crate_02', [5.35, roofY + this.props.heightOf('wooden_crate_02'), 46.65], 0.1, { collide: true, colliderId: 'door-crate-2' });
     this.props.place('cardboard_box_01', [6.5, roofY, 47.4], 1.1, { collide: true, colliderId: 'door-box' });
     this.props.place('Barrel_01', [-5.4, roofY, 44.8], 0.8, { collide: true, colliderId: 'door-drum' });
     this.props.place('old_tyre', [-6.2, roofY, 45.6], 0.4, {});
     this.props.place('concrete_road_barrier_02', [-4.6, roofY, 47.8], Math.PI / 2, { collide: true, colliderId: 'door-barrier-w' });
     this.props.place('concrete_road_barrier_02', [4.6, roofY, 47.8], Math.PI / 2, { collide: true, colliderId: 'door-barrier-e' });
     this.props.place('metal_trash_can', [-4.3, roofY, 49.6], 0.2, { collide: true, colliderId: 'door-bin' });
-    this.props.place('exterior_aircon_unit', [shed.x + 3.8 + 0.19, roofY + 1.4, shed.z - 1.2], Math.PI / 2, { variant: 'exterior_aircon_unit_rusted', anchor: 'origin' });
-    this.props.place('security_camera_01', [shed.x - 3.2, roofY + shed.h - 0.2, frontZ - 0.1 - 0.2], Math.PI, { anchor: 'origin' });
+    // Wall-mounted units sit ON the wall face: the mounted side of the real model's rotated extent touches the
+    // brick/corrugated plane (shed east face x = shed.x + 3.8, shed front face z = frontZ - 0.1).
+    const aircon = this.props.extent('exterior_aircon_unit', Math.PI / 2, { variant: 'exterior_aircon_unit_rusted' });
+    if (aircon) this.props.place('exterior_aircon_unit', [shed.x + 3.8 - aircon.min[0] + 0.01, roofY + 1.4, shed.z - 1.2], Math.PI / 2, { variant: 'exterior_aircon_unit_rusted', anchor: 'origin' });
+    const cam = this.props.extent('security_camera_01', Math.PI);
+    if (cam) this.props.place('security_camera_01', [shed.x - 3.2, roofY + shed.h - 0.45, frontZ - 0.1 - cam.max[2] - 0.01], Math.PI, { anchor: 'origin' });
     this.checkpoint('spawn', [0, roofY, 50.5], 2.5, 0, 'Leave dispatch, run the roof and jump the gap to the transfer annex.');
   }
 
@@ -261,7 +266,10 @@ export class HighlineDistrict {
     this.props.place('wooden_crate_02', [6.2, y, 14.5], 0.1, { collide: true, colliderId: 'annex-crate' });
     this.props.place('industrial_pastic_container', [7.4, y, 14.9], 0.4, { collide: true, colliderId: 'annex-crate-b' });
     this.props.place('Barrel_02', [7.6, y, 16.2], 1.3, { collide: true, colliderId: 'annex-drum' });
-    this.props.place('security_light', [-2.03 - 0.21, y + 2.5, kz - 1.6], Math.PI / 2, { anchor: 'origin' });
+    // Security light on the kiosk's west post: the model's mount plate is its local −z face and the shade projects to
+    // +z, so yaw −π/2 turns the shade toward −x and puts the plate against the post's west face (x = −2.09).
+    const secLight = this.props.extent('security_light', -Math.PI / 2);
+    if (secLight) this.props.place('security_light', [-2.09 - secLight.max[0] - 0.01, y + 2.55, kz - 2.0], -Math.PI / 2, { anchor: 'origin' });
     // Recovery: a service catwalk under the roof gap; stairs climb west to a landing at the annex's NW corner.
     b.catwalk('gap-catwalk', [-9, -6.2, 25.9], 13, { width: 3.2, axis: 'x', rails: 'both', surface: 'grating' });
     b.stairs('gap-stairs', [-3.2, -6.2, 25.3], { rise: 4.6, run: 0.29, count: 16, width: 1.3, axis: 'x', direction: -1 });
@@ -360,7 +368,7 @@ export class HighlineDistrict {
     this.props.place('Barrel_01', [bay.x - 1.0, y, bay.z - 3.6], 0.4, { collide: true, colliderId: 'bay-drum-a' });
     this.props.place('barrel_03', [bay.x - 0.3, y, bay.z - 4.4], 2.1, { collide: true, colliderId: 'bay-drum-b' });
     this.props.place('wooden_crate_02', [bay.x + 0.9, y, bay.z - 3.8], -0.25, { collide: true, colliderId: 'bay-crate' });
-    this.props.place('cardboard_box_01', [bay.x + 0.9, y + 0.53, bay.z - 3.8], 0.6, {});
+    this.props.place('cardboard_box_01', [bay.x + 0.9, y + this.props.heightOf('wooden_crate_02'), bay.z - 3.8], 0.6, {});
     this.props.place('WetFloorSign_01', [bay.x + 0.3, y, bay.z - 1.4], 2.6, {});
     this.doors.push(new RollerDoor(this, { id: 'bay-door', centre: [bay.x, y, bay.z + 0.3], width: bay.w, height: bay.h, facing: '+z', wallThickness: 0.5, open: 0, trigger: 5.5, speed: 0.75, region: 'split-deck' }));
     // Route-choice signal cabinet moved off the centre line so it no longer blocks the door read.
@@ -604,10 +612,14 @@ export class HighlineDistrict {
     b.box('hall-wall-w', m.brick, [0.6, h + 0.5 + (floorY - GROUND_Y), z1 - z0], [x0 - 0.3, (roofY + GROUND_Y) / 2, cz], { collide: true, traits: { walkable: false, wallJumpable: true }, id: 'hall-wall-w' });
     b.box('hall-wall-e', m.brick, [0.6, h + 0.5 + (floorY - GROUND_Y), z1 - z0], [x1 + 0.3, (roofY + GROUND_Y) / 2, cz], { collide: true, traits: { walkable: false, wallJumpable: true }, id: 'hall-wall-e' });
     b.box('hall-wall-n', m.brick, [x1 - x0 + 1.2, h + 0.5 + (floorY - GROUND_Y), 0.6], [cx, (roofY + GROUND_Y) / 2, z1 + 0.3], { collide: true, traits: { walkable: false, wallJumpable: true }, id: 'hall-wall-n' });
-    b.box('hall-wall-s', m.brick, [11.6, h + 0.5 + (floorY - GROUND_Y), 0.6], [-9.7, (roofY + GROUND_Y) / 2, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s1' });
-    b.box('hall-wall-s', m.brick, [11.6, h + 0.5 + (floorY - GROUND_Y), 0.6], [9.7, (roofY + GROUND_Y) / 2, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s2' });
-    b.box('hall-wall-s', m.brick, [7.2, (-0.4) - GROUND_Y, 0.6], [0, (GROUND_Y - 0.4) / 2, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s3' });
-    b.box('hall-wall-s', m.brick, [7.2, roofY - 4.6 + 0.5, 0.6], [0, (roofY + 4.6) / 2 + 0.25, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s4' });
+    // South wall = two piers that run all the way to the corner walls (x ±18.6, meeting hall-wall-w/e at ∓18.3±0.3)
+    // and a sill/header band across the 7.2 m opening. Earlier the piers stopped at ±15.5 (2.5 m open corners) and
+    // the bands were 7.2 m wide against piers starting at ±3.9 (0.3 m see-through slits) — D-17d-3 / D-hall-swcorner.
+    const pierW = 18.6 - 3.6; // 3.6 = half the opening
+    b.box('hall-wall-s', m.brick, [pierW, h + 0.5 + (floorY - GROUND_Y), 0.6], [-(3.6 + pierW / 2), (roofY + GROUND_Y) / 2, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s1' });
+    b.box('hall-wall-s', m.brick, [pierW, h + 0.5 + (floorY - GROUND_Y), 0.6], [3.6 + pierW / 2, (roofY + GROUND_Y) / 2, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s2' });
+    b.box('hall-wall-s', m.brick, [7.4, (-0.4) - GROUND_Y, 0.6], [0, (GROUND_Y - 0.4) / 2, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s3' });
+    b.box('hall-wall-s', m.brick, [7.4, roofY - 4.6 + 0.5, 0.6], [0, (roofY + 4.6) / 2 + 0.25, z0 - 0.3], { collide: true, traits: { walkable: false }, id: 'hall-wall-s4' });
     // South loading door onto the Sunline gantry: a real 7.2 m opening in the brick (s3 below the sill,
     // s4 above the header, jambs left by s1/s2) with a roller curtain that lifts as the player approaches.
     for (const side of [-1, 1]) b.box('hall-door-jamb', m.brickDark, [0.5, 5.0, 0.9], [side * 3.85, 2.1, z0 - 0.3], { cast: false });
@@ -655,7 +667,8 @@ export class HighlineDistrict {
     b.cabinet('pulpit', [0, floorY, cz + 6], Math.PI, { width: 3, height: 1.6, depth: 1.2, material: m.steelPale });
     for (const [k, [x, z]] of [[-15, -66], [15, -66], [-15, -86], [15, -86], [0, -88]].entries()) {
       this.props.place('wooden_crate_02', [x, floorY, z], 0.3 * k, { collide: true, colliderId: `hall-crate-${k}` });
-      this.props.place('wooden_crate_02', [x + 0.1, floorY + 0.53, z - 0.05], 0.3 * k + 1.5, { collide: true, colliderId: `hall-crate-${k}-top` });
+      // Top crate turned only slightly (a 90° turn of a 1.17 m crate on a 0.53 m one hangs 0.3 m in the air).
+      this.props.place('wooden_crate_02', [x + 0.02, floorY + this.props.heightOf('wooden_crate_02'), z - 0.02], 0.3 * k + 0.15, { collide: true, colliderId: `hall-crate-${k}-top` });
       if (k % 2) this.props.place('cardboard_box_01', [x - 1.1, floorY, z + 0.8], 0.7 * k, { collide: true, colliderId: `hall-box-${k}` });
     }
     for (const [lx, lz] of [[-6, -71], [6, -83]]) { b.box('hall-light-drop', m.steelDark, [0.06, 2.6, 0.06], [lx, roofY - 1.3, lz], { cast: false, collide: true, traits: { walkable: false, decor: true }, id: `hall-light-drop-${lx}` }); this.props.place('caged_hanging_light', [lx, roofY - 2.6, lz], 0, { anchor: 'origin' }); }

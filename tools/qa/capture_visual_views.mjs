@@ -14,6 +14,12 @@
  * Timing is measured in game seconds (probe `elapsed`), never wall-clock milliseconds, so the
  * same script works at 60 fps and at 2 fps.
  *
+ * Render pacing: on software GL (GitHub Actions / SwiftShader) one 1280×720 PBR frame costs 5–15 s, which
+ * starves the game loop (run 34162559951: 0.1 s of game time in 30 s, 0 gameplay frames). With
+ * VISUAL_RENDER_MODE=ondemand (default in CI) the page keeps simulating every tick but rasterises only
+ * when a frame is captured — the SAME renderer, scene, camera and post settings, so the image is what a
+ * player would see at that instant; only the wall-clock pacing differs. Every record states the mode.
+ *
  * This tool never writes an approval: critic_status is always CAPTURED_UNINSPECTED.
  */
 import fs from 'node:fs/promises';
@@ -34,7 +40,11 @@ const frameFilter = (process.env.VISUAL_FRAMES || '').split(',').filter(Boolean)
 const method = process.env.VISUAL_CAPTURE_METHOD || 'canvas'; // page screenshots stall under software GL; the canvas readback is the actual framebuffer
 const viewport = { width: Number(process.env.VISUAL_VIEWPORT_W || 1280), height: Number(process.env.VISUAL_VIEWPORT_H || 720) };
 const evidenceDir = path.resolve(root, process.env.VISUAL_EVIDENCE_DIR || path.join('qa', 'visual', 'captures', captureRunId));
-const seedParam = process.env.RIVET_RUN_SEED ? `?seed=${encodeURIComponent(process.env.RIVET_RUN_SEED)}` : '';
+const seedValue = process.env.RIVET_RUN_SEED || null;
+// RIVET_RUN_URL may already carry ?seed=… (CI does); never append a second query string.
+const seedParam = seedValue && !/[?&]seed=/.test(baseURL) ? `${baseURL.includes('?') ? '&' : '?'}seed=${encodeURIComponent(seedValue)}` : '';
+const renderMode = process.env.VISUAL_RENDER_MODE || (process.env.CI ? 'ondemand' : 'continuous');
+const startLockTimeoutMs = Number(process.env.VISUAL_START_TIMEOUT_MS || 120000);
 if (!executablePath) throw new Error('BLOCKED_NO_BROWSER_BINARY: set BROWSER_EXECUTABLE_PATH to a vetted Chromium executable. No browser download is attempted.');
 
 const browser = await chromium.launch({ executablePath, headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--headless=new'] });
@@ -191,7 +201,10 @@ async function writeCaptureRecord(status, failure = null) {
     capture_mode_statement: mode === 'staged'
       ? 'STAGED: every frame is a labelled teleport view for composition review. Not gameplay evidence.'
       : 'GAMEPLAY: real click → pointer lock → keyboard/mouse input. Frames after a failed phase (if any) are labelled STAGED.',
-    status, seed: endState?.worldSeed || null, frames: frameRecords, phases: phaseResults, final_probe: endState, scene_audit: audit, input_trace: inputTrace, console_events: consoleEvents, capture_failure: failure,
+    status, seed: endState?.worldSeed || seedValue, render_mode: renderMode, render_mode_statement: renderMode === 'ondemand'
+      ? 'ONDEMAND: the page simulates every animation tick but rasterises only at capture time (software GL pacing). Same renderer/scene/camera as play; wall-clock pacing differs.'
+      : 'CONTINUOUS: every animation tick is rasterised (normal play).',
+    frames: frameRecords, phases: phaseResults, final_probe: endState, scene_audit: audit, input_trace: inputTrace, console_events: consoleEvents, capture_failure: failure,
     approval: { approved: false, score: null, reason: 'A vision-capable critic must inspect the actual image files. This tool never approves.' },
   };
   await fs.writeFile(path.join(evidenceDir, 'capture_record.json'), `${JSON.stringify(record, null, 2)}\n`);
@@ -202,6 +215,13 @@ try {
   await page.waitForFunction(() => window.__rivetRunProbe && window.__rivetRunProbe.snapshot().renderFrameCount > 2, null, { timeout: 180000 });
   // Wait (bounded) for the sky/env to finish loading so frames are not captured against the fallback gradient.
   await page.waitForFunction(() => window.__rivetRunProbe.snapshot().skySource !== 'loading', null, { timeout: 60000 }).catch(() => null);
+  if (renderMode === 'ondemand') {
+    const r = await page.evaluate(() => window.__rivetRunProbe.setRenderMode?.('ondemand'));
+    inputTrace.push({ action: 'RENDER_MODE', mode: r?.renderMode || 'unsupported', at: Date.now() });
+    if (r?.renderMode !== 'ondemand') console.warn('[capture] page does not support on-demand rendering; continuing in continuous mode');
+  }
+  // The real props (glTF) load asynchronously after the world is built; give them a bounded settle window.
+  await sleep(Number(process.env.VISUAL_PROP_SETTLE_MS || 4000));
 
   if (mode === 'staged') {
     const ids = frameFilter.length ? frameFilter : Object.keys(POSES).slice(0, maxFrames);
@@ -219,8 +239,16 @@ try {
     await page.locator('#start-button').scrollIntoViewIfNeeded().catch(() => null);
     await page.click('#start-button', { timeout: 15000 }).catch(async () => page.evaluate(() => document.querySelector('#start-button')?.click()));
     await sleep(300);
-    await page.mouse.click(viewport.width / 2, viewport.height / 2);
-    await page.waitForFunction(() => { const s = window.__rivetRunProbe.snapshot(); return s.running && s.pointerLocked && s.renderFrameCount > 8; }, null, { timeout: 30000 });
+    // Pointer lock needs a user gesture on the canvas; retry the click until the probe confirms the lock
+    // (under software GL the first click can land while the renderer is mid-frame and be dropped).
+    let locked = false;
+    const lockDeadline = Date.now() + startLockTimeoutMs;
+    while (!locked && Date.now() < lockDeadline) {
+      await page.mouse.click(viewport.width / 2, viewport.height / 2);
+      locked = await page.waitForFunction(() => { const s = window.__rivetRunProbe.snapshot(); return s.running && s.pointerLocked && s.renderFrameCount > 8; }, null, { timeout: 15000 }).then(() => true).catch(() => false);
+      if (!locked) inputTrace.push({ action: 'pointer_lock_retry', at: Date.now(), state: await snapshot().then((s) => ({ running: s?.running, pointerLocked: s?.pointerLocked, ticks: s?.renderFrameCount })) });
+    }
+    if (!locked) throw new Error(`POINTER_LOCK_NOT_ACQUIRED within ${startLockTimeoutMs} ms (${inputTrace.filter((t) => t.action === 'pointer_lock_retry').length} retries)`);
     inputTrace.push({ action: 'start_run_pointer_lock_confirmed', at: Date.now() });
     await orient(0, -0.1);
     await capture('01-dispatch-spawn', 'dispatch', 'spawn: shed doorway, route read toward the parapet opening', ['shed-floor', 'dispatch-roof']);

@@ -36,7 +36,12 @@ let elapsed = 0;
 let bestTime = Number(localStorage.getItem('rivet-run-highline-best') || 0);
 let toastTimer = 0;
 let pulseVisuals = [];
-let renderFrameCount = 0;
+let renderFrameCount = 0; // animation-loop ticks (simulation steps)
+let presentedFrames = 0; // frames actually rasterised
+// 'continuous' presents every tick. 'ondemand' (capture probe only) keeps simulating every tick but rasterises
+// only when a frame is captured: on software GL (GitHub Actions, SwiftShader) a 1280×720 PBR frame costs
+// 5–15 s, which starves the game loop (0.1 s of game time per 30 s) and makes real-input traversal impossible.
+let renderMode = 'continuous';
 let stagingMode = false; // set only by the capture probe; never by gameplay
 
 // ------------------------------------------------------------------ renderer
@@ -264,7 +269,7 @@ function animate() {
   if (running && (document.pointerLockElement === canvas || stagingMode)) { elapsed += delta; updateGame(delta); }
   course.update(elapsed, delta, player.root.position); updatePulseLines(delta); updateHud(); followSun();
   if (toastTimer > 0) { toastTimer -= delta; if (toastTimer <= 0) toastNode.classList.remove('show'); }
-  renderer.render(scene, camera);
+  if (renderMode === 'continuous') { renderer.render(scene, camera); presentedFrames += 1; }
 }
 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); renderer.setSize(window.innerWidth, window.innerHeight); });
 
@@ -283,6 +288,8 @@ window.__rivetRunProbe = Object.freeze({
     pointerLocked: document.pointerLockElement === canvas,
     stagingMode,
     renderFrameCount,
+    presentedFrames,
+    renderMode,
     relaysRemaining: course.activeTargetCount(),
     checkpoint: { position: checkpoint.position.toArray(), yaw: checkpoint.yaw },
     objective,
@@ -314,9 +321,12 @@ window.__rivetRunProbe = Object.freeze({
   doorReupload: (id) => { const door = course.doors.find((d) => d.id === id); if (!door) return { error: `no door ${id}` }; const g = door.curtainGeom; const old = g.attributes.position; g.setAttribute('position', new THREE.BufferAttribute(old.array.slice(), 3)); door.curtainGeomPositionReplaced = true; return { id, count: g.attributes.position.count }; },
   /** DIAGNOSTIC ONLY — hide/show one dynamic part of a door (curtain, bottomRail, wrap, drum, weight) to attribute what a frame shows. */
   doorPart: (id, part, visible) => { stagingMode = true; const door = course.doors.find((d) => d.id === id); if (!door || !door[part] || !door[part].isObject3D) return { error: `no part ${id}.${part}` }; door[part].visible = !!visible; return { id, part, visible: !!visible }; },
+  /** CAPTURE HARNESS ONLY — see `renderMode`. The game itself never calls this. */
+  setRenderMode: (mode) => { renderMode = mode === 'ondemand' ? 'ondemand' : 'continuous'; return { renderMode, presentedFrames, renderFrameCount }; },
   captureCanvas: (type = 'image/jpeg', quality = 0.85) => {
-    // preserveDrawingBuffer is off, so re-render synchronously then read back. Shadows are
-    // already up to date from the last presented frame; skip the shadow pass for the readback.
+    // preserveDrawingBuffer is off, so re-render synchronously then read back.
+    if (renderMode === 'ondemand') { renderer.render(scene, camera); presentedFrames += 1; return canvas.toDataURL(type, quality); }
+    // Continuous mode: shadows are already up to date from the last presented frame; skip the shadow pass for the readback.
     const shadows = renderer.shadowMap.autoUpdate; renderer.shadowMap.autoUpdate = false;
     try { renderer.render(scene, camera); return canvas.toDataURL(type, quality); } finally { renderer.shadowMap.autoUpdate = shadows; }
   },

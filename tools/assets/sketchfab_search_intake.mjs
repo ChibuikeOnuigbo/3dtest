@@ -137,7 +137,7 @@ if (!token) {
       const buffer = Buffer.from(await res.arrayBuffer());
       const id = `sf_${c.uid.slice(0, 8)}_${(c.name || 'model').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 40)}`;
       const gltf = readGlbJson(buffer);
-      const inspection = inspectGltf(gltf);
+      const inspection = inspectGltf(gltf, { id });
       const roots = inspection.nodes.filter((n) => n.bounds);
       const largest = Math.max(...roots.flatMap((n) => n.size_m));
       const smallest = Math.max(...roots.map((n) => Math.max(...n.size_m)));
@@ -153,7 +153,7 @@ if (!token) {
       await fs.writeFile(path.join(outRoot, id, `${id}.glb`), buffer);
       const meta = { ...c, id, inspection: { triangles: inspection.triangles_total, nodes: roots.length, size_m: roots[0].size_m, materials: inspection.materials.length, extensions: inspection.extensions_used } };
       await fs.writeFile(path.join(outRoot, id, 'meta.json'), `${JSON.stringify(meta, null, 2)}\n`);
-      manifest.models[id] = { name: c.name, gltf: `${id}.glb`, role: c.role, triangles: inspection.triangles_total, nodes: inspection.nodes, variants: displayVariants(inspection), materials: inspection.materials, bundle_bytes: buffer.length, authors: { [c.author]: c.url }, license: c.licence, source: c.url, base_path: '/models/sketchfab' };
+      manifest.models[id] = { name: c.name, gltf: `${id}.glb`, role: c.role, triangles: inspection.triangles_total, nodes: inspection.nodes, assemblies: inspection.assemblies, variants: displayVariants(inspection), materials: inspection.materials, bundle_bytes: buffer.length, authors: { [c.author]: c.url }, license: c.licence, source: c.url, base_path: '/models/sketchfab' };
       c.verdict = 'APPROVED'; c.id = id; c.triangles = inspection.triangles_total; c.size_m = roots[0].size_m;
       report.downloaded.push(c); report.total_bytes += buffer.length; manifest.total_bytes += buffer.length;
     } catch (error) {

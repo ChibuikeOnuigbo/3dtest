@@ -228,6 +228,7 @@ jobs:
           RIVET_RUN_URL: http://127.0.0.1:5173/?seed=${{ env.SEED }}
           RIVET_RUN_SEED: ${{ env.SEED }}
           VISUAL_CAPTURE_MODE: gameplay
+          VISUAL_RENDER_MODE: ondemand
           VISUAL_STAGED_FALLBACK: '1'
           VISUAL_CAPTURE_METHOD: canvas
           VISUAL_VIEWPORT_W: '1280'
@@ -246,7 +247,9 @@ jobs:
           RIVET_RUN_URL: http://127.0.0.1:5173/?seed=qa-harbour-alt-01
           RIVET_RUN_SEED: qa-harbour-alt-01
           VISUAL_CAPTURE_MODE: staged
+          VISUAL_RENDER_MODE: ondemand
           VISUAL_CAPTURE_METHOD: canvas
+          VISUAL_MAX_FRAMES: '6'
           VISUAL_FRAMES: 01-dispatch-spawn,02-dispatch-look-east,07-split-deck,10-boiler-court,11-boiler-vista,18-sunline-gantry
           VISUAL_VIEWPORT_W: '1280'
           VISUAL_VIEWPORT_H: '720'
