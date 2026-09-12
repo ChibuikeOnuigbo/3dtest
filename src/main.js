@@ -45,7 +45,11 @@ let renderMode = 'continuous';
 let stagingMode = false; // set only by the capture probe; never by gameplay
 
 // ------------------------------------------------------------------ renderer
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+// reversedDepthBuffer: floating-point reversed-Z (EXT_clip_control, Chrome 131+/Firefox 132+/Safari 18+, and the CI
+// SwiftShader build) — depth precision becomes near-uniform over the whole 0.08…900 m range instead of collapsing
+// past ~40 m, which is what made 1–3 cm decals and trims shimmer in the distance. three falls back to a normal depth
+// buffer (with a console warning) where the extension is missing; the probe reports which mode rendered.
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance', reversedDepthBuffer: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
@@ -89,7 +93,7 @@ new THREE.TextureLoader(loadingManager).load('/sky/harbour_afternoon_equirect.jp
   probeState.skySource = 'fallback:gradient';
 });
 
-const camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 0.05, 900);
+const camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 0.08, 900); // capsule radius 0.34 keeps the eye ≥ 0.34 m from any collider face, so 0.08 never clips walls
 camera.position.set(0, 1.62, 0); // eye height above the player's feet (root); the rig handles crouch/bob offsets
 const sun = new THREE.DirectionalLight(atmospherePreset.sun, atmospherePreset.sunIntensity);
 sun.position.set(...atmospherePreset.sunDir).multiplyScalar(120);
@@ -297,6 +301,7 @@ window.__rivetRunProbe = Object.freeze({
     worldSeed: course.seed,
     timeOfDay,
     skySource: probeState.skySource,
+    reversedDepth: renderer.capabilities.reversedDepthBuffer === true,
     textureSources: course.materials.sources,
     realProps: course.props.status,
     doors: course.doors.map((d) => ({ id: d.id, state: d.state, open: Number(d.open.toFixed(2)) })),

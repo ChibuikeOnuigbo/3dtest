@@ -56,7 +56,7 @@ export class SeedLayer {
       const style = pick(r, ['mast', 'helipad', 'plant', 'spire', 'billboard']);
       if (style === 'mast') { const h = range(r, 10, 26); b.cylinder('skyline-mast', m.galvanised, 0.5, h, [slot.x, top + 4 + h / 2, slot.z], { segments: 6, cast: false }); b.lamp([slot.x, top + 4 + h + 0.5, slot.z], { material: m.lampRed, color: '#ff3b2f', intensity: 0, light: false, size: 1.4 }); masts += 1; }
       if (style === 'helipad') { b.cylinder('skyline-helipad', m.concreteDark, slot.w * 0.35, 1, [slot.x, top + 4.5, slot.z], { segments: 12, cast: false }); }
-      if (style === 'plant') { for (let i = 0; i < 3; i += 1) b.box('skyline-plant', m.corrugatedPale, [slot.w * 0.25, range(r, 3, 6), slot.d * 0.25], [slot.x + range(r, -slot.w * 0.3, slot.w * 0.3), top + 5.5, slot.z + range(r, -slot.d * 0.3, slot.d * 0.3)], { cast: false }); }
+      if (style === 'plant') { for (let i = 0; i < 3; i += 1) { const ph = range(r, 3, 6); b.box('skyline-plant', m.corrugatedPale, [slot.w * 0.2, ph, slot.d * 0.2], [slot.x + range(r, -slot.w * 0.18, slot.w * 0.18), top + 4 + ph / 2, slot.z + range(r, -slot.d * 0.18, slot.d * 0.18)], { cast: false }); } } // stands on the crown top (top + 4) and stays ≥ 0.02 w inside the crown's faces (crown half-width 0.3 w)
       if (style === 'spire') { b.box('skyline-spire', m.steelDark, [slot.w * 0.3, 18, slot.d * 0.3], [slot.x, top + 13, slot.z], { cast: false }); b.box('skyline-spire', m.steelDark, [slot.w * 0.12, 30, slot.d * 0.12], [slot.x, top + 19, slot.z], { cast: false }); }
       if (style === 'billboard') { b.box('skyline-billboard', pick(r, [m.windowLit, m.screen, m.lampCool]), [slot.w * 0.9, 6, 0.6], [slot.x, top + 7, slot.z - slot.d / 2], { cast: false }); }
       crowns += 1;
@@ -152,7 +152,9 @@ export class SeedLayer {
       while (x < 70) {
         const len = chance(r, 0.7) ? 12.19 : 6.06;
         const stack = Math.floor(range(r, 1, 4));
-        if (chance(r, 0.82)) for (let s = 0; s < stack; s += 1) { b.container(`yard-${containers}`, [x + len / 2, GROUND_Y + s * 2.59, z], range(r, -0.03, 0.03), pick(r, palette)); containers += 1; }
+        // `length: len` — the row pitch is `len`, so every box must BE `len` long (a 12.19 m default at a 6.06 m pitch buried
+        // every second container inside its neighbour: the biggest overlap in the yard).
+        if (chance(r, 0.82)) for (let s = 0; s < stack; s += 1) { b.container(`yard-${containers}`, [x + len / 2, GROUND_Y + s * 2.59, z], range(r, -0.03, 0.03), pick(r, palette), { length: len }); containers += 1; }
         x += len + 0.4;
       }
     }
@@ -227,7 +229,13 @@ export class SeedLayer {
     if (chance(r, 0.5)) { b.cylinder('variant-shortcut-pipe', m.oxide, 0.35, 8, [5.2, 8.6 + 0.35, -39.5], { rotation: [Math.PI / 2, 0, 0], segments: 12, collide: true, traits: { walkable: true, surface: 'steel' } }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -36.0], { cast: false }); b.box('variant-pipe-saddle', m.steelDark, [1.0, 0.3, 0.3], [5.2, 8.75, -43.0], { cast: false }); variants.push('boiler-court-pipe-balance'); }
     // Three crates in a row along the west aisle; the crate is 1.17 m long in Z, so the row pitch is 1.3 m (was 0.75 m).
     if (chance(r, 0.5)) { for (let i = 0; i < 3; i += 1) { const yaw = range(r, -0.2, 0.2); this.world.props.place('wooden_crate_02', [-4.4 + (i % 2) * 0.1, -14, -66.2 + i * 1.3], yaw, { collide: true, colliderId: `variant-hall-crate-${i}` }); } variants.push('turbine-floor-crates'); }
-    if (chance(r, 0.5)) { b.box('variant-billboard', m.windowLit, [6, 2.4, 0.3], [-6, 3.2, 27.9], { cast: false }); variants.push('transfer-gap-billboard'); }
+    if (chance(r, 0.5)) {
+      // Lit billboard on two posts at the dispatch roof's south edge (posts stand on the roof, panel 2 m up): solid, never floating.
+      // Posts stand just inside the south parapet (parapet back face z 27.8; posts z 27.5–27.66) so no post face lies in the parapet's plane.
+      for (const sx of [-1, 1]) b.box('variant-billboard-post', m.steelDark, [0.16, 2.2, 0.16], [-6 + sx * 2.6, 1.1, 27.58], { collide: true, traits: { walkable: false }, id: `variant-billboard-post-${sx}`, cast: false });
+      b.box('variant-billboard', m.windowLit, [6, 2.4, 0.3], [-6, 3.2, 27.65], { cast: false, collide: true, traits: { walkable: true, surface: 'steel' }, id: 'variant-billboard' });
+      variants.push('transfer-gap-billboard');
+    }
     this.note('routeVariants', { variants });
   }
 

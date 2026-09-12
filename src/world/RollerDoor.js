@@ -50,10 +50,10 @@ export class RollerDoor {
     // --- guides: steel channel on each jamb, standing proud of the wall by the track depth
     const trackDepth = 0.16; const trackWidth = 0.12;
     for (const side of [-1, 1]) {
-      const w = side * (width / 2 + trackWidth / 2 - 0.02);
+      const w = side * (width / 2 - trackWidth / 2); // guide fully inside the opening, flat against the jamb (a face 2 cm off the jamb face z-fought)
       b.box(`${id}-guide`, m.steelDark, S(trackWidth, height + 0.1, trackDepth), P(w, height / 2 + 0.05, trackDepth / 2 - 0.02), { cast: false });
       b.box(`${id}-guide-lip`, m.steelDark, S(0.04, height + 0.1, trackDepth * 0.6), P(w - side * trackWidth * 0.35, height / 2 + 0.05, trackDepth * 0.8), { cast: false });
-      b.box(`${id}-guide-foot`, m.concreteDark, S(trackWidth + 0.16, 0.12, trackDepth + 0.2), P(w, 0.06, trackDepth / 2), { cast: false });
+      b.box(`${id}-guide-foot`, m.concreteDark, S(trackWidth + 0.16, 0.12, trackDepth + 0.2), P(w, 0.09, trackDepth / 2), { cast: false }); // stands on the sill plate (its top is 3 cm above floor level)
     }
     // --- barrel housing above the header (hood), drum inside, end plates that carry the axle
     const big = width > 5; // wide bay doors get a motor-sized hoist so the mechanism reads from 10 m away
@@ -61,11 +61,13 @@ export class RollerDoor {
     // Hood = top plate + back plate + a front plate covering only the upper part: the lower front is OPEN, so the
     // barrel and the curtain winding onto it are visible from the threshold (you can see where the door goes).
     b.box(`${id}-hood-top`, m.steelPale, S(width + 0.6, 0.05, hoodD), P(0, hoodY + hoodH / 2 - 0.025, hoodD / 2 - 0.02), { cast: true });
-    b.box(`${id}-hood-back`, m.steelPale, S(width + 0.6, hoodH, 0.05), P(0, hoodY, 0.005), { cast: false });
-    b.box(`${id}-hood-front`, m.steelPale, S(width + 0.6, hoodH * 0.5, 0.05), P(0, hoodY + hoodH * 0.25, hoodD - 0.045), { cast: true });
-    b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, 0.08), P(0, hoodY, hoodD - 0.04), { cast: false });
-    b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, hoodD + 0.04), P(0, hoodY + hoodH / 2, hoodD / 2 - 0.02), { cast: false });
+    b.box(`${id}-hood-back`, m.steelPale, S(width + 0.6, hoodH - 0.06, 0.05), P(0, hoodY + 0.01, 0.005), { cast: false }); // bottom 2 cm above the header plate, top buried in the top plate: no shared face with either
+    b.box(`${id}-hood-front`, m.steelPale, S(width + 0.6, hoodH * 0.5, 0.05), P(0, hoodY + hoodH * 0.25, hoodD - 0.065), { cast: true }); // 4.5 cm behind the drip lip's front face
+    b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.64, 0.05, 0.10), P(0, hoodY, hoodD - 0.01), { cast: false }); // drip lip 5 cm proud of the front plate, 3 cm clear of its back face
+    b.box(`${id}-hood-lip`, m.steelDark, S(width + 0.72, 0.06, hoodD + 0.12), P(0, hoodY + hoodH / 2 + 0.03, hoodD / 2 - 0.02), { cast: false }); // cap plate sits ON the top plate (bottom = top plate top, 6 cm overhang all round)
     for (const side of [-1, 1]) b.box(`${id}-end-plate`, m.steelDark, S(0.06, hoodH + 0.2, hoodD + 0.1), P(side * (width / 2 + 0.34), hoodY, hoodD / 2 - 0.02), { cast: false });
+    // The hood (plates, drum, end plates) is one solid box over the opening: a double jump at the threshold bumps it, the camera never enters it.
+    b.addCollider(`${id}-hood`, P(0, hoodY, hoodD / 2 - 0.02), S(width + 0.74, hoodH + 0.2, hoodD + 0.1), 0, { walkable: false, wallJumpable: false, decor: true, region });
     // --- chain hoist on the drive side (+w): gearbox, sprocket, chain guard, hand chain loop to knee height
     const k = big ? 1.6 : 1; // hoist scale
     const driveW = width / 2 + 0.34 + 0.18 * k;
@@ -80,14 +82,21 @@ export class RollerDoor {
     b.cylinder(`${id}-hand-chain-loop`, m.steelPale, 0.02, 0.24 * k, P(driveW + 0.17 * k, 0.6, hoodD / 2 - 0.02), { rotation: alongNormal, segments: 6, cast: false });
     b.box(`${id}-chain-bracket`, m.steelDark, S(0.3 * k, 0.05, 0.05), P(driveW + 0.05 * k, hoodY + hoodH / 2 + 0.1, hoodD / 2), { cast: false });
     b.box(`${id}-conduit`, m.galvanised, S(0.06, height * 0.9, 0.06), P(driveW + 0.05 * k, height * 0.45 + 0.1, 0.1), { cast: false });
+    // Hoist assembly (gearbox, motor, sprocket, chain guard, bracket): one solid on the drive jamb.
+    b.addCollider(`${id}-hoist`, P(driveW + 0.06 * k, hoodY - 0.02 * k, hoodD / 2 - 0.02 - 0.1 * k), S(0.42 * k, 0.66 * k, hoodD + 0.44 * k), 0, { walkable: false, wallJumpable: false, decor: true, region });
     // --- counterweight channel on the opposite jamb (weight is dynamic; channel is static)
     this.weightW = -(width / 2 + 0.34 + 0.16);
-    b.box(`${id}-weight-channel`, m.steelDark, S(0.22, height + 0.4, 0.06), P(this.weightW, (height + 0.4) / 2, 0.28), { cast: false });
-    b.box(`${id}-weight-channel`, m.steelDark, S(0.06, height + 0.4, 0.28), P(this.weightW - 0.08, (height + 0.4) / 2, 0.14), { cast: false });
-    b.box(`${id}-weight-channel`, m.steelDark, S(0.06, height + 0.4, 0.28), P(this.weightW + 0.08, (height + 0.4) / 2, 0.14), { cast: false });
+    // Channel stands 6 cm proud of the wall face (a back plate 1 cm off the brick z-fought with it on every approach).
+    // The channel runs 5 cm into the floor (its foot is buried, never a face level with the jamb's). One collider wraps all three plates + the moving weight.
+    b.addCollider(`${id}-weight-channel`, P(this.weightW, (height + 0.45) / 2 - 0.05, 0.23), S(0.34, height + 0.45, 0.34), 0, { walkable: false, wallJumpable: false, decor: true, region });
+    b.box(`${id}-weight-channel`, m.steelDark, S(0.22, height + 0.45, 0.06), P(this.weightW, (height + 0.45) / 2 - 0.05, 0.37), { cast: false });
+    b.box(`${id}-weight-channel`, m.steelDark, S(0.06, height + 0.45, 0.28), P(this.weightW - 0.08, (height + 0.45) / 2 - 0.05, 0.26), { cast: false });
+    b.box(`${id}-weight-channel`, m.steelDark, S(0.06, height + 0.45, 0.28), P(this.weightW + 0.08, (height + 0.45) / 2 - 0.05, 0.26), { cast: false });
     // --- header plate, threshold sill and signage/lamp above the hood
-    b.box(`${id}-header-plate`, m.steelDark, S(width + 0.2, 0.12, t + 0.04), P(0, height + 0.02, -t / 2 + 0.02), { cast: false });
-    b.box(`${id}-sill`, m.checker, S(width + 0.3, 0.04, t + 0.6), P(0, 0.02, -t / 2 + 0.3), { cast: false });
+    // Header plate: back face 4 cm inside the wall (buried), front face 4 cm proud — never coplanar with the header brick.
+    b.box(`${id}-header-plate`, m.steelDark, S(width + 0.2, 0.12, t), P(0, height + 0.02, -t / 2 + 0.04), { cast: false });
+    // Threshold plate: 3 cm proud of the floors on both sides and a real (walkable) step, bridging the wall thickness.
+    b.box(`${id}-sill`, m.checker, S(width + 0.3, 0.06, t + 0.6), P(0, 0, -t / 2 + 0.1), { cast: false, collide: true, traits: { walkable: true, surface: 'steel', region }, id: `${id}-sill` });
     b.box(`${id}-lamp-arm`, m.steelDark, S(0.08, 0.08, 0.7), P(0, hoodY + hoodH / 2 + 0.55, 0.35), { cast: false });
     b.lamp(P(0, hoodY + hoodH / 2 + 0.45, 0.68), { intensity: 9, distance: 12, size: 0.3, light: lampLight });
     b.register('roller-door', centre, yawFor, { width, height, facing });
@@ -123,9 +132,9 @@ export class RollerDoor {
     this.wrap.rotation.z = Math.PI / 2; this.wrap.position.copy(this.drum.position);
     this.wrapBaseRadius = 0.13; this.wrapMaxRadius = Math.min(big ? 0.36 : 0.26, hoodH / 2 - 0.06);
     this.weight = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.5, 0.2), m.safetyYellow);
-    this.weight.position.set(this.wSign * this.weightW, height - 0.3, 0.14);
+    this.weight.position.set(this.wSign * this.weightW, height - 0.3, 0.26);
     this.weightCable = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1, 5), m.steelDark);
-    this.weightCable.position.set(this.wSign * this.weightW, height, 0.14);
+    this.weightCable.position.set(this.wSign * this.weightW, height, 0.26);
     this.sprocketSpin = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.03, 0.03), m.safetyYellow);
     this.sprocketSpin.rotation.y = Math.PI / 2; this.sprocketSpin.position.set(this.wSign * (driveW + 0.2 * k), hoodY, hoodD / 2 - 0.02);
     this.group.add(this.curtain, this.bottomRail, this.handle, this.drum, this.wrap, this.weight, this.weightCable, this.sprocketSpin);

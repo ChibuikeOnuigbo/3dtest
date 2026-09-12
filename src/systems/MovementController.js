@@ -40,6 +40,8 @@ export class MovementController {
     this.radius = 0.34;
     this.maxStepHeight = 0.46;
     this.standingHeight = 1.66;
+    // The eye (camera at 1.62 in main.js) must stay under the capsule top at every height: the rig drops by the FULL
+    // crouch amount. At 56 % the crouched eye sat 0.23 m above the capsule and looked through every duct it slid under.
     this.crouchingHeight = 1.05;
     this.height = this.standingHeight;
     this.velocity = new THREE.Vector3();
@@ -328,7 +330,7 @@ export class MovementController {
         this.mantleCooldown = 0.25;
         this.emit('mantle_end');
       }
-      this.cameraRig.position.y = THREE.MathUtils.damp(this.cameraRig.position.y, -(this.standingHeight - this.height) * 0.56, 17, delta);
+      this.cameraRig.position.y = THREE.MathUtils.damp(this.cameraRig.position.y, -(this.standingHeight - this.height), 17, delta);
       return;
     }
 
@@ -488,7 +490,7 @@ export class MovementController {
     const dip = this.landingLock > 0 ? -0.18 * Math.sin(Math.min(1, this.landingLock / 0.3) * Math.PI) : 0;
     this.headBob += (this.grounded ? speed : 0) * delta * 2.2;
     const bob = this.grounded && speed > 1.5 && this.slideTime <= 0 ? Math.sin(this.headBob * 2) * 0.03 : 0;
-    this.cameraRig.position.y = THREE.MathUtils.damp(this.cameraRig.position.y, -(this.standingHeight - this.height) * 0.56 + dip + bob, 17, delta);
+    this.cameraRig.position.y = THREE.MathUtils.damp(this.cameraRig.position.y, -(this.standingHeight - this.height) + dip + bob, 17, delta);
     const targetRoll = (this.slideTime > 0 ? 0.045 : 0) - (this.grounded ? 0 : 0.01) * movement.x - (sliding && this.wallNormal ? this.wallNormal.x * Math.cos(this.yaw) * 0.06 : 0);
     this.cameraRoll = THREE.MathUtils.damp(this.cameraRoll, targetRoll, 10, delta);
     this.applyOrientation();

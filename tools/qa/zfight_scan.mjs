@@ -20,21 +20,27 @@
  */
 import * as THREE from 'three';
 import { writeFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 import { HighlineDistrict } from '../../src/world/HighlineDistrict.js';
 
-const args = process.argv.slice(2);
-const opt = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
-const seed = opt('--seed', 'rivet-run-highline-01');
-const EPS = Number(opt('--eps', '0.02'));
-const FAR_EPS = Number(opt('--far-eps', '0.12'));
-const jsonOut = opt('--json', null);
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) await main();
 
-const world = new HighlineDistrict(new THREE.Scene(), { headless: true, seed });
-const pieces = boxesFromRegistry(world.builder.registry);
-const findings = scan(pieces, { eps: EPS, farEps: FAR_EPS });
-report(findings, pieces.length);
-if (jsonOut) await writeFile(jsonOut, JSON.stringify({ seed, pieces: pieces.length, findings }, null, 2));
-process.exit(findings.some((f) => f.severity === 'COPLANAR') ? 1 : 0);
+async function main() {
+  const args = process.argv.slice(2);
+  const opt = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
+  const seed = opt('--seed', 'rivet-run-highline-01');
+  const EPS = Number(opt('--eps', '0.02'));
+  const FAR_EPS = Number(opt('--far-eps', '0.12'));
+  const jsonOut = opt('--json', null);
+
+  const world = new HighlineDistrict(new THREE.Scene(), { headless: true, seed });
+  const pieces = boxesFromRegistry(world.builder.registry);
+  const findings = scan(pieces, { eps: EPS, farEps: FAR_EPS });
+  report(findings, pieces.length);
+  if (jsonOut) await writeFile(jsonOut, JSON.stringify({ seed, pieces: pieces.length, findings }, null, 2));
+  process.exit(findings.some((f) => f.severity === 'COPLANAR') ? 1 : 0);
+}
 
 // ------------------------------------------------------------------------------------------
 export function boxesFromRegistry(registry) {

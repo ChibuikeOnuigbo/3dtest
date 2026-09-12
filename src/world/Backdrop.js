@@ -79,7 +79,7 @@ export function buildBackdrop(world) {
   building('west-power-annex', -40, -66, 24, 40, 20, { material: m.brick, windows: 'grid', windowMaterial: m.windowLit, stack: 26 });
   building('west-quay-shed', -60, -108, 36, 22, 12, { material: m.corrugated, windows: 'strip', parapet: false });
   building('east-office', 42, 20, 26, 22, 42, { material: m.facade, windows: 'none', roofMaterial: m.concrete });
-  b.box('east-office-crown', m.facadeCool, [26.6, 4, 22.6], [42, g + 44, 20], { cast: false });
+  b.box('east-office-crown', m.facadeCool, [25.4, 4, 21.4], [42, g + 44.4, 20], { cast: false }); // inset 0.3 m from the roof slab edge, base 0.2 m above it: no coplanar face with the roof
   b.cylinder('east-office-mast', m.galvanised, 0.2, 12, [50, g + 52, 12], { segments: 8, cast: false });
   b.lamp([50, g + 58.2, 12], { material: m.lampRed, color: '#ff3b2f', intensity: 0, light: false, size: 0.4 });
   building('east-sorting', 46, -30, 30, 44, 16, { material: m.corrugated, windows: 'strip', parapet: false });
