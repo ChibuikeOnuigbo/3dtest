@@ -75,7 +75,10 @@ export class RollerDoor {
     const alongNormal = this.alongX ? [Math.PI / 2, 0, 0] : [0, 0, Math.PI / 2]; // cylinder axis along the wall normal
     // gearbox (oxide red) + motor can (pale) on the axle end, sprocket, yellow chain guard, hand chain to knee height
     b.box(`${id}-gearbox`, m.oxide, S(0.28 * k, 0.36 * k, 0.3 * k), P(driveW, hoodY, hoodD / 2 - 0.02), { cast: false });
-    b.cylinder(`${id}-motor`, m.steelPale, 0.14 * k, 0.4 * k, P(driveW, hoodY, hoodD / 2 - 0.02 - 0.22 * k), { rotation: alongNormal, segments: 12, cast: false });
+    // Motor can on the axle line OUTBOARD of the chain guard (axis along the wall, like the barrel it drives). It used to
+    // point into the wall: 0.3 m of it was buried in the jamb brick and 0.2 m sat inside the gearbox.
+    const motorLen = 0.32 * k; const motorW0 = driveW + 0.22 * k + 0.035 + 0.02;
+    b.cylinder(`${id}-motor`, m.steelPale, 0.14 * k, motorLen, P(motorW0 + motorLen / 2, hoodY, hoodD / 2 - 0.02), { rotation: alongWall, segments: 12, cast: false });
     b.cylinder(`${id}-sprocket`, m.steelDark, 0.17 * k, 0.05, P(driveW + 0.17 * k, hoodY, hoodD / 2 - 0.02), { rotation: alongWall, segments: 14, cast: false });
     b.box(`${id}-chain-guard`, m.safetyYellow, S(0.07, 0.6 * k, 0.42 * k), P(driveW + 0.22 * k, hoodY - 0.05 * k, hoodD / 2 - 0.02), { cast: false });
     for (const n of [-0.12 * k, 0.12 * k]) b.cylinder(`${id}-hand-chain`, m.steelPale, 0.02, hoodY - 0.7, P(driveW + 0.17 * k, (hoodY - 0.7) / 2 + 0.6, hoodD / 2 - 0.02 + n), { segments: 6, cast: false });
@@ -83,7 +86,8 @@ export class RollerDoor {
     b.box(`${id}-chain-bracket`, m.steelDark, S(0.3 * k, 0.05, 0.05), P(driveW + 0.05 * k, hoodY + hoodH / 2 + 0.1, hoodD / 2), { cast: false });
     b.box(`${id}-conduit`, m.galvanised, S(0.06, height * 0.9, 0.06), P(driveW + 0.05 * k, height * 0.45 + 0.1, 0.1), { cast: false });
     // Hoist assembly (gearbox, motor, sprocket, chain guard, bracket): one solid on the drive jamb.
-    b.addCollider(`${id}-hoist`, P(driveW + 0.06 * k, hoodY - 0.02 * k, hoodD / 2 - 0.02 - 0.1 * k), S(0.42 * k, 0.66 * k, hoodD + 0.44 * k), 0, { walkable: false, wallJumpable: false, decor: true, region });
+    const hoistW0 = driveW - 0.15 * k; const hoistW1 = motorW0 + motorLen + 0.02;
+    b.addCollider(`${id}-hoist`, P((hoistW0 + hoistW1) / 2, hoodY - 0.02 * k, hoodD / 2 - 0.02 - 0.1 * k), S(hoistW1 - hoistW0, 0.66 * k, hoodD + 0.44 * k), 0, { walkable: false, wallJumpable: false, decor: true, region });
     // --- counterweight channel on the opposite jamb (weight is dynamic; channel is static)
     this.weightW = -(width / 2 + 0.34 + 0.16);
     // Channel stands 6 cm proud of the wall face (a back plate 1 cm off the brick z-fought with it on every approach).
@@ -203,7 +207,9 @@ export class RollerDoor {
     if (this.trigger && playerPosition) {
       const d = Math.hypot(playerPosition.x - this.centre.x, playerPosition.z - this.centre.z);
       const near = d < this.trigger && Math.abs(playerPosition.y - this.centre.y) < 3.5;
-      if (near) this.target = 1; else if (d > this.trigger + 4) this.target = 0;
+      const locked = this.lockedWhile ? this.lockedWhile() : false; // a locked door ignores the approach trigger
+      this.locked = locked;
+      if (near && !locked) this.target = 1; else if (d > this.trigger + 4 || locked) this.target = 0;
     }
     if (Math.abs(this.target - this.open) < 1e-4) { this.state = this.open > 0.5 ? 'open' : 'closed'; return; }
     const dir = Math.sign(this.target - this.open);

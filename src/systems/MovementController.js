@@ -21,8 +21,10 @@ const EPSILON = 0.0001;
 const SUPPORT_TOLERANCE = 0.12; // stepped ramps/conveyors are chains of 0.5 m plates; 0.05 lost contact between them
 
 function overlapsXZ(position, radius, solid) {
-  return position.x + radius > solid.min.x && position.x - radius < solid.max.x
-    && position.z + radius > solid.min.z && position.z - radius < solid.max.z;
+  // EPSILON tolerance: a capsule clamped flush against a wall (x − r == wall.max.x up to float noise) is touching, not
+  // overlapping. Without it, ulp-level contact counted as penetration and the step/clamp logic misfired.
+  return position.x + radius > solid.min.x + EPSILON && position.x - radius < solid.max.x - EPSILON
+    && position.z + radius > solid.min.z + EPSILON && position.z - radius < solid.max.z - EPSILON;
 }
 
 function verticalOverlap(bottom, height, solid) {
@@ -173,6 +175,7 @@ export class MovementController {
     let wallNormal = null;
     let wallSolid = null;
 
+    let steppedSolid = null;
     for (const axis of ['x', 'z']) {
       const amount = (this.velocity[axis] + (carry ? carry[axis] : 0)) * delta;
       if (Math.abs(amount) < EPSILON) continue;
@@ -187,11 +190,27 @@ export class MovementController {
         const canStep = solid.walkable && !solid.railing && this.velocity.y <= 0.5 && stepUp > EPSILON && stepUp <= this.maxStepHeight;
         if (canStep) {
           const steppedBottom = solid.max.y + EPSILON;
+          // Only solids the step would NEWLY put the capsule into count as head blockers: a wall already beside the
+          // player (touching it, overlapping its height range) is not a ceiling. Without this, brushing a stair rail
+          // cancelled the step, and the fall-through clamp below then shoved the player across the tread — through the rail.
           const blockedAtHead = solids.some((other) => other !== solid && !other.sensor
             && overlapsXZ(test, this.radius, other)
             && other.min.y < steppedBottom + verticalHeight - EPSILON
-            && other.max.y > steppedBottom + EPSILON);
-          if (!blockedAtHead) { position.y = steppedBottom; continue; }
+            && other.max.y > steppedBottom + EPSILON
+            && !(overlapsXZ(position, this.radius, other) && verticalOverlap(position.y, verticalHeight, other)));
+          if (!blockedAtHead) { position.y = steppedBottom; steppedSolid = solid; continue; }
+        }
+        // Pre-existing penetration (the capsule already overlapped this solid on this axis before moving — e.g. a
+        // 1 cm tread overlap left by a step that the support pass dropped again): never clamp to the FAR face, that
+        // is a teleport through whatever stands there. Push out of the NEAR face if the overlap is shallow, else hold.
+        const lo = solid.min[axis] - this.radius, hi = solid.max[axis] + this.radius;
+        const already = position[axis] > lo + EPSILON && position[axis] < hi - EPSILON;
+        if (already) {
+          const toLo = position[axis] - lo, toHi = hi - position[axis];
+          const shallow = Math.min(toLo, toHi);
+          if (shallow < 0.12) candidate = toLo < toHi ? lo : hi; else candidate = position[axis];
+          this.velocity[axis] = 0;
+          continue;
         }
         if (axis === 'x') {
           candidate = amount > 0 ? Math.min(candidate, solid.min.x - this.radius) : Math.max(candidate, solid.max.x + this.radius);
@@ -215,7 +234,11 @@ export class MovementController {
       const snap = this.grounded ? Math.max(SUPPORT_TOLERANCE, 0.25) : SUPPORT_TOLERANCE; // ground snap keeps contact over ramps/steps
       for (const solid of solids) {
         if (solid.sensor) continue;
-        if (!overlapsXZ(position, this.radius * 0.84, solid)) continue;
+        // The tread just stepped onto counts as support at the full capsule radius: the horizontal pass lifted the
+        // feet onto it with radius 0.34, so the support pass must not drop them back through it with radius 0.29
+        // (that left a penetrating overlap every stair frame — the seed of the "shoved through the rail" glitch).
+        const supportRadius = solid === steppedSolid ? this.radius : this.radius * 0.84;
+        if (!overlapsXZ(position, supportRadius, solid)) continue;
         const stick = this.grounded ? snap : EPSILON;
         if (previousBottom >= solid.max.y - snap && nextBottom <= solid.max.y + stick && solid.max.y > floorTop) {
           floorTop = solid.max.y;

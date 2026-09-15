@@ -6,13 +6,28 @@ import { buildBackdrop } from './Backdrop.js';
 import { SeedLayer } from './SeedLayer.js';
 import { PropLibrary } from './PropLibrary.js';
 import { RollerDoor } from './RollerDoor.js';
+import { buildHarbourDistrict } from './HarbourDistrict.js';
 import { GROUND_Y, WATER_Y } from './constants.js';
 export { GROUND_Y, WATER_Y };
 
 /**
  * Rivet Run: Highline District — authored primary route.
  *
- * Regions (player travels toward -Z, toward the low sun over the harbour):
+ * HOW TO PASS (the goal structure the HUD narrates; each sector has a hard gate):
+ *   SECTOR 1  ROOFS       dispatch → transfer annex → KINETIC PERMIT (double jump). Gate: the gallery needs the permit's
+ *                          slides/jumps only in the sense of speed — the real gate is sector 3.
+ *   SECTOR 2  GALLERY     conveyor gallery → split deck: choose WEST SHAFT (wall kicks) or EAST SPAN (dash + containers).
+ *   SECTOR 3  RELAY YARD  boiler-court roof: pulse the THREE RELAYS. Gate: the turbine-hall loading door stays locked
+ *                          until all three are live (and so does everything after it).
+ *   SECTOR 4  DESCENT     control corridor slides → drop shaft → turbine hall (crane trolley ride) → Sunline gantry →
+ *                          the crane cab landing.
+ *   SECTOR 5  TERMINAL    stair tower down to the 5-high container stacks → reefer-gantry slide → the CANYON → crane
+ *                          KEY CARD → wall-kick chain out → return stacks → field stair.  (HarbourDistrict.js)
+ *   SECTOR 6  CRANE       crane catwalk → spreader platform. Gate: the spreader only cycles for a key-card holder.
+ *   SECTOR 7  SHIP        spreader ride onto MV SUNLINE → hatch stacks → lashing bridge → main deck → five
+ *                          accommodation flights → FINISH on the starboard bridge wing.
+ *
+ * Regions in this file (player travels toward -Z, toward the low sun over the harbour):
  *   dispatch      spawn shed + warehouse roof (run, edge launch)
  *   transfer      lower annex roof, Kinetic Permit kiosk (double jump), recovery catwalk
  *   gallery       enclosed inclined conveyor gallery (slide under ducts, conveyor carry)
@@ -22,7 +37,7 @@ export { GROUND_Y, WATER_Y };
  *   boiler-court  relay yard on the boiler-house roof (3 relays, ladders, overhead racks)
  *   control       low maintenance corridor (slides) ending at the framed DROP SHAFT
  *   turbine-hall  interior descent: landing catwalk, moving crane trolley, gallery stairs
- *   sunline       exterior gantry over the quay to the crane cab (finish)
+ *   sunline       exterior gantry over the quay to the crane cab landing (hand-off to the terminal stair tower)
  *
  * Only the SeedLayer reads the seed. Everything in this file is identical for every seed.
  */
@@ -46,6 +61,9 @@ export class HighlineDistrict {
     this.spawn = { position: new THREE.Vector3(0, 0.1, 50.5), yaw: 0 };
     this.powerupCollected = false;
     this.finished = false;
+    this.keys = {}; // sector gates: { crane: { position, radius, mesh, collected }, craneReader: { position, radius } }
+    this.spreaderArmed = false;
+    this.machinery = [];
     this.seedLayer = new SeedLayer(this, subStream);
     this.build();
   }
@@ -73,8 +91,8 @@ export class HighlineDistrict {
     }
   }
 
-  checkpoint(id, position, radius, yaw, objective) {
-    this.checkpoints.push({ id, position: new THREE.Vector3(...position), radius, yaw, objective, reached: false });
+  checkpoint(id, position, radius, yaw, objective, sector = null) {
+    this.checkpoints.push({ id, position: new THREE.Vector3(...position), radius, yaw, objective, sector: sector || this.currentSector || null, reached: false });
   }
 
   addRelay(id, position, facing = '+z', mount = 'wall') {
@@ -107,7 +125,7 @@ export class HighlineDistrict {
     this.scene.add(mesh);
     const solid = this.builder.addCollider(id, from, size, 0, { walkable: true, surface, moving: true, region });
     solid.velocity = new THREE.Vector3();
-    const mover = { id, mesh, solid, from: new THREE.Vector3(...from), to: new THREE.Vector3(...to), size, period, dwell, region, children: [] };
+    const mover = { id, mesh, solid, from: new THREE.Vector3(...from), to: new THREE.Vector3(...to), size, period, dwell, region, children: [], gate: null, phase: 0 };
     this.movers.push(mover);
     return mover;
   }
@@ -115,16 +133,22 @@ export class HighlineDistrict {
   // ---------------------------------------------------------------- regions
   build() {
     buildBackdrop(this);
+    this.currentSector = 'SECTOR 1 · ROOFS';
     this.region('dispatch', () => this.buildDispatch());
     this.region('transfer', () => this.buildTransfer());
+    this.currentSector = 'SECTOR 2 · GALLERY';
     this.region('gallery', () => this.buildGallery());
     this.region('split-deck', () => this.buildSplitDeck());
     this.region('east-span', () => this.buildEastSpan());
     this.region('west-shaft', () => this.buildWestShaft());
+    this.currentSector = 'SECTOR 3 · RELAY YARD';
     this.region('boiler-court', () => this.buildBoilerCourt());
+    this.currentSector = 'SECTOR 4 · DESCENT';
     this.region('control', () => this.buildControlCorridor());
     this.region('turbine-hall', () => this.buildTurbineHall());
     this.region('sunline', () => this.buildSunlineBridge());
+    buildHarbourDistrict(this); // sectors 5–7 set their own sector labels
+    this.currentSector = null;
     this.seedLayer.build();
     this.builder.flush();
     this.regionBySolid.set('ground', 'ground');
@@ -456,7 +480,7 @@ export class HighlineDistrict {
     b.railing('stub-rail-e', [19, y, -22], 5, 'z');
     for (const [x, z] of [[14.2, -17.5], [18.3, -17.5], [14.2, -21.5], [18.3, -21.5]]) b.box('stub-column', m.steelDark, [0.45, y - GROUND_Y - 0.35, 0.45], [x, (y + GROUND_Y) / 2 - 0.225, z], { cast: false });
     b.box('torn-belt', m.rubber, [3.6, 0.06, 1.4], [9.2, y - 1.1, -18.4], { rotation: [0, 0, -0.55], cast: false });
-    b.cylinder('torn-roller', m.steelPale, 0.09, 1.4, [8.0, y - 0.3, -18.4], { rotation: [0.4, 0, Math.PI / 2], segments: 8, cast: false });
+    b.cylinder('torn-roller', m.steelPale, 0.09, 1.4, [7.3, y - 0.2, -18.4], { rotation: [0.4, 0, Math.PI / 2], segments: 8, cast: false }); // hangs off the torn end of the belt, not inside it
     b.box('torn-frame', m.oxide, [2.6, 0.18, 0.18], [8.2, y + 1.9, -17.2], { rotation: [0, 0, 0.35], cast: false });
     b.box('torn-frame', m.oxide, [0.18, 2.2, 0.18], [7.1, y + 1.1, -17.2], { cast: false, collide: true, traits: { walkable: false, wallJumpable: false }, id: 'torn-frame-post' });
     b.box('torn-frame', m.oxide, [2.0, 0.18, 0.18], [12.0, y + 1.9, -17.2], { rotation: [0, 0, 0.5], cast: false }); // hangs over the gap (x 11.1–12.9), clear of the stub deck's reach
@@ -643,7 +667,9 @@ export class HighlineDistrict {
     // South loading door onto the Sunline gantry: a real 7.2 m opening in the brick (s3 below the sill,
     // s4 above the header, jambs left by s1/s2) with a roller curtain that lifts as the player approaches.
     for (const side of [-1, 1]) b.box('hall-door-jamb', m.brickDark, [0.5, 5.0, 0.9], [side * 3.85, 2.1, z0 - 0.3], { cast: false });
-    this.doors.push(new RollerDoor(this, { id: 'hall-door', centre: [0, -0.4, z0], width: 7.2, height: 5.0, facing: '+z', wallThickness: 0.6, open: 0, trigger: 9, speed: 1.1, region: 'turbine-hall', lampLight: false })); // centre = hall-side wall face: guides, hood and hoist stand in the hall, not buried in the brick
+    const hallDoor = new RollerDoor(this, { id: 'hall-door', centre: [0, -0.4, z0], width: 7.2, height: 5.0, facing: '+z', wallThickness: 0.6, open: 0, trigger: 9, speed: 1.1, region: 'turbine-hall', lampLight: false });
+    hallDoor.lockedWhile = () => this.activeTargetCount() > 0; // SECTOR 3 gate: the loading door stays down until all three relays are live
+    this.doors.push(hallDoor); // centre = hall-side wall face: guides, hood and hoist stand in the hall, not buried in the brick
     const roofTraits = { collide: true, traits: { walkable: true, surface: 'steel' } };
     b.box('hall-roof', m.steelDark, [16.3, 0.3, z1 - z0 + 1.4], [-10.55, roofY + 0.15, cz], { ...roofTraits, id: 'hall-roof-w' });
     b.box('hall-roof', m.steelDark, [16.3, 0.3, z1 - z0 + 1.4], [10.55, roofY + 0.15, cz], { ...roofTraits, id: 'hall-roof-e' });
@@ -697,7 +723,7 @@ export class HighlineDistrict {
     b.catwalk('hall-catwalk-n', [2.0, catY, -64], 4.2, { width: 2.4, axis: 'x', rails: 'both', surface: 'grating' });
     b.lamp([0, catY + 2.6, -64], { intensity: 6, distance: 9, size: 0.4 });
     // High-bay lamps: the hall is roofed, so the sun never reaches the floor. Three wide lamps carry the interior.
-    for (const z of [-68.5, -76, -86]) { b.box('highbay-housing', m.steelDark, [1.2, 0.3, 1.2], [0, roofY - 2.9, z], { cast: false }); b.lamp([0, roofY - 3.1, z], { intensity: 90, distance: 42, size: 0.9, color: '#ffc98a' }); } // −68.5: clear of the drop shaft's south wall (z −66.4)
+    for (const z of [-68.5, -76, -86]) { b.box('highbay-housing', m.steelDark, [1.2, 0.3, 1.2], [0, roofY - 2.9, z], { cast: false }); b.lamp([0, roofY - 3.3, z], { intensity: 90, distance: 42, size: 0.9, color: '#ffc98a' }); } // −68.5: clear of the drop shaft's south wall (z −66.4)
     b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.03, 30], [-4.6, floorY + 0.015, cz], { cast: false });
     b.box('hall-floor-paint', m.safetyYellow, [0.25, 0.03, 30], [4.6, floorY + 0.015, cz], { cast: false });
     b.box('hall-floor-paint', m.routePaint, [8.9, 0.03, 0.25], [0, floorY + 0.015, -70], { cast: false });
@@ -763,7 +789,9 @@ export class HighlineDistrict {
     for (let z = -94; z > -117; z -= 4) b.lamp([-1.4, y + 2.4, z], { intensity: 4, distance: 7, light: false, size: 0.28 }); // exterior gantry is sunlit; the point-light budget goes to the doors
     for (let z = -94; z > -117; z -= 4) b.box('lamp-post', m.steelDark, [0.06, 2.4, 0.06], [-1.4, y + 1.2, z], { cast: false, collide: true, traits: { walkable: false, wallJumpable: false }, id: `lamp-post-${z}` });
     b.box('cab-landing', m.checker, [7, 0.2, 7], [0, y - 0.1, -121.5], { collide: true, traits: { walkable: true, surface: 'steel' }, id: 'cab-landing' });
-    b.railing('cab-rail-w', [-3.5, y, -125], 7, 'z');
+    // West rail has a 1.6 m opening at z −120.2…−118.6 where the terminal stair tower's entry landing abuts the deck.
+    b.railing('cab-rail-w1', [-3.5, y, -125], 4.8, 'z');
+    b.railing('cab-rail-w2', [-3.5, y, -118.6], 0.6, 'z');
     b.railing('cab-rail-e', [3.5, y, -125], 7, 'z');
     b.railing('cab-rail-s', [-3.5, y, -125], 7, 'x');
     // Operator cab: plinth, safety-yellow body with dark window band, roof with eaves, interior console + seat
@@ -785,24 +813,28 @@ export class HighlineDistrict {
     const beacon = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), m.lampWarm.clone());
     beacon.position.set(cabX + 0.9, y + 3.2, cabZ + 0.6); this.scene.add(beacon);
     b.box('beacon-post', m.steelDark, [0.1, 0.5, 0.1], [cabX + 0.9, y + 2.95, cabZ + 0.6], { cast: false, collide: true, traits: { walkable: true, surface: 'steel' }, id: 'beacon-post' });
-    b.box('finish-pad', m.routePaint, [2.4, 0.03, 2.4], [1.6, y + 0.015, -122.2], { cast: false });
-    b.box('finish-pad-inner', m.checker, [1.6, 0.03, 1.6], [1.6, y + 0.045, -122.2], { cast: false }); // sits ON the painted pad (top 6 cm), not inside it
-    this.finish = { position: new THREE.Vector3(1.6, y, -122.2), radius: 2.4, mesh: beacon };
-    this.animated.push({ kind: 'finish', material: beacon.material });
-    // Finish portal: two posts on the landing edge and a header; the sign hangs under it and the lamp is bracketed off it (nothing floats).
-    for (const sx of [-1, 1]) b.box('finish-portal-post', m.steelDark, [0.12, 3.6, 0.12], [sx * 3.3, y + 1.8, -119.5], { collide: true, traits: { walkable: false, wallJumpable: false }, id: `finish-portal-post-${sx}` });
-    b.box('finish-portal-header', m.steelDark, [6.72, 0.16, 0.16], [0, y + 3.68, -119.5], { cast: false, collide: true, traits: { walkable: false }, id: 'finish-portal-header' });
-    b.sign('SUNLINE EXIT', [0, y + 3.25, -119.5], '+z', { width: 3 });
-    b.box('finish-lamp-arm', m.steelDark, [0.08, 0.08, 0.3], [0, y + 3.6, -119.27], { cast: false });
-    b.lamp([0, y + 3.5, -119.1], { intensity: 7, distance: 10, size: 0.4 });
-    this.checkpoint('sunline', [0, y, -95], 2.4, 0, 'Cross the Sunline gantry to the crane cab. Dash or double-jump the missing panel.');
+    b.box('sector-pad', m.routePaint, [2.4, 0.03, 2.4], [1.6, y + 0.015, -122.2], { cast: false });
+    b.box('sector-pad-inner', m.checker, [1.6, 0.03, 1.6], [1.6, y + 0.045, -122.2], { cast: false }); // sits ON the painted pad (top 6 cm), not inside it
+    this.animated.push({ kind: 'relay', material: beacon.material });
+    // Sector portal: two posts on the landing edge and a header; the sign hangs under it and the lamp is bracketed off it (nothing floats).
+    // Portal at the landing's north edge (z −118.5) — south of it the west rail opens onto the terminal stair tower.
+    for (const sx of [-1, 1]) b.box('sector-portal-post', m.steelDark, [0.12, 3.6, 0.12], [sx * 3.3, y + 1.8, -118.5], { collide: true, traits: { walkable: false, wallJumpable: false }, id: `sector-portal-post-${sx}` });
+    b.box('sector-portal-header', m.steelDark, [6.72, 0.16, 0.16], [0, y + 3.68, -118.5], { cast: false, collide: true, traits: { walkable: false }, id: 'sector-portal-header' });
+    b.sign('CRANE CAB · TERMINAL STAIR ◄', [0, y + 3.25, -118.5], '+z', { width: 3.4 });
+    b.box('sector-lamp-arm', m.steelDark, [0.08, 0.08, 0.3], [0, y + 3.6, -118.27], { cast: false });
+    b.lamp([0, y + 3.5, -118.1], { intensity: 7, distance: 10, size: 0.4, light: false }); // sunlit landing: emissive only
+    this.checkpoint('sunline', [0, y, -95], 2.4, 0, 'Cross the Sunline gantry to the crane cab landing. Dash or double-jump the missing panel.');
+    this.checkpoint('cab-landing', [1.6, y, -122.2], 2.0, Math.PI / 2, 'Sector 4 cleared. Take the TERMINAL STAIR down (west rail opening) to the container stacks.');
   }
 
   // ---------------------------------------------------------------- runtime
   update(elapsed, delta, playerPosition = null) {
     for (const mover of this.movers) {
       const cycle = mover.period + mover.dwell * 2;
-      const t = elapsed % cycle;
+      // Gated movers (the crane spreader) only run once their gate flag is set; their own clock starts at that moment
+      // so the ride always begins from the boarding end.
+      if (mover.gate) { if (!this[mover.gate]) { mover.solid.velocity?.set(0, 0, 0); continue; } mover.phase += delta; }
+      const t = (mover.gate ? mover.phase : elapsed) % cycle;
       let k;
       if (t < mover.dwell) k = 0;
       else if (t < mover.dwell + mover.period / 2) k = (t - mover.dwell) / (mover.period / 2);
@@ -825,6 +857,7 @@ export class HighlineDistrict {
     for (const entry of this.animated) {
       if (entry.kind === 'relay') entry.material.emissiveIntensity = 1.8 + Math.sin(elapsed * 3.1) * 0.9;
       if (entry.kind === 'finish') entry.material.emissiveIntensity = 2.4 + Math.sin(elapsed * 2.2) * 1.2;
+      if (entry.kind === 'key') { entry.material.emissiveIntensity = 2.0 + Math.sin(elapsed * 4) * 1.0; entry.mesh.rotation.y = Math.PI / 2 + Math.sin(elapsed * 1.5) * 0.35; }
     }
     for (const door of this.doors) door.update(delta, playerPosition);
   }
@@ -842,11 +875,24 @@ export class HighlineDistrict {
         events.push({ type: 'checkpoint', id: checkpoint.id, position: checkpoint.position.clone(), yaw: checkpoint.yaw, objective: checkpoint.objective });
       }
     }
-    if (!this.finished && this.activeTargetCount() === 0 && position.distanceTo(this.finish.position) < this.finish.radius) {
+    const key = this.keys.crane;
+    if (key && !key.collected && Math.abs(position.y - key.position.y) < 2.2 && Math.hypot(position.x - key.position.x, position.z - key.position.z) < key.radius) {
+      key.collected = true; key.mesh.visible = false;
+      events.push({ type: 'key', id: 'crane' });
+    }
+    const reader = this.keys.craneReader;
+    if (reader && key?.collected && !this.spreaderArmed && Math.abs(position.y - reader.position.y) < 2.2 && Math.hypot(position.x - reader.position.x, position.z - reader.position.z) < reader.radius) {
+      this.spreaderArmed = true;
+      events.push({ type: 'spreader_armed' });
+    }
+    if (!this.finished && this.activeTargetCount() === 0 && key?.collected && Math.abs(position.y - this.finish.position.y) < 2.5 && position.distanceTo(this.finish.position) < this.finish.radius) {
       this.finished = true; events.push({ type: 'finish' });
     }
     return events;
   }
+
+  /** Ordered sector list for the HUD (labels in route order, deduplicated). */
+  sectors() { return [...new Set(this.checkpoints.map((c) => c.sector).filter(Boolean))]; }
 
   hitTarget(id) {
     const target = this.targets.get(id);
@@ -905,6 +951,9 @@ export class HighlineDistrict {
 
   reset() {
     this.powerupCollected = false; this.finished = false; this.permitMesh.visible = true;
+    if (this.keys.crane) { this.keys.crane.collected = false; this.keys.crane.mesh.visible = true; }
+    this.spreaderArmed = false;
+    for (const mover of this.movers) if (mover.gate) { mover.phase = 0; mover.mesh.position.copy(mover.from); }
     for (const checkpoint of this.checkpoints) checkpoint.reached = false;
     this.targets.forEach((target) => { target.active = true; target.panel.material = this.materials.relay; target.lensMat.emissive.set('#ffb257'); });
   }

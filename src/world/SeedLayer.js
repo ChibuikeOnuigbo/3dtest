@@ -32,6 +32,15 @@ export class SeedLayer {
     return this.routeLanes.some(([x0, x1, z0, z1]) => x > x0 - margin && x < x1 + margin && z > z0 - margin && z < z1 + margin);
   }
 
+  /** True when a ground footprint of half-size r at (x, z) touches a backdrop mass, road, rail or another seeded piece. */
+  blockedOnGround(x, z, r = 1) {
+    const boxes = this.world.exclusionBoxes || [];
+    for (const [x0, x1, z0, z1] of boxes) if (x + r > x0 && x - r < x1 && z + r > z0 && z - r < z1) return true;
+    return false;
+  }
+
+  claimGround(x, z, w, d, margin = 0.4) { (this.world.exclusionBoxes ||= []).push([x - w / 2 - margin, x + w / 2 + margin, z - d / 2 - margin, z + d / 2 + margin]); }
+
   build() {
     this.skylineCrowns();
     this.districtLights();
@@ -71,8 +80,8 @@ export class SeedLayer {
     const r = this.stream('districtLights'); const b = this.world.builder; const m = this.world.materials;
     const facades = [
       { x: -34, z: 45.2, w: 22, h: 30, axis: 'x' }, { x: -34, z: 14.8, w: 22, h: 30, axis: 'x' }, { x: -23, z: 30, w: 30, h: 30, axis: 'z' },
-      { x: 42, z: 8.8, w: 26, h: 42, axis: 'x' }, { x: 28.9, z: 20, w: 22, h: 42, axis: 'z' }, { x: 32, z: -66.8, w: 20, h: 22, axis: 'x' }, { x: 21.9, z: -80, w: 26, h: 22, axis: 'z' },
-      { x: -40, z: -45.8, w: 24, h: 20, axis: 'x' }, { x: -27.9, z: -66, w: 40, h: 20, axis: 'z' }, { x: 37.9, z: -80, w: 30, h: 24, axis: 'z' },
+      { x: 42, z: 8.8, w: 26, h: 42, axis: 'x' }, { x: 28.9, z: 20, w: 22, h: 42, axis: 'z' }, { x: 38, z: -66.8, w: 18, h: 22, axis: 'x' }, { x: 28.9, z: -80, w: 26, h: 22, axis: 'z' },
+      { x: -40, z: -45.8, w: 24, h: 20, axis: 'x' }, { x: -27.9, z: -66, w: 40, h: 20, axis: 'z' }, { x: 48.9, z: -80, w: 30, h: 24, axis: 'z' },
     ];
     let lit = 0;
     for (const f of facades) {
@@ -95,10 +104,13 @@ export class SeedLayer {
     const r = this.stream('rooftopProps'); const b = this.world.builder; const m = this.world.materials;
     const roofs = [
       { x: -34, z: 30, w: 22, d: 30, y: GROUND_Y + 30 }, { x: -36, z: -18, w: 20, d: 28, y: GROUND_Y + 14, skip: true }, { x: -40, z: -66, w: 24, d: 40, y: GROUND_Y + 20 },
-      { x: 42, z: 20, w: 26, d: 22, y: GROUND_Y + 42 }, { x: 46, z: -30, w: 30, d: 44, y: GROUND_Y + 16 }, { x: 50, z: -80, w: 24, d: 30, y: GROUND_Y + 24 }, { x: 32, z: -80, w: 20, d: 26, y: GROUND_Y + 22 },
-      { x: 0, z: 90, w: 70, d: 24, y: GROUND_Y + 12 }, { x: -60, z: -108, w: 36, d: 22, y: GROUND_Y + 12 },
+      { x: 42, z: 20, w: 26, d: 22, y: GROUND_Y + 42 }, { x: 46, z: -30, w: 30, d: 44, y: GROUND_Y + 16 }, { x: 59, z: -80, w: 20, d: 30, y: GROUND_Y + 24 }, { x: 38, z: -80, w: 18, d: 26, y: GROUND_Y + 22 },
+      { x: 0, z: 90, w: 70, d: 24, y: GROUND_Y + 12 }, { x: -86, z: -108, w: 36, d: 22, y: GROUND_Y + 12 },
     ];
     let props = 0;
+    // Authored rooftop plant that seeded machinery must keep clear of (x, z, half-size).
+    const taken = [[-40, 22, 3.2], [50, 12, 1.5]];
+    const footprintOf = { hvac: 2.2, tank: 2.4, vent: 1.0, skylight: 4.8, shed: 3.0, dish: 1.6 };
     for (const roof of roofs) {
       if (roof.skip) continue;
       const count = Math.floor(range(r, 2, 6));
@@ -106,6 +118,9 @@ export class SeedLayer {
         const x = roof.x + range(r, -roof.w / 2 + 2.5, roof.w / 2 - 2.5); const z = roof.z + range(r, -roof.d / 2 + 2.5, roof.d / 2 - 2.5);
         const kind = pick(r, ['hvac', 'tank', 'vent', 'skylight', 'shed', 'dish']);
         const yaw = range(r, -0.5, 0.5);
+        const half = footprintOf[kind];
+        if (taken.some(([tx, tz, th]) => Math.abs(tx - x) < th + half && Math.abs(tz - z) < th + half)) continue; // never inside another unit
+        taken.push([x, z, half]);
         if (kind === 'hvac') b.hvacUnit(`seed-hvac-${props}`, [x, roof.y + 0.4, z], yaw, [range(r, 2, 3.4), range(r, 1.1, 1.8), range(r, 1, 1.6)]);
         if (kind === 'tank') b.tank(`seed-tank-${props}`, [x, roof.y + 0.4, z], range(r, 1.2, 2.2), range(r, 2, 3.6), { legs: chance(r, 0.6) });
         if (kind === 'vent') { b.cylinder('seed-vent', m.galvanised, range(r, 0.3, 0.5), range(r, 1.4, 2.6), [x, roof.y + 1.4, z], { segments: 10, cast: false }); b.cylinder('seed-vent-cowl', m.steelDark, 0.7, 0.4, [x, roof.y + 2.6, z], { segments: 10, cast: false }); }
@@ -147,21 +162,25 @@ export class SeedLayer {
     const palette = ['#8a3b2f', '#3f5a6d', '#6c6f52', '#8a7c3b', '#4a4f55', '#5a4a3a', '#2f5d50', '#7d3f5a'];
     let containers = 0;
     for (let row = 0; row < 5; row += 1) {
-      const z = 40 - row * 3.2;
+      const z = 46 - row * 3.4; // rows end at z 31.2: the east office roof slab reaches z 31.15 (two rows used to stand inside the office)
       let x = 40;
       while (x < 70) {
         const len = chance(r, 0.7) ? 12.19 : 6.06;
         const stack = Math.floor(range(r, 1, 4));
         // `length: len` — the row pitch is `len`, so every box must BE `len` long (a 12.19 m default at a 6.06 m pitch buried
         // every second container inside its neighbour: the biggest overlap in the yard).
-        if (chance(r, 0.82)) for (let s = 0; s < stack; s += 1) { b.container(`yard-${containers}`, [x + len / 2, GROUND_Y + s * 2.59, z], range(r, -0.03, 0.03), pick(r, palette), { length: len }); containers += 1; }
+        if (chance(r, 0.82) && !this.blockedOnGround(x + len / 2, z, 1.2)) { for (let s = 0; s < stack; s += 1) { b.container(`yard-${containers}`, [x + len / 2, GROUND_Y + s * 2.59, z], range(r, -0.03, 0.03), pick(r, palette), { length: len }); containers += 1; } this.claimGround(x + len / 2, z, len, 2.44, 0.1); }
         x += len + 0.4;
       }
     }
-    for (let i = 0; i < Math.floor(range(r, 6, 14)); i += 1) {
-      const x = range(r, -110, -80); const z = range(r, -100, -60);
-      if (this.inLane(x, z)) continue;
-      b.container(`quay-${i}`, [x, GROUND_Y, z], range(r, -0.2, 0.2), pick(r, palette), { length: chance(r, 0.5) ? 12.19 : 6.06 }); containers += 1;
+    // Quay stacks on a 14 × 3.4 m slot grid with small jitter/yaw: the old free scatter buried containers in each other.
+    const wanted = Math.floor(range(r, 6, 14)); let placed = 0;
+    for (let row = 0; row < 8 && placed < wanted; row += 1) for (let col = 0; col < 2 && placed < wanted; col += 1) {
+      if (!chance(r, 0.7)) continue;
+      const len = chance(r, 0.5) ? 12.19 : 6.06;
+      const x = -108 + col * 14 + (12.19 - len) / 2 + range(r, -0.3, 0.3); const z = -100 + row * 3.6 + range(r, -0.15, 0.15);
+      if (this.inLane(x, z) || this.blockedOnGround(x, z, 3)) continue;
+      b.container(`quay-${placed}`, [x, GROUND_Y, z], range(r, -0.03, 0.03), pick(r, palette), { length: len }); containers += 1; placed += 1;
     }
     this.note('containers', { containers });
   }
@@ -174,14 +193,14 @@ export class SeedLayer {
     let clumps = 0;
     for (let i = 0; i < 40; i += 1) {
       const x = pick(r, [-20, 24, 34, -44]) + range(r, -3, 3); const z = range(r, -110, 80);
-      if (this.inLane(x, z, 3)) continue;
       const s = range(r, 0.6, 1.6);
+      if (this.inLane(x, z, 3) || this.blockedOnGround(x + s * 0.3, z + s * 0.15, s * 1.1)) continue; // never inside a wall, a truck or a container
       const mat = chance(r, 0.7) ? leaf : leafDry;
       b.box('seed-scrub', mat, [s * 1.4, s, s * 1.2], [x, GROUND_Y + s / 2, z], { rotation: [0, range(r, 0, 1.5), 0], cast: false });
       b.box('seed-scrub', mat, [s * 0.9, s * 0.7, s * 0.8], [x + s * 0.6, GROUND_Y + s * 0.35, z + s * 0.3], { rotation: [0, range(r, 0, 1.5), 0], cast: false });
       clumps += 1;
     }
-    for (let i = 0; i < 6; i += 1) { const x = range(r, -30, 30); b.cylinder('seed-tree-trunk', this.world.materials.steelDark, 0.25, 4, [-46 + i * 12 + range(r, -2, 2), GROUND_Y + 2, 76 + range(r, -2, 2)], { segments: 6, cast: false }); b.box('seed-tree-crown', leaf, [range(r, 3, 5), range(r, 3, 4.5), range(r, 3, 5)], [-46 + i * 12 + range(r, -2, 2), GROUND_Y + 5.5, 76 + range(r, -2, 2)], { rotation: [0, x * 0.02, 0], cast: false }); }
+    for (let i = 0; i < 6; i += 1) { const x = range(r, -30, 30); const tx = -46 + i * 12 + range(r, -2, 2); const tz = 59 + range(r, -1, 1); if (this.blockedOnGround(tx, tz, 2.6)) continue; b.cylinder('seed-tree-trunk', this.world.materials.steelDark, 0.25, 4, [tx, GROUND_Y + 2, tz], { segments: 6, cast: false }); b.box('seed-tree-crown', leaf, [range(r, 3, 5), range(r, 3, 4.5), range(r, 3, 5)], [tx, GROUND_Y + 5.5, tz], { rotation: [0, x * 0.02, 0], cast: false }); this.claimGround(tx, tz, 5, 5); }
     this.note('vegetation', { clumps });
   }
 
@@ -189,7 +208,7 @@ export class SeedLayer {
   signage() {
     const r = this.stream('signs'); const b = this.world.builder;
     const words = ['HALL 4', 'BAY 12', 'NO ENTRY', 'RIVET CO.', 'DOCK 3', 'HIGHLINE', 'TURBINES', 'STORES', 'UNIT 7', 'WEIGHBRIDGE'];
-    const spots = [[-22.9, GROUND_Y + 22, 30, '+x'], [28.9, GROUND_Y + 30, 26, '-x'], [21.9, GROUND_Y + 16, -80, '-x'], [-27.9, GROUND_Y + 15, -60, '+x'], [0, GROUND_Y + 9.5, 77.8, '-z']];
+    const spots = [[-22.9, GROUND_Y + 22, 30, '+x'], [28.9, GROUND_Y + 30, 26, '-x'], [28.9, GROUND_Y + 16, -80, '-x'], [-27.9, GROUND_Y + 15, -60, '+x'], [0, GROUND_Y + 9.5, 77.8, '-z']];
     let signs = 0;
     for (const [x, y, z, facing] of spots) { if (!chance(r, 0.75)) continue; b.sign(pick(r, words), [x, y, z], facing, { width: range(r, 6, 10), accent: pick(r, ['#e0b66b', '#c65a2a', '#9fd0ff']) }); signs += 1; }
     this.note('signs', { signs });

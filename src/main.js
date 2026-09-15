@@ -18,6 +18,8 @@ const objectiveNode = document.querySelector('#objective');
 const timerNode = document.querySelector('#timer');
 const targetNode = document.querySelector('#target-count');
 const abilityNode = document.querySelector('#ability');
+const sectorNode = document.querySelector('#sector');
+const keyNode = document.querySelector('#key-card');
 const movementStateNode = document.querySelector('#movement-state');
 const toastNode = document.querySelector('#toast');
 const controlHint = document.querySelector('#control-hint');
@@ -182,7 +184,7 @@ function firePulse() {
   window.setTimeout(() => { pulseTool.rotation.x = -0.1; pulseTool.visible = false; }, 110);
   if (hit && course.hitTarget(hit.object.userData.targetId)) {
     audio.handle({ type: 'relay' }); showToast(`Relay switched — ${course.activeTargetCount()} remaining.`);
-    if (course.activeTargetCount() === 0) { objective = 'Relays live. Take the CONTROL BRIDGE south, drop the shaft and cross the Sunline gantry.'; showToast('YARD LIVE — take the control bridge.'); audio.handle({ type: 'checkpoint' }); }
+    if (course.activeTargetCount() === 0) { objective = 'Relays live — the turbine-hall loading door is unlocked. Take the CONTROL BRIDGE south, drop the shaft, cross the hall and the Sunline gantry.'; showToast('YARD LIVE — loading door unlocked.'); audio.handle({ type: 'checkpoint' }); }
   } else audio.handle({ type: 'relay_miss' });
 }
 function keyIs(action, code) { return bindings[action] === code; }
@@ -206,12 +208,20 @@ resumeButton.addEventListener('click', () => { setOverlay(pauseScreen, false); r
 restartButton.addEventListener('click', restartCheckpoint);
 restartFinishButton.addEventListener('click', begin);
 
+function currentSector() {
+  // The sector of the last checkpoint reached (checkpoints carry their sector label), else the first.
+  const reached = course.checkpoints.filter((c) => c.reached || c.id === 'spawn');
+  return (reached.length ? reached[reached.length - 1] : course.checkpoints[0]).sector || course.sectors()[0];
+}
 function updateHud() {
   timerNode.textContent = formatTime(elapsed);
   targetNode.textContent = `${course.activeTargetCount()} / 3`;
   abilityNode.textContent = player.doubleJumpUnlocked ? 'JUMP II' : 'JUMP I';
   movementStateNode.textContent = player.state.replace('_', ' ');
   objectiveNode.textContent = objective;
+  const sectors = course.sectors(); const sector = currentSector();
+  sectorNode.textContent = `${sector}  ·  ${sectors.indexOf(sector) + 1}/${sectors.length}`;
+  keyNode.textContent = course.keys.crane?.collected ? (course.spreaderArmed ? 'KEY USED' : 'KEY CARD') : '—';
 }
 function updatePulseLines(delta) {
   pulseVisuals = pulseVisuals.filter((pulse) => {
@@ -220,7 +230,7 @@ function updatePulseLines(delta) {
     scene.remove(pulse.line); pulse.line.geometry.dispose(); pulse.line.material.dispose(); return false;
   });
 }
-const machineryPoints = [new THREE.Vector3(0, -3, -76), new THREE.Vector3(-3, 9, -36), new THREE.Vector3(-1.35, 0, -2)];
+const machineryPoints = [new THREE.Vector3(0, -3, -76), new THREE.Vector3(-3, 9, -36), new THREE.Vector3(-1.35, 0, -2), ...course.machinery.map((p) => new THREE.Vector3(...p))];
 function updateGame(delta) {
   const movement = {
     x: (pressed.has(bindings.MOVE_RIGHT) ? 1 : 0) - (pressed.has(bindings.MOVE_LEFT) ? 1 : 0),
@@ -234,11 +244,13 @@ function updateGame(delta) {
   for (const event of course.collectEvents(player.root.position)) {
     if (event.type === 'powerup') { player.unlockDoubleJump(); objective = 'Permit active: press SPACE again in the air. Enter the CONVEYOR GALLERY.'; showToast('KINETIC PERMIT — double jump unlocked.'); audio.handle({ type: 'permit' }); }
     if (event.type === 'checkpoint') { checkpoint = { position: event.position.clone(), yaw: event.yaw }; objective = event.objective; showToast(`CHECKPOINT — ${event.id.toUpperCase().replace('-', ' ')}`); audio.handle({ type: 'checkpoint' }); }
+    if (event.type === 'key') { objective = 'KEY CARD taken. Wall-kick out of the canyon (the two facing stacks), run the return row east and climb the crane stair.'; showToast('CRANE KEY CARD — spreader access granted.'); audio.handle({ type: 'powerup' }); }
+    if (event.type === 'spreader_armed') { objective = 'Spreader cycling. Step onto the yellow spreader frame and ride it over the quay onto MV SUNLINE.'; showToast('SPREADER ARMED — board now.'); audio.handle({ type: 'relay' }); }
     if (event.type === 'finish') {
       running = false; const currentBest = !bestTime || elapsed < bestTime;
       if (currentBest) { bestTime = elapsed; localStorage.setItem('rivet-run-highline-best', String(bestTime)); }
       finishTimeNode.textContent = `${currentBest ? 'NEW BEST — ' : ''}Time: ${formatTime(elapsed)}${bestTime ? ` · Best: ${formatTime(bestTime)}` : ''}`;
-      showToast('SUNLINE EXIT CLEARED.'); audio.handle({ type: 'finish' });
+      showToast('MV SUNLINE — BRIDGE WING REACHED.'); audio.handle({ type: 'finish' });
       window.setTimeout(() => setOverlay(endingScreen, true), 850); document.exitPointerLock?.();
     }
   }
@@ -247,7 +259,8 @@ function updateGame(delta) {
   camera.fov = THREE.MathUtils.damp(camera.fov, 74 + Math.min(player.lastSpeed, 15) * 0.6 + dashVisual * 5, 10, delta); camera.updateProjectionMatrix();
   const p = player.root.position;
   const machineryDistance = Math.min(...machineryPoints.map((m) => m.distanceTo(p)));
-  const interior = (p.z < -60 && p.z > -92 && Math.abs(p.x) < 18) || (p.z < 10 && p.z > -14 && Math.abs(p.x) < 2.4) || (p.z < -46 && p.z > -60 && Math.abs(p.x) < 2.2);
+  const interior = (p.z < -60 && p.z > -92 && Math.abs(p.x) < 18) || (p.z < 10 && p.z > -14 && Math.abs(p.x) < 2.4) || (p.z < -46 && p.z > -60 && Math.abs(p.x) < 2.2)
+    || (p.x < -49 && p.x > -62.5 && p.z < -117.5 && p.z > -120.6 && p.y < -12); // the container canyon reads as an interior (walls 3 m apart, 8 m high)
   const snap = player.snapshot();
   const horizontal = Math.hypot(player.velocity.x, player.velocity.z);
   audio.updateBeds(delta, { altitude: p.y, machineryDistance, interior, speed: player.lastSpeed, verticalSpeed: player.velocity.y, sprinting: horizontal > 5.5 && snap.grounded, climbing: snap.onLadder || snap.mantling, airborne: !snap.grounded && !snap.onLadder });

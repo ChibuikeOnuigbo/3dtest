@@ -4,8 +4,10 @@ import * as THREE from 'three';
 import { HighlineDistrict } from '../src/world/HighlineDistrict.js';
 import { clipScan } from '../tools/qa/clip_scan.mjs';
 import { boxesFromRegistry, scan } from '../tools/qa/zfight_scan.mjs';
+import { overlapScan } from '../tools/qa/overlap_scan.mjs';
 
-// The two geometry scanners are the automated half of "no camera through walls" and "no z-fighting textures".
+// The three geometry scanners are the automated half of "no camera through walls", "no z-fighting textures" and
+// "no two solids in the same place" (buildings inside buildings, scrub inside walls, containers inside each other).
 // They run over the authored world for several seeds (the seed layer places extra props/structures).
 const SEEDS = ['rivet-run-highline-01', 'harbour-7', 'night-shift-3'];
 
@@ -22,5 +24,11 @@ for (const seed of SEEDS) {
     const world = new HighlineDistrict(new THREE.Scene(), { headless: true, seed });
     const findings = scan(boxesFromRegistry(world.builder.registry)).filter((f) => f.severity === 'COPLANAR');
     assert.deepEqual(findings.slice(0, 20).map((f) => `${f.a.family} × ${f.b.family} (${f.axis}${f.side}) ${f.area} m² @ ${f.at.join(',')}`), []);
+  });
+
+  test(`overlap_scan: no solid mass buried in / interpenetrating another (seed ${seed})`, () => {
+    const world = new HighlineDistrict(new THREE.Scene(), { headless: true, seed });
+    const findings = overlapScan(world.builder.registry, { minVolume: 0.05, ratio: 0.3 }).filter((f) => !f.accepted);
+    assert.deepEqual(findings.slice(0, 20).map((f) => `${f.kind} ${f.small} ⊂ ${f.big} ${(f.share * 100).toFixed(0)}% @ ${f.at.join(',')}`), []);
   });
 }

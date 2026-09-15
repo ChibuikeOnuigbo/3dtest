@@ -287,6 +287,7 @@ test('turbine hall: gallery stairs lead to the south gallery and the loading doo
   const player = makePlayer(world, [12.5, -3.3, -84.4], 0);
   run(world, player, 5, () => ({ z: 1, sprint: false }));
   assert.equal(player.supportSolidId, 'hall-gallery-s', `after stairs: ${player.supportSolidId} ${player.root.position.toArray()}`);
+  for (const id of ['relay-stack', 'relay-rack', 'relay-switchgear']) world.hitTarget(id); // the loading door is the sector-3 gate
   const w2 = makePlayer(world, [0, -0.3, -89], 0);
   run(world, w2, 3, (t, p) => (p.supportSolidId === 'gantry-a' ? { z: 0 } : { z: 1 }));
   assert.ok(w2.root.position.z < -92.5, `should pass the door onto the gantry, z=${w2.root.position.z}`);
@@ -313,13 +314,163 @@ test('sunline gantry: the missing panel needs a double jump (or dash), and the r
   assert.equal(recovery.supportSolidId, 'gantry-b', `recovery ladder should exit onto gantry-b, got ${recovery.supportSolidId} at ${recovery.root.position.toArray()}`);
 });
 
-test('finish: with all relays pulsed the cab landing triggers the finish event', () => {
+test('sector 4 gate: the turbine-hall loading door stays locked until all three relays are live', () => {
   const world = makeWorld();
+  const door = world.doors.find((d) => d.id === 'hall-door');
+  const walker = makePlayer(world, [0, -0.3, -89.2], 0);
+  run(world, walker, 4, (t, p) => (p.root.position.z < -91.2 ? { z: 0 } : { z: 1, sprint: false }));
+  assert.equal(door.state, 'closed', 'door must not open while relays are live');
+  assert.ok(walker.root.position.z > -92.0, `locked curtain must stop the player at the opening, got z=${walker.root.position.z.toFixed(2)}`);
   for (const id of ['relay-stack', 'relay-rack', 'relay-switchgear']) world.hitTarget(id);
-  const player = makePlayer(world, [0, -0.3, -116], 0);
+  const states = new Set();
+  run(world, walker, 8, (t, p) => { states.add(door.state); return p.root.position.z < -93.5 ? { z: 0 } : { z: 1, sprint: false }; });
+  assert.ok(states.has('opening') || states.has('open'), `door should open once the relays are live (${[...states].join(',')})`);
+  assert.equal(walker.supportSolidId, 'gantry-a', `player should be through the door on the gantry, got ${walker.supportSolidId}`);
+});
+
+test('sector 4→5: the cab landing hands off to the terminal stair tower; two flights reach the 5-high stack row', () => {
+  const world = makeWorld();
+  const player = makePlayer(world, [1.6, -0.3, -119.4], Math.PI / 2);
+  run(world, player, 3, (t, p) => (p.supportSolidId === 'tower-t0' ? { z: 0 } : { z: 1, sprint: false }));
+  assert.equal(player.supportSolidId, 'tower-t0', `expected the tower entry landing, got ${player.supportSolidId}`);
+  run(world, player, 5, (t, p) => (p.supportSolidId === 'tower-l1' ? { z: 0 } : { z: 1, sprint: false, yaw: 0, x: p.root.position.x > -5.0 ? -0.4 : 0 }));
+  assert.equal(player.supportSolidId, 'tower-l1');
+  const lands = [];
+  run(world, player, 6, (t, p) => {
+    for (const e of p.drain()) if (e.type === 'land') lands.push(e.kind);
+    if (p.supportSolidId === 'tower-l2') return { z: 0 };
+    return p.root.position.x > -7.4 && p.supportSolidId === 'tower-l1' ? { x: 0, z: 1, yaw: Math.PI / 2, sprint: false } : { z: 1, sprint: false, yaw: Math.PI };
+  });
+  assert.equal(player.supportSolidId, 'tower-l2', `expected the bottom landing, got ${player.supportSolidId} at ${player.root.position.toArray()}`);
+  assert.ok(!lands.includes('stumble'), 'no stumbles on a stair descent (no falling through / shoving across treads)');
+  run(world, player, 3, (t, p) => (p.supportSolidId === 'stack-a1' ? { z: 0 } : { z: 1, yaw: Math.PI / 2 }));
+  assert.equal(player.supportSolidId, 'stack-a1');
+});
+
+test('sector 5: outbound stacks descend to the canyon, the key card is at its far end and the wall-kick chain climbs out', () => {
+  const world = makeWorld();
+  const player = makePlayer(world, [-8.96, -8.95, -119.57], Math.PI / 2);
+  const r = run(world, player, 12, (t, p) => {
+    if (p.supportSolidId === 'stack-f') return { z: 0 };
+    const x = p.root.position.x;
+    return { z: 1, yaw: Math.PI / 2, crouch: x < -25.2 && x > -28.6 };
+  });
+  assert.equal(player.supportSolidId, 'stack-f', `expected the canyon floor, got ${player.supportSolidId} at ${player.root.position.toArray()}`);
+  assert.ok(r.minY > -17, 'never below the canyon floor');
   const events = [];
-  run(world, player, 4, () => ({ z: 1 }), { onFrame: (t, p) => events.push(...world.collectEvents(p.root.position)) });
-  assert.ok(events.some((e) => e.type === 'finish'), 'finish should fire on the cab landing');
+  run(world, player, 4, (t, p) => (p.root.position.x < -60.4 ? { z: 0 } : { z: 1 }), { onFrame: (t, p) => events.push(...world.collectEvents(p.root.position)) });
+  assert.ok(events.some((e) => e.type === 'key' && e.id === 'crane'), 'key card should be collected at the canyon end');
+  assert.equal(world.keys.crane.collected, true);
+  // Kick chain: alternate between the two canyon walls until standing on the 4-high south stack.
+  const climber = makePlayer(world, [-56, -16.7, -119.06], Math.PI);
+  const kicks = []; let target = Math.PI; let phase = 'run';
+  run(world, climber, 12, (t, p) => {
+    for (const e of p.drain()) if (e.type === 'wallkick') kicks.push(e.count);
+    if (p.grounded && (p.supportSolidId === 'stack-d3' || p.supportSolidId === 'stack-b3')) return { z: 0 };
+    if (phase === 'run') { if (p.grounded) { phase = 'air'; return { z: 1, jump: true, yaw: target }; } return { z: 1, yaw: target }; }
+    if (p.wallNormal && p.velocity.y < 3.5) { target = target === Math.PI ? 0 : Math.PI; return { z: 1, jump: true, yaw: target }; }
+    if (p.grounded) { phase = 'run'; return { z: 0 }; }
+    return { z: 1, yaw: target };
+  });
+  assert.ok(kicks.length >= 3, `expected a 3-kick chain, got ${kicks.length}`);
+  assert.equal(climber.supportSolidId, 'stack-b3', `kick chain should top out on the south stack, got ${climber.supportSolidId} at ${climber.root.position.toArray()}`);
+  // From the south stack a jump-mantle reaches the 5-high north stack (the return row).
+  const hopper = makePlayer(world, [-56, -11.5, -123.14], Math.PI);
+  let mantled = false; let jumped = false;
+  run(world, hopper, 4, (t, p) => {
+    for (const e of p.drain()) if (e.type === 'mantle') mantled = true;
+    if (mantled) return { z: 0 };
+    if (p.grounded && p.root.position.z > -121.2 && !jumped) { jumped = true; return { z: 1, jump: true }; }
+    return { z: 1 };
+  });
+  assert.equal(hopper.supportSolidId, 'stack-d3', `expected the north stack, got ${hopper.supportSolidId} at ${hopper.root.position.toArray()}`);
+  // The return row leads east to the field stair and the crane catwalk.
+  run(world, hopper, 14, (t, p) => (p.supportSolidId === 'crane-catwalk' ? { z: 0 } : { z: 1, yaw: -Math.PI / 2, x: p.root.position.z < -116.5 ? 0.3 : 0 })); // strafe (player-right = +z when facing +x) to the row centre for the stair
+  assert.equal(hopper.supportSolidId, 'crane-catwalk', `expected the crane catwalk, got ${hopper.supportSolidId} at ${hopper.root.position.toArray()}`);
+});
+
+test('sector 6 gate: the spreader only cycles for a key-card holder, then carries the player onto the ship cargo', () => {
+  const world = makeWorld();
+  const noKey = makePlayer(world, [-12, -5.9, -116.3], 0);
+  run(world, noKey, 8, (t, p) => { world.collectEvents(p.root.position); return p.root.position.z < -138.8 ? { z: 0 } : { z: 1, sprint: false }; });
+  assert.equal(world.spreaderArmed, false, 'reader must ignore a player without the key card');
+  run(world, noKey, 3, (t, p) => { world.collectEvents(p.root.position); return p.supportSolidId === 'sts-spreader' ? { z: 0 } : { z: 1, yaw: -Math.PI / 2, sprint: false }; });
+  assert.equal(world.spreaderArmed, false, 'reader must ignore a player without the key card');
+  run(world, noKey, 8, () => ({ z: 0 }));
+  assert.ok(noKey.root.position.z > -141, `spreader must stay parked without the key, player z=${noKey.root.position.z.toFixed(1)}`);
+  const world2 = makeWorld();
+  world2.keys.crane.collected = true;
+  const rider = makePlayer(world2, [-12, -5.9, -116.3], 0);
+  const events = [];
+  run(world2, rider, 8, (t, p) => { events.push(...world2.collectEvents(p.root.position)); return p.root.position.z < -138.8 ? { z: 0 } : { z: 1, sprint: false }; });
+  assert.equal(world2.spreaderArmed, false, 'the catwalk end is outside the reader radius: the player has to walk up to the controller');
+  run(world2, rider, 4, (t, p) => { events.push(...world2.collectEvents(p.root.position)); return p.supportSolidId === 'sts-spreader' && p.root.position.x > -3 ? { z: 0 } : { z: 1, yaw: -Math.PI / 2, sprint: false }; });
+  assert.ok(events.some((e) => e.type === 'spreader_armed'), 'walking past the controller with the key arms the spreader');
+  assert.equal(rider.supportSolidId, 'sts-spreader', `should board the spreader, got ${rider.supportSolidId}`);
+  const mover = world2.movers.find((m) => m.id === 'sts-spreader');
+  run(world2, rider, 20, (t, p) => {
+    const overShip = mover.mesh.position.z < -156.9; // spreader set down over bay 3: step off toward the stern (+x)
+    if (p.supportSolidId && p.supportSolidId !== 'sts-spreader') return { z: 0 };
+    return overShip ? { z: 1, yaw: -Math.PI / 2 } : { z: 0 };
+  });
+  assert.equal(rider.supportSolidId, 'cargo-3-M', `the ride should end over bay 3, got ${rider.supportSolidId} at ${rider.root.position.toArray()}`);
+});
+
+test('sector 7: deck cargo → lashing bridges → aft stair → main deck → five accommodation flights → finish on the port wing', () => {
+  const world = makeWorld();
+  world.keys.crane.collected = true;
+  for (const id of ['relay-stack', 'relay-rack', 'relay-switchgear']) world.hitTarget(id);
+  const player = makePlayer(world, [8.83, -7.3, -157.43], -Math.PI / 2);
+  const mantles = [];
+  run(world, player, 5, (t, p) => { for (const e of p.drain()) if (e.type === 'mantle') mantles.push(e.rise); if (p.supportSolidId === 'lashing-bridge-18') return { z: 0 }; return { z: 1, jump: p.grounded && p.root.position.x > 16.4 && p.root.position.x < 17.2 }; });
+  assert.equal(player.supportSolidId, 'lashing-bridge-18', `expected the 3|4 lashing bridge, got ${player.supportSolidId}`);
+  run(world, player, 6, (t, p) => {
+    if (p.supportSolidId === 'cargo-4-S') return { z: 0 };
+    if (p.supportSolidId === 'lashing-bridge-18' && p.root.position.z > -162.6) return { z: 1, yaw: 0 };
+    return { z: 1, yaw: -Math.PI / 2 };
+  });
+  assert.equal(player.supportSolidId, 'cargo-4-S');
+  run(world, player, 8, (t, p) => {
+    for (const e of p.drain()) if (e.type === 'mantle') mantles.push(e.rise);
+    if (p.supportSolidId === 'lashing-bridge-46') return { z: 0 };
+    const x = p.root.position.x;
+    return { z: 1, yaw: -Math.PI / 2, jump: p.grounded && ((x > 30.2 && x < 31.1) || (x > 44.4 && x < 45.3)) };
+  });
+  assert.equal(player.supportSolidId, 'lashing-bridge-46', `expected the aft lashing bridge, got ${player.supportSolidId} at ${player.root.position.toArray()}`);
+  assert.ok(mantles.length >= 2, `both bridges are mantled (${mantles.length})`);
+  run(world, player, 12, (t, p) => {
+    if (p.supportSolidId === 'ship-deck') return { z: 0 };
+    if (p.supportSolidId === 'lashing-bridge-46' && p.root.position.z < -148.6) return { z: 1, yaw: Math.PI, sprint: false };
+    return { z: 1, yaw: -Math.PI / 2, sprint: false };
+  });
+  assert.equal(player.supportSolidId, 'ship-deck', `expected the main deck, got ${player.supportSolidId} at ${player.root.position.toArray()}`);
+  const events = [];
+  run(world, player, 8, (t, p) => { events.push(...world.collectEvents(p.root.position)); if (p.root.position.z < -159.6 && p.supportSolidId === 'ship-deck') return { z: 0 }; return { z: 1, yaw: 0, x: p.root.position.x > 57.0 ? -0.3 : 0, sprint: false }; });
+  assert.ok(events.some((e) => e.type === 'checkpoint' && e.id === 'main-deck'));
+  let flight = 0;
+  run(world, player, 40, (t, p) => {
+    if (p.supportSolidId === 'acc-landing-4') return { z: 0 };
+    const m = (p.supportSolidId || '').match(/acc-landing-(\d)/); if (m) flight = Number(m[1]) + 1;
+    const south = flight % 2 === 0; const lane = south ? 56.85 : 58.35; const dx = lane - p.root.position.x;
+    if (m && Math.abs(dx) > 0.15) return { z: 0, x: (dx > 0 ? 0.6 : -0.6) * (south ? 1 : -1), yaw: south ? 0 : Math.PI, sprint: false };
+    return { z: 1, yaw: south ? 0 : Math.PI, sprint: false };
+  });
+  assert.equal(player.supportSolidId, 'acc-landing-4', `expected the bridge-deck landing, got ${player.supportSolidId} at ${player.root.position.toArray()}`);
+  let east = true;
+  run(world, player, 12, (t, p) => { events.push(...world.collectEvents(p.root.position)); if (world.finished) return { z: 0 }; if (east && p.root.position.x > 61.5) east = false; return east ? { z: 1, yaw: -Math.PI / 2, sprint: false } : { z: 1, yaw: Math.PI, sprint: false }; });
+  assert.ok(events.some((e) => e.type === 'finish'), 'finish should fire on the port bridge wing');
+});
+
+test('finish is gated: no finish without the relays and the key card even when standing on the wing', () => {
+  const world = makeWorld();
+  const probe = () => world.collectEvents(world.finish.position.clone()).some((e) => e.type === 'finish');
+  assert.equal(probe(), false, 'relays live + no key → locked');
+  for (const id of ['relay-stack', 'relay-rack', 'relay-switchgear']) world.hitTarget(id);
+  assert.equal(probe(), false, 'relays done but no key → locked');
+  world.keys.crane.collected = true;
+  assert.equal(probe(), true, 'relays done + key → finish');
+  world.reset();
+  assert.equal(world.keys.crane.collected, false); assert.equal(world.spreaderArmed, false); assert.equal(world.finished, false);
 });
 
 test('scene audit reports texture sources, seed layer and repetition diagnostics', () => {
@@ -332,10 +483,17 @@ test('scene audit reports texture sources, seed layer and repetition diagnostics
   assert.ok(Array.isArray(audit.regular_spacing_candidates));
 });
 
-test('checkpoints are ordered along the route and respawn facing forward', () => {
+test('checkpoints follow the sector order, every one has a floor, and each sector label appears once in sequence', () => {
   const world = makeWorld();
-  const zs = world.checkpoints.map((c) => c.position.z);
-  for (let i = 1; i < zs.length; i += 1) assert.ok(zs[i] < zs[i - 1], `checkpoint ${world.checkpoints[i].id} out of order`);
+  // Sectors 1–4 run north→south (decreasing z); sectors 5–7 turn west then east across the terminal and ship, so order is checked per sector.
+  const sectors = world.sectors();
+  assert.deepEqual(sectors, ['SECTOR 1 · ROOFS', 'SECTOR 2 · GALLERY', 'SECTOR 3 · RELAY YARD', 'SECTOR 4 · DESCENT', 'SECTOR 5 · TERMINAL', 'SECTOR 6 · CRANE', 'SECTOR 7 · MV SUNLINE']);
+  const labels = world.checkpoints.map((c) => c.sector);
+  const firstIndex = new Map(); labels.forEach((l, i) => { if (!firstIndex.has(l)) firstIndex.set(l, i); });
+  const lastIndex = new Map(); labels.forEach((l, i) => lastIndex.set(l, i));
+  for (let i = 1; i < sectors.length; i += 1) assert.ok(firstIndex.get(sectors[i]) > lastIndex.get(sectors[i - 1]), `${sectors[i]} checkpoints must all come after ${sectors[i - 1]}`);
+  const descent = world.checkpoints.filter((c) => /SECTOR [1-4]/.test(c.sector)).map((c) => c.position.z);
+  for (let i = 1; i < descent.length; i += 1) assert.ok(descent[i] < descent[i - 1], `sector 1–4 checkpoint ${i} out of order`);
   for (const checkpoint of world.checkpoints) {
     const player = makePlayer(world, [checkpoint.position.x, checkpoint.position.y + 0.1, checkpoint.position.z], checkpoint.yaw);
     run(world, player, 0.4, () => ({}));
