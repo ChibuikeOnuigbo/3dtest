@@ -28,3 +28,11 @@ __pycache__/
 
 # External-model acquisition scratch space; never version third-party raw archives or credentials.
 research/sketchfab/intake/
+
+# Credentials must never enter source control (Sketchfab token lives in env / GitHub secrets).
+sketchfab_token.txt
+*.token
+.env
+.env.*
+# Local scratch scripts (browser probes, debug sims).
+.scratch/

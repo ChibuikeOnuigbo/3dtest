@@ -1,0 +1,95 @@
+{
+  "schema": "rivet-run-texture-sets/v1",
+  "sets": {
+    "concrete_roof": {
+      "family": "concrete",
+      "tile_m": 3.0,
+      "size_px": 1024,
+      "maps": [
+        "albedo",
+        "normal",
+        "roughness"
+      ],
+      "source": "research/generated_sources/concrete_roof_raw.png",
+      "provenance": "generated:image-model (project-owned derivative)",
+      "license": "project-generated, CC0-equivalent for this repository",
+      "derived_maps": "normal from blurred luminance height (Sobel); roughness from inverted local contrast",
+      "quality_class": "derived (not photometric) \u2014 replace with Poly Haven scan when CI fetch succeeds"
+    },
+    "brick_industrial": {
+      "family": "brick",
+      "tile_m": 2.4,
+      "size_px": 1024,
+      "maps": [
+        "albedo",
+        "normal",
+        "roughness"
+      ],
+      "source": "research/generated_sources/brick_industrial_raw.png",
+      "provenance": "generated:image-model (project-owned derivative)",
+      "license": "project-generated, CC0-equivalent for this repository",
+      "derived_maps": "normal from blurred luminance height (Sobel); roughness from inverted local contrast",
+      "quality_class": "derived (not photometric) \u2014 replace with Poly Haven scan when CI fetch succeeds"
+    },
+    "corrugated_steel": {
+      "family": "corrugated",
+      "tile_m": 2.0,
+      "size_px": 1024,
+      "maps": [
+        "albedo",
+        "normal",
+        "roughness"
+      ],
+      "source": "research/generated_sources/corrugated_steel_raw.png",
+      "provenance": "generated:image-model (project-owned derivative)",
+      "license": "project-generated, CC0-equivalent for this repository",
+      "derived_maps": "normal from blurred luminance height (Sobel); roughness from inverted local contrast",
+      "quality_class": "derived (not photometric) \u2014 replace with Poly Haven scan when CI fetch succeeds"
+    },
+    "checker_plate": {
+      "family": "checker",
+      "tile_m": 1.2,
+      "size_px": 1024,
+      "maps": [
+        "albedo",
+        "normal",
+        "roughness"
+      ],
+      "source": "research/generated_sources/checker_plate_raw.png",
+      "provenance": "generated:image-model (project-owned derivative)",
+      "license": "project-generated, CC0-equivalent for this repository",
+      "derived_maps": "normal from blurred luminance height (Sobel); roughness from inverted local contrast",
+      "quality_class": "derived (not photometric) \u2014 replace with Poly Haven scan when CI fetch succeeds"
+    },
+    "steel_grating": {
+      "family": "grating",
+      "tile_m": 1.0,
+      "size_px": 1024,
+      "maps": [
+        "albedo",
+        "normal",
+        "roughness"
+      ],
+      "source": "research/generated_sources/steel_grating_raw.png",
+      "provenance": "generated:image-model (project-owned derivative)",
+      "license": "project-generated, CC0-equivalent for this repository",
+      "derived_maps": "normal from blurred luminance height (Sobel); roughness from inverted local contrast",
+      "quality_class": "derived (not photometric) \u2014 replace with Poly Haven scan when CI fetch succeeds"
+    },
+    "office_facade": {
+      "family": "facade",
+      "tile_m": 8.0,
+      "size_px": 1024,
+      "maps": [
+        "albedo",
+        "normal",
+        "roughness"
+      ],
+      "source": "research/generated_sources/office_facade_raw.png",
+      "provenance": "generated:image-model (project-owned derivative)",
+      "license": "project-generated, CC0-equivalent for this repository",
+      "derived_maps": "normal from blurred luminance height (Sobel); roughness from inverted local contrast",
+      "quality_class": "derived (not photometric) \u2014 replace with Poly Haven scan when CI fetch succeeds"
+    }
+  }
+}

@@ -1,155 +1,491 @@
 {
-  "schema": "rivet-run-level/v2",
+  "schema": "rivet-run-level/v3",
   "title": "Rivet Run: Highline District",
   "status": "AUTHORING_IN_PROGRESS",
   "seed": {
     "master": "rivet-run-highline-01",
-    "invariant": "authored traversal geometry stays fixed; skyline antenna/window variation is deterministic per seed"
+    "invariant": "authored traversal geometry stays fixed for every seed; the SeedLayer only varies decoration, skyline, rooftop plant, container-yard colours, lighting and non-critical alternatives"
   },
-  "theme": "late-afternoon harbour highline: connected roof structures, rail bridge and active utility architecture. No cyan void, floating islands, mascot character, fantasy portal rings, neon-pink clutter, or exposed falls.",
+  "theme": "late-afternoon working harbour: connected roof structures, a conveyor gallery, a relay yard, a turbine hall, a container terminal, a ship-to-shore crane and a moored feeder ship. No cyan void, floating islands, fantasy portal rings or exposed falls.",
+  "how_to_pass": [
+    "SECTOR 1 ROOFS — leave dispatch, jump the parapet gap, take the KINETIC PERMIT (double jump) in the transfer kiosk.",
+    "SECTOR 2 GALLERY — ride the conveyor / slide the ducts up the gallery to the split deck; choose WEST SHAFT (wall kicks) or EAST SPAN (dash + container mantles) up to the boiler roof.",
+    "SECTOR 3 RELAY YARD — pulse all THREE RELAYS (stack platform, rack platform, switchgear). GATE: the turbine-hall loading door is locked until they are live.",
+    "SECTOR 4 DESCENT — slide the control corridor, drop the shaft, ride the crane trolley across the turbine hall, climb to the gallery, pass the loading door, cross the Sunline gantry (missing panel: double jump/dash) to the crane cab landing.",
+    "SECTOR 5 TERMINAL — stair tower down to the 5-high stacks, run/drop the outbound row, slide the reefer gantry, drop into the CANYON, take the CRANE KEY CARD at its end, wall-kick chain out, mantle to the return row, run east to the field stair.",
+    "SECTOR 6 CRANE — crane catwalk → spreader platform; GATE: the controller arms the spreader only for a key-card holder. Board the spreader and ride it over the quay.",
+    "SECTOR 7 MV SUNLINE — step off onto bay 3, mantle the lashing bridges, hop the deck cargo aft, take the aft bridge stair to the main deck, climb the five accommodation flights, walk the bridge deck to the PORT WING. FINISH requires: 3 relays live + key card."
+  ],
+  "sectors": [
+    {
+      "id": 1,
+      "name": "ROOFS",
+      "regions": [
+        "dispatch",
+        "transfer"
+      ],
+      "gate": null,
+      "mechanics": [
+        "run",
+        "edge launch",
+        "ledge grab",
+        "double jump unlock"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "GALLERY",
+      "regions": [
+        "gallery",
+        "split-deck",
+        "west-shaft",
+        "east-span"
+      ],
+      "gate": null,
+      "mechanics": [
+        "conveyor carry",
+        "slide",
+        "wall kick x3",
+        "dash gap",
+        "container mantle chain"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "RELAY YARD",
+      "regions": [
+        "boiler-court"
+      ],
+      "gate": "relays:3",
+      "mechanics": [
+        "ladders",
+        "platforms",
+        "pulse targets"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "DESCENT",
+      "regions": [
+        "control",
+        "turbine-hall",
+        "sunline"
+      ],
+      "gate": "hall-door (locked while relays live)",
+      "mechanics": [
+        "slide x3",
+        "drop shaft landings",
+        "moving trolley ride",
+        "stairs",
+        "roller door",
+        "missing panel"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "TERMINAL",
+      "regions": [
+        "terminal"
+      ],
+      "gate": "key:crane",
+      "mechanics": [
+        "stair tower",
+        "stack drops",
+        "slide under gantry",
+        "canyon wall-kick chain",
+        "jump-mantle 2.59 m",
+        "field stair"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "CRANE",
+      "regions": [
+        "crane"
+      ],
+      "gate": "spreader (armed by key card at the controller)",
+      "mechanics": [
+        "catwalk",
+        "gated moving platform ride 18 m over water"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "MV SUNLINE",
+      "regions": [
+        "ship"
+      ],
+      "gate": "finish (relays + key)",
+      "mechanics": [
+        "cargo hops",
+        "lashing-bridge mantles",
+        "gap jumps",
+        "stairs x7",
+        "finish"
+      ]
+    }
+  ],
   "spawn": {
     "id": "dispatch-bay",
     "position": [
       0,
-      0,
-      43
+      0.1,
+      50.5
     ]
   },
   "nodes": [
     {
       "id": "dispatch-bay",
       "type": "spawn",
+      "sector": 1,
       "position": [
         0,
-        0,
-        43
+        0.1,
+        50.5
       ],
-      "landmark": "framed dispatch bay on a supported yard roof"
+      "landmark": "dispatch shed on the warehouse roof"
     },
     {
       "id": "permit-terminal",
       "type": "powerup",
+      "sector": 1,
       "position": [
-        0,
-        1.75,
-        20.5
+        1.1,
+        -1.6,
+        16.5
       ],
       "ability": "doubleJump",
-      "landmark": "mounted Kinetic Permit terminal"
+      "landmark": "Kinetic Permit kiosk on the transfer annex"
     },
     {
-      "id": "transfer-beacon",
+      "id": "gallery",
       "type": "checkpoint",
+      "sector": 2,
+      "position": [
+        0.9,
+        -1.2,
+        6
+      ],
+      "landmark": "inclined conveyor gallery"
+    },
+    {
+      "id": "split-deck",
+      "type": "branch",
+      "sector": 2,
       "position": [
         0,
-        1.75,
-        14.3
+        2.4,
+        -17.5
       ],
-      "landmark": "mounted transfer signal mast"
+      "landmark": "split deck: WEST SHAFT / EAST SPAN"
     },
     {
       "id": "west-shaft",
       "type": "traversal",
+      "sector": 2,
       "position": [
-        -9.2,
-        2.25,
-        6.1
+        -10,
+        2.4,
+        -22
       ],
       "mechanic": "wall-jump",
-      "landmark": "supported maintenance shaft"
+      "landmark": "wall-kick shaft with three ledges"
     },
     {
       "id": "east-span",
       "type": "traversal",
+      "sector": 2,
       "position": [
-        9.2,
-        2.25,
-        6.1
+        16.3,
+        2.4,
+        -19.5
       ],
       "mechanic": "dash",
-      "landmark": "supported rail viaduct"
+      "landmark": "torn conveyor gap + container stack"
     },
     {
       "id": "boiler-court",
-      "type": "arena",
+      "type": "objective",
+      "sector": 3,
       "position": [
-        0,
-        4.65,
-        -13.5
+        -1,
+        8.6,
+        -30
       ],
-      "landmark": "boiler roof relay yard",
-      "targets": 3
+      "objective": "relays:3",
+      "landmark": "relay yard on the boiler-house roof"
     },
     {
-      "id": "maintenance-passage",
-      "type": "traversal",
+      "id": "drop-shaft",
+      "type": "checkpoint",
+      "sector": 4,
       "position": [
         0,
-        5.45,
-        -27.8
+        8.6,
+        -60.7
       ],
-      "mechanic": "slide/crouch",
-      "landmark": "framed low maintenance passage"
+      "landmark": "framed drop shaft after the control corridor"
+    },
+    {
+      "id": "turbine-hall",
+      "type": "checkpoint",
+      "sector": 4,
+      "position": [
+        0,
+        -3.4,
+        -64
+      ],
+      "landmark": "turbine hall arrival catwalk / crane trolley"
+    },
+    {
+      "id": "hall-door",
+      "type": "gate",
+      "sector": 4,
+      "position": [
+        0,
+        -0.4,
+        -92
+      ],
+      "requires": "relays:3",
+      "landmark": "turbine-hall loading roller door"
+    },
+    {
+      "id": "sunline-gantry",
+      "type": "checkpoint",
+      "sector": 4,
+      "position": [
+        0,
+        -0.4,
+        -95
+      ],
+      "landmark": "exterior gantry over the quay"
+    },
+    {
+      "id": "cab-landing",
+      "type": "checkpoint",
+      "sector": 4,
+      "position": [
+        1.6,
+        -0.4,
+        -122.2
+      ],
+      "landmark": "crane cab landing / terminal stair tower"
+    },
+    {
+      "id": "terminal-stacks",
+      "type": "checkpoint",
+      "sector": 5,
+      "position": [
+        -6.3,
+        -9.05,
+        -119.4
+      ],
+      "landmark": "stair tower foot on the 5-high stack row"
+    },
+    {
+      "id": "canyon",
+      "type": "key",
+      "sector": 5,
+      "position": [
+        -50.4,
+        -16.82,
+        -119.06
+      ],
+      "key": "crane",
+      "landmark": "container canyon; key card hut at the west end"
+    },
+    {
+      "id": "return-row",
+      "type": "checkpoint",
+      "sector": 5,
+      "position": [
+        -47,
+        -9.05,
+        -116.3
+      ],
+      "landmark": "return row behind the reefer screen"
+    },
+    {
+      "id": "spreader-platform",
+      "type": "gate",
+      "sector": 6,
+      "position": [
+        -10.5,
+        -5.9,
+        -138.7
+      ],
+      "requires": "key:crane",
+      "landmark": "spreader controller on the crane leg"
+    },
+    {
+      "id": "ship-cargo",
+      "type": "checkpoint",
+      "sector": 7,
+      "position": [
+        -3,
+        -7.42,
+        -157
+      ],
+      "landmark": "MV Sunline bay 3 deck cargo"
+    },
+    {
+      "id": "main-deck",
+      "type": "checkpoint",
+      "sector": 7,
+      "position": [
+        56.5,
+        -14,
+        -148.2
+      ],
+      "landmark": "main deck aft of the deck crane"
+    },
+    {
+      "id": "bridge-deck",
+      "type": "checkpoint",
+      "sector": 7,
+      "position": [
+        58,
+        0,
+        -165.2
+      ],
+      "landmark": "top of the accommodation stairs"
     },
     {
       "id": "sunline-exit",
       "type": "finish",
+      "sector": 7,
       "position": [
+        61.5,
         0,
-        7.25,
-        -50.1
+        -147
       ],
-      "landmark": "mounted Sunline Exit relay on a trussed bridge"
+      "requires": [
+        "relays:3",
+        "key:crane"
+      ],
+      "landmark": "port bridge wing of MV Sunline"
     }
   ],
   "edges": [
     {
       "from": "dispatch-bay",
       "to": "permit-terminal",
-      "type": "roof-rise",
-      "mechanic": "ground-jump"
+      "type": "roof-gap",
+      "mechanic": "ground-jump / ledge-grab"
     },
     {
       "from": "permit-terminal",
-      "to": "transfer-beacon",
-      "type": "canopy-crossing",
-      "mechanic": "double-jump"
+      "to": "gallery",
+      "type": "annex-to-gallery",
+      "mechanic": "run"
     },
     {
-      "from": "transfer-beacon",
+      "from": "gallery",
+      "to": "split-deck",
+      "type": "incline",
+      "mechanic": "conveyor carry + slide"
+    },
+    {
+      "from": "split-deck",
       "to": "west-shaft",
-      "type": "vertical-shaft",
-      "mechanic": "wall-jump"
+      "type": "branch",
+      "mechanic": "wall-kick chain"
     },
     {
-      "from": "transfer-beacon",
+      "from": "split-deck",
       "to": "east-span",
-      "type": "supported-viaduct",
-      "mechanic": "dash"
+      "type": "branch",
+      "mechanic": "dash gap + container mantles"
     },
     {
       "from": "west-shaft",
       "to": "boiler-court",
-      "type": "cap-roof",
-      "mechanic": "mixed"
+      "type": "climb-out",
+      "mechanic": "ledge mantle"
     },
     {
       "from": "east-span",
       "to": "boiler-court",
-      "type": "catwalk",
-      "mechanic": "mixed"
+      "type": "climb-out",
+      "mechanic": "container hop"
     },
     {
       "from": "boiler-court",
-      "to": "maintenance-passage",
-      "type": "framed-bridge",
-      "mechanic": "slide/crouch"
+      "to": "drop-shaft",
+      "type": "corridor",
+      "mechanic": "slide x3"
     },
     {
-      "from": "maintenance-passage",
+      "from": "drop-shaft",
+      "to": "turbine-hall",
+      "type": "descent",
+      "mechanic": "landing drops"
+    },
+    {
+      "from": "turbine-hall",
+      "to": "hall-door",
+      "type": "hall-crossing",
+      "mechanic": "trolley ride + stairs"
+    },
+    {
+      "from": "hall-door",
+      "to": "sunline-gantry",
+      "type": "gate",
+      "mechanic": "roller door (relays)"
+    },
+    {
+      "from": "sunline-gantry",
+      "to": "cab-landing",
+      "type": "gantry",
+      "mechanic": "missing panel: double jump / dash"
+    },
+    {
+      "from": "cab-landing",
+      "to": "terminal-stacks",
+      "type": "stair-tower",
+      "mechanic": "stairs down 8.65 m"
+    },
+    {
+      "from": "terminal-stacks",
+      "to": "canyon",
+      "type": "stack-row",
+      "mechanic": "drops + slide + canyon drop"
+    },
+    {
+      "from": "canyon",
+      "to": "return-row",
+      "type": "climb-out",
+      "mechanic": "wall-kick chain x3 + jump-mantle"
+    },
+    {
+      "from": "return-row",
+      "to": "spreader-platform",
+      "type": "stack-row",
+      "mechanic": "gap jumps + field stair + catwalk"
+    },
+    {
+      "from": "spreader-platform",
+      "to": "ship-cargo",
+      "type": "gate",
+      "mechanic": "gated moving platform (key card)"
+    },
+    {
+      "from": "ship-cargo",
+      "to": "main-deck",
+      "type": "deck-cargo",
+      "mechanic": "mantles + gap jumps + aft stair"
+    },
+    {
+      "from": "main-deck",
+      "to": "bridge-deck",
+      "type": "accommodation-stair",
+      "mechanic": "stairs x5"
+    },
+    {
+      "from": "bridge-deck",
       "to": "sunline-exit",
-      "type": "trussed-bridge",
-      "mechanic": "jump/dash"
+      "type": "bridge-deck",
+      "mechanic": "run to the port wing"
     }
   ],
   "surfaces": [
@@ -157,14 +493,29 @@
     "WALL_JUMPABLE",
     "SLIDE_TUNNEL",
     "DASH_ROUTE",
-    "NON_TRAVERSABLE"
+    "NON_TRAVERSABLE",
+    "MOVING",
+    "CONVEYOR",
+    "LADDER"
   ],
   "critical_path": [
     "dispatch-bay",
     "permit-terminal",
-    "transfer-beacon",
+    "gallery",
+    "split-deck",
     "boiler-court",
-    "maintenance-passage",
+    "drop-shaft",
+    "turbine-hall",
+    "hall-door",
+    "sunline-gantry",
+    "cab-landing",
+    "terminal-stacks",
+    "canyon",
+    "return-row",
+    "spreader-platform",
+    "ship-cargo",
+    "main-deck",
+    "bridge-deck",
     "sunline-exit"
   ],
   "authored_segment_contract": "game/data/highline_segments.json"

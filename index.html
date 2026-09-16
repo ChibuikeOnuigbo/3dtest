@@ -16,13 +16,14 @@
           <div id="movement-state" class="system-status">GROUND</div>
         </header>
         <div class="objective-panel">
-          <p class="eyebrow">RUN OBJECTIVE</p>
-          <p id="objective">Reach the Kinetic Permit terminal on the switch-house roof.</p>
+          <p class="eyebrow" id="sector">SECTOR 1 · ROOFS  ·  1/7</p>
+          <p id="objective">Leave dispatch, run the roof and jump the gap to the transfer annex.</p>
         </div>
         <div class="readouts">
           <div><span class="readout-label">TIME</span><strong id="timer">00:00.000</strong></div>
           <div><span class="readout-label">RELAYS</span><strong id="target-count">3 / 3</strong></div>
           <div><span class="readout-label">ABILITY</span><strong id="ability">JUMP I</strong></div>
+          <div><span class="readout-label">CRANE KEY</span><strong id="key-card">—</strong></div>
         </div>
         <div id="crosshair" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
         <div id="toast" class="toast" aria-live="polite"></div>
@@ -32,7 +33,7 @@
         <div class="title-card">
           <p class="kicker">HIGHLINE DISTRICT // PERSONAL BEST ROUTE</p>
           <h1>RIVET<br /><em>RUN</em></h1>
-          <p class="lede">A fast first-person line across a working harbour district. Build speed, collect the movement permit, choose a roof route, switch relays, and cross Sunline Bridge.</p>
+          <p class="lede">Seven sectors across a working harbour: roofs, the conveyor gallery, the relay yard, the descent through the turbine hall, the container terminal, the ship-to-shore crane and the deck of MV Sunline. Three relays open the hall; the crane key card starts the spreader; the run ends on the bridge wing.</p>
           <div class="briefing-rule"></div>
           <p class="briefing"><b>RUN CARD</b> <span class="keycap">SPACE</span> jump · <span class="keycap">SHIFT</span> dash · <span class="keycap">CTRL</span> crouch/slide or air-slam · click to pulse targets.</p>
           <button id="start-button" type="button">START RUN <span>↗</span></button>
@@ -44,11 +45,11 @@
       </section>
       <section id="ending-screen" class="overlay hidden" aria-hidden="true">
         <div class="title-card ending-card">
-          <p class="kicker">SUNLINE EXIT // LINE COMPLETE</p>
+          <p class="kicker">MV SUNLINE · BRIDGE WING // LINE COMPLETE</p>
           <h1>RUN<br /><em>CLEARED</em></h1>
           <p id="finish-time" class="lede">Time: 00:00.000</p>
           <div class="briefing-rule"></div>
-          <p class="briefing">Your best route is saved locally. Restart immediately and use the West Shaft or East Span to cut a cleaner line.</p>
+          <p class="briefing">Your best route is saved locally. Restart immediately: try the other split-deck branch, skip the trolley with a wall-kick line, and take the canyon in one kick chain.</p>
           <button id="restart-finish-button" type="button">RUN AGAIN <span>↻</span></button>
         </div>
       </section>

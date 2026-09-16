@@ -1,0 +1,751 @@
+{
+  "schema": "rivet-run-player-height-capture/v3",
+  "run_id": "local-2026-09-07T15-25-05-724Z-default",
+  "mode": "staged",
+  "staged_fallback_enabled": false,
+  "base_url": "http://localhost:5173",
+  "viewport": {
+    "width": 960,
+    "height": 540
+  },
+  "capture_method": "canvas",
+  "capture_mode_statement": "STAGED: every frame is a labelled teleport view for composition review. Not gameplay evidence.",
+  "status": "CAPTURED_UNINSPECTED_STAGED",
+  "seed": "rivet-run-highline-01",
+  "frames": [
+    {
+      "frame_id": "13-control-corridor",
+      "region": "control-corridor",
+      "requested_region": "control-corridor",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "control",
+        "support_surface_id": "corridor-floor",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "staged composition review pose",
+      "image": ".scratch/staged-07/13-control-corridor.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        10.204,
+        -46.826
+      ],
+      "camera_direction": [
+        0,
+        -0.1395,
+        -0.9902
+      ],
+      "player_position": [
+        0,
+        8.6,
+        -46.6
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "corridor-floor",
+      "expected_surfaces": [],
+      "runtime_running": true,
+      "pointer_locked": false,
+      "rendered_frames": 19,
+      "game_elapsed": 0.125,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "generated:concrete_roof",
+        "brick": "generated:brick_industrial",
+        "corrugated": "generated:corrugated_steel",
+        "rust": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "generated:checker_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 141,
+        "triangles": 59718,
+        "geometries": 153,
+        "textures": 72
+      },
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "19-finish-cab",
+      "region": "finish-cab",
+      "requested_region": "finish-cab",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "sunline",
+        "support_surface_id": "gantry-b",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "staged composition review pose",
+      "image": ".scratch/staged-07/19-finish-cab.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        1.218,
+        -116.081
+      ],
+      "camera_direction": [
+        0,
+        -0.05,
+        -0.9988
+      ],
+      "player_position": [
+        0,
+        -0.4,
+        -116
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "gantry-b",
+      "expected_surfaces": [],
+      "runtime_running": true,
+      "pointer_locked": false,
+      "rendered_frames": 31,
+      "game_elapsed": 0.344,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "generated:concrete_roof",
+        "brick": "generated:brick_industrial",
+        "corrugated": "generated:corrugated_steel",
+        "rust": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "generated:checker_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 77,
+        "triangles": 55512,
+        "geometries": 153,
+        "textures": 72
+      },
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "09-container-stack",
+      "region": "container-stack",
+      "requested_region": "container-stack",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "unsupported-or-airborne",
+        "support_surface_id": null,
+        "verification": "NO_AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "staged composition review pose",
+      "image": ".scratch/staged-07/09-container-stack.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        14,
+        3.714,
+        -22.206
+      ],
+      "camera_direction": [
+        0,
+        0.1197,
+        -0.9928
+      ],
+      "player_position": [
+        14,
+        2.105152456000677,
+        -22.4
+      ],
+      "player_state": "AIR",
+      "player_grounded": false,
+      "support_surface": null,
+      "expected_surfaces": [],
+      "runtime_running": true,
+      "pointer_locked": false,
+      "rendered_frames": 46,
+      "game_elapsed": 0.611,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "generated:concrete_roof",
+        "brick": "generated:brick_industrial",
+        "corrugated": "generated:corrugated_steel",
+        "rust": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "generated:checker_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 160,
+        "triangles": 60284,
+        "geometries": 153,
+        "textures": 72
+      },
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    }
+  ],
+  "phases": [],
+  "final_probe": {
+    "player": {
+      "state": "AIR",
+      "grounded": false,
+      "position": [
+        14,
+        1.8773794560008465,
+        -22.4
+      ],
+      "velocity": [
+        0,
+        -4.55545999999661,
+        0
+      ],
+      "supportSolidId": null,
+      "surface": "grating",
+      "onLadder": false,
+      "mantling": false,
+      "doubleJumpUnlocked": false,
+      "wallJumpCount": 0,
+      "dashCooldown": 0,
+      "crouching": false,
+      "slam": false,
+      "traversalRegion": {
+        "id": "unsupported-or-airborne",
+        "support_surface_id": null,
+        "verification": "NO_AUTHORED_SUPPORT_CONTACT"
+      }
+    },
+    "cameraPosition": [
+      14,
+      3.486,
+      -22.206
+    ],
+    "cameraDirection": [
+      0,
+      0.1197,
+      -0.9928
+    ],
+    "elapsed": 0.661,
+    "running": true,
+    "pointerLocked": false,
+    "stagingMode": true,
+    "renderFrameCount": 47,
+    "relaysRemaining": 3,
+    "checkpoint": {
+      "position": [
+        0,
+        0.1,
+        50.5
+      ],
+      "yaw": 0
+    },
+    "objective": "Leave dispatch, run the roof and jump the gap to the transfer annex.",
+    "bindings": {
+      "MOVE_FORWARD": "KeyW",
+      "MOVE_BACK": "KeyS",
+      "MOVE_LEFT": "KeyA",
+      "MOVE_RIGHT": "KeyD",
+      "JUMP": "Space",
+      "DASH": "ShiftLeft",
+      "CROUCH": "ControlLeft",
+      "RESTART": "KeyR",
+      "PAUSE": "Escape"
+    },
+    "worldSeed": "rivet-run-highline-01",
+    "timeOfDay": "golden-hour",
+    "skySource": "equirect:/sky/harbour_afternoon_equirect.jpg",
+    "textureSources": {
+      "concrete": "generated:concrete_roof",
+      "brick": "generated:brick_industrial",
+      "corrugated": "generated:corrugated_steel",
+      "rust": "generated:corrugated_steel",
+      "facade": "generated:office_facade",
+      "checker": "generated:checker_plate",
+      "grating": "generated:steel_grating"
+    },
+    "rendererInfo": {
+      "calls": 160,
+      "triangles": 60284,
+      "geometries": 153,
+      "textures": 72
+    }
+  },
+  "scene_audit": {
+    "schema": "rivet-run-scene-audit/v3",
+    "diagnostic_only": true,
+    "registered_objects": 3859,
+    "colliders": 431,
+    "point_lights": 24,
+    "texture_sources": {
+      "concrete": "generated:concrete_roof",
+      "brick": "generated:brick_industrial",
+      "corrugated": "generated:corrugated_steel",
+      "rust": "generated:corrugated_steel",
+      "facade": "generated:office_facade",
+      "checker": "generated:checker_plate",
+      "grating": "generated:steel_grating"
+    },
+    "repeated_families": [
+      {
+        "family": "west-mill-window",
+        "count": 168,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lit-window",
+        "count": 162,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-corner",
+        "count": 160,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-doorbar",
+        "count": 160,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-stack-30-ladder-rung",
+        "count": 153,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "sleeper",
+        "count": 140,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "west-power-annex-window",
+        "count": 136,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-stack-36-ladder-rung",
+        "count": 126,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lamp-lens",
+        "count": 107,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lamp",
+        "count": 107,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-house-window",
+        "count": 96,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "west-power-annex-stack-ladder-rung",
+        "count": 79,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "seed-scrub",
+        "count": 72,
+        "distinct_rotations": 71,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "crane-boom-diagonal",
+        "count": 51,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "boiler-stack-2-ladder-rung",
+        "count": 51,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lane-paint",
+        "count": 50,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "boiler-stack-1-ladder-rung",
+        "count": 43,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "drop-ladder-rung",
+        "count": 39,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "boiler-stack-0-ladder-rung",
+        "count": 36,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-recovery-ladder-rung",
+        "count": 35,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "bridge-cable",
+        "count": 32,
+        "distinct_rotations": 8,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "crane-boom-vertical",
+        "count": 27,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "sign",
+        "count": 26,
+        "distinct_rotations": 4,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "skyline-lit-band",
+        "count": 25,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "bollard",
+        "count": 21,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "clerestory-window",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "parapet",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "hall-window",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-catwalk-rail-post",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-stairs-tread",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-stairs-riser",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "conveyor-roller",
+        "count": 15,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "stack-platform-ladder-rung",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "corridor-truss-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--67-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--73-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--79-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--85-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gantry-lower-rail-post",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gantry-truss-w-diagonal",
+        "count": 13,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      }
+    ],
+    "regular_spacing_candidates": [
+      {
+        "family": "bollard",
+        "axis": "x",
+        "deltas": [
+          12
+        ],
+        "count": 21
+      },
+      {
+        "family": "sleeper",
+        "axis": "z",
+        "deltas": [
+          1.4
+        ],
+        "count": 140
+      },
+      {
+        "family": "yard-light-pole",
+        "axis": "z",
+        "deltas": [
+          22
+        ],
+        "count": 8
+      },
+      {
+        "family": "refinery-stack",
+        "axis": "x",
+        "deltas": [
+          26
+        ],
+        "count": 6
+      },
+      {
+        "family": "ship-boxes",
+        "axis": "x",
+        "deltas": [
+          11.3
+        ],
+        "count": 9
+      },
+      {
+        "family": "ship-boxes",
+        "axis": "z",
+        "deltas": [
+          4.1
+        ],
+        "count": 9
+      },
+      {
+        "family": "shaft-wall",
+        "axis": "x",
+        "deltas": [
+          0.6,
+          1.6
+        ],
+        "count": 9
+      },
+      {
+        "family": "shaft-wall",
+        "axis": "z",
+        "deltas": [
+          0.7,
+          1.5
+        ],
+        "count": 9
+      },
+      {
+        "family": "drop-shaft-wall",
+        "axis": "z",
+        "deltas": [
+          0.3,
+          2
+        ],
+        "count": 6
+      }
+    ],
+    "seed_layer": {
+      "seed": "rivet-run-highline-01",
+      "systems": {
+        "skyline": {
+          "crowns": 13,
+          "masts": 5,
+          "litBands": 25
+        },
+        "districtLights": {
+          "lit": 162
+        },
+        "rooftopProps": {
+          "machinery": 25,
+          "roofProps": 2
+        },
+        "containers": {
+          "containers": 35
+        },
+        "vegetation": {
+          "clumps": 36
+        },
+        "signs": {
+          "signs": 3
+        },
+        "harbour": {
+          "vessels": 3
+        },
+        "routeVariants": {
+          "variants": [
+            "boiler-court-pipe-balance",
+            "turbine-floor-pallets"
+          ]
+        },
+        "lamps": {
+          "tint": "#ffc98a"
+        }
+      }
+    },
+    "required_human_review": "Judge repetition/dead zones/placement from player-height frames. Counts cannot approve anything."
+  },
+  "input_trace": [
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        0,
+        8.7,
+        -46.6
+      ],
+      "yaw": 0,
+      "pitch": -0.14,
+      "at": 1788794724443
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        0,
+        -0.3,
+        -116
+      ],
+      "yaw": 0,
+      "pitch": -0.05,
+      "at": 1788794815913
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        14,
+        2.5,
+        -22.4
+      ],
+      "yaw": 0,
+      "pitch": 0.12,
+      "at": 1788794843471
+    }
+  ],
+  "console_events": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    }
+  ],
+  "capture_failure": null,
+  "approval": {
+    "approved": false,
+    "score": null,
+    "reason": "A vision-capable critic must inspect the actual image files. This tool never approves."
+  }
+}

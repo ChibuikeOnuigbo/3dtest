@@ -1,0 +1,3109 @@
+{
+  "schema": "rivet-run-player-height-capture/v3",
+  "run_id": "34679203383-default",
+  "mode": "gameplay",
+  "staged_fallback_enabled": true,
+  "base_url": "http://127.0.0.1:5173/?seed=rivet-run-highline-01",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "capture_method": "canvas",
+  "capture_mode_statement": "GAMEPLAY: real click → pointer lock → keyboard/mouse input. Frames after a failed phase (if any) are labelled STAGED.",
+  "status": "CAPTURED_UNINSPECTED_WITH_STAGED_FALLBACKS",
+  "seed": "rivet-run-highline-01",
+  "render_mode": "ondemand",
+  "render_mode_statement": "ONDEMAND: the page simulates every animation tick but rasterises only at capture time (software GL pacing). Same renderer/scene/camera as play; wall-clock pacing differs.",
+  "frames": [
+    {
+      "frame_id": "01-dispatch-spawn",
+      "region": "dispatch",
+      "requested_region": "dispatch",
+      "evidence_class": "REAL_PLAYER_INPUT",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch",
+        "support_surface_id": "shed-floor",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "spawn: shed doorway, route read toward the parapet opening",
+      "image": "qa/visual/evidence/34679203383/default/01-dispatch-spawn.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        1.672,
+        50.341
+      ],
+      "camera_direction": [
+        -0.002,
+        -0.0982,
+        -0.9952
+      ],
+      "player_position": [
+        0,
+        0.06,
+        50.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "shed-floor",
+      "expected_surfaces": [
+        "shed-floor",
+        "dispatch-roof"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 281,
+      "game_elapsed": 0.505,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 163,
+        "triangles": 61614,
+        "geometries": 157,
+        "textures": 112
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "02-dispatch-look-east",
+      "region": "dispatch",
+      "requested_region": "dispatch",
+      "evidence_class": "REAL_PLAYER_INPUT",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch",
+        "support_surface_id": "shed-floor",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "look-around east: adjacent office tower, tank farm, container yard depth layers",
+      "image": "qa/visual/evidence/34679203383/default/02-dispatch-look-east.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0.157,
+        1.672,
+        50.473
+      ],
+      "camera_direction": [
+        0.9803,
+        -0.0982,
+        -0.1711
+      ],
+      "player_position": [
+        0,
+        0.06,
+        50.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "shed-floor",
+      "expected_surfaces": [],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 294,
+      "game_elapsed": 0.732,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 524,
+        "triangles": 1099121,
+        "geometries": 196,
+        "textures": 166
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "03-dispatch-look-west",
+      "region": "dispatch",
+      "requested_region": "dispatch",
+      "evidence_class": "REAL_PLAYER_INPUT",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch",
+        "support_surface_id": "shed-floor",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "look-around west: mill, silos, harbour inlet depth layers",
+      "image": "qa/visual/evidence/34679203383/default/03-dispatch-look-west.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        -0.157,
+        1.672,
+        50.473
+      ],
+      "camera_direction": [
+        -0.9807,
+        -0.0982,
+        -0.1691
+      ],
+      "player_position": [
+        0,
+        0.06,
+        50.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "shed-floor",
+      "expected_surfaces": [],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 306,
+      "game_elapsed": 0.942,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 123,
+        "triangles": 310206,
+        "geometries": 200,
+        "textures": 178
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "04-dispatch-runup",
+      "region": "dispatch",
+      "requested_region": "dispatch",
+      "evidence_class": "REAL_PLAYER_INPUT",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "dispatch",
+        "support_surface_id": "dispatch-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "speed frame: roof run toward the parapet opening, annex and gallery visible",
+      "image": "qa/visual/evidence/34679203383/default/04-dispatch-runup.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        1.608,
+        34.145
+      ],
+      "camera_direction": [
+        0,
+        -0.1589,
+        -0.9873
+      ],
+      "player_position": [
+        0,
+        0,
+        34.40205234039635
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "dispatch-roof",
+      "expected_surfaces": [
+        "dispatch-roof"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 467,
+      "game_elapsed": 3.635,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 124,
+        "triangles": 305375,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "05-transfer-kiosk",
+      "region": "transfer",
+      "requested_region": "transfer",
+      "evidence_class": "REAL_PLAYER_INPUT",
+      "navigation_status": "REACHED_REQUESTED_REGION",
+      "runtime_region_evidence": {
+        "id": "transfer",
+        "support_surface_id": "transfer-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "transition: landing on the annex, Kinetic Permit kiosk and gallery mouth",
+      "image": "qa/visual/evidence/34679203383/default/05-transfer-kiosk.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        0.008,
+        19.115
+      ],
+      "camera_direction": [
+        0,
+        -0.1,
+        -0.995
+      ],
+      "player_position": [
+        0,
+        -1.6,
+        19.27664433234515
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "transfer-roof",
+      "expected_surfaces": [
+        "transfer-roof",
+        "kiosk-floor"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 602,
+      "game_elapsed": 5.903,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 503,
+        "triangles": 949321,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "06-gallery-interior",
+      "region": "gallery",
+      "requested_region": "gallery",
+      "evidence_class": "REAL_PLAYER_INPUT",
+      "navigation_status": "CAPTURED_NAVIGATION_MISS",
+      "runtime_region_evidence": {
+        "id": "transfer",
+        "support_surface_id": "transfer-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "interior: inclined gallery, conveyor, ducts to slide under, lamps",
+      "image": "qa/visual/evidence/34679203383/default/06-gallery-interior.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        3.647,
+        0.012,
+        10.528
+      ],
+      "camera_direction": [
+        0,
+        -0.1,
+        -0.995
+      ],
+      "player_position": [
+        3.6468131857892523,
+        -1.6,
+        10.69
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "transfer-roof",
+      "expected_surfaces": [
+        "gallery-step",
+        "conveyor-"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 877,
+      "game_elapsed": 10.498,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 506,
+        "triangles": 973052,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "07-split-deck",
+      "region": "split-deck",
+      "requested_region": "split-deck",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "split-deck",
+        "support_surface_id": "split-deck",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "branch read: WEST SHAFT / EAST SPAN signs, boiler house, relay yard above",
+      "image": "qa/visual/evidence/34679203383/default/07-split-deck.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        4.012,
+        -16.662
+      ],
+      "camera_direction": [
+        0,
+        -0.0998,
+        -0.995
+      ],
+      "player_position": [
+        0,
+        2.4,
+        -16.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "split-deck",
+      "expected_surfaces": [
+        "split-deck"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 2162,
+      "game_elapsed": 31.928,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 501,
+        "triangles": 986993,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "08-east-span-gap",
+      "region": "east-span",
+      "requested_region": "east-span",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "split-deck",
+        "support_surface_id": "split-deck",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "dash gap read: torn conveyor, stub deck, hazard paint",
+      "image": "qa/visual/evidence/34679203383/default/08-east-span-gap.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0.194,
+        4.008,
+        -20.086
+      ],
+      "camera_direction": [
+        0.9928,
+        -0.1195,
+        0.0012
+      ],
+      "player_position": [
+        0,
+        2.4,
+        -20.086222082496153
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "split-deck",
+      "expected_surfaces": [
+        "split-deck"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 2216,
+      "game_elapsed": 32.85,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 486,
+        "triangles": 903365,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "opening",
+          "open": 0.12
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "09-container-stack",
+      "region": "east-span",
+      "requested_region": "east-span",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "east-span",
+        "support_surface_id": "stub-deck",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "vertical: container mantle chain up to the boiler roof",
+      "image": "qa/visual/evidence/34679203383/default/09-container-stack.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        18.6,
+        4.012,
+        -19.904
+      ],
+      "camera_direction": [
+        0,
+        0.0996,
+        -0.995
+      ],
+      "player_position": [
+        18.6,
+        2.4,
+        -20.06494816310963
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "stub-deck",
+      "expected_surfaces": [
+        "stub-deck"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 2346,
+      "game_elapsed": 35.033,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 157,
+        "triangles": 294126,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closing",
+          "open": 0.15
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "10-boiler-court",
+      "region": "boiler-court",
+      "requested_region": "boiler-court",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "boiler-court",
+        "support_surface_id": "boiler-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "landmark: relay yard, stacks, pipe rack, header tank",
+      "image": "qa/visual/evidence/34679203383/default/10-boiler-court.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        8.871,
+        10.215,
+        -31.5
+      ],
+      "camera_direction": [
+        -0.9968,
+        -0.0799,
+        0
+      ],
+      "player_position": [
+        9,
+        8.6,
+        -31.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "boiler-roof",
+      "expected_surfaces": [
+        "boiler-roof"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 3275,
+      "game_elapsed": 50.526,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 461,
+        "triangles": 863093,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "11-boiler-vista",
+      "region": "boiler-court",
+      "requested_region": "boiler-court",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "boiler-court",
+        "support_surface_id": "boiler-roof",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "vista: harbour cranes, estuary bridge, lower yard",
+      "image": "qa/visual/evidence/34679203383/default/11-boiler-vista.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        9.025,
+        10.219,
+        -31.538
+      ],
+      "camera_direction": [
+        -0.5401,
+        0.028,
+        0.8411
+      ],
+      "player_position": [
+        9,
+        8.6,
+        -31.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "boiler-roof",
+      "expected_surfaces": [],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 3288,
+      "game_elapsed": 50.758,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 212,
+        "triangles": 383724,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "12-rack-platform",
+      "region": "boiler-court",
+      "requested_region": "boiler-court",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "boiler-court",
+        "support_surface_id": "rack-platform",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "vertical/relay: rack platform over the pipe rack, relay panel, stack platform beyond",
+      "image": "qa/visual/evidence/34679203383/default/12-rack-platform.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        -2,
+        13.918,
+        -38.419
+      ],
+      "camera_direction": [
+        0,
+        -0.05,
+        0.9988
+      ],
+      "player_position": [
+        -2,
+        12.3,
+        -38.5
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "rack-platform",
+      "expected_surfaces": [
+        "rack-platform"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 4039,
+      "game_elapsed": 63.283,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 242,
+        "triangles": 572078,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "13-control-corridor",
+      "region": "control",
+      "requested_region": "control",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "control",
+        "support_surface_id": "corridor-floor",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "low maintenance corridor: slide ducts, trusses, drop-room door",
+      "image": "qa/visual/evidence/34679203383/default/13-control-corridor.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        10.204,
+        -46.826
+      ],
+      "camera_direction": [
+        0,
+        -0.1395,
+        -0.9902
+      ],
+      "player_position": [
+        0,
+        8.6,
+        -46.6
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "corridor-floor",
+      "expected_surfaces": [
+        "corridor-floor"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 4653,
+      "game_elapsed": 73.529,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 250,
+        "triangles": 576820,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "14-drop-room",
+      "region": "control",
+      "requested_region": "control",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "unsupported-or-airborne",
+        "support_surface_id": null,
+        "verification": "NO_AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "transition: framed drop shaft, yellow frame, landings visible below",
+      "image": "qa/visual/evidence/34679203383/default/14-drop-room.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        -0.073,
+        9.495,
+        -63.791
+      ],
+      "camera_direction": [
+        0,
+        -0.481,
+        -0.8767
+      ],
+      "player_position": [
+        0,
+        8.417543362,
+        -63.012098203974915
+      ],
+      "player_state": "AIR",
+      "player_grounded": false,
+      "support_surface": null,
+      "expected_surfaces": [
+        "drop-room-floor-n"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 5075,
+      "game_elapsed": 80.589,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 248,
+        "triangles": 498295,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "15-turbine-hall",
+      "region": "turbine-hall",
+      "requested_region": "turbine-hall",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "turbine-hall",
+        "support_surface_id": "drop-bottom",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "interior arrival: turbine casings, crane rails, trolley, lit windows",
+      "image": "qa/visual/evidence/34679203383/default/15-turbine-hall.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        -1.589,
+        -1.782,
+        -65.699
+      ],
+      "camera_direction": [
+        0.8761,
+        -0.05,
+        -0.4795
+      ],
+      "player_position": [
+        -1.66,
+        -3.4,
+        -65.66
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "drop-bottom",
+      "expected_surfaces": [
+        "drop-bottom",
+        "hall-catwalk-n"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 5366,
+      "game_elapsed": 85.447,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 221,
+        "triangles": 456373,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "17-hall-gallery-door",
+      "region": "turbine-hall",
+      "requested_region": "turbine-hall",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "turbine-hall",
+        "support_surface_id": "hall-gallery-s",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "transition: south gallery toward the loading door and the sunlit gantry",
+      "image": "qa/visual/evidence/34679203383/default/17-hall-gallery-door.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        3.968,
+        1.22,
+        -91.298
+      ],
+      "camera_direction": [
+        -0.9998,
+        -0.02,
+        0
+      ],
+      "player_position": [
+        4,
+        -0.3999999999999999,
+        -91.29808129881737
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "hall-gallery-s",
+      "expected_surfaces": [
+        "hall-gallery-s",
+        "gallery-stairs"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 5811,
+      "game_elapsed": 92.882,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 204,
+        "triangles": 415060,
+        "geometries": 201,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "opening",
+          "open": 0.25
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "18-sunline-gantry",
+      "region": "sunline",
+      "requested_region": "sunline",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "sunline",
+        "support_surface_id": "gantry-a",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "exterior vista: gantry over the quay, harbour cranes, ships, bridge, missing panel",
+      "image": "qa/visual/evidence/34679203383/default/18-sunline-gantry.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        1.217,
+        -96.097
+      ],
+      "camera_direction": [
+        0,
+        -0.06,
+        -0.9982
+      ],
+      "player_position": [
+        0,
+        -0.4,
+        -96
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "gantry-a",
+      "expected_surfaces": [
+        "gantry-a",
+        "door-threshold"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 6512,
+      "game_elapsed": 104.581,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 160,
+        "triangles": 308974,
+        "geometries": 202,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "opening",
+          "open": 0.04
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "19-finish-cab",
+      "region": "sunline",
+      "requested_region": "sunline",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "sunline",
+        "support_surface_id": "gantry-b",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "final approach: crane cab, beacon, SUNLINE EXIT sign",
+      "image": "qa/visual/evidence/34679203383/default/19-finish-cab.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        1.218,
+        -116.081
+      ],
+      "camera_direction": [
+        0,
+        -0.05,
+        -0.9988
+      ],
+      "player_position": [
+        0,
+        -0.4,
+        -116
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "gantry-b",
+      "expected_surfaces": [
+        "gantry-b",
+        "cab-landing"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 6783,
+      "game_elapsed": 109.109,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 143,
+        "triangles": 282638,
+        "geometries": 202,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closing",
+          "open": 0.11
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    },
+    {
+      "frame_id": "20-finish-look-back",
+      "region": "sunline",
+      "requested_region": "sunline",
+      "evidence_class": "STAGED_TELEPORT_VIEW",
+      "navigation_status": "STAGED",
+      "runtime_region_evidence": {
+        "id": "sunline",
+        "support_surface_id": "cab-landing",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      },
+      "intent": "finish look-back: whole route silhouette (turbine hall, boiler house, dispatch)",
+      "image": "qa/visual/evidence/34679203383/default/20-finish-look-back.jpg",
+      "capture_method": "canvas",
+      "camera_position": [
+        0,
+        1.218,
+        -119.714
+      ],
+      "camera_direction": [
+        0.0004,
+        0.0508,
+        0.9987
+      ],
+      "player_position": [
+        0,
+        -0.4,
+        -119.63137743617048
+      ],
+      "player_state": "GROUND",
+      "player_grounded": true,
+      "support_surface": "cab-landing",
+      "expected_surfaces": [
+        "cab-landing",
+        "gantry-b"
+      ],
+      "runtime_running": true,
+      "pointer_locked": true,
+      "rendered_frames": 6860,
+      "game_elapsed": 110.401,
+      "seed": "rivet-run-highline-01",
+      "time_of_day": "golden-hour",
+      "sky_source": "equirect:/sky/harbour_afternoon_equirect.jpg",
+      "texture_sources": {
+        "concrete": "polyhaven:concrete_floor_worn_001",
+        "brick": "polyhaven:brick_wall_09",
+        "corrugated": "polyhaven:corrugated_iron_02",
+        "rust": "polyhaven:rusty_metal_sheet",
+        "shutter": "generated:corrugated_steel",
+        "facade": "generated:office_facade",
+        "checker": "polyhaven:metal_plate",
+        "grating": "generated:steel_grating"
+      },
+      "renderer": {
+        "calls": 118,
+        "triangles": 234004,
+        "geometries": 202,
+        "textures": 181
+      },
+      "real_props": {
+        "source": "manifest",
+        "models_available": 27,
+        "placed": 61,
+        "missing": 0,
+        "load_failures": 0
+      },
+      "doors": [
+        {
+          "id": "bay-door",
+          "state": "closed",
+          "open": 0
+        },
+        {
+          "id": "hall-door",
+          "state": "closed",
+          "open": 0
+        }
+      ],
+      "critic_status": "CAPTURED_UNINSPECTED",
+      "critic_findings": [],
+      "scores": null,
+      "approved": false
+    }
+  ],
+  "phases": [
+    {
+      "phase": "dispatch-run",
+      "ok": true,
+      "error": null,
+      "wall_ms": 12287,
+      "game_seconds": 4.37,
+      "end_support": "transfer-roof",
+      "end_position": [
+        0,
+        -1.6,
+        19.649522986732343
+      ],
+      "staged_after": false
+    },
+    {
+      "phase": "gallery",
+      "ok": false,
+      "error": null,
+      "wall_ms": 32662,
+      "game_seconds": 25.83,
+      "end_support": "transfer-roof",
+      "end_position": [
+        3.6468131857892523,
+        -1.6,
+        10.69
+      ],
+      "staged_after": true
+    },
+    {
+      "phase": "east-span",
+      "ok": false,
+      "error": null,
+      "wall_ms": 27931,
+      "game_seconds": 18.38,
+      "end_support": "east-annex-roof",
+      "end_position": [
+        15.56,
+        2.4,
+        -32.645091748425884
+      ],
+      "staged_after": true
+    },
+    {
+      "phase": "rack-platform",
+      "ok": false,
+      "error": null,
+      "wall_ms": 12328,
+      "game_seconds": 12.33,
+      "end_support": "boiler-roof",
+      "end_position": [
+        5.89,
+        8.6,
+        -40.88688743986055
+      ],
+      "staged_after": true
+    },
+    {
+      "phase": "corridor",
+      "ok": false,
+      "error": null,
+      "wall_ms": 10051,
+      "game_seconds": 10.05,
+      "end_support": "east-annex-roof",
+      "end_position": [
+        16.25,
+        2.4,
+        -28.991427865218665
+      ],
+      "staged_after": true
+    },
+    {
+      "phase": "drop",
+      "ok": true,
+      "error": null,
+      "wall_ms": 15563,
+      "game_seconds": 11.13,
+      "end_support": "drop-bottom",
+      "end_position": [
+        -1.66,
+        -3.4,
+        -65.66
+      ],
+      "staged_after": false
+    },
+    {
+      "phase": "trolley",
+      "ok": false,
+      "error": null,
+      "wall_ms": 6253,
+      "game_seconds": 6.25,
+      "end_support": "drop-bottom",
+      "end_position": [
+        1.66,
+        -3.4,
+        -65.60816650315431
+      ],
+      "staged_after": true
+    },
+    {
+      "phase": "gallery-door",
+      "ok": false,
+      "error": null,
+      "wall_ms": 14901,
+      "game_seconds": 12.52,
+      "end_support": "hall-floor",
+      "end_position": [
+        -17.61697595471513,
+        -14,
+        -91.66
+      ],
+      "staged_after": true
+    },
+    {
+      "phase": "finish",
+      "ok": false,
+      "error": null,
+      "wall_ms": 4310,
+      "game_seconds": 4.31,
+      "end_support": "gantry-a",
+      "end_position": [
+        0,
+        -0.4,
+        -99.1722507774084
+      ],
+      "staged_after": true
+    }
+  ],
+  "final_probe": {
+    "player": {
+      "state": "GROUND",
+      "grounded": true,
+      "position": [
+        0,
+        -0.4,
+        -119.63137743617048
+      ],
+      "velocity": [
+        0,
+        0,
+        -0.000025916578349882448
+      ],
+      "supportSolidId": "cab-landing",
+      "surface": "steel",
+      "onLadder": false,
+      "mantling": false,
+      "doubleJumpUnlocked": false,
+      "wallJumpCount": 0,
+      "dashCooldown": 0,
+      "crouching": false,
+      "slam": false,
+      "traversalRegion": {
+        "id": "sunline",
+        "support_surface_id": "cab-landing",
+        "verification": "AUTHORED_SUPPORT_CONTACT"
+      }
+    },
+    "cameraPosition": [
+      0,
+      1.218,
+      -119.714
+    ],
+    "audio": {
+      "bank": "loaded",
+      "cues": 12,
+      "decoded": 60,
+      "loops": [
+        "windRush",
+        "breath",
+        "pulseSlow",
+        "pulseFast",
+        "gustA",
+        "boiler",
+        "machine"
+      ],
+      "params": {
+        "exertion": 0.08,
+        "airspeed": 0,
+        "altitude": -0.4,
+        "machinery": 43.708775972081014,
+        "interior": false
+      },
+      "snapshot": "default"
+    },
+    "cameraDirection": [
+      0.0004,
+      0.0508,
+      0.9987
+    ],
+    "elapsed": 110.451,
+    "running": true,
+    "pointerLocked": true,
+    "stagingMode": true,
+    "renderFrameCount": 6861,
+    "presentedFrames": 28,
+    "renderMode": "ondemand",
+    "relaysRemaining": 3,
+    "checkpoint": {
+      "position": [
+        0,
+        -0.4,
+        -95
+      ],
+      "yaw": 0
+    },
+    "objective": "Cross the Sunline gantry to the crane cab. Dash or double-jump the missing panel.",
+    "bindings": {
+      "MOVE_FORWARD": "KeyW",
+      "MOVE_BACK": "KeyS",
+      "MOVE_LEFT": "KeyA",
+      "MOVE_RIGHT": "KeyD",
+      "JUMP": "Space",
+      "DASH": "ShiftLeft",
+      "CROUCH": "ControlLeft",
+      "RESTART": "KeyR",
+      "PAUSE": "Escape"
+    },
+    "worldSeed": "rivet-run-highline-01",
+    "timeOfDay": "golden-hour",
+    "skySource": "equirect:/sky/harbour_afternoon_equirect.jpg",
+    "textureSources": {
+      "concrete": "polyhaven:concrete_floor_worn_001",
+      "brick": "polyhaven:brick_wall_09",
+      "corrugated": "polyhaven:corrugated_iron_02",
+      "rust": "polyhaven:rusty_metal_sheet",
+      "shutter": "generated:corrugated_steel",
+      "facade": "generated:office_facade",
+      "checker": "polyhaven:metal_plate",
+      "grating": "generated:steel_grating"
+    },
+    "realProps": {
+      "source": "manifest",
+      "models_available": 27,
+      "placed": 61,
+      "missing": 0,
+      "load_failures": 0
+    },
+    "doors": [
+      {
+        "id": "bay-door",
+        "state": "closed",
+        "open": 0
+      },
+      {
+        "id": "hall-door",
+        "state": "closed",
+        "open": 0
+      }
+    ],
+    "rendererInfo": {
+      "calls": 555,
+      "triangles": 1241490,
+      "geometries": 202,
+      "textures": 181
+    }
+  },
+  "scene_audit": {
+    "schema": "rivet-run-scene-audit/v3",
+    "diagnostic_only": true,
+    "registered_objects": 4100,
+    "colliders": 466,
+    "point_lights": 24,
+    "texture_sources": {
+      "concrete": "polyhaven:concrete_floor_worn_001",
+      "brick": "polyhaven:brick_wall_09",
+      "corrugated": "polyhaven:corrugated_iron_02",
+      "rust": "polyhaven:rusty_metal_sheet",
+      "shutter": "generated:corrugated_steel",
+      "facade": "generated:office_facade",
+      "checker": "polyhaven:metal_plate",
+      "grating": "generated:steel_grating"
+    },
+    "repeated_families": [
+      {
+        "family": "west-mill-window",
+        "count": 168,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lit-window",
+        "count": 162,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-corner",
+        "count": 160,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-doorbar",
+        "count": 160,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-stack-30-ladder-rung",
+        "count": 153,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "sleeper",
+        "count": 140,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "west-power-annex-window",
+        "count": 136,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-stack-36-ladder-rung",
+        "count": 126,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lamp-lens",
+        "count": 110,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lamp",
+        "count": 110,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "power-house-window",
+        "count": 96,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-rail",
+        "count": 80,
+        "distinct_rotations": 28,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "west-power-annex-stack-ladder-rung",
+        "count": 79,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "seed-scrub",
+        "count": 72,
+        "distinct_rotations": 71,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "crane-boom-diagonal",
+        "count": 51,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "boiler-stack-2-ladder-rung",
+        "count": 51,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "lane-paint",
+        "count": 50,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "boiler-stack-1-ladder-rung",
+        "count": 43,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "container-plate",
+        "count": 40,
+        "distinct_rotations": 28,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "drop-ladder-rung",
+        "count": 39,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "boiler-stack-0-ladder-rung",
+        "count": 36,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-recovery-ladder-rung",
+        "count": 35,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "bridge-cable",
+        "count": 32,
+        "distinct_rotations": 8,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "crane-boom-vertical",
+        "count": 27,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "sign",
+        "count": 27,
+        "distinct_rotations": 4,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "skyline-lit-band",
+        "count": 25,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "bollard",
+        "count": 21,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "clerestory-window",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "parapet",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": false,
+        "same_rotation_warning": true
+      },
+      {
+        "family": "hall-window",
+        "count": 18,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "prop:wooden_crate_02",
+        "count": 17,
+        "distinct_rotations": 15,
+        "structural_module": false,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-catwalk-rail-post",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-stairs-tread",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "gap-stairs-riser",
+        "count": 16,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "conveyor-roller",
+        "count": 15,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "stack-platform-ladder-rung",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "corridor-truss-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--67-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--73-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      },
+      {
+        "family": "hall-truss--79-diagonal",
+        "count": 14,
+        "distinct_rotations": 1,
+        "structural_module": true,
+        "same_rotation_warning": false
+      }
+    ],
+    "regular_spacing_candidates": [
+      {
+        "family": "bollard",
+        "axis": "x",
+        "deltas": [
+          12
+        ],
+        "count": 21
+      },
+      {
+        "family": "sleeper",
+        "axis": "z",
+        "deltas": [
+          1.4
+        ],
+        "count": 140
+      },
+      {
+        "family": "yard-light-pole",
+        "axis": "z",
+        "deltas": [
+          22
+        ],
+        "count": 8
+      },
+      {
+        "family": "refinery-stack",
+        "axis": "x",
+        "deltas": [
+          26
+        ],
+        "count": 6
+      },
+      {
+        "family": "ship-boxes",
+        "axis": "x",
+        "deltas": [
+          11.3
+        ],
+        "count": 9
+      },
+      {
+        "family": "ship-boxes",
+        "axis": "z",
+        "deltas": [
+          4.1
+        ],
+        "count": 9
+      },
+      {
+        "family": "shaft-wall",
+        "axis": "x",
+        "deltas": [
+          0.6,
+          1.6
+        ],
+        "count": 9
+      },
+      {
+        "family": "shaft-wall",
+        "axis": "z",
+        "deltas": [
+          0.7,
+          1.5
+        ],
+        "count": 9
+      },
+      {
+        "family": "drop-shaft-wall",
+        "axis": "z",
+        "deltas": [
+          0.3,
+          2
+        ],
+        "count": 6
+      },
+      {
+        "family": "hall-door-chevron",
+        "axis": "x",
+        "deltas": [
+          1
+        ],
+        "count": 7
+      }
+    ],
+    "seed_layer": {
+      "seed": "rivet-run-highline-01",
+      "systems": {
+        "skyline": {
+          "crowns": 13,
+          "masts": 5,
+          "litBands": 25
+        },
+        "districtLights": {
+          "lit": 162
+        },
+        "rooftopProps": {
+          "machinery": 25,
+          "roofProps": 3
+        },
+        "containers": {
+          "containers": 35
+        },
+        "vegetation": {
+          "clumps": 36
+        },
+        "signs": {
+          "signs": 3
+        },
+        "harbour": {
+          "vessels": 3
+        },
+        "routeVariants": {
+          "variants": [
+            "boiler-court-pipe-balance",
+            "turbine-floor-crates"
+          ]
+        },
+        "lamps": {
+          "tint": "#ffc98a"
+        }
+      }
+    },
+    "real_props": {
+      "source": "manifest",
+      "models_available": 27,
+      "placed": 61,
+      "missing": [],
+      "load_failures": [],
+      "by_model": {
+        "metal_tool_chest": 3,
+        "cardboard_box_01": 6,
+        "WetFloorSign_01": 2,
+        "wooden_crate_02": 18,
+        "Barrel_01": 6,
+        "old_tyre": 2,
+        "concrete_road_barrier_02": 3,
+        "metal_trash_can": 1,
+        "exterior_aircon_unit": 1,
+        "security_camera_01": 1,
+        "utility_box_02": 1,
+        "industrial_pastic_container": 1,
+        "Barrel_02": 4,
+        "security_light": 1,
+        "barrel_03": 5,
+        "utility_box_01": 2,
+        "portable_generator": 1,
+        "propane_tank": 1,
+        "caged_hanging_light": 2
+      }
+    },
+    "doors": [
+      {
+        "id": "bay-door",
+        "state": "closed",
+        "open": 0,
+        "width": 3.2,
+        "height": 3.6,
+        "facing": "+z"
+      },
+      {
+        "id": "hall-door",
+        "state": "closed",
+        "open": 0,
+        "width": 7.2,
+        "height": 5,
+        "facing": "+z"
+      }
+    ],
+    "required_human_review": "Judge repetition/dead zones/placement from player-height frames. Counts cannot approve anything."
+  },
+  "input_trace": [
+    {
+      "action": "RENDER_MODE",
+      "mode": "ondemand",
+      "at": 1789196110495
+    },
+    {
+      "action": "start_run_pointer_lock_confirmed",
+      "at": 1789196114940
+    },
+    {
+      "action": "look",
+      "dx": -245.0242699714129,
+      "dy": 197.88520033395966,
+      "at": 1789196114944
+    },
+    {
+      "action": "look",
+      "dx": 700,
+      "dy": 0,
+      "at": 1789196131902
+    },
+    {
+      "action": "look",
+      "dx": -1400,
+      "dy": 0,
+      "at": 1789196135534
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 34.24526858968381,
+      "at": 1789196139054
+    },
+    {
+      "action": "look",
+      "dx": 300.9845196646261,
+      "dy": -0.7776830872997952,
+      "at": 1789196139231
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 2.2,
+      "at": 1789196139417
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196149658
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196150681
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196150683
+    },
+    {
+      "action": "look",
+      "dx": 0,
+      "dy": -33.097998393068224,
+      "at": 1789196151703
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyD"
+      ],
+      "game_seconds": 0.25,
+      "at": 1789196161036
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196161544
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 6,
+      "at": 1789196172462
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW",
+        "ControlLeft"
+      ],
+      "game_seconds": 3,
+      "at": 1789196178531
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196181564
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW",
+        "ControlLeft"
+      ],
+      "game_seconds": 3,
+      "at": 1789196185608
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 5,
+      "at": 1789196188641
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        0,
+        2.5,
+        -16.5
+      ],
+      "yaw": 0,
+      "pitch": -0.1,
+      "at": 1789196193693
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196204943
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 11.12976909583731,
+      "at": 1789196205453
+    },
+    {
+      "action": "look",
+      "dx": 385.3985107328084,
+      "dy": 0.11874536112112719,
+      "at": 1789196205629
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196208841
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196209857
+    },
+    {
+      "action": "tap",
+      "key": "ShiftLeft",
+      "at": 1789196209858
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 1,
+      "at": 1789196209859
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -122.1034768611011,
+      "at": 1789196210619
+    },
+    {
+      "action": "look",
+      "dx": -385.9835449544269,
+      "dy": -0.1303254745455778,
+      "at": 1789196210794
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyD"
+      ],
+      "game_seconds": 0.2,
+      "at": 1789196217581
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196217839
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196218348
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196218349
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196221377
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196224409
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196224410
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": 110.98078563656554,
+      "at": 1789196227444
+    },
+    {
+      "action": "look",
+      "dx": -385.37906455510057,
+      "dy": 0.018657984726203985,
+      "at": 1789196227626
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 2,
+      "at": 1789196227814
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196229835
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196229836
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        9,
+        8.7,
+        -31.5
+      ],
+      "yaw": 1.5707963267948966,
+      "pitch": -0.08,
+      "at": 1789196232868
+    },
+    {
+      "action": "look",
+      "dx": -500,
+      "dy": -60,
+      "at": 1789196236526
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 71.1131444211372,
+      "at": 1789196240388
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 0.1303254745455778,
+      "at": 1789196240560
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 0.1303254745455778,
+      "at": 1789196240744
+    },
+    {
+      "action": "look",
+      "dx": 86.40751708360328,
+      "dy": 0.1303254745455778,
+      "at": 1789196240929
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196241109
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -55.425230081009985,
+      "at": 1789196241870
+    },
+    {
+      "action": "look",
+      "dx": -386.01678386675604,
+      "dy": -0.4444444918518655,
+      "at": 1789196242043
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196242229
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -54.99999990740737,
+      "at": 1789196246274
+    },
+    {
+      "action": "look",
+      "dx": 385.3790645551006,
+      "dy": -0.018657984726203985,
+      "at": 1789196246460
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 6,
+      "at": 1789196246643
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        -2,
+        12.4,
+        -38.5
+      ],
+      "yaw": 3.141592653589793,
+      "pitch": -0.05,
+      "at": 1789196252708
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 27.766190663461106,
+      "at": 1789196256401
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -0.20468375354762272,
+      "at": 1789196256576
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -0.20468375354762272,
+      "at": 1789196256760
+    },
+    {
+      "action": "look",
+      "dx": 370.80385472255693,
+      "dy": -0.20468375354762272,
+      "at": 1789196256943
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196257126
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -0.20468375354762272,
+      "at": 1789196260156
+    },
+    {
+      "action": "look",
+      "dx": 385.16696248040813,
+      "dy": 0.8002833957520411,
+      "at": 1789196260344
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196260525
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -11.315794864658736,
+      "at": 1789196261034
+    },
+    {
+      "action": "look",
+      "dx": -385.21471700639296,
+      "dy": -0.32622104059268814,
+      "at": 1789196261209
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 5,
+      "at": 1789196261392
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        0,
+        8.7,
+        -46.6
+      ],
+      "yaw": 0,
+      "pitch": -0.14,
+      "at": 1789196266444
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 5,
+      "at": 1789196270282
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW",
+        "ControlLeft"
+      ],
+      "game_seconds": 6,
+      "at": 1789196275332
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196276849
+    },
+    {
+      "action": "look",
+      "dx": 0,
+      "dy": 200.0241891736212,
+      "at": 1789196277105
+    },
+    {
+      "action": "look",
+      "dx": 0,
+      "dy": -167.66387235217047,
+      "at": 1789196281767
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 2,
+      "at": 1789196281942
+    },
+    {
+      "action": "hold",
+      "keys": [],
+      "game_seconds": 4,
+      "at": 1789196282198
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 55.878264533095546,
+      "at": 1789196282453
+    },
+    {
+      "action": "look",
+      "dx": 385.3706162965189,
+      "dy": -0.10455802488108636,
+      "at": 1789196282642
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196282825
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -0.10455802488108636,
+      "at": 1789196283840
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -0.10455802488108636,
+      "at": 1789196284025
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": 0.8838266529022211,
+      "at": 1789196284208
+    },
+    {
+      "action": "look",
+      "dx": -370.41095136856137,
+      "dy": -0.10455802488108636,
+      "at": 1789196284391
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196284574
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -138.99344691377,
+      "at": 1789196285843
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -0.011587114316673815,
+      "at": 1789196286025
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": -0.011587114316673815,
+      "at": 1789196286209
+    },
+    {
+      "action": "look",
+      "dx": 120.38930655338864,
+      "dy": -0.011587114316673815,
+      "at": 1789196286394
+    },
+    {
+      "action": "look",
+      "dx": 250.3885536143029,
+      "dy": 27.766190663461106,
+      "at": 1789196289693
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 6,
+      "at": 1789196289875
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        4,
+        -0.3,
+        -89.5
+      ],
+      "yaw": 1.1707963267948966,
+      "pitch": -0.02,
+      "at": 1789196295939
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 44.44370357033863,
+      "at": 1789196296099
+    },
+    {
+      "action": "look",
+      "dx": 185.40141779971992,
+      "dy": 0.4653144825001593,
+      "at": 1789196296275
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 6,
+      "at": 1789196296458
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -44.98415777172704,
+      "at": 1789196296715
+    },
+    {
+      "action": "look",
+      "dx": -384.98997414080947,
+      "dy": -0.0007408741058280741,
+      "at": 1789196296890
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 6,
+      "at": 1789196299505
+    },
+    {
+      "action": "look",
+      "dx": 400,
+      "dy": 22.22148134811639,
+      "at": 1789196305569
+    },
+    {
+      "action": "look",
+      "dx": 385.40291500228795,
+      "dy": 0.2025881607639227,
+      "at": 1789196305758
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 5,
+      "at": 1789196305941
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        0,
+        -0.3,
+        -96
+      ],
+      "yaw": 0,
+      "pitch": -0.06,
+      "at": 1789196310998
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 4,
+      "at": 1789196312218
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196312980
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 0.45,
+      "at": 1789196312981
+    },
+    {
+      "action": "tap",
+      "key": "Space",
+      "at": 1789196313488
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196313489
+    },
+    {
+      "action": "STAGED_TELEPORT",
+      "position": [
+        0,
+        -0.3,
+        -116
+      ],
+      "yaw": 0,
+      "pitch": -0.05,
+      "at": 1789196316523
+    },
+    {
+      "action": "hold",
+      "keys": [
+        "KeyW"
+      ],
+      "game_seconds": 3,
+      "at": 1789196317879
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -55.56714266987224,
+      "at": 1789196318392
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": -0.5446503429790448,
+      "at": 1789196318574
+    },
+    {
+      "action": "look",
+      "dx": -400,
+      "dy": 0.456597128432786,
+      "at": 1789196318757
+    },
+    {
+      "action": "look",
+      "dx": -370.8168045463034,
+      "dy": -0.5446503429790448,
+      "at": 1789196318941
+    }
+  ],
+  "console_events": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0xfa400180e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0xfa400180e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0xfa400180e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0xfa400180e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    }
+  ],
+  "capture_failure": null,
+  "approval": {
+    "approved": false,
+    "score": null,
+    "reason": "A vision-capable critic must inspect the actual image files. This tool never approves."
+  }
+}
